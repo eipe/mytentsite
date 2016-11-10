@@ -1,0 +1,39 @@
+/* Customizing leaflet design */
+.leaflet-popup-content-wrapper {
+    border-radius: 0;
+}
+
+.leaflet-popup-content {
+    margin: 0;
+}
+
+.leaflet-container a.leaflet-popup-close-button {
+    font-size: 22px;
+}
+
+.leaflet-popup-content {
+    width: auto!important; /* Because leaflet adds a style directly to element we need to flag this as important! */
+}
+
+.leaflet-popup-content p {
+    margin: 0;
+    padding: 10px 5px;
+}
+
+.leaflet-popup-content-wrapper {
+    padding: 0;
+}
+
+.leaflet-control-layers-list label > input {
+    margin-bottom: 0;
+}
+
+/* Foundation overrides */
+.easy-button-button {
+    padding: 0;
+    margin: 0;
+}
+
+.easy-button-button:hover {
+    cursor: pointer;
+}
