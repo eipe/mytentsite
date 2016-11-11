@@ -31,6 +31,7 @@ class TentSitesController extends Controller
 
             // Save data and use id to store image
             $post = $request->all();
+            dd($post);
             if (isset($post['photo'])) {
                 unset($post['photo']);
             }
