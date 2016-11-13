@@ -31,7 +31,7 @@ class TentSitesController extends Controller
 
             // Save data and use id to store image
             $post = $request->all();
-            dd($post);
+
             if (isset($post['photo'])) {
                 unset($post['photo']);
             }
@@ -53,19 +53,24 @@ class TentSitesController extends Controller
 
     }
 
-/*
+
     public function index($lat, $lng, $rad)
     {
 
-        $this->getWithinArea($lat, $lng, $rad);
+
+
+
+
+
+       /* $this->getWithinArea($lat, $lng, $rad);
         echo $lat;
         echo $lng;
         echo $rad;
         exit;
         dd($post);
-
-    }
 */
+    }
+
 }
 /*
 
