@@ -294,7 +294,7 @@
 
     function Photo() {
         var $photo, $cancel, $store, $location, location = null, $uploader, $uploaderLabel, $caption,
-            loaded = false, options = {target: "/tentsites"};
+            loaded = false, options = {target: "/api/tentsites"};
 
         function storePhoto(callback) {
             if(typeof $uploader.prop("files") !== typeof undefined) {
@@ -310,14 +310,15 @@
                     data: photoData,
                     cache : false,
                     contentType : false,
-                    processType : false
+                    processData : false
                 }).success(function(response) {
                     callback(200, response);
                 }).error(function(response) {
                     callback(400, response);
                 });
+            } else {
+                callback(400, "Missing file to upload")
             }
-            callback(400, "Missing file to upload")
         }
 
         function togglePhotoControllers() {
