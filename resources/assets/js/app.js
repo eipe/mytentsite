@@ -16,7 +16,7 @@
 
     function Sites() {
         var fncCallbackOnFetchedSites,
-            strSiteApiUrl = "/tentsites";
+            strSiteApiUrl = "/api/tentsites";
 
         function hasExtendedCacheLifeTime() {
             var intLastFetchTime = localStorage.getItem("Sites.lastFetchTime");
@@ -394,11 +394,13 @@
                             // Throw error as this image does not have required EXIF data
                             view.displayError(
                                 "Photo does not contain location data",
-                                "We can not accept photos without location data as they are impossible to place on the " +
-                                "map, which indeed is the whole concept of this service. <br /><br />" +
+                                "We can not accept photos without location data as they are impossible to place on " +
+                                "the map, which indeed is the whole concept of this service. <br /><br />" +
                                 "Please try a new photo"
                             );
-                            $uploaderLabel.addClass("alert").text("Photo does not contain location data, try a new one!");
+                            $uploaderLabel
+                                .addClass("alert")
+                                .text("Photo does not contain location data, try a new one!");
                             return false;
                         }
 
