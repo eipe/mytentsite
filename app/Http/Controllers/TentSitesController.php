@@ -54,8 +54,8 @@ class TentSitesController extends Controller
     }
 
 
-    public function index($lat, $lng, $rad)
-    {
+    //public function index($lat, $lng, $rad)
+    //{
 
 
 
@@ -69,7 +69,7 @@ class TentSitesController extends Controller
         exit;
         dd($post);
 */
-    }
+   // }
 
 }
 /*
