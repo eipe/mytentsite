@@ -18,7 +18,6 @@ class AddNullableTentsites extends Migration
             $table->string('location_name')->nullable()->change();
             $table->integer('created_time')->nullable()->change();
             $table->integer('likes')->nullable()->change();
-            $table->integer('created_at')->nullable()->change();
             $table->string('img_location')->nullable()->change();
             $table->string('external_id')->nullable()->change();
             $table->string('thumbnail_location')->nullable()->change();
