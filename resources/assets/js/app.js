@@ -16,7 +16,10 @@
 
     function Sites() {
         var fncCallbackOnFetchedSites,
-            strSiteApiUrl = "/api/tentsites";
+            config = {
+                apiUrl : "/api/tentsites",
+                storageFolder : "/storage/images/tentsites/"
+            };
 
         function hasExtendedCacheLifeTime() {
             var intLastFetchTime = localStorage.getItem("Sites.lastFetchTime");
@@ -39,7 +42,7 @@
                 fncCallbackOnFetchedSites(JSON.parse(localStorage.getItem("Sites.all")));
             } else {
                 $.ajax({
-                    url: strSiteApiUrl,
+                    url: config.apiUrl,
                     success: function(response) {
                         var tentSites = [];
                         if(parseInt(response.code) === 200 && typeof response.data !== typeof undefined) {
@@ -52,9 +55,9 @@
                                     location_name: photo["location_name"],
                                     created_time: photo["created_time"],
                                     likes: photo["likes"],
-                                    img_location: photo["img_location"],
+                                    img_location: config.storageFolder + photo["img_location"],
                                     external_id: photo["external_id"],
-                                    thumbnail: photo["thumbnail_location"],
+                                    thumbnail: config.storageFolder + photo["img_location"],
                                     caption: photo["caption"],
                                     created_at: photo["created_at"],
                                     updated_at: photo["updated_at"]
