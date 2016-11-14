@@ -38,9 +38,9 @@ class TentSitesController extends Controller
             $data = $m::create($post);
 
             if ($request->hasFile('photo')) {
-                $imageName = env('TENT_SITE_PHOTO_DIR') . $data->getAttribute('id') . '.' .
+                $imageName = $data->getAttribute('id') . '.' .
                     $request->file('photo')->getClientOriginalExtension();
-                \Storage::put(env('TENT_SITE_PHOTO_DIR') . $imageName, $request->file('photo'));
+                $request->file('photo')->storePubliclyAs(env('TENT_SITE_PHOTO_DIR'), $imageName);
                 $data->setAttribute('img_location', $imageName);
                 $data->save();
             }
