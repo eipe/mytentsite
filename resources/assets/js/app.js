@@ -341,12 +341,11 @@
 
         function clearLocation() {
             $location.removeData("location");
-            $location.toggleClass("success");
             location = null;
         }
 
         function setLocation(lat, lng, accuracy) {
-            $location.data("location", true).addClass("success").attr("title", "Location found");
+            $location.data("location", true).attr("title", "Location found");
             location = {
                 latitude: lat,
                 longitude: lng,
