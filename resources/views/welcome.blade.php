@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Mytentsite - a collaborative tent collective</title>
         <link href="{{ asset('/css/vendor.css') }}" rel="stylesheet" type="text/css">
         <link href="{{ asset('/css/app_normalize.css') }}" rel="stylesheet" type="text/css">
@@ -35,22 +34,13 @@
                         I have a stored photo to upload!
                     </label>
                     <input type="file" id="photo-file" class="show-for-sr">
-                    <div>
-                        <img src="" />
-                    </div>
                 </div>
                 <div id="photo-controllers" class="input-group is-hidden">
                     <span class="input-group-label" title="Caption"><i class="fa fa-font"></i></span>
                     <input type="text" id="photo-caption" class="input-group-field"
                            title="Caption" placeholder="Caption" />
                     <div class="input-group-button">
-                        <button id="photo-rotate-left" class="button secondary" title="Rotate image">
-                            <i class="fa fa-rotate-left"></i>
-                        </button><button id="photo-rotate-right" class="button secondary" title="Rotate image">
-                            <i class="fa fa-rotate-right"></i>
-                        </button><button id="photo-crop" class="button secondary" title="Crop image">
-                            <i class="fa fa-crop"></i>
-                        </button><button id="photo-location" class="button secondary" title="Location of tentsite">
+                        <button id="photo-location" class="button secondary" title="Location of tentsite">
                             <i class="fa fa-map-marker"></i>
                         </button><button id="photo-cancel" class="button alert" title="Cancel">
                             <i class="fa fa-remove"></i>
@@ -69,8 +59,6 @@
                         <i class="wall-image-close fa fa-times" data-close title="Close"></i>
                     </div>
                     <img src="">
-                    <br /><br />
-                    <p></p>
                 </div>
                 <div id="wall-images">
                     <div class="wall-image-container"></div>
