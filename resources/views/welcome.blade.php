@@ -35,6 +35,9 @@
                         I have a stored photo to upload!
                     </label>
                     <input type="file" id="photo-file" class="show-for-sr">
+                    <div>
+                        <img src="" />
+                    </div>
                 </div>
                 <div id="photo-controllers" class="input-group is-hidden">
                     <span class="input-group-label" title="Caption"><i class="fa fa-font"></i></span>

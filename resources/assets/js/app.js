@@ -335,7 +335,7 @@
         function clearPhotoDetails() {
             $caption.val("");
             $uploader.val("");
-            $photo.find("img").remove();
+            $photo.find("img").attr("src", "");
             clearLocation();
         }
 
@@ -425,7 +425,7 @@
                         togglePhotoControllers();
 
                         var reader = new FileReader(),
-                            $previewImage = $("<img>");
+                            $previewImage = $photo.find("img");
 
                         reader.onload = function(e) {
                             $previewImage.attr("src", e.target.result);
