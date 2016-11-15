@@ -60,6 +60,8 @@
                         <i class="wall-image-close fa fa-times" data-close title="Close"></i>
                     </div>
                     <img src="">
+                    <br /><br />
+                    <p></p>
                 </div>
                 <div id="wall-images">
                     <div class="wall-image-container"></div>
