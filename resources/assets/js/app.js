@@ -308,7 +308,7 @@
                 photoData.append("photo", $uploader.prop("files")[0]);
                 photoData.append("latitude", location.latitude);
                 photoData.append("longitude", location.longitude);
-                photoData.append("title", $caption.val());
+                photoData.append("caption", $caption.val());
 
                 $.ajax({
                     url: options.target,

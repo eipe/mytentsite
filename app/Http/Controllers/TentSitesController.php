@@ -10,7 +10,7 @@ class TentSitesController extends Controller
 {
     use RestControllerTrait;
     const MODEL = 'App\Models\TentSites';
-    protected $validationRules = ['photo' => 'required', 'title' => 'required'];
+    protected $validationRules = ['photo' => 'required', 'caption' => 'required'];
 
 
     public function store(Request $request)
@@ -42,6 +42,7 @@ class TentSitesController extends Controller
                     $request->file('photo')->getClientOriginalExtension();
                 $request->file('photo')->storePubliclyAs(env('TENT_SITE_PHOTO_DIR'), $imageName);
                 $data->setAttribute('img_location', $imageName);
+                $data->setAttribute('caption', $post['caption']);
                 $data->save();
             }
 
