@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\TentSites;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Validator;
 
 class TentSitesController extends Controller
 {
     use RestControllerTrait;
+    /* @var TentSites MODEL */
     const MODEL = 'App\Models\TentSites';
     protected $validationRules = ['photo' => 'required', 'title' => 'required'];
 
@@ -53,27 +55,33 @@ class TentSitesController extends Controller
 
     }
 
+    /**
+     * @param null $lat Latitude
+     * @param null $lng Longitude
+     * @param null $rad Radius in kilometers
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function index($lat = null, $lng = null, $rad = null)
+    {
 
-    //public function index($lat, $lng, $rad)
-    //{
+        if(!is_null($lat) && !is_null($lng) && !is_null($rad)) {
+            $tentSites = $this->getWithinArea($lat, $lng, $rad);
+        } else {
+            $m = self::MODEL;
+            $tentSites= $m::all();
+        }
+        dd($tentSites);
+        return $this->listResponse($tentSites);
+
+    }
 
 
-
-
-
-
-       /* $this->getWithinArea($lat, $lng, $rad);
-        echo $lat;
-        echo $lng;
-        echo $rad;
-        exit;
-        dd($post);
-*/
-   // }
-
-}
-/*
-
+    /**
+     * @param $lat
+     * @param $lng
+     * @param $rad
+     * @return mixed
+     */
     private function getWithinArea($lat, $lng, $rad) {
 
         $earthRadius = 6371;  // earth's mean radius, km
@@ -81,51 +89,17 @@ class TentSitesController extends Controller
         // first-cut bounding box (in degrees)
         $maxLat = $lat + rad2deg($rad/$earthRadius);
         $minLat = $lat - rad2deg($rad/$earthRadius);
-        $maxLon = $lng + rad2deg(asin($rad/$earthRadius) / cos(deg2rad($lat)));
-        $minLon = $lng - rad2deg(asin($rad/$earthRadius) / cos(deg2rad($lat)));
+        $maxLng = $lng + rad2deg(asin($rad/$earthRadius) / cos(deg2rad($lat)));
+        $minLng = $lng - rad2deg(asin($rad/$earthRadius) / cos(deg2rad($lat)));
+        $m = self::MODEL;
 
-        $sql = "Select Id, Postcode, Lat, Lon,
-                   acos(sin(:lat)*sin(radians(Lat)) + cos(:lat)*cos(radians(Lat))*cos(radians(Lon)-:lon)) * :R As D
-            From (
-                Select Id, Postcode, Lat, Lon
-                From MyTable
-                Where Lat Between :minLat And :maxLat
-                  And Lon Between :minLon And :maxLon
-            ) As FirstCut
-            Where acos(sin(:lat)*sin(radians(Lat)) + cos(:lat)*cos(radians(Lat))*cos(radians(Lon)-:lon)) * :R < :rad
-            Order by D";
-        $params = [
-            'lat'    => deg2rad($lat),
-            'lon'    => deg2rad($lon),
-            'minLat' => $minLat,
-            'minLon' => $minLon,
-            'maxLat' => $maxLat,
-            'maxLon' => $maxLon,
-            'rad'    => $rad,
-            'R'      => $R,
-        ];
-        $points = $db->prepare($sql);
-        $points->execute($params);
+        echo $maxLat .'<br>';
+        echo $minLat .'<br>';
+        echo $maxLng .'<br>';
+        echo $minLng .'<br>';
+        return DB::table($m::DB)
+            ->whereBetween('latitude', [$minLat, $maxLat])
+            ->whereBetween('longitude', [$minLng, $maxLng])
+            ->get();
     }
 }
-/*
- *
-
-
-
-
-
-
-
-
-?>
-
-<html>
-<table>
-    <? foreach ($points as $point): ?>
-    <tr>
-        <td><?= $point->Postcode ?></td>
-        <td><?= number_format($point->Lat,4) ?></td>
-        <td><?= number_format($point->Lon,4) ?></td>
-        <td><?= number_format($point
- */
