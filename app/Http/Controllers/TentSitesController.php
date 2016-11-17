@@ -70,9 +70,7 @@ class TentSitesController extends Controller
             $m = self::MODEL;
             $tentSites= $m::all();
         }
-        dd($tentSites);
         return $this->listResponse($tentSites);
-
     }
 
 
@@ -93,10 +91,6 @@ class TentSitesController extends Controller
         $minLng = $lng - rad2deg(asin($rad/$earthRadius) / cos(deg2rad($lat)));
         $m = self::MODEL;
 
-        echo $maxLat .'<br>';
-        echo $minLat .'<br>';
-        echo $maxLng .'<br>';
-        echo $minLng .'<br>';
         return DB::table($m::DB)
             ->whereBetween('latitude', [$minLat, $maxLat])
             ->whereBetween('longitude', [$minLng, $maxLng])
