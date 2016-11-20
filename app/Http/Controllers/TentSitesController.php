@@ -4,14 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Models\TentSites;
 use Illuminate\Http\Request;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Validation\Validator;
+use App\Notifications\NewTentSite;
 
 class TentSitesController extends Controller
 {
     use RestControllerTrait;
+
+
     /* @var TentSites MODEL */
     const MODEL = 'App\Models\TentSites';
+
     protected $validationRules = ['photo' => 'required', 'title' => 'required'];
 
 
@@ -46,6 +52,9 @@ class TentSitesController extends Controller
                 $data->setAttribute('img_location', $imageName);
                 $data->save();
             }
+
+            // Notify slack channel
+            Notification::send(TentSites::find($data->getAttribute('id')), new NewTentSite($data));
 
             return $this->createdResponse($data);
         } catch (\Exception $ex) {
@@ -96,4 +105,5 @@ class TentSitesController extends Controller
             ->whereBetween('longitude', [$minLng, $maxLng])
             ->get();
     }
+
 }
