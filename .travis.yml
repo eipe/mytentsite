@@ -11,4 +11,4 @@ before_install:
   -in deploy-key.enc -out deploy-key -d
 
 install:
-- composer install --no-interaction --prefer-source; fi
+- composer install --no-interaction;
