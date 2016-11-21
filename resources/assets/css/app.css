@@ -36,10 +36,6 @@ nav {
     width: 300px;
 }
 
-#wall {
-    overflow-y: auto;
-}
-
 #wall-images {
     padding: 0;
     font-size: 0;
@@ -91,6 +87,11 @@ nav {
 #wall img {
     width: 100%;
     height: auto;
+}
+
+/* General rules */
+.page-allow-overflow {
+    overflow-y: auto;
 }
 
 hr.border-dashed {

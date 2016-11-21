@@ -55,7 +55,7 @@
                 </div>
             </div>
             <div class="page is-hidden" id="map"></div>
-            <div class="page is-hidden" id="wall">
+            <div class="page is-hidden page-allow-overflow" id="wall">
                 <div id="wall-fullscreen" class="wall-image-container reveal" data-reveal data-close-on-click="true">
                     <div class="wall-image-controllers">
                         <i class="wall-image-view-map wall-image-enlarged fa fa-map-marker"
@@ -84,7 +84,7 @@
                 </div>
                 <div class="row"><br /><br /></div>
             </div>
-            <div class="page is-hidden" id="info">
+            <div class="page is-hidden page-allow-overflow" id="info">
                 <div class="row"><br /></div>
                 <div class="row">
                     <div class="medium-6 large-centered columns text-center">
