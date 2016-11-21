@@ -70,7 +70,6 @@ class NewTentSite extends Notification
      */
     public function toSlack($notifiable)
     {
-
         $url = url('storage/images/tentsites/'.$notifiable->img_location);
         return (new SlackMessage)
             ->success()
