@@ -57,7 +57,6 @@ class NewTentSite extends Notification
     public function toArray($notifiable)
     {
         return [
-            //
         ];
     }
 
