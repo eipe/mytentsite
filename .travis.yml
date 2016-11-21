@@ -1,0 +1,17 @@
+language: php
+php:
+  - '5.6'
+  - '7.0'
+
+addons:
+   ssh_known_hosts: mytent.site
+
+before_install:
+  - bash _scripts/install.sh
+
+install:
+  - composer install --no-interaction;
+
+
+after_success:
+  - bash _scripts/deploy.sh
