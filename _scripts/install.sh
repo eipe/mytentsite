@@ -6,4 +6,4 @@ openssl aes-256-cbc -K $encrypted_b6b3065e2137_key -iv $encrypted_b6b3065e2137_i
 rm deploy-key.enc # Don't need it anymore
 chmod 600 deploy-key
 eval `ssh-agent -s` #start shh agent
-ssh-add ~/.ssh/deploy-key
+ssh-add ~/.ssh/id_rsa
