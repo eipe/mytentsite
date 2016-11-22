@@ -192,15 +192,16 @@
                     placeSites(sites);
                 });
             },
-            updateView: function(latitude, longitude) {
+            updateView: function(latitude, longitude, zoom) {
                 if(!latitude || !longitude) {
                     return false;
                 }
                 if(!loaded) {
                     this.initialize();
                 }
-                TentMap.panTo(
+                TentMap.setView(
                     new L.LatLng(latitude, longitude),
+                    zoom,
                     {animate: true, duration: 0.2, noMoveStart: true, easyLinearity: 0.25}
                 );
             },
@@ -230,7 +231,8 @@
                 $container.attr("data-image-id", photo.id)
                     .attr("data-image-latitude", photo.lat)
                     .attr("data-image-longitude", photo.lng)
-                    .attr("data-image-location", photo.img_location);
+                    .attr("data-image-location", photo.img_location)
+                    .attr("data-image-caption", photo.caption);
 
                 $container.append($("<img>").attr("src", photo.img_location));
                 $container.append('<div class="wall-image-controllers is-hidden">' +
@@ -246,7 +248,7 @@
                     $photoContainer.foundation("close");
                 }
                 view.changePage("map");
-                map.updateView($photoContainer.data("image-latitude"), $photoContainer.data("image-longitude"));
+                map.updateView($photoContainer.data("image-latitude"), $photoContainer.data("image-longitude"), 9);
             });
 
             $(".wall-image-enlarge").on("click", function(e) {
@@ -255,6 +257,7 @@
                 $wallFullscreen.attr("data-image-latitude", $photoContainer.data("image-latitude")).
                 attr("data-image-longitude", $photoContainer.data("image-longitude"));
                 $wallFullscreen.find("img").attr("src", $photoContainer.data("image-location"));
+                $wallFullscreen.find("p").text($photoContainer.data("image-caption"));
                 $wallFullscreen.foundation("open");
             });
 
@@ -305,7 +308,7 @@
                 photoData.append("photo", $uploader.prop("files")[0]);
                 photoData.append("latitude", location.latitude);
                 photoData.append("longitude", location.longitude);
-                photoData.append("title", $caption.val());
+                photoData.append("caption", $caption.val());
 
                 $.ajax({
                     url: options.target,
@@ -332,18 +335,17 @@
         function clearPhotoDetails() {
             $caption.val("");
             $uploader.val("");
-            $photo.find("img").remove();
+            $photo.find("img").attr("src", "");
             clearLocation();
         }
 
         function clearLocation() {
             $location.removeData("location");
-            $location.toggleClass("success");
             location = null;
         }
 
         function setLocation(lat, lng, accuracy) {
-            $location.data("location", true).addClass("success").attr("title", "Location found");
+            $location.data("location", true).attr("title", "Location found");
             location = {
                 latitude: lat,
                 longitude: lng,
@@ -422,7 +424,7 @@
                         togglePhotoControllers();
 
                         var reader = new FileReader(),
-                            $previewImage = $("<img>");
+                            $previewImage = $photo.find("img");
 
                         reader.onload = function(e) {
                             $previewImage.attr("src", e.target.result);

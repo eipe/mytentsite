@@ -37,3 +37,23 @@
 .easy-button-button:hover {
     cursor: pointer;
 }
+
+.menu {
+    font-size: 20px;
+}
+
+.top-bar, ul.menu {
+    background-color: #444;
+    padding: 0;
+}
+.menu a {
+    color: #777;
+}
+
+.menu li.is-active a {
+    color: #eee;
+}
+
+.menu li:hover:not(.is-active) a {
+    color: #999;
+}
