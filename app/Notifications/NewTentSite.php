@@ -82,7 +82,9 @@ class NewTentSite extends Notification
                         'Nice tentsite' => ':+1:',
                         'Latitude' => $notifiable->latitude,
                         'Longitude' => $notifiable->longitude,
-                        ':world_map:' => 'google.com/maps/?q='.$notifiable->latitude.','.$notifiable->longitude
+                        ':world_map:' => 'google.com/maps/?q='.$notifiable->latitude.','.$notifiable->longitude,
+                        'Decline' => 'click here',
+                        'Accept' => 'click here'
                     ]);
             });
     }
