@@ -14,3 +14,6 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('auth/{provider}', 'Auth\SocialController@redirectToProvider');
+Route::get('auth/handle/{provider}', 'Auth\SocialController@handleProviderCallback');
