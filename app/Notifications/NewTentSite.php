@@ -83,8 +83,8 @@ class NewTentSite extends Notification
                         'Latitude' => $notifiable->latitude,
                         'Longitude' => $notifiable->longitude,
                         ':world_map:' => 'google.com/maps/?q='.$notifiable->latitude.','.$notifiable->longitude,
-                        'Decline' => 'click',
-                        'Accept' => 'click'
+                        'Decline' => 'click here',
+                        'Accept' => 'click here'
                     ]);
             });
     }
