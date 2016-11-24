@@ -15,5 +15,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('auth/sign_out', 'Auth\SocialController@signOut');
 Route::get('auth/{provider}', 'Auth\SocialController@redirectToProvider');
 Route::get('auth/handle/{provider}', 'Auth\SocialController@handleProviderCallback');

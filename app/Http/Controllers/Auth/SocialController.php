@@ -92,4 +92,11 @@ class SocialController
         return Redirect::to('/');
     }
 
+
+    public function signOut()
+    {
+        Auth::logout();
+        return Redirect::to('/');
+    }
+
 }
