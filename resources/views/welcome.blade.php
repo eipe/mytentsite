@@ -26,95 +26,29 @@
                 <li data-page="info">
                     <a href="#/info" title="Information about this service"><i class="fa fa-info"></i></a>
                 </li>
+                @if (Auth::check())
+                    <li data-page="user">
+                        <a href="#/user"><i class="fa fa-user"></i></a>
+                    </li>
+                @endif
             </ul>
         </nav>
         <div id="content">
             <div class="page is-hidden" id="photo">
-                <div id="photo-frame">
-                    <label for="photo-file" class="button" data-text="I have a stored photo to upload!">
-                        I have a stored photo to upload!
-                    </label>
-                    <input type="file" id="photo-file" class="show-for-sr">
-                    <div>
-                        <img src="" />
-                    </div>
-                </div>
-                <div id="photo-controllers" class="input-group is-hidden">
-                    <span class="input-group-label" title="Caption"><i class="fa fa-font"></i></span>
-                    <input type="text" id="photo-caption" class="input-group-field"
-                           title="Caption" placeholder="Caption" />
-                    <div class="input-group-button">
-                        <button id="photo-location" class="button secondary" title="Location of tentsite">
-                            <i class="fa fa-map-marker"></i>
-                        </button><button id="photo-cancel" class="button alert" title="Cancel">
-                            <i class="fa fa-remove"></i>
-                        </button><button id="photo-store" class="button success" title="Share this tentsite">
-                            <i class="fa fa-check"></i>
-                        </button>
-                    </div>
-                </div>
+                @include('page.photo')
             </div>
             <div class="page is-hidden" id="map"></div>
             <div class="page is-hidden page-allow-overflow" id="wall">
-                <div id="wall-fullscreen" class="wall-image-container reveal" data-reveal data-close-on-click="true">
-                    <div class="wall-image-controllers">
-                        <i class="wall-image-view-map wall-image-enlarged fa fa-map-marker"
-                           title="View image on map"></i>
-                        <i class="wall-image-close fa fa-times" data-close title="Close"></i>
-                    </div>
-                    <img src="">
-                    <br /><br />
-                    <p></p>
-                </div>
-                <div id="wall-images">
-                    <div class="wall-image-container"></div>
-                    <div class="wall-image-container"></div>
-                    <div class="wall-image-container"></div>
-                    <div class="wall-image-container"></div>
-                    <div class="wall-image-container"></div>
-                    <div class="wall-image-container"></div>
-                    <div class="wall-image-container"></div>
-                    <div class="wall-image-container"></div>
-                    <div class="wall-image-container"></div>
-                    <div class="wall-image-container"></div>
-                </div>
-                <br />
-                <div class="row">
-                    <button class="button float-center is-hidden" id="wall-load-more">Load more tent sites</button>
-                </div>
-                <div class="row"><br /><br /></div>
+                @include('page.wall')
             </div>
             <div class="page is-hidden page-allow-overflow" id="info">
-                <div class="row"><br /></div>
-                <div class="row">
-                    <div class="medium-6 large-centered columns text-center">
-                        <h4>The story and vision of mytentsite</h4>
-                        <hr />
-                        <br />
-                        <div class="row">
-                            <div class="large-4 columns">
-                                <i class="fa fa-5x fa-picture-o"></i><br />
-                                Photo
-                            </div>
-                            <div class="large-4 columns">
-                                <i class="fa fa-5x fa-map-marker"></i><br />
-                                Location
-                            </div>
-                            <div class="large-4 columns">
-                                <i class="fa fa-5x fa-font"></i><br />
-                                Caption
-                            </div>
-                        </div>
-                        <br />
-                        <hr />
-                        <br />
-                        <p>As we have focused on developing the story has not yet been written in words.</p>
-                        <p>If you have the time and desire to help us, we would appreciate that a lot, and we think
-                            this project deserves a good description. So please, do not hesitate to contact us if you
-                            want to make your contribution to this project.</p>
-                    </div>
-                </div>
+                @include('page.info');
             </div>
+            @if(Auth::check())
+                <div class="page is-hidden page-allow-overflow" id="user">
+                    @include('page.user');
+                </div>
+            @endif
         </div>
         <div class="reveal" id="app-modal" data-reveal>
             <h4></h4>
