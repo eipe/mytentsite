@@ -23,5 +23,5 @@
         </div>
     </div>
 @else
-    @include('auth.sign_in')
+    @include('auth.sign_up')
 @endif
