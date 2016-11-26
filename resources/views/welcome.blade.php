@@ -9,7 +9,7 @@
     </head>
     <body>
         <nav class="top-bar">
-            <ul id="menu" class="menu align-center" data-page-default="map">
+            <ul id="menu" class="menu align-center" data-page-default="info">
                 <li data-page="photo">
                     <a href="#/photo" title="Upload photo of your tent site"><i class="fa fa-camera"></i></a>
                 </li>
