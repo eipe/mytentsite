@@ -8,10 +8,9 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class NewTentSite extends Notification
+class NewUser extends Notification
 {
     use Queueable;
-
 
     /**
      * Create a new notification instance.
@@ -57,6 +56,7 @@ class NewTentSite extends Notification
     public function toArray($notifiable)
     {
         return [
+            //
         ];
     }
 
@@ -69,21 +69,7 @@ class NewTentSite extends Notification
      */
     public function toSlack($notifiable)
     {
-        $url = url('storage/images/tentsites/'.$notifiable->img_location);
-        return (new SlackMessage)
-            ->success()
-            ->content('New tentsite added!')
-            ->attachment(function ($attachment) use ($url, $notifiable) {
-                $attachment->title($notifiable->location_name, $url)
-                    ->fields([
-                        'Date' => $notifiable->created_at,
-                        'Id' => $notifiable->id,
-                        'Reported by' => $notifiable->reported_by,
-                        'Latitude' => $notifiable->latitude,
-                        'Longitude' => $notifiable->longitude,
-                        ':world_map:' => 'google.com/maps/?q='.$notifiable->latitude.','.$notifiable->longitude,
-                        'Accept' => 'click here'
-                    ]);
-            });
+        return (new SlackMessage())
+            ->content('New user registered! His name is '. $notifiable->name);
     }
 }
