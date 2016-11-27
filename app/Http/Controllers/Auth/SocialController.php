@@ -4,9 +4,13 @@ namespace App\Http\Controllers\Auth;
 
 use App\Models\SocialLogin;
 use App\Models\User;
+use App\Notifications\NewUser;
+use Illuminate\Auth\Events\Authenticated;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Response;
 use Laravel\Socialite\Facades\Socialite;
@@ -85,6 +89,9 @@ class SocialController
                 $socialData->provider= $provider;
                 $newSocialUser->socialLogin()->save($socialData);
                 $socialUser = $newSocialUser;
+
+                // Notify slack channel, should probably change to new user event and move this to the event handler
+                Notification::send(User::find($socialUser->getAttribute('id')), new NewUser($socialUser));
             }
         }
 

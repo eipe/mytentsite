@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\TentSites;
 use Illuminate\Http\Request;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Validation\Validator;
