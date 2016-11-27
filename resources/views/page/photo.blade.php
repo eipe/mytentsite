@@ -13,11 +13,11 @@
         <input type="text" id="photo-caption" class="input-group-field"
                title="Caption" placeholder="Caption" />
         <div class="input-group-button">
-            <button id="photo-location" class="button secondary" title="Location of tentsite">
+            <button id="photo-location" class="button secondary" title="Location of tent site">
                 <i class="fa fa-map-marker"></i>
             </button><button id="photo-cancel" class="button alert" title="Cancel">
                 <i class="fa fa-remove"></i>
-            </button><button id="photo-store" class="button success" title="Share this tentsite">
+            </button><button id="photo-store" class="button success" title="Share this tent site">
                 <i class="fa fa-check"></i>
             </button>
         </div>
