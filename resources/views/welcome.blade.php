@@ -42,11 +42,11 @@
                 @include('page.wall')
             </div>
             <div class="page is-hidden page-allow-overflow" id="info">
-                @include('page.info');
+                @include('page.info')
             </div>
             @if(Auth::check())
                 <div class="page is-hidden page-allow-overflow" id="user">
-                    @include('page.user');
+                    @include('page.user')
                 </div>
             @endif
         </div>
