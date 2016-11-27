@@ -18,5 +18,5 @@
         </div>
     </div>
 @else
-    @include('auth.sign_up');
+    @include('auth.sign_up')
 @endif
