@@ -300,16 +300,29 @@
     }
 
     function Photo() {
-        var $photo, $cancel, $store, $location, location = null, $uploader, $uploaderLabel, $caption,
-            loaded = false, options = {target: "/api/tentsites"};
+        var $frame, $preview, $uploader, $uploaderLabel, $caption,
+            $rotate, $cancel, $store, $location,
+            location = null, loaded = false,
+            options = {
+                target: "/api/tentsites",
+                cropperSettings: {
+                    aspectRatio: 4 / 3,
+                    zoomable: false
+                }
+            };
 
         function storePhoto(callback) {
             if(typeof $uploader.prop("files") !== typeof undefined) {
                 var photoData = new FormData();
-                photoData.append("photo", $uploader.prop("files")[0]);
+                // photoData.append("photo", $uploader.prop("files")[0]);
+                photoData.append("photo", $preview.cropper("getCroppedCanvas"));
                 photoData.append("latitude", location.latitude);
                 photoData.append("longitude", location.longitude);
                 photoData.append("caption", $caption.val());
+
+                $preview.cropper("getCroppedCanvas").toBlob(function(blob) {
+                    photoData.append("photo", blob);
+                });
 
                 $.ajax({
                     url: options.target,
@@ -344,7 +357,8 @@
         function clearPhotoDetails() {
             $caption.val("");
             $uploader.val("");
-            $photo.find("img").attr("src", "");
+            $frame.find("img").attr("src", "");
+            $preview.cropper("destroy");
             clearLocation();
         }
 
@@ -363,13 +377,19 @@
         }
 
         function setupListeners() {
-            $photo = $("#photo-frame");
+            $frame = $("#photo-frame");
+            $preview = $("#photo-preview");
             $caption = $("#photo-caption");
             $location = $("#photo-location");
             $cancel = $("#photo-cancel");
             $store = $("#photo-store");
             $uploader = $("#photo-file");
             $uploaderLabel = $('label[for="photo-file"]');
+            $rotate = $("#photo-rotate");
+
+            $rotate.click(function() {
+                $preview.cropper("rotate", 90);
+            });
 
             $cancel.on("click", function() {
                 clearPhotoDetails();
@@ -429,15 +449,13 @@
                         setLocation(lat, lng);
                         togglePhotoControllers();
 
-                        var reader = new FileReader(),
-                            $previewImage = $photo.find("img");
+                        var reader = new FileReader();
 
                         reader.onload = function(e) {
-                            $previewImage.attr("src", e.target.result);
+                            $preview.attr("src", e.target.result);
+                            $preview.cropper(options.cropperSettings);
                         };
                         reader.readAsDataURL(file);
-
-                        $previewImage.appendTo($photo);
                     });
                 }
             });

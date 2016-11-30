@@ -18,19 +18,6 @@ nav {
     width: 100vw;
 }
 
-#photo, #photo-frame, #photo-frame img {
-    height: auto;
-    width: auto;
-    max-width: 100vw;
-    max-height: calc(100vh - 85px);
-    margin: 0 auto;
-}
-
-#photo-frame label.button {
-    width: 100%;
-    height: 100%;
-}
-
 #map img, #map video {
     max-width: 300px;
     width: 300px;

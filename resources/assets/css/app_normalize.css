@@ -57,3 +57,8 @@
 .menu li:hover:not(.is-active) a {
     color: #999;
 }
+
+/* Foundation override - cropper specific */
+#photo-frame img {
+    max-width: 100%;
+}
