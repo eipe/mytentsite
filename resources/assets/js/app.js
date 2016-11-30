@@ -318,13 +318,21 @@
                     cache : false,
                     contentType : false,
                     processData : false
-                }).success(function(response) {
-                    callback(200, response);
+                }).success(function() {
+                    callback(200, "Photo successfully uploaded");
                 }).error(function(response) {
-                    callback(400, response);
+                    var error = '',
+                        errors = $.parseJSON(response.responseText);
+                    console.log(errors);
+                    if(typeof errors.data.form_validations !== typeof undefined) {
+                        $.each(errors.data.form_validations, function(field, fieldError) {
+                            error += fieldError + "<br />";
+                        });
+                    }
+                    callback(400, error);
                 });
             } else {
-                callback(400, "Missing file to upload")
+                callback(400, "Missing file to upload");
             }
         }
 
@@ -380,10 +388,7 @@
                         clearPhotoDetails();
                         togglePhotoControllers();
                     } else {
-                        view.displayError(
-                            "Upload of photo was not successful",
-                            responseText
-                        );
+                        view.displayError("Upload of photo was not successful", responseText);
                     }
                 });
             });
