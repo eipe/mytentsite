@@ -1,4 +1,4 @@
-@if(!Auth::check())
+@if(Auth::check())
     <div class="row">
         <div id="photo-frame" class="column medium-centered text-center">
             <div>
