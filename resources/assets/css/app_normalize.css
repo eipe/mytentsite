@@ -62,3 +62,8 @@
 #photo-frame img {
     max-width: 100%;
 }
+
+#photo-frame div {
+    max-height: calc(100vh - 85px);
+    max-width: 100vw;
+}
