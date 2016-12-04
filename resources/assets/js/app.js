@@ -314,16 +314,10 @@
         function storePhoto(callback) {
             if(typeof $uploader.prop("files") !== typeof undefined) {
                 var photoData = new FormData();
-                // photoData.append("photo", $uploader.prop("files")[0]);
-                photoData.append("photo", $preview.cropper("getCroppedCanvas"));
                 photoData.append("latitude", location.latitude);
                 photoData.append("longitude", location.longitude);
                 photoData.append("caption", $caption.val());
-
-                $preview.cropper("getCroppedCanvas").toBlob(function(blob) {
-                    photoData.append("photo", blob);
-                });
-
+                photoData.append("photo", $preview.cropper("getCroppedCanvas").toDataURL());
                 $.ajax({
                     url: options.target,
                     method: "POST",
@@ -336,10 +330,9 @@
                 }).error(function(response) {
                     var error = '',
                         errors = $.parseJSON(response.responseText);
-                    console.log(errors);
                     if(typeof errors.data.form_validations !== typeof undefined) {
                         $.each(errors.data.form_validations, function(field, fieldError) {
-                            error += fieldError + "<br />";
+                            error += fieldError + "<br>";
                         });
                     }
                     callback(400, error);

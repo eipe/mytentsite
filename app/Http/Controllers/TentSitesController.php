@@ -6,6 +6,7 @@ use App\Models\TentSites;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Validator;
 use App\Notifications\NewTentSite;
 
@@ -38,21 +39,24 @@ class TentSitesController extends Controller
             // Save data and use id to store image
             $post = $request->all();
 
-            if (isset($post['photo'])) {
-                unset($post['photo']);
-            }
+            // Decode photo dataURL
+            $photo = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $post['photo']));
+
+            // Unset photo from post as location will be added later on
+            unset($post['photo']);
+
             $data = $m::create($post);
 
-            if ($request->hasFile('photo')) {
-                $imageName = $data->getAttribute('id') . '.' .
-                    $request->file('photo')->getClientOriginalExtension();
-                $request->file('photo')->storePubliclyAs(env('TENT_SITE_PHOTO_DIR'), $imageName);
-                $data->setAttribute('img_location', $imageName);
-                $data->setAttribute('caption', $post['caption']);
-                $data->save();
-            }
+            // Force all photos to be .jpg formatted
+            $imageName = $data->getAttribute('id') . '.jpg';
 
-            // Notify slack channel
+            // Store all photos in public tent site directory
+            Storage::disk('public')->put(env('TENT_SITE_PHOTO_DIR') . $imageName, $photo);
+            $data->setAttribute('img_location', $imageName);
+            $data->setAttribute('caption', $post['caption']);
+            $data->save();
+
+            // Notify slack channel of new tent site
             Notification::send(TentSites::find($data->getAttribute('id')), new NewTentSite($data));
 
             return $this->createdResponse($data);
