@@ -309,7 +309,7 @@
                     aspectRatio: 4 / 3,
                     zoomable: false,
                     viewMode: 1,
-                    dragMode: "none",
+                    dragMode: "move",
                     toggleDragModeOnDblclick: false
                 }
             };
