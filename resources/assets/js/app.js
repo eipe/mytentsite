@@ -307,7 +307,10 @@
                 target: "/api/tentsites",
                 cropperSettings: {
                     aspectRatio: 4 / 3,
-                    zoomable: false
+                    zoomable: false,
+                    viewMode: 1,
+                    dragMode: "none",
+                    toggleDragModeOnDblclick: false
                 }
             };
 
