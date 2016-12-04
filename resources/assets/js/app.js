@@ -18,7 +18,7 @@
         var fncCallbackOnFetchedSites,
             config = {
                 apiUrl : "/api/tentsites",
-                storageFolder : "/storage/images/tentsites/"
+                storageFolder : "/storage/photos/tentsites/"
             };
 
         function hasExtendedCacheLifeTime() {
