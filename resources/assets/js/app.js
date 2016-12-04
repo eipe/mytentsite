@@ -36,9 +36,9 @@
                 localStorage.removeItem("Sites.all");
             }
 
-            var storedImages = localStorage.getItem("Sites.all");
+            var storedPhotos = localStorage.getItem("Sites.all");
 
-            if(storedImages) {
+            if(storedPhotos) {
                 fncCallbackOnFetchedSites(JSON.parse(localStorage.getItem("Sites.all")));
             } else {
                 $.ajax({
@@ -65,16 +65,16 @@
                             });
                         }
 
-                        if(!storedImages) {
-                            storedImages = [];
+                        if(!storedPhotos) {
+                            storedPhotos = [];
                         } else {
-                            storedImages = JSON.parse(storedImages);
+                            storedPhotos = JSON.parse(storedPhotos);
                         }
 
-                        storedImages = storedImages.concat(tentSites);
+                        storedPhotos = storedPhotos.concat(tentSites);
 
                         localStorage.setItem("Sites.lastFetchTime", getTime());
-                        localStorage.setItem("Sites.all", JSON.stringify(storedImages));
+                        localStorage.setItem("Sites.all", JSON.stringify(storedPhotos));
                         fncCallbackOnFetchedSites(tentSites);
                     }, error: function(error) {
                         console.log(error);
@@ -214,66 +214,66 @@
 
     function Wall() {
         var $wall = $("#wall"),
-            $wallImageContainer = $("#wall-images"),
+            $wallPhotoContainer = $("#wall-photos"),
             $wallFullscreen = $("#wall-fullscreen"),
             $wallLoadMore = $("#wall-load-more"),
-            $preLoadedContainers = $wallImageContainer.find(".wall-image-container"),
+            $preLoadedContainers = $wallPhotoContainer.find(".wall-photo-container"),
             index = $preLoadedContainers.index(),
             loaded = false;
 
-        function createImageWall(sites) {
+        function createPhotoWall(sites) {
             $.each(sites, function(key, photo) {
                 var $container = $preLoadedContainers.eq(index);
                 index++;
                 if($container.length === 0) {
-                    $container = $("<div>").addClass("wall-image-container").appendTo($wallImageContainer);
+                    $container = $("<div>").addClass("wall-photo-container").appendTo($wallPhotoContainer);
                 }
 
-                $container.attr("data-image-id", photo.id)
-                    .attr("data-image-latitude", photo.lat)
-                    .attr("data-image-longitude", photo.lng)
-                    .attr("data-image-location", photo.img_location)
-                    .attr("data-image-caption", photo.caption);
+                $container.attr("data-photo-id", photo.id)
+                    .attr("data-photo-latitude", photo.lat)
+                    .attr("data-photo-longitude", photo.lng)
+                    .attr("data-photo-location", photo.img_location)
+                    .attr("data-photo-caption", photo.caption);
 
                 $container.append($("<img>").attr("src", photo.img_location));
-                $container.append('<div class="wall-image-controllers is-hidden">' +
-                    '<i class="wall-image-view-map fa fa-map-marker" title="View image on map"></i>' +
-                    '<i class="wall-image-enlarge fa fa-arrows-alt fa-3x" title="Enlarge image"></i>' +
+                $container.append('<div class="wall-photo-controllers is-hidden">' +
+                    '<i class="wall-photo-view-map fa fa-map-marker" title="View photo on map"></i>' +
+                    '<i class="wall-photo-enlarge fa fa-arrows-alt fa-3x" title="View enlarged photo"></i>' +
                     '</div>');
             });
 
-            $(".wall-image-view-map").on("click", function(e) {
+            $(".wall-photo-view-map").on("click", function(e) {
                 e.stopPropagation();
-                var $photoContainer = $(this).closest(".wall-image-container");
+                var $photoContainer = $(this).closest(".wall-photo-container");
                 if($photoContainer.hasClass("reveal")) {
                     $photoContainer.foundation("close");
                 }
                 view.changePage("map");
-                map.updateView($photoContainer.data("image-latitude"), $photoContainer.data("image-longitude"), 9);
+                map.updateView($photoContainer.data("photo-latitude"), $photoContainer.data("photo-longitude"), 9);
             });
 
-            $(".wall-image-enlarge").on("click", function(e) {
+            $(".wall-photo-enlarge").on("click", function(e) {
                 e.stopPropagation();
-                var $photoContainer = $(this).closest(".wall-image-container");
-                $wallFullscreen.attr("data-image-latitude", $photoContainer.data("image-latitude")).
-                attr("data-image-longitude", $photoContainer.data("image-longitude"));
-                $wallFullscreen.find("img").attr("src", $photoContainer.data("image-location"));
-                $wallFullscreen.find("p").text($photoContainer.data("image-caption"));
+                var $photoContainer = $(this).closest(".wall-photo-container");
+                $wallFullscreen.attr("data-photo-latitude", $photoContainer.data("photo-latitude")).
+                attr("data-photo-longitude", $photoContainer.data("photo-longitude"));
+                $wallFullscreen.find("img").attr("src", $photoContainer.data("photo-location"));
+                $wallFullscreen.find("p").text($photoContainer.data("photo-caption"));
                 $wallFullscreen.foundation("open");
             });
 
             // Support for non-mouse interaction
-            $(document).on("click", ".wall-image-container", function(e) {
+            $(document).on("click", ".wall-photo-container", function(e) {
                 e.stopPropagation();
-                $(this).find(".wall-image-controllers").toggleClass("is-hidden");
+                $(this).find(".wall-photo-controllers").toggleClass("is-hidden");
             });
-            $(document).on("mouseover", ".wall-image-container", function(e) {
+            $(document).on("mouseover", ".wall-photo-container", function(e) {
                 e.stopPropagation();
-                $(this).find(".wall-image-controllers").removeClass("is-hidden");
+                $(this).find(".wall-photo-controllers").removeClass("is-hidden");
             });
-            $(document).on("mouseout", ".wall-image-container", function(e) {
+            $(document).on("mouseout", ".wall-photo-container", function(e) {
                 e.stopPropagation();
-                $(this).find(".wall-image-controllers").addClass("is-hidden");
+                $(this).find(".wall-photo-controllers").addClass("is-hidden");
             });
         }
 
@@ -282,13 +282,13 @@
                 if(loaded === false) {
                     loaded = true;
                     sites.onFetchedSites(function(sites) {
-                        createImageWall(sites);
+                        createPhotoWall(sites);
                         $wallLoadMore.removeClass("is-hidden");
                     });
 
                     $wallLoadMore.on("click", function() {
                         sites.onFetchedSites(function(sites) {
-                            createImageWall(sites);
+                            createPhotoWall(sites);
                         });
                         $wall.animate({scrollTop: $wall.prop("scrollHeight") - 80}, 1000);
                     });
@@ -396,7 +396,9 @@
                 if(!location) {
                     return false;
                 }
+                $preview.cropper("disable");
                 storePhoto(function(responseCode, responseText) {
+                    $preview.cropper("enable");
                     if(responseCode === 200) {
                         $uploaderLabel
                             .addClass("success")
@@ -419,7 +421,7 @@
                 if(typeof file !== typeof undefined) {
                     EXIF.getData(file, function() {
                         if(typeof EXIF.getTag(this, 'GPSLatitude') === typeof undefined) {
-                            // Throw error as this image does not have required EXIF data
+                            // Throw error as this photo does not have required EXIF data
                             view.displayError(
                                 "Photo does not contain location data",
                                 "We can not accept photos without location data as they are impossible to place on " +

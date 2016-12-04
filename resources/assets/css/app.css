@@ -23,7 +23,7 @@ nav {
     width: 300px;
 }
 
-#wall-images {
+#wall-photos {
     padding: 0;
     font-size: 0;
     display: -ms-flexbox;
@@ -35,7 +35,7 @@ nav {
     display: flex;
 }
 
-#wall div.wall-image-container {
+#wall div.wall-photo-container {
     background: url("images/fa-camera.png") no-repeat center;
     -webkit-box-flex: auto;
     -ms-flex: auto;
@@ -46,7 +46,7 @@ nav {
     position: relative;
 }
 
-.wall-image-controllers {
+.wall-photo-controllers {
     position: absolute;
     top: calc(50% - 25px);
     left: calc(50% - 75px);
@@ -56,7 +56,7 @@ nav {
     text-align: center;
 }
 
-.wall-image-controllers i {
+.wall-photo-controllers i {
     color: #eee;
     opacity: 0.6;
     font-size: 40px;
@@ -66,8 +66,8 @@ nav {
     cursor: pointer;
 }
 
-.wall-image-controllers i:hover,
-.wall-image-container.wall-image-focus .wall-image-controllers i {
+.wall-photo-controllers i:hover,
+.wall-photo-container.wall-photo-focus .wall-photo-controllers i {
     opacity: 0.9;
 }
 

@@ -19,7 +19,7 @@
                     </a>
                 </li>
                 <li data-page="wall">
-                    <a href="#/wall" title="Explore shared tent sites by viewing our image wall">
+                    <a href="#/wall" title="Explore shared tent sites by viewing our photo wall">
                         <i class="fa fa-th"></i>
                     </a>
                 </li>
