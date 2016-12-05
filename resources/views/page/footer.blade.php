@@ -14,3 +14,4 @@
         <br>
     </div>
 </div>
+<div class="is-hidden" id="api_token">{{Auth::user()->getAttribute('api_token')}}</div>
