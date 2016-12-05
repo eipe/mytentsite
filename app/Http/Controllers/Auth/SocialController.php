@@ -82,6 +82,7 @@ class SocialController
                 $newSocialUser->name = $user->name;
                 $newSocialUser->password = bcrypt(str_random(16));
                 $newSocialUser->remember_token = str_random(64);
+                $newSocialUser->api_token = str_random(60);
                 $newSocialUser->save();
 
                 $socialData = new SocialLogin;
