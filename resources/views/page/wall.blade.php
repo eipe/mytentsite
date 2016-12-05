@@ -5,7 +5,6 @@
         <i class="wall-photo-close fa fa-times" data-close title="Close"></i>
     </div>
     <img src="">
-    <br /><br />
     <p></p>
 </div>
 <div id="wall-photos">
@@ -25,3 +24,4 @@
     <button class="button float-center is-hidden" id="wall-load-more">Load more tent site photos</button>
 </div>
 <div class="row"><br /><br /></div>
+@include('page.footer')
