@@ -83,6 +83,10 @@ nav {
     padding-bottom: 45px;
 }
 
+.background-light-gray {
+    background-color: #eee;
+}
+
 hr.border-dashed {
     border-style: dashed;
 }
