@@ -58,6 +58,14 @@
     color: #999;
 }
 
+.reveal {
+    padding: 0;
+}
+
+.row {
+    max-width: 100%;
+}
+
 /* Foundation override - cropper specific */
 #photo-frame img {
     max-width: 100%;
