@@ -14,7 +14,10 @@ use Illuminate\Http\Request;
 */
 
 Route::resource('/tentsites', 'TentSitesController', ['except' => [
-    'index'
+    'index', 'store', 'update','destroy'
 ]]);
 Route::get('/tentsites/{lat?}/{lng?}/{rad?}', 'TentSitesController@index');
+Route::post('/tentsites', 'TentSitesController@store')->middleware('auth:api');
+Route::put('/tentsites', 'TentSitesController@update')->middleware('auth:api');
+
 
