@@ -24,7 +24,8 @@ class TentSites extends Model
         'created_at',
         'likes',
         'img_location',
-        'external_id'
+        'external_id',
+        'approved'
     ];
 
     /**

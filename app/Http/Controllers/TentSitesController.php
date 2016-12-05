@@ -45,6 +45,8 @@ class TentSitesController extends Controller
             // Unset photo from post as location will be added later on
             unset($post['photo']);
 
+            $post['approved'] = false;
+
             $data = $m::create($post);
 
             // Force all photos to be .jpg formatted
