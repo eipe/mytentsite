@@ -79,6 +79,8 @@ nav {
 /* General rules */
 .page-allow-overflow {
     overflow-y: auto;
+    /* Add padding bottom matching the reduced height */
+    padding-bottom: 45px;
 }
 
 hr.border-dashed {
