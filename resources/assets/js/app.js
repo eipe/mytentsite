@@ -304,7 +304,7 @@
             $rotate, $cancel, $store, $location,
             location = null, loaded = false,
             options = {
-                target: "/api/tentsites",
+                target: "/api/tentsites?api_token=" +  $('#api_token').html(),
                 cropperSettings: {
                     aspectRatio: 4 / 3,
                     zoomable: false,
