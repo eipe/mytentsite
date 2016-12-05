@@ -16,15 +16,15 @@
         <hr>
         <div class="row">
             <div class="large-4 columns">
-                <i class="fa fa-5x fa-picture-o" style="font-size: 120px;"></i><br>
+                <i class="fa fa-5x fa-picture-o"></i><br>
                 Photo
             </div>
             <div class="large-4 columns">
-                <i class="fa fa-5x fa-map-marker" style="font-size: 120px;"></i><br>
+                <i class="fa fa-5x fa-map-marker"></i><br>
                 Location
             </div>
             <div class="large-4 columns">
-                <i class="fa fa-5x fa-font" style="font-size: 120px;"></i><br>
+                <i class="fa fa-5x fa-font"></i><br>
                 Caption
             </div>
         </div>
