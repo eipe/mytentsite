@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NewTentSiteRegistered;
 use App\Models\TentSites;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Validator;
-use App\Notifications\NewTentSite;
+
 
 class TentSitesController extends Controller
 {
@@ -58,8 +58,8 @@ class TentSitesController extends Controller
             $data->setAttribute('caption', $post['caption']);
             $data->save();
 
-            // Notify slack channel of new tent site
-            Notification::send(TentSites::find($data->getAttribute('id')), new NewTentSite($data));
+            // Fire event
+            event(new NewTentSiteRegistered($data));
 
             return $this->createdResponse($data);
         } catch (\Exception $ex) {
