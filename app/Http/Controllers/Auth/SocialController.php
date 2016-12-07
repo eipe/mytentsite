@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Events\UserRegisteredThroughSocialite;
 use App\Models\SocialLogin;
 use App\Models\User;
 use App\Notifications\NewUser;
@@ -90,12 +91,10 @@ class SocialController
                 $socialData->provider= $provider;
                 $newSocialUser->socialLogin()->save($socialData);
                 $socialUser = $newSocialUser;
-
-                // Notify slack channel, should probably change to new user event and move this to the event handler
-                Notification::send(User::find($socialUser->getAttribute('id')), new NewUser($socialUser));
             }
         }
 
+        event(new UserRegisteredThroughSocialite($socialUser));
         Auth::login($socialUser, true);
         return Redirect::to('/');
     }

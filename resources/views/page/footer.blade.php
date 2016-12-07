@@ -20,4 +20,9 @@
         </div>
     </div>
 </div>
-<div class="is-hidden" id="api_token">{{Auth::user()->getAttribute('api_token')}}</div>
+
+<div class="is-hidden" id="api_token">
+    @if(Auth::check())
+        {{Auth::user()->getAttribute('api_token')}}
+    @endif
+</div>
