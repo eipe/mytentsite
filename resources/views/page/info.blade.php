@@ -2,7 +2,7 @@
 <div class="row">
     <div class="columns large-centered text-center">
         <h4>mytentsite</h4>
-        <img src="/storage/photos/500.png" />
+        <img src="/images/500.png" />
     </div>
 </div>
 <br><br>
