@@ -1,8 +1,23 @@
 <div class="row"><br /></div>
 <div class="row">
     <div class="columns large-centered text-center">
-        <h4>mytentsite</h4>
+        <h4>mytentsite
+            @if(Config::get('app.env') == 'staging')
+                <small> - BETA</small>
+            @endif
+        </h4>
         <img src="/images/500.png" />
+        @if(Config::get('app.env') == 'staging')
+            <br><br>
+            <i class="fa fa-exclamation-circle fa-4x"></i>
+            <h5>The tent site is not finished yet - stay tuned!</h5>
+            <p>We are still working on some features before we can publish this site, <br>
+                and appreciate that you have joined us one the journey.</p>
+            <p>Please submit both bug reports and feature ideas to us and we <br>
+                will take it into consideration on further development.<br>
+            </p>
+            <p><strong>You are first in line to be noticed when we are ready to launch this site :)</strong></p>
+        @endif
     </div>
 </div>
 <br><br>

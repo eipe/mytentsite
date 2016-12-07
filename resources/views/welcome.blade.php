@@ -9,6 +9,11 @@
     </head>
     <body>
         <nav class="top-bar">
+            @if(Config::get('app.env') === 'staging')
+            <div style="position: absolute; color: #e00;">
+                &nbsp;&nbsp;<small><strong>BETA</strong></small>
+            </div>
+            @endif
             <ul id="menu" class="menu align-center" data-page-default="info">
                 <li data-page="photo">
                     <a href="#/photo" title="Upload photo of your tent site"><i class="fa fa-camera"></i></a>
