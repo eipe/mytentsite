@@ -304,7 +304,7 @@
             $rotate, $cancel, $store, $location,
             location = null, loaded = false,
             options = {
-                target: "/api/tentsites?api_token=" +  $('#api_token').html(),
+                target: "/api/tentsites",
                 cropperSettings: {
                     aspectRatio: 4 / 3,
                     zoomable: false,
@@ -317,6 +317,11 @@
                     }
                 }
             };
+
+        var $apiToken = $("#api_token");
+        if($apiToken.length > 0) {
+            options.target += "?api_token=" +  $apiToken.text();
+        }
 
         function storePhoto(callback) {
             if(typeof $uploader.prop("files") !== typeof undefined) {

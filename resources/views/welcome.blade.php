@@ -63,6 +63,9 @@
             </button>
             <button data-close aria-label="Close" class="secondary button hollow">OK</button>
         </div>
+        @if(Auth::check())
+            <div class="is-hidden" id="api_token">{{Auth::user()->getAttribute('api_token')}}</div>
+        @endif
         <script src="{{ asset('/js/vendor.js') }}"></script>
         <script src="{{ asset('/js/app.js') }}"></script>
     </body>
