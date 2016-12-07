@@ -69,7 +69,7 @@ class NewUser extends Notification
      */
     public function toSlack($notifiable)
     {
-        return (new SlackMessage())
-            ->content('New user registered! His name is '. $notifiable->name);
+        return (new SlackMessage)
+            ->content('New user registered! The user is named '. $notifiable->name);
     }
 }

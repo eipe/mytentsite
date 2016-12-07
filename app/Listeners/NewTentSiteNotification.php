@@ -24,7 +24,7 @@ class NewTentSiteNotification
     /**
      * Handle the event.
      *
-     * @param  NewTentSiteRegistered  $event
+     * @param  NewTentSiteRegistered $event
      * @return void
      */
     public function handle(NewTentSiteRegistered $event)

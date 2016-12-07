@@ -31,4 +31,18 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Models\SocialLogin');
     }
+
+    /**
+     * Route notifications for the Slack channel.
+     *
+     * @return string
+     */
+    public function routeNotificationForSlack()
+    {
+        if (\App::environment('production')) {
+            return "https://hooks.slack.com/services/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";
+        } else {
+            return "https://hooks.slack.com/services/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";
+        }
+    }
 }

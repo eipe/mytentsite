@@ -16,6 +16,9 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\NewTentSiteRegistered' => [
             'App\Listeners\NewTentSiteNotification',
         ],
+        'App\Events\UserRegisteredThroughSocialite' => [
+            'App\Listeners\NewSocialiteUserNotification',
+        ],
     ];
 
     /**
