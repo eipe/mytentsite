@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\NewTentSiteRegistered;
 use App\Models\TentSites;
+use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -56,6 +57,7 @@ class TentSitesController extends Controller
             Storage::disk('public')->put(env('TENT_SITE_PHOTO_DIR') . $imageName, $photo);
             $data->setAttribute('img_location', $imageName);
             $data->setAttribute('caption', $post['caption']);
+            $data->setAttribute('reported_by', Auth::user()->getAttribute('id'));
             $data->save();
 
             // Fire event
