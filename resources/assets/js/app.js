@@ -300,7 +300,7 @@
     }
 
     function Photo() {
-        var $frame, $preview, $uploader, $uploaderLabel, $caption,
+        var $frame, $preview, $previewLoading, $uploader, $uploaderLabel, $caption,
             $rotate, $cancel, $store, $location,
             location = null, loaded = false,
             options = {
@@ -310,7 +310,11 @@
                     zoomable: false,
                     viewMode: 1,
                     dragMode: "move",
-                    toggleDragModeOnDblclick: false
+                    toggleDragModeOnDblclick: false,
+                    built: function() {
+                        $previewLoading.addClass("is-hidden");
+                        togglePhotoControllers();
+                    }
                 }
             };
 
@@ -345,9 +349,12 @@
             }
         }
 
+        function toggleUploaderLabel() {
+            $uploaderLabel.toggleClass("is-hidden");
+        }
+
         function togglePhotoControllers() {
             $("#photo-controllers").toggleClass("is-hidden");
-            $uploaderLabel.toggleClass("is-hidden");
         }
 
         function clearPhotoDetails() {
@@ -356,6 +363,8 @@
             $frame.find("img").attr("src", "");
             $preview.cropper("destroy");
             clearLocation();
+            togglePhotoControllers();
+            toggleUploaderLabel();
         }
 
         function clearLocation() {
@@ -375,6 +384,7 @@
         function setupListeners() {
             $frame = $("#photo-frame");
             $preview = $("#photo-preview");
+            $previewLoading = $("#photo-preview-loading");
             $caption = $("#photo-caption");
             $location = $("#photo-location");
             $cancel = $("#photo-cancel");
@@ -389,7 +399,6 @@
 
             $cancel.on("click", function() {
                 clearPhotoDetails();
-                togglePhotoControllers();
             });
 
             $store.on("click", function() {
@@ -404,7 +413,6 @@
                             .addClass("success")
                             .text("Photo successfully uploaded. Click to upload a new photo");
                         clearPhotoDetails();
-                        togglePhotoControllers();
                     } else {
                         view.displayError("Upload of photo was not successful", responseText);
                     }
@@ -419,8 +427,16 @@
                 var file = $(this).prop("files")[0];
 
                 if(typeof file !== typeof undefined) {
+
+                    // Add loader to preview to indicate that application is working
+                    // This loader will be terminated if GPS is not defined or when build is completed if GPS is defined
+                    $previewLoading.removeClass("is-hidden");
+                    toggleUploaderLabel();
+
                     EXIF.getData(file, function() {
                         if(typeof EXIF.getTag(this, 'GPSLatitude') === typeof undefined) {
+                            $previewLoading.addClass("is-hidden");
+                            toggleUploaderLabel();
                             // Throw error as this photo does not have required EXIF data
                             view.displayError(
                                 "Photo does not contain location data",
@@ -445,7 +461,6 @@
                         lng = (lng[0] + lng[1]/60 + lng[2]/3600) * (lngRef == "W" ? -1 : 1);
 
                         setLocation(lat, lng);
-                        togglePhotoControllers();
 
                         var reader = new FileReader();
 

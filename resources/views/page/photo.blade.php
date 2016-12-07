@@ -6,6 +6,11 @@
                     I have a stored photo to upload
                 </label>
                 <div>
+                    <div id="photo-preview-loading" class="is-hidden">
+                        <br>
+                        <i class="fa fa-5x fa-circle-o-notch fa-spin"></i><br>
+                        <small>We are preparing your photo, please hold on!</small>
+                    </div>
                     <img id="photo-preview" src="" />
                 </div>
                 <input type="file" id="photo-file" class="show-for-sr" />
