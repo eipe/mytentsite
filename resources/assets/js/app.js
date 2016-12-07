@@ -337,7 +337,10 @@
                 }).error(function(response) {
                     var error = '',
                         errors = $.parseJSON(response.responseText);
-                    if(typeof errors.data.form_validations !== typeof undefined) {
+                    if(typeof errors.error !== typeof undefined) {
+                        error = errors.error;
+                    }
+                    else if(typeof errors.data.form_validations !== typeof undefined) {
                         $.each(errors.data.form_validations, function(field, fieldError) {
                             error += fieldError + "<br>";
                         });
