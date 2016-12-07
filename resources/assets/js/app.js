@@ -472,7 +472,7 @@
     }
 
     function View() {
-        var $currentPage, $currentPageContent, currentPageName, $modal;
+        var currentPage, $currentPage, $currentPageContent, currentPageName, $modal, $menu, pages = [];
 
         function toggleCurrentPage() {
             if(typeof $currentPage !== typeof undefined) {
@@ -534,12 +534,35 @@
                 map = new Map();
                 wall = new Wall();
                 $modal = $("#app-modal");
-                var $menu = $("#menu");
-                var tmpPageName = localStorage.getItem("App.View.currentPage");
-                if(!tmpPageName) {
-                    tmpPageName =  $menu.data("page-default");
+                $menu = $("#menu");
+                $menu.children().each(function() {
+                    pages.push($(this).data("page"));
+                });
+
+                // Check if page is delegated through url and that given page exists
+                var url = window.location.href,
+                    urlPage = url.substring(url.indexOf("#")+2),
+                    urlPageIndex = pages.indexOf(urlPage);
+
+                if(urlPageIndex > -1) {
+                    currentPage = pages[urlPageIndex];
                 }
-                setCurrentPage(findPageByName(tmpPageName), tmpPageName);
+
+                // If not defined through url we check for cached page, which will be defined if user has visited before
+                if(!currentPage) {
+                    var cachedPage = localStorage.getItem("App.View.currentPage");
+
+                    if(cachedPage && pages.indexOf(cachedPage) >= 0) {
+                        currentPage = cachedPage;
+                    }
+                }
+
+                // If still no defined page we use the default page defined in application
+                if(!currentPage) {
+                    currentPage = $menu.data("page-default");
+                }
+
+                setCurrentPage(findPageByName(currentPage), currentPage);
 
                 $menu.on("click", "li", function() {
                     var $page = $(this);
