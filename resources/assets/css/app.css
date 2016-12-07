@@ -36,7 +36,7 @@ nav {
 }
 
 #wall div.wall-photo-container {
-    background: url("/storage/photos/250.png") no-repeat center #eee;
+    background: url("/images/250.png") no-repeat center #eee;
     -webkit-box-flex: auto;
     -ms-flex: auto;
     flex: auto;
