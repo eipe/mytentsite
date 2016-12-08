@@ -48,4 +48,8 @@ class TentSites extends Model
             return "https://hooks.slack.com/services/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";
         }
     }
+
+    public function reportedBy() {
+        return $this->belongsTo('App\Models\User', 'id');
+    }
 }

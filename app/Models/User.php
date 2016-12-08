@@ -32,6 +32,11 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\SocialLogin');
     }
 
+    public function tentSites()
+    {
+        return $this->hasMany('App\Models\TentSites', 'reported_by');
+    }
+
     /**
      * Route notifications for the Slack channel.
      *
