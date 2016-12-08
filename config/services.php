@@ -41,4 +41,10 @@ return [
         'redirect' => env('FACEBOOK_CALLBACK_URL'),
     ],
 
+    'instagram' => [
+        'client_id' => env('INSTAGRAM_CLINT_ID'),
+        'client_secret' => env('INSTAGRAM_CLIENT_SECRET'),
+        'redirect' => env('INSTAGRAM_CALLBACK_URL')
+    ]
+
 ];
