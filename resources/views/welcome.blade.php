@@ -10,7 +10,7 @@
     <body>
         <nav class="top-bar">
             @if(Config::get('app.env') === 'staging')
-            <div style="position: absolute; color: #e00;">
+            <div style="position: absolute; top: 10px; color: #e00;">
                 &nbsp;&nbsp;<small><strong>BETA</strong></small>
             </div>
             @endif
