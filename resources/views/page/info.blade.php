@@ -9,7 +9,7 @@
         <img src="/images/500.png" />
         @if(Config::get('app.env') == 'staging')
             <br><br>
-            <i class="fa fa-exclamation-circle fa-4x"></i>
+            <i class="fa fa-exclamation-circle fa-4x"></i><br><br>
             <h5>The tent site is not finished yet - stay tuned!</h5>
             <p>We are still working on some features before we can publish this site, <br>
                 and appreciate that you have joined us one the journey.</p>
@@ -52,10 +52,10 @@
 <div class="row">
     <div class="large-8 columns large-centered">
         <br><br>
-        <div class="small-2 columns">
-            <i class="fa fa-5x fa-comment"></i>
+        <div class="medium-2 columns">
+            <i class="fa fa-4x fa-comment"></i>
         </div>
-        <div class="small-10 columns text-left">
+        <div class="medium-10 columns text-left">
             <h4>The story and vision of mytentsite</h4>
             <p>As we have focused on developing the story has not yet been written in words.</p>
             <p>If you have the time and desire to help us, we would appreciate that a lot, and we think
