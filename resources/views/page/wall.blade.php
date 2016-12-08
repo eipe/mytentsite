@@ -5,7 +5,8 @@
         <i class="wall-photo-close fa fa-times" data-close title="Close"></i>
     </div>
     <img src="">
-    <p></p>
+    <p id="wall-fullscreen-caption"></p>
+    <p id="wall-fullscreen-reported"></p>
 </div>
 <div id="wall-photos">
     <div class="wall-photo-container"></div>

@@ -53,7 +53,6 @@
                                     lat: photo["latitude"],
                                     lng: photo["longitude"],
                                     location_name: photo["location_name"],
-                                    created_time: photo["created_time"],
                                     likes: photo["likes"],
                                     img_location: config.storageFolder + photo["img_location"],
                                     external_id: photo["external_id"],
@@ -130,7 +129,7 @@
         function placeSites(tentSites) {
             var photoLayer = L.photo.cluster().on("click", function (evt) {
                 var photo = evt.layer.photo,
-                    template = '<img src="{img_location}" /></a><p>{caption}</p>';
+                    template = '<img src="{img_location}" /></a><p>{caption}</p><p>{reported_by} - {created_at}</p>';
                 if (photo.video &&
                     (!!document.createElement("video").canPlayType("video/mp4; codecs=avc1.42E01E,mp4a.40.2"))
                 ) {
@@ -216,6 +215,9 @@
         var $wall = $("#wall"),
             $wallPhotoContainer = $("#wall-photos"),
             $wallFullscreen = $("#wall-fullscreen"),
+            $wallFullscreenPhoto = $wallFullscreen.find("img"),
+            $wallFullscreenCaption = $("#wall-fullscreen-caption"),
+            $wallFullscreenReported = $("#wall-fullscreen-reported"),
             $wallLoadMore = $("#wall-load-more"),
             $preLoadedContainers = $wallPhotoContainer.find(".wall-photo-container"),
             index = $preLoadedContainers.index(),
@@ -233,7 +235,9 @@
                     .attr("data-photo-latitude", photo.lat)
                     .attr("data-photo-longitude", photo.lng)
                     .attr("data-photo-location", photo.img_location)
-                    .attr("data-photo-caption", photo.caption);
+                    .attr("data-photo-caption", photo.caption)
+                    .attr("data-photo-reported-by", photo.reported_by)
+                    .attr("data-photo-created-at", photo.created_at);
 
                 $container.append($("<img>").attr("src", photo.img_location));
                 $container.append('<div class="wall-photo-controllers is-hidden">' +
@@ -257,8 +261,11 @@
                 var $photoContainer = $(this).closest(".wall-photo-container");
                 $wallFullscreen.attr("data-photo-latitude", $photoContainer.data("photo-latitude")).
                 attr("data-photo-longitude", $photoContainer.data("photo-longitude"));
-                $wallFullscreen.find("img").attr("src", $photoContainer.data("photo-location"));
-                $wallFullscreen.find("p").text($photoContainer.data("photo-caption"));
+                $wallFullscreenPhoto.attr("src", $photoContainer.data("photo-location"));
+                $wallFullscreenCaption.text($photoContainer.data("photo-caption"));
+                $wallFullscreenReported.text(
+                    $photoContainer.data("photo-reported-by") + " - " + $photoContainer.data("photo-created-at")
+                );
                 $wallFullscreen.foundation("open");
             });
 
