@@ -26,8 +26,8 @@
             if(!intLastFetchTime) {
                 return true;
             } else {
-                // Cache lifetime is one hour
-                return ((getTime() - intLastFetchTime) > 3600000);
+                // Cache lifetime is one minute
+                return ((getTime() - intLastFetchTime) > 60000);
             }
         }
 
@@ -547,6 +547,7 @@
             $currentPageContent = getPageContentObject(pageName);
             currentPageName = pageName;
             initializeCurrentPage();
+            document.location.href = "#/" + pageName;
         }
 
         function getPageContentObject(page) {
