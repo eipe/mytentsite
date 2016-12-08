@@ -62,6 +62,14 @@
     max-width: 100%;
 }
 
+.wall-photo-container.reveal {
+    padding: 0;
+}
+
+.wall-photo-container p {
+    padding: 10px;
+}
+
 /* Foundation override - cropper specific */
 #photo-frame img {
     max-width: 100%;
