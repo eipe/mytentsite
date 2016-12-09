@@ -2,8 +2,9 @@
     <div class="row">
         <div id="photo-frame" class="column medium-centered text-center">
             <div>
-                <label for="photo-file" class="button" data-text="I have a stored photo to upload">
-                    I have a stored photo to upload
+                <br>
+                <label for="photo-file" class="button" data-text="I want to share a tent site!">
+                    I want to share a tent site!
                 </label>
                 <div>
                     <div id="photo-preview-loading" class="is-hidden">
