@@ -558,6 +558,11 @@
             return $("#menu").find('li[data-page="'+pageName+'"]');
         }
 
+        function getPageFromUrl() {
+            var url = window.location.href;
+            return url.substring(url.indexOf("#")+2);
+        }
+
         return {
             initialize: function() {
                 sites = new Sites();
@@ -571,9 +576,7 @@
                 });
 
                 // Check if page is delegated through url and that given page exists
-                var url = window.location.href,
-                    urlPage = url.substring(url.indexOf("#")+2),
-                    urlPageIndex = pages.indexOf(urlPage);
+                var urlPageIndex = pages.indexOf(getPageFromUrl());
 
                 if(urlPageIndex > -1) {
                     currentPage = pages[urlPageIndex];
@@ -594,6 +597,14 @@
                 }
 
                 setCurrentPage(findPageByName(currentPage), currentPage);
+
+                $(window).on("popstate", function() {
+                    var pageIndex = pages.indexOf(getPageFromUrl());
+                    if(pageIndex > -1) {
+                        var changeToPage = pages[pageIndex];
+                        setCurrentPage(findPageByName(changeToPage), changeToPage);
+                    }
+                });
 
                 $menu.on("click", "li", function() {
                     var $page = $(this);
