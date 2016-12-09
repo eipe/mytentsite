@@ -33,9 +33,9 @@
             </div>
             <div class="large-4 columns">
                 <h4><i class="fa fa-2x fa-map-marker"></i> Location</h4>
-                <p>Location, location, location. It is not important whether the tent site is located in top of a
-                    mountain or besides a lake in the middle of the forrest.
-                    But to make it possible to locate the tent site and serve your tent site on the map, we need
+                <p>Location, location, location. It is not important whether the tent site is located on top of a
+                    mountain or beside a lake in the middle of the forrest.
+                    But to make it possible to locate the tent site and place it on the map, we need
                     the GPS information.
                 </p>
             </div>
