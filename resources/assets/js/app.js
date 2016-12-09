@@ -259,8 +259,8 @@
             $(".wall-photo-enlarge").on("click", function(e) {
                 e.stopPropagation();
                 var $photoContainer = $(this).closest(".wall-photo-container");
-                $wallFullscreen.attr("data-photo-latitude", $photoContainer.data("photo-latitude")).
-                attr("data-photo-longitude", $photoContainer.data("photo-longitude"));
+                $wallFullscreen.data("photo-latitude", $photoContainer.data("photo-latitude")).
+                data("photo-longitude", $photoContainer.data("photo-longitude"));
                 $wallFullscreenPhoto.attr("src", $photoContainer.data("photo-location"));
                 $wallFullscreenCaption.text($photoContainer.data("photo-caption"));
                 $wallFullscreenReported.text(
