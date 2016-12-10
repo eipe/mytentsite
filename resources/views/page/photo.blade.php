@@ -2,7 +2,6 @@
     <div class="row">
         <div id="photo-frame" class="column medium-centered text-center">
             <div>
-                <br>
                 <label for="photo-file" class="button" data-text="I want to share a tent site!">
                     I want to share a tent site!
                 </label>
