@@ -428,7 +428,7 @@
                     if(responseCode === 200) {
                         $uploaderLabel
                             .addClass("success")
-                            .text("Photo successfully uploaded. Click to upload a new photo");
+                            .text("Tent site successfully uploaded. Click to share another tent site!");
                         clearPhotoDetails();
                     } else {
                         view.displayError("Upload of photo was not successful", responseText);
