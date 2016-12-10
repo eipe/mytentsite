@@ -336,7 +336,9 @@
                 photoData.append("latitude", location.latitude);
                 photoData.append("longitude", location.longitude);
                 photoData.append("caption", $caption.val());
-                photoData.append("photo", $preview.cropper("getCroppedCanvas").toDataURL());
+                photoData.append("photo",
+                    $preview.cropper("getCroppedCanvas").toDataURL($preview.data("photo-mime-type"))
+                );
                 $.ajax({
                     url: options.target,
                     method: "POST",
@@ -481,6 +483,10 @@
 
                         reader.onload = function(e) {
                             $preview.attr("src", e.target.result);
+                            $preview.attr(
+                                "data-photo-mime-type",
+                                e.target.result.split(",")[0].split(":")[1].split(";")[0]
+                            );
                             $preview.cropper(options.cropperSettings);
                         };
                         reader.readAsDataURL(file);
