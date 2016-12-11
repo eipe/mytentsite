@@ -339,6 +339,7 @@
                 photoData.append("photo",
                     $preview.cropper("getCroppedCanvas").toDataURL($preview.data("photo-mime-type"))
                 );
+                view.displayModalMessage("Uploading your tent site", $previewLoading.clone().html());
                 $.ajax({
                     url: options.target,
                     method: "POST",
@@ -347,8 +348,10 @@
                     contentType : false,
                     processData : false
                 }).success(function() {
+                    view.closeModalMessage();
                     callback(200, "Photo successfully uploaded");
                 }).error(function(response) {
+                    view.closeModalMessage();
                     var error = '',
                         errors = $.parseJSON(response.responseText);
                     if(typeof errors.error !== typeof undefined) {
@@ -624,6 +627,9 @@
                 $modal.find("h4").text(title);
                 $modal.find("p").html(message);
                 $modal.foundation("open");
+            },
+            closeModalMessage: function() {
+                $modal.foundation("close");
             }
         }
     }
