@@ -185,7 +185,7 @@
                 });
 
                 TentMap.on("locationerror", function(event) {
-                    view.displayError("Could not detect your location", event.message);
+                    view.displayModalMessage("Could not detect your location", event.message);
                 });
 
                 sites.onFetchedSites(function(sites) {
@@ -431,7 +431,7 @@
                             .text("Tent site successfully uploaded. Click to share another tent site!");
                         clearPhotoDetails();
                     } else {
-                        view.displayError("Upload of photo was not successful", responseText);
+                        view.displayModalMessage("Upload of photo was not successful", responseText);
                     }
                 });
             });
@@ -455,7 +455,7 @@
                             $previewLoading.addClass("is-hidden");
                             toggleUploaderLabel();
                             // Throw error as this photo does not have required EXIF data
-                            view.displayError(
+                            view.displayModalMessage(
                                 "Photo does not contain location data",
                                 "We can not accept photos without location data as they are impossible to place on " +
                                 "the map, which indeed is the whole concept of this service. <br /><br />" +
@@ -620,9 +620,9 @@
             changePage: function(pageName) {
                 setCurrentPage(findPageByName(pageName), pageName);
             },
-            displayError: function(title, error) {
+            displayModalMessage: function(title, message) {
                 $modal.find("h4").text(title);
-                $modal.find("p").html(error);
+                $modal.find("p").html(message);
                 $modal.foundation("open");
             }
         }
