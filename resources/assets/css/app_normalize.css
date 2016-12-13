@@ -88,3 +88,7 @@
 .cropit-image-loaded .cropit-preview-image-container {
     cursor: move;
 }
+
+.cropit-disabled .cropit-image-loaded .cropit-preview-image-container {
+    cursor: default;
+}

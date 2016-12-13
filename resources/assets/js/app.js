@@ -402,6 +402,11 @@
             currentStep++;
             $controllersContainer.find("span[data-step=" + currentStep + "]").toggleClass("is-hidden");
             $controllersContainer.data("current-step", currentStep);
+
+            // Disable photo editing when user has moved away from step 1
+            if(currentStep > 1) {
+                $frame.cropit("disable");
+            }
         }
 
         function photoControllerPrevious() {
@@ -413,6 +418,11 @@
             currentStep--;
             $controllersContainer.find("span[data-step=" + currentStep + "]").toggleClass("is-hidden");
             $controllersContainer.data("current-step", currentStep);
+
+            // Enable photo editing if user is back on step 1
+            if(currentStep === 1) {
+                $frame.cropit("reenable");
+            }
         }
 
         function clearPhotoDetails() {
