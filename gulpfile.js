@@ -29,8 +29,7 @@ elixir(function(mix) {
         config.bowerDir + '/Leaflet.EasyButton/src/easy-button.css',
         config.bowerDir + '/font-awesome/css/font-awesome.css',
         config.bowerDir + '/foundation-sites/dist/foundation-flex.css',
-        config.bowerDir + '/foundation-sites/dist/foundation.css',
-        config.bowerDir + '/cropper/dist/cropper.css'
+        config.bowerDir + '/foundation-sites/dist/foundation.css'
     ], 'public/css/vendor.css');
 
     mix.scripts('app.js', 'public/js/app.js')
@@ -43,7 +42,7 @@ elixir(function(mix) {
         config.bowerDir + '/foundation-sites/dist/foundation.js',
         config.bowerDir + '/exif-js/exif.js',
         config.bowerDir + '/what-input/what-input.js',
-        config.bowerDir + '/cropper/dist/cropper.js'
+        config.bowerDir + '/cropit/dist/jquery.cropit.js'
     ], 'public/js/vendor.js');
 });
 

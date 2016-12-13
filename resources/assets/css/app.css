@@ -18,6 +18,28 @@ nav {
     width: 100vw;
 }
 
+/* Page specific rules */
+#photo-controllers {
+    padding-top: 20px;
+    white-space: nowrap;
+}
+
+#photo-controllers i {
+    margin: 0 8px;
+}
+
+#photo-controllers i.fa-2x {
+    font-size: 1.6em;
+}
+
+#photo-controllers i:not(.fa-2x) {
+    font-size: 1.2em;
+}
+
+#photo-controllers * {
+    vertical-align: middle;
+}
+
 #map img, #map video {
     max-width: 300px;
     width: 300px;
@@ -84,6 +106,10 @@ nav {
 
 .background-light-gray {
     background-color: #eee;
+}
+
+.is-clickable {
+    cursor: pointer;
 }
 
 hr.border-dashed {

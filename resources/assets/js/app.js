@@ -312,15 +312,20 @@
             location = null, loaded = false,
             options = {
                 target: "/api/tentsites",
-                cropperSettings: {
-                    aspectRatio: 4 / 3,
-                    zoomable: false,
-                    viewMode: 1,
-                    dragMode: "move",
-                    toggleDragModeOnDblclick: false,
-                    built: function() {
+                cropItSettings: {
+                    exportZoom: 1,
+                    imageBackground: true,
+                    imageBackgroundBorderWidth: 1,
+                    onImageLoading: function() {
+
+                    },
+                    onImageLoaded: function() {
                         $previewLoading.addClass("is-hidden");
-                        togglePhotoControllers();
+                    },
+                    onImageError: function() {
+                        toggleUploaderLabel();
+                        $previewLoading.addClass("is-hidden");
+                        view.displayModalMessage("Could not load image", "Please try again, or try another photo");
                     }
                 }
             };
@@ -336,9 +341,7 @@
                 photoData.append("latitude", location.latitude);
                 photoData.append("longitude", location.longitude);
                 photoData.append("caption", $caption.val());
-                photoData.append("photo",
-                    $preview.cropper("getCroppedCanvas").toDataURL($preview.data("photo-mime-type"))
-                );
+                photoData.append("photo", $frame.cropit("export"));
                 view.displayModalMessage("Uploading your tent site", $previewLoading.clone().html());
                 $.ajax({
                     url: options.target,
@@ -381,7 +384,7 @@
             $caption.val("");
             $uploader.val("");
             $frame.find("img").attr("src", "");
-            $preview.cropper("destroy");
+            $preview.removeClass("cropit-image-loaded");
             clearLocation();
             togglePhotoControllers();
             toggleUploaderLabel();
@@ -414,7 +417,7 @@
             $rotate = $("#photo-rotate");
 
             $rotate.click(function() {
-                $preview.cropper("rotate", 90);
+                $frame.cropit("rotateCW");
             });
 
             $cancel.on("click", function() {
@@ -425,9 +428,7 @@
                 if(!location) {
                     return false;
                 }
-                $preview.cropper("disable");
                 storePhoto(function(responseCode, responseText) {
-                    $preview.cropper("enable");
                     if(responseCode === 200) {
                         $uploaderLabel
                             .addClass("success")
@@ -439,24 +440,23 @@
                 });
             });
 
+            $frame.cropit(options.cropItSettings);
+
             $uploaderLabel.on("click", function() {
                 $(this).removeClass("alert success").text($(this).data("text"));
             });
 
             $uploader.on("change", function() {
+                toggleUploaderLabel();
+                $previewLoading.removeClass("is-hidden");
+
                 var file = $(this).prop("files")[0];
 
                 if(typeof file !== typeof undefined) {
-
-                    // Add loader to preview to indicate that application is working
-                    // This loader will be terminated if GPS is not defined or when build is completed if GPS is defined
-                    $previewLoading.removeClass("is-hidden");
-                    toggleUploaderLabel();
-
                     EXIF.getData(file, function() {
                         if(typeof EXIF.getTag(this, 'GPSLatitude') === typeof undefined) {
-                            $previewLoading.addClass("is-hidden");
                             toggleUploaderLabel();
+                            $previewLoading.addClass("is-hidden");
                             // Throw error as this photo does not have required EXIF data
                             view.displayModalMessage(
                                 "Photo does not contain location data",
@@ -481,18 +481,7 @@
                         lng = (lng[0] + lng[1]/60 + lng[2]/3600) * (lngRef == "W" ? -1 : 1);
 
                         setLocation(lat, lng);
-
-                        var reader = new FileReader();
-
-                        reader.onload = function(e) {
-                            $preview.attr("src", e.target.result);
-                            $preview.attr(
-                                "data-photo-mime-type",
-                                e.target.result.split(",")[0].split(":")[1].split(";")[0]
-                            );
-                            $preview.cropper(options.cropperSettings);
-                        };
-                        reader.readAsDataURL(file);
+                        togglePhotoControllers();
                     });
                 }
             });

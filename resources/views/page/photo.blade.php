@@ -1,35 +1,28 @@
 @if(Auth::check())
     <div class="row">
-        <div id="photo-frame" class="column medium-centered text-center">
-            <div>
-                <label for="photo-file" class="button" data-text="I want to share a tent site!">
-                    I want to share a tent site!
-                </label>
-                <div>
-                    <div id="photo-preview-loading" class="is-hidden">
-                        <br>
-                        <i class="fa fa-5x fa-circle-o-notch fa-spin"></i><br>
-                        <small>We are preparing your photo, please hold on!</small>
-                    </div>
-                    <img id="photo-preview" src="" />
+        <div id="photo-frame" class="medium-centered text-center">
+            <label for="photo-file" class="button" data-text="I want to share a tent site!">
+                I want to share a tent site!
+            </label>
+            <div id="photo-preview" class="cropit-preview small-centered">
+                <div id="photo-preview-loading" class="is-hidden">
+                    <br>
+                    <i class="fa fa-5x fa-circle-o-notch fa-spin"></i><br>
+                    <small>We are preparing your photo, please hold on!</small>
                 </div>
-                <input type="file" id="photo-file" class="show-for-sr" />
             </div>
-            <div id="photo-controllers" class="input-group is-hidden">
-                <span class="input-group-label" title="Caption"><i class="fa fa-font"></i></span>
-                <input type="text" id="photo-caption" class="input-group-field"
-                       title="Caption" placeholder="Caption" />
-                <div class="input-group-button">
-                    <button id="photo-location" class="button secondary show-for-sr" title="Location of tent site">
-                        <i class="fa fa-map-marker"></i>
-                    </button><button id="photo-rotate" class="button secondary" title="Rotate clockwise">
-                        <i class="fa fa-rotate-right"></i>
-                    </button><button id="photo-cancel" class="button alert" title="Cancel">
-                        <i class="fa fa-remove"></i>
-                    </button><button id="photo-store" class="button success" title="Share this tent site">
-                        <i class="fa fa-check"></i>
-                    </button>
-                </div>
+            <input type="file" id="photo-file" class="cropit-image-input show-for-sr" />
+            <div id="photo-controllers" class="is-hidden small-centered" style="color: #666;">
+                <i id="photo-rotate" title="Rotate clockwise"
+                   class="is-clickable fa fa-rotate-right"></i>
+                <i class="fa fa-image"></i>
+                <input type="range" title="Drag to zoom" min="0" max="1" step="0.1" class="cropit-image-zoom-input" />
+                <i class="fa fa-image fa-2x"></i>
+                <i id="photo-cancel" title="Cancel"
+                   class="is-clickable fa fa-remove"></i>
+                <i id="photo-store" title="Share this tent site"
+                   class="is-clickable fa fa-check"></i>
+                <i id="photo-location" class="fa fa-map-marker show-for-sr" title="Location of tent site"></i>
             </div>
         </div>
     </div>
