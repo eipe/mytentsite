@@ -4,7 +4,7 @@
             <label for="photo-file" class="button" data-text="I want to share a tent site!">
                 I want to share a tent site!
             </label>
-            <div id="photo-preview" class="cropit-preview small-centered">
+            <div id="photo-preview" class="cropit-preview small-centered color-gray">
                 <div id="photo-preview-loading" class="is-hidden">
                     <br>
                     <i class="fa fa-5x fa-circle-o-notch fa-spin"></i><br>
@@ -12,7 +12,7 @@
                 </div>
             </div>
             <input type="file" id="photo-file" class="cropit-image-input show-for-sr" />
-            <div id="photo-controllers" class="is-hidden small-centered" style="color: #666;">
+            <div id="photo-controllers" class="is-hidden small-centered color-gray">
                 <i id="photo-rotate" title="Rotate clockwise"
                    class="is-clickable fa fa-rotate-right"></i>
                 <i class="fa fa-image"></i>
