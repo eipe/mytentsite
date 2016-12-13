@@ -12,17 +12,24 @@
                 </div>
             </div>
             <input type="file" id="photo-file" class="cropit-image-input show-for-sr" />
-            <div id="photo-controllers" class="is-hidden small-centered color-gray">
-                <i id="photo-rotate" title="Rotate clockwise"
-                   class="is-clickable fa fa-rotate-right"></i>
-                <i class="fa fa-image"></i>
-                <input type="range" title="Drag to zoom" min="0" max="1" step="0.1" class="cropit-image-zoom-input" />
-                <i class="fa fa-image fa-2x"></i>
-                <i id="photo-cancel" title="Cancel"
-                   class="is-clickable fa fa-remove"></i>
-                <i id="photo-store" title="Share this tent site"
-                   class="is-clickable fa fa-check"></i>
-                <i id="photo-location" class="fa fa-map-marker show-for-sr" title="Location of tent site"></i>
+            <div id="photo-controllers" data-current-step="1" class="is-hidden small-centered color-gray">
+                <i id="photo-cancel" title="Cancel" class="is-clickable fa fa-trash-o"></i>
+                <span data-step="1">
+                    <i id="photo-rotate" title="Rotate clockwise"
+                       class="is-clickable fa fa-rotate-right"></i>
+                    <i class="fa fa-image"></i>
+                    <input type="range" title="Drag to zoom" min="0" max="1" step="0.1"
+                           class="cropit-image-zoom-input" />
+                    <i class="fa fa-image fa-2x"></i>
+                    <i class="photo-controllers-next fa fa-arrow-right is-clickable" title="Proceed"></i>
+                </span>
+                <span data-step="2" class="is-hidden">
+                    <i class="photo-controllers-previous fa fa-arrow-left is-clickable"></i>
+                    <textarea name="caption" id="photo-caption" title="Caption"
+                              placeholder="Caption" maxlength="255"></textarea>
+                    <i id="photo-store" title="Share this tent site" class="is-clickable fa fa-check"></i>
+                </span>
+                <i id="photo-location" class="fa fa-map-marker is-hidden" title="Location of tent site"></i>
             </div>
         </div>
     </div>

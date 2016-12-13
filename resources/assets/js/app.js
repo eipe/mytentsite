@@ -309,7 +309,7 @@
     function Photo() {
         var $frame, $preview, $previewLoading, $uploader, $uploaderLabel, $caption,
             $rotate, $cancel, $store, $location,
-            location = null, loaded = false,
+            location = null, loaded = false, $controllersContainer,
             options = {
                 target: "/api/tentsites",
                 cropItSettings: {
@@ -325,7 +325,7 @@
                     onImageError: function() {
                         toggleUploaderLabel();
                         $previewLoading.addClass("is-hidden");
-                        view.displayModalMessage("Could not load image", "Please try again, or try another photo");
+                        view.displayModalMessage("Could not load photo", "Please try again, or try another photo");
                     }
                 }
             };
@@ -377,7 +377,37 @@
         }
 
         function togglePhotoControllers() {
-            $("#photo-controllers").toggleClass("is-hidden");
+            $controllersContainer.toggleClass("is-hidden");
+        }
+
+        function resetPhotoControllers() {
+            $controllersContainer
+                .find("span[data-step=" + $controllersContainer.data("current-step") + "]")
+                .addClass("is-hidden");
+            $controllersContainer.find("span[data-step=1]").removeClass("is-hidden");
+            $controllersContainer.data("current-step", 1);
+        }
+
+        function photoControllerNext() {
+            var currentStep = $controllersContainer.data("current-step");
+            if($controllersContainer.data("max-step") === currentStep) {
+                return false;
+            }
+            $controllersContainer.find("span[data-step=" + currentStep + "]").toggleClass("is-hidden");
+            currentStep++;
+            $controllersContainer.find("span[data-step=" + currentStep + "]").toggleClass("is-hidden");
+            $controllersContainer.data("current-step", currentStep);
+        }
+
+        function photoControllerPrevious() {
+            var currentStep = $controllersContainer.data("current-step");
+            if(currentStep === 1) {
+                return false;
+            }
+            $controllersContainer.find("span[data-step=" + currentStep + "]").toggleClass("is-hidden");
+            currentStep--;
+            $controllersContainer.find("span[data-step=" + currentStep + "]").toggleClass("is-hidden");
+            $controllersContainer.data("current-step", currentStep);
         }
 
         function clearPhotoDetails() {
@@ -387,6 +417,7 @@
             $preview.removeClass("cropit-image-loaded");
             clearLocation();
             togglePhotoControllers();
+            resetPhotoControllers();
             toggleUploaderLabel();
         }
 
@@ -415,6 +446,25 @@
             $uploader = $("#photo-file");
             $uploaderLabel = $('label[for="photo-file"]');
             $rotate = $("#photo-rotate");
+            $controllersContainer = $("#photo-controllers");
+
+            var maxStep = $controllersContainer.data("current-step");
+            $controllersContainer.find("*[data-step]").each(function() {
+                var $stepContainer = $(this),
+                    step = $stepContainer.data("step");
+                if(step > maxStep) {
+                    maxStep = step;
+                }
+            });
+            $controllersContainer.data("max-step", maxStep);
+
+            $(".photo-controllers-next").on("click", function() {
+                photoControllerNext();
+            });
+
+            $(".photo-controllers-previous").on("click", function() {
+                photoControllerPrevious();
+            });
 
             $rotate.click(function() {
                 $frame.cropit("rotateCW");
