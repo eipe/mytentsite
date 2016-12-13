@@ -327,6 +327,11 @@
                         $previewLoading.addClass("is-hidden");
                         view.displayModalMessage("Could not load photo", "Please try again, or try another photo");
                     }
+                },
+                cropItExportOptions: {
+                    type: "image/jpeg",
+                    quality: 1,
+                    originalSize: true
                 }
             };
 
@@ -341,7 +346,7 @@
                 photoData.append("latitude", location.latitude);
                 photoData.append("longitude", location.longitude);
                 photoData.append("caption", $caption.val());
-                photoData.append("photo", $frame.cropit("export"));
+                photoData.append("photo", $frame.cropit("export", options.cropItExportOptions));
                 view.displayModalMessage("Uploading your tent site", $previewLoading.clone().html());
                 $.ajax({
                     url: options.target,
