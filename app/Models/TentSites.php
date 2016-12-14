@@ -68,4 +68,21 @@ class TentSites extends Model
         return $id;
 
     }
+
+    public function getCaptionAttribute($caption)
+    {
+        return htmlspecialchars($caption);
+    }
+
+    public function getCreatedAtAttribute($date)
+    {
+        $formatDate = new \DateTime($date);
+        return $formatDate->format('d. M. Y');
+    }
+
+    public function getTakenDateAttribute($date)
+    {
+        $formatDate = new \DateTime($date);
+        return $formatDate->format('d. M. Y');
+    }
 }
