@@ -52,4 +52,16 @@ class TentSites extends Model
     public function reportedBy() {
         return $this->belongsTo('App\Models\User', 'id');
     }
+
+    /**
+     * Get the user's name.
+     *
+     * @param  string  $id
+     * @return string
+     */
+    public function getReportedByAttribute($id)
+    {
+        $user = \DB::table('users')->where('id', $id)->first();
+        return $user->name;
+    }
 }
