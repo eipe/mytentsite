@@ -64,4 +64,9 @@ class TentSites extends Model
         $user = \DB::table('users')->where('id', $id)->first();
         return $user->name;
     }
+
+    public function getCaptionAttribute($caption)
+    {
+        return htmlspecialchars($caption);
+    }
 }
