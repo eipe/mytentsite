@@ -57,6 +57,7 @@ class TentSitesController extends Controller
             Storage::disk('public')->put(env('TENT_SITE_PHOTO_DIR') . $imageName, $photo);
             $data->setAttribute('img_location', $imageName);
             $data->setAttribute('caption', $post['caption']);
+            $data->setAttribute('taken_date', $post['taken_date']);
             $data->setAttribute('reported_by', Auth::user()->getAttribute('id'));
             $data->save();
 

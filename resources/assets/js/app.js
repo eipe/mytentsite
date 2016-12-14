@@ -308,8 +308,14 @@
 
     function Photo() {
         var $frame, $preview, $previewLoading, $uploader, $uploaderLabel, $caption,
-            $rotate, $cancel, $store,
-            location = null, loaded = false, $controllersContainer,
+            $rotate, $cancel, $store, loaded = false, $controllersContainer,
+            photoExifData = {
+                location: {
+                    latitude: null,
+                    longitude: null
+                },
+                taken_date: null
+            },
             options = {
                 target: "/api/tentsites",
                 cropItSettings: {
@@ -343,10 +349,11 @@
         function storePhoto(callback) {
             if(typeof $uploader.prop("files") !== typeof undefined) {
                 var photoData = new FormData();
-                photoData.append("latitude", location.latitude);
-                photoData.append("longitude", location.longitude);
+                photoData.append("latitude", photoExifData.location.latitude);
+                photoData.append("longitude", photoExifData.location.longitude);
                 photoData.append("caption", $caption.val());
                 photoData.append("photo", $frame.cropit("export", options.cropItExportOptions));
+                photoData.append("taken_date", photoExifData.taken_date);
                 view.displayModalMessage("Uploading your tent site", $previewLoading.clone().html());
                 $.ajax({
                     url: options.target,
@@ -430,22 +437,21 @@
             $uploader.val("");
             $frame.find("img").attr("src", "");
             $preview.removeClass("cropit-image-loaded");
-            clearLocation();
+            clearPhotoExifData();
             togglePhotoControllers();
             resetPhotoControllers();
             toggleUploaderLabel();
         }
 
-        function clearLocation() {
-            location = null;
+        function clearPhotoExifData() {
+            photoExifData.location.latitude = null;
+            photoExifData.location.longitude = null;
+            photoExifData.taken_date = null;
         }
 
-        function setLocation(lat, lng, accuracy) {
-            location = {
-                latitude: lat,
-                longitude: lng,
-                accuracy: accuracy
-            };
+        function setLocationData(lat, lng) {
+            photoExifData.location.latitude = lat;
+            photoExifData.location.longitude = lng;
         }
 
         function setupListeners() {
@@ -542,7 +548,12 @@
                         lat = (lat[0] + lat[1]/60 + lat[2]/3600) * (latRef == "N" ? 1 : -1);
                         lng = (lng[0] + lng[1]/60 + lng[2]/3600) * (lngRef == "W" ? -1 : 1);
 
-                        setLocation(lat, lng);
+                        setLocationData(lat, lng);
+
+                        if(typeof exifData.DateTime !== typeof undefined) {
+                            photoExifData.taken_date = exifData.DateTime;
+                        }
+
                         togglePhotoControllers();
                     });
                 }
