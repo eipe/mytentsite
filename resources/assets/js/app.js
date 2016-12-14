@@ -308,7 +308,7 @@
 
     function Photo() {
         var $frame, $preview, $previewLoading, $uploader, $uploaderLabel, $caption,
-            $rotate, $cancel, $store, $location,
+            $rotate, $cancel, $store,
             location = null, loaded = false, $controllersContainer,
             options = {
                 target: "/api/tentsites",
@@ -437,12 +437,10 @@
         }
 
         function clearLocation() {
-            $location.removeData("location");
             location = null;
         }
 
         function setLocation(lat, lng, accuracy) {
-            $location.data("location", true).attr("title", "Location found");
             location = {
                 latitude: lat,
                 longitude: lng,
@@ -455,7 +453,6 @@
             $preview = $("#photo-preview");
             $previewLoading = $("#photo-preview-loading");
             $caption = $("#photo-caption");
-            $location = $("#photo-location");
             $cancel = $("#photo-cancel");
             $store = $("#photo-store");
             $uploader = $("#photo-file");

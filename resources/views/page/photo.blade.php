@@ -29,7 +29,6 @@
                               placeholder="Caption" maxlength="255"></textarea>
                     <i id="photo-store" title="Share this tent site" class="is-clickable fa fa-check"></i>
                 </span>
-                <i id="photo-location" class="fa fa-map-marker is-hidden" title="Location of tent site"></i>
             </div>
         </div>
     </div>
