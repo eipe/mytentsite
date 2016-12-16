@@ -62,7 +62,11 @@ class TentSites extends Model
     public function getReportedByAttribute($id)
     {
         $user = \DB::table('users')->where('id', $id)->first();
-        return $user->name;
+        if(is_object($user)) {
+            return $user->name;
+        }
+        return $id;
+
     }
 
     public function getCaptionAttribute($caption)
