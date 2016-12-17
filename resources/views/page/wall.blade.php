@@ -9,9 +9,7 @@
     <p id="wall-fullscreen-reported"></p>
 </div>
 <div id="wall-photos"></div>
-<br />
-<div class="row">
-    <button class="button float-center is-hidden" id="wall-load-more">Load more tent site photos</button>
+<div class="row is-hidden">
+    <button class="button float-center" id="wall-load-more">Load more tent site photos</button>
 </div>
-<div class="row"><br /><br /></div>
 @include('page.footer')
