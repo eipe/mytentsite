@@ -219,18 +219,11 @@
             $wallFullscreenCaption = $("#wall-fullscreen-caption"),
             $wallFullscreenReported = $("#wall-fullscreen-reported"),
             $wallLoadMore = $("#wall-load-more"),
-            $preLoadedContainers = $wallPhotoContainer.find(".wall-photo-container"),
-            index = $preLoadedContainers.index(),
             loaded = false;
 
         function createPhotoWall(sites) {
             $.each(sites, function(key, photo) {
-                var $container = $preLoadedContainers.eq(index);
-                index++;
-                if($container.length === 0) {
-                    $container = $("<div>").addClass("wall-photo-container").appendTo($wallPhotoContainer);
-                }
-
+                var $container = $("<div>").addClass("wall-photo-container").appendTo($wallPhotoContainer);
                 $container.attr("data-photo-id", photo.id)
                     .attr("data-photo-latitude", photo.lat)
                     .attr("data-photo-longitude", photo.lng)
