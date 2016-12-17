@@ -3,6 +3,9 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>mytentsite - a collaborative tent collective</title>
+    <link rel="shortcut icon" type="image/png" href="/images/mytentsite-32x32.png" sizes="32x32">
+    <link rel="shortcut icon" type="image/png" href="/images/mytentsite-16x16.png" sizes="16x16">
+    <link rel="shortcut icon" href="/images/mytentsite.ico">
     <link href="{{ asset('/css/vendor.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('/css/app_normalize.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('/css/app.css') }}" rel="stylesheet" type="text/css">
