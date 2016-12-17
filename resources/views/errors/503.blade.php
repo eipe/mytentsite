@@ -12,7 +12,6 @@
                 /* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
                    We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
             </style>
-
                 <form action="//site.us14.list-manage.com/subscribe/post?u=1f675764e3102d26f82b8f7ab&amp;id=4ed8a8d5b8" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
                     <div id="mc_embed_signup_scroll">
                         <label for="mce-EMAIL">Subscribe to our mailing list and we will inform you when we launch!</label>
