@@ -300,7 +300,7 @@
 
     function Photo() {
         var $frame, $preview, $previewLoading, $uploader, $uploaderLabel, $caption,
-            $rotate, $cancel, $store, loaded = false, $controllersContainer,
+            $rotate, $store, loaded = false, $controllersContainer,
             photoExifData = {
                 location: {
                     latitude: null,
@@ -345,7 +345,7 @@
                 photoData.append("caption", $caption.val());
                 photoData.append("photo", $frame.cropit("export", options.cropItExportOptions));
                 photoData.append("taken_date", photoExifData.taken_date);
-                view.displayModalMessage("Uploading your tent site", $previewLoading.clone().html());
+                photoControllerNext();
                 $.ajax({
                     url: options.target,
                     method: "POST",
@@ -357,7 +357,7 @@
                     view.closeModalMessage();
                     callback(200, "Photo successfully uploaded");
                 }).error(function(response) {
-                    view.closeModalMessage();
+                    photoControllerPrevious();
                     var error = '',
                         errors = $.parseJSON(response.responseText);
                     if(typeof errors.error !== typeof undefined) {
@@ -450,7 +450,6 @@
             $preview = $("#photo-preview");
             $previewLoading = $("#photo-preview-loading");
             $caption = $("#photo-caption");
-            $cancel = $("#photo-cancel");
             $store = $("#photo-store");
             $uploader = $("#photo-file");
             $uploaderLabel = $('label[for="photo-file"]');
@@ -479,7 +478,7 @@
                 $frame.cropit("rotateCW");
             });
 
-            $cancel.on("click", function() {
+            $(".photo-cancel").on("click", function() {
                 clearPhotoDetails();
             });
 
