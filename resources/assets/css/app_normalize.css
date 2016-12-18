@@ -70,6 +70,10 @@
     padding: 10px;
 }
 
+#footer a {
+    color: inherit;
+}
+
 /* Cropit specific rules */
 .cropit-preview {
     background-color: transparent;
