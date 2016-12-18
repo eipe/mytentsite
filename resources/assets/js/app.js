@@ -52,14 +52,13 @@
                                     reported_by: photo["reported_by"],
                                     lat: photo["latitude"],
                                     lng: photo["longitude"],
-                                    location_name: photo["location_name"],
                                     likes: photo["likes"],
                                     img_location: config.storageFolder + photo["img_location"],
-                                    external_id: photo["external_id"],
                                     thumbnail: config.storageFolder + photo["img_location"],
                                     caption: photo["caption"],
                                     created_at: photo["created_at"],
-                                    updated_at: photo["updated_at"]
+                                    updated_at: photo["updated_at"],
+                                    approved: photo["approved"]
                                 });
                             });
                         }
