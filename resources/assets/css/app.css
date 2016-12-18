@@ -59,7 +59,7 @@ nav {
 }
 
 #wall-photos {
-    padding: 0;
+    padding: 20px 0 0 20px;
     font-size: 0;
     display: -ms-flexbox;
     -ms-flex-wrap: wrap;
@@ -76,7 +76,7 @@ nav {
     -ms-flex: auto;
     flex: auto;
     width: 300px;
-    margin: 0 2px 2px 0;
+    margin: 0 20px 20px 0;
     position: relative;
 }
 
