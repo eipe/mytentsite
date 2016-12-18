@@ -3,9 +3,12 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>mytentsite - a collaborative tent collective</title>
-    <link rel="shortcut icon" type="image/png" href="/images/mytentsite-32x32.png" sizes="32x32">
-    <link rel="shortcut icon" type="image/png" href="/images/mytentsite-16x16.png" sizes="16x16">
-    <link rel="shortcut icon" href="/images/mytentsite.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#333333">
+    <meta name="theme-color" content="#ffffff">
     <link href="{{ asset('/css/vendor.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('/css/app_normalize.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('/css/app.css') }}" rel="stylesheet" type="text/css">
