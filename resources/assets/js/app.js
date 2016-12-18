@@ -321,7 +321,6 @@
                         $previewLoading.addClass("is-hidden");
                     },
                     onImageError: function() {
-                        toggleUploaderLabel();
                         $previewLoading.addClass("is-hidden");
                         view.displayModalMessage("Could not load photo", "Please try again, or try another photo");
                     }
