@@ -344,7 +344,9 @@
                 photoData.append("longitude", photoExifData.location.longitude);
                 photoData.append("caption", $caption.val());
                 photoData.append("photo", $frame.cropit("export", options.cropItExportOptions));
-                photoData.append("taken_date", photoExifData.taken_date);
+                if(photoExifData.taken_date.length > 0) {
+                    photoData.append("taken_date", photoExifData.taken_date);
+                }
                 photoControllerNext();
                 $.ajax({
                     url: options.target,
