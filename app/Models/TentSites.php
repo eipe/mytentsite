@@ -17,14 +17,10 @@ class TentSites extends Model
      * @var array
      */
     protected $fillable = [
-        'reported_by',
         'latitude',
         'longitude',
-        'location_name',
-        'created_at',
-        'likes',
-        'img_location',
-        'external_id',
+        'caption',
+        'taken_date',
         'approved'
     ];
 
