@@ -46,6 +46,10 @@ class TentSitesController extends Controller
             // Unset photo from post as location will be added later on
             unset($post['photo']);
 
+            // We don't want to store the api token
+            unset($post['api_token']);
+
+            // Set approved to false as default - could this be defined in table?
             $post['approved'] = false;
 
             $data = $m::create($post);
@@ -56,8 +60,6 @@ class TentSitesController extends Controller
             // Store all photos in public tent site directory
             Storage::disk('public')->put(env('TENT_SITE_PHOTO_DIR') . $imageName, $photo);
             $data->setAttribute('img_location', $imageName);
-            $data->setAttribute('caption', $post['caption']);
-            $data->setAttribute('taken_date', $post['taken_date']);
             $data->setAttribute('reported_by', Auth::user()->getAttribute('id'));
             $data->save();
 
