@@ -71,19 +71,16 @@ class NewTentSite extends Notification
     public function toSlack($notifiable)
     {
         $url = url('storage/images/tentsites/'.$notifiable->img_location);
-        $user = \DB::table('users')->where('id', $notifiable->reported_by)->first();
-
-//        $user = User::where('id', $notifiable->reported_by);
 
         return (new SlackMessage)
             ->success()
             ->content('New tentsite added!')
-            ->attachment(function ($attachment) use ($url, $notifiable, $user) {
+            ->attachment(function ($attachment) use ($url, $notifiable) {
                 $attachment->title($notifiable->location_name, $url)
                     ->fields([
                         'Date' => date('d.m.Y'),
                         'Id' => $notifiable->id,
-                        'Reported by' => $user->name,
+                        'Reported by' => $notifiable->reported_by,
                         'Latitude' => $notifiable->latitude,
                         'Longitude' => $notifiable->longitude,
                         ':world_map:' => 'google.com/maps/?q='.$notifiable->latitude.','.$notifiable->longitude,
