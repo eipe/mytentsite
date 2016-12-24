@@ -3,7 +3,7 @@
     <div class="page page-allow-overflow">
         <div class="row">
             <div class="columns large-4 large-centered text-center" style="margin-top: 40px;">
-                <img src="/images/mytentsite.svg" style="max-width: 500px;" />
+                <img src="/images/mytentsite.svg" />
                 <h4>mytentsite</h4>
                 <p>We are currently working on the tent site, <br>and are looking forward to invite you to join!</p>
                 <form action="//site.us14.list-manage.com/subscribe/post?u=1f675764e3102d26f82b8f7ab&amp;id=4ed8a8d5b8"
