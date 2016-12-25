@@ -96,7 +96,7 @@ class SocialController
 
         event(new UserRegisteredThroughSocialite($socialUser));
         Auth::login($socialUser, true);
-        return Redirect::to('/');
+        return Redirect::to('/#/user');
     }
 
 

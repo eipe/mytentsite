@@ -9,6 +9,18 @@
             {{ ucfirst(trans(Auth::user()->socialLogin()->first()->provider)) }},<br>
             and the last authentication was {{ Auth::user()->socialLogin()->first()->updated_at }}.</p>
                 <a href="/auth/sign_out" class="button">Sign out</a>
+            @else
+
+                <a class="button" href="{{ url('/logout') }}"
+                   onclick="event.preventDefault();
+                            document.getElementById('logout-form').submit();">
+                    Logout
+                </a>
+
+                <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                    {{ csrf_field() }}
+                </form>
+
             @endif
         </div>
     </div>

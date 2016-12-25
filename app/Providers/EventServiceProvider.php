@@ -19,6 +19,9 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\UserRegisteredThroughSocialite' => [
             'App\Listeners\NewSocialiteUserNotification',
         ],
+        'Illuminate\Auth\Events\Registered' => [
+            'App\Listeners\NewUserRegisteredNotification',
+        ],
     ];
 
     /**
