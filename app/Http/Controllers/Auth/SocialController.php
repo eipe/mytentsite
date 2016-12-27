@@ -91,10 +91,10 @@ class SocialController
                 $socialData->provider= $provider;
                 $newSocialUser->socialLogin()->save($socialData);
                 $socialUser = $newSocialUser;
+
+                event(new UserRegisteredThroughSocialite($socialUser));
             }
         }
-
-        event(new UserRegisteredThroughSocialite($socialUser));
         Auth::login($socialUser, true);
         return Redirect::to('/#/user');
     }
