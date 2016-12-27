@@ -5,6 +5,8 @@
         <hr>
         <p>We want to give you control over your contributions, and to make that possible we need
             you to sign up.</p>
-
+        <p>
+            <a href="/login" class="button">Sign up</a>
+        </p>
     </div>
 </div>
