@@ -8,29 +8,29 @@
     @endif
     <ul id="menu" class="menu align-center" data-page-default="info">
         <li data-page="photo">
-            <a href="/#/photo" title="Upload photo of your tent site"><i class="fa fa-camera"></i></a>
+            <a href="{{ url('/#/photo') }}" title="Upload photo of your tent site"><i class="fa fa-camera"></i></a>
         </li>
         <li data-page="map">
-            <a href="/#/map" title="Get a view of shared tent sites on the map">
+            <a href="{{ url('/#/map') }}" title="Get a view of shared tent sites on the map">
                 <i class="fa fa-map-o"></i>
             </a>
         </li>
         <li data-page="wall">
-            <a href="/#/wall" title="Explore shared tent sites by viewing our photo wall">
+            <a href="{{ url('/#/wall') }}" title="Explore shared tent sites by viewing our photo wall">
                 <i class="fa fa-th"></i>
             </a>
         </li>
         <li data-page="info">
-            <a href="/#/info" title="Information about this service"><i class="fa fa-info"></i></a>
+            <a href="{{ url('/#/info') }}" title="Information about this service"><i class="fa fa-info"></i></a>
         </li>
 
         @if (Auth::check())
             <li data-page="user">
-                <a href="/#/user"><i class="fa fa-user"></i></a>
+                <a href="{{ url('/#/user') }}"><i class="fa fa-user"></i></a>
             </li>
         @else
             <li data-page="login">
-                <a href="/login" title="Log in"><i class="fa fa-user-o"></i></a>
+                <a href="{{ url('/login') }}" title="Log in"><i class="fa fa-user-o"></i></a>
             </li>
         @endif
     </ul>

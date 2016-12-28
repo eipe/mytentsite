@@ -40,14 +40,11 @@
                 </div>
                 <div class="row">
                     <div class="medium-5 columns large-centered text-right">
-                        <button type="submit" class="button expanded">
-                            Login
-                        </button>
-                        <a href="/register" class="button" > Don't have an account?</a>
-                        <a href="/auth/facebook" class="button">
+                        <button type="submit" class="button expanded">Login</button>
+                        <a href="{{ url('/register') }}" class="button">Don't have an account?</a>
+                        <a href="{{ url('/auth/facebook') }}" class="button">
                             <i class="fa fa-facebook"></i>&nbsp;&nbsp;Login with Facebook
                         </a>
-
                     </div>
                 </div>
 

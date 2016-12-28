@@ -57,8 +57,8 @@
 
                 <div class="row">
                     <div class="medium-5 columns large-centered text-right">
-                        <a href="/auth/facebook" class="button">
-                            <i class="fa fa-facebook"></i>&nbsp;&nbsp;Sign up with Facebook
+                        <a href="{{ url('/auth/facebook') }}" class="button">
+                            <i class="fa fa-facebook"></i>&nbsp;Sign up with Facebook
                         </a>
                     </div>
                 </div>

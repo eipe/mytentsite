@@ -8,7 +8,7 @@
             <p>You signed up through
             {{ ucfirst(trans(Auth::user()->socialLogin()->first()->provider)) }},<br>
             and the last authentication was {{ Auth::user()->socialLogin()->first()->updated_at }}.</p>
-                <a href="/auth/sign_out" class="button">Sign out</a>
+                <a href="{{ url('/auth/sign_out') }}" class="button">Sign out</a>
             @else
 
                 <a class="button" href="{{ url('/logout') }}"

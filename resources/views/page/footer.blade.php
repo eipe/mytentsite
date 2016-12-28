@@ -15,10 +15,10 @@
                 <p><small>We encourage you to bring this message further on, in hope of a growing database of
                     tent sites throughout the world. We will promote tent sites through this instagram account on
                     request, to spread the word and inspire to share.</small></p>
-                <p><a href="https://instagram.com/mytentsite" title="Instagram - @mytentsite" target="_blank">
-                        <i class="fa fa-2x fa-instagram"></i>
-                    </a> <a href="https://facebook.com/mytentsite" title="Facebook - mytentsite" target="_blank">
-                        <i class="fa fa-2x fa-facebook-square"></i>
+                <p><a href="{{ url('https://instagram.com/mytentsite') }}"
+                      title="Instagram - @mytentsite" target="_blank"><i class="fa fa-2x fa-instagram"></i>
+                    </a> <a href="{{ url('https://facebook.com/mytentsite') }}"
+                            title="Facebook - mytentsite" target="_blank"><i class="fa fa-2x fa-facebook-square"></i>
                     </a></p>
             </div>
         </div>
