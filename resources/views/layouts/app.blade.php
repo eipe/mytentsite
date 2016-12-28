@@ -14,6 +14,8 @@
     <link href="{{ asset('/css/app.css') }}" rel="stylesheet" type="text/css">
 </head>
 <body>
+    @section('navigation')
+    @show
     <div id="content">
         @section('content')
         @show

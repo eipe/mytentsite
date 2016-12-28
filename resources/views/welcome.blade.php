@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+@section('navigation')
 <nav class="top-bar">
     @if(Config::get('app.env') === 'staging')
         <div style="position: absolute; top: 10px; color: #e00;">
@@ -35,6 +36,7 @@
         @endif
     </ul>
 </nav>
+@endsection
 
 @section('content')
     <div class="page is-hidden" id="photo">
