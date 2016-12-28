@@ -6,6 +6,7 @@ use App\Events\UserRegisteredThroughSocialite;
 use App\Models\SocialLogin;
 use App\Models\User;
 use App\Notifications\NewUser;
+use Carbon\Carbon;
 use Illuminate\Auth\Events\Authenticated;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
@@ -63,7 +64,12 @@ class SocialController
 
         if(!empty($userCheck))
         {
+            /** @var User $socialUser */
             $socialUser = $userCheck;
+
+            /** @var SocialLogin $socialLogin */
+            $socialLogin = $socialUser->socialLogin();
+            $socialLogin->update(array('updated_at' => Carbon::now()));
         }
         else
         {
