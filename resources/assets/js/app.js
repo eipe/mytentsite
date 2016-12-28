@@ -18,7 +18,8 @@
         var fncCallbackOnFetchedSites,
             config = {
                 apiUrl : "/api/tentsites",
-                storageFolder : "/storage/photos/tentsites/"
+                photoFolder : "/storage/photos/tentsites/",
+                thumbnailFolder : "storage/photos/tentsite_thumbnails/"
             };
 
         function hasExtendedCacheLifeTime() {
@@ -53,8 +54,8 @@
                                     lat: photo["latitude"],
                                     lng: photo["longitude"],
                                     likes: photo["likes"],
-                                    img_location: config.storageFolder + photo["img_location"],
-                                    thumbnail: config.storageFolder + photo["img_location"],
+                                    img_location: config.photoFolder + photo["img_location"],
+                                    thumbnail: config.thumbnailFolder + photo["thumbnail_location"],
                                     caption: photo["caption"],
                                     created_at: photo["created_at"],
                                     updated_at: photo["updated_at"],
@@ -128,7 +129,7 @@
         function placeSites(tentSites) {
             var photoLayer = L.photo.cluster().on("click", function (evt) {
                 var photo = evt.layer.photo,
-                    template = '<img src="{img_location}" /></a><p>{caption}</p><p>{reported_by} - {created_at}</p>';
+                    template = '<img src="{thumbnail}" /></a><p>{caption}</p><p>{reported_by} - {created_at}</p>';
                 if (photo.video &&
                     (!!document.createElement("video").canPlayType("video/mp4; codecs=avc1.42E01E,mp4a.40.2"))
                 ) {
@@ -231,7 +232,7 @@
                     .attr("data-photo-reported-by", photo.reported_by)
                     .attr("data-photo-created-at", photo.created_at);
 
-                $container.append($("<img>").attr("src", photo.img_location));
+                $container.append($("<img>").attr("src", photo.thumbnail).attr("data-src", photo.img_location));
                 $container.append('<div class="wall-photo-controllers is-hidden">' +
                     '<i class="wall-photo-view-map fa fa-map-marker" title="View photo on map"></i>' +
                     '<i class="wall-photo-enlarge fa fa-arrows-alt fa-3x" title="View enlarged photo"></i>' +
@@ -284,6 +285,8 @@
                         createPhotoWall(sites);
                         $wallLoadMore.removeClass("is-hidden");
                     });
+
+                    $("#wall img").unveil();
 
                     $wallLoadMore.on("click", function() {
                         sites.onFetchedSites(function(sites) {

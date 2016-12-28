@@ -42,7 +42,8 @@ elixir(function(mix) {
         config.bowerDir + '/foundation-sites/dist/js/foundation.js',
         config.bowerDir + '/exif-js/exif.js',
         config.bowerDir + '/what-input/dist/what-input.js',
-        config.bowerDir + '/cropit/dist/jquery.cropit.js'
+        config.bowerDir + '/cropit/dist/jquery.cropit.js',
+        config.bowerDir + '/jquery-unveil/jquery.unveil.js'
     ], 'public/js/vendor.js');
 });
 
