@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('welcome')
 @section('content')
 <div class="page page-allow-overflow">
     <div class="row"><br/></div>
@@ -33,7 +33,7 @@
                     <div class="medium-5 columns large-centered text-left">
                         <input type="checkbox" name="remember"> <label>Remember Me</label>
 
-                        <a href="{{ url('/#/password/reset') }}">
+                        <a href="{{ url('/password/reset') }}">
                             Forgot Your Password?
                         </a>
                     </div>

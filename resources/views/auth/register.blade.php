@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('welcome')
 @section('content')
 <div class="page page-allow-overflow">
     <div class="row"><br/></div>
