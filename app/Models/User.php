@@ -24,7 +24,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token'
     ];
 
     public function socialLogin()
@@ -49,5 +49,9 @@ class User extends Authenticatable
         } else {
             return "https://hooks.slack.com/services/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";
         }
+    }
+
+    public function isAdmin() {
+        return (bool) $this->getAttribute('is_admin');
     }
 }
