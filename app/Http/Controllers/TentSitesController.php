@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Events\NewTentSiteRegistered;
 use App\Models\TentSites;
 use Auth;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -141,6 +142,21 @@ class TentSitesController extends Controller
             ->whereBetween('latitude', [$minLat, $maxLat])
             ->whereBetween('longitude', [$minLng, $maxLng])
             ->get();
+    }
+
+    public function getUnapproved() {
+        $m = self::MODEL;
+        return DB::table($m::DB)->where('approved', 0)->get();
+    }
+
+
+    public function approve($id) {
+        $m = self::MODEL;
+        /* @var TentSites $tentSite */
+        $tentSite = $m::get()->where('id', $id)->first();
+        $tentSite->approved = true;
+        $tentSite->save();
+        return redirect('/admin');
     }
 
 }

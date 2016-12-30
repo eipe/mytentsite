@@ -20,4 +20,23 @@ Route::get('auth/{provider}', 'Auth\SocialController@redirectToProvider');
 Route::get('auth/handle/{provider}', 'Auth\SocialController@handleProviderCallback');
 Auth::routes();
 
+/**
+ * Admin
+ */
+Route::group(['middleware' => 'admin'], function () {
+    Route::get('admin', 'AdminController@index');
+    Route::get('admin/approve/{id}', 'TentSitesController@approve');
+    Route::get('admin/deny/{id}', 'TentSitesController@deny');
+});
+
+
+
+
+/**
+ * Errors
+ */
+Route::get('403', function () {
+    return view('errors.403');
+});
+
 

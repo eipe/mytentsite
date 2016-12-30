@@ -29,11 +29,17 @@
             <li data-page="user">
                 <a href="{{ url('/#/user') }}"><i class="fa fa-user"></i></a>
             </li>
+            @if (Auth::user()->isAdmin())
+                <li data-page="login">
+                    <a href="{{ url('/admin') }}" title="Admin"><i class="fa fa-unlock-alt"></i></a>
+                </li>
+            @endif
         @else
             <li data-page="login">
                 <a href="{{ url('/login') }}" title="Log in"><i class="fa fa-user-o"></i></a>
             </li>
         @endif
+
     </ul>
 </nav>
 @endsection
