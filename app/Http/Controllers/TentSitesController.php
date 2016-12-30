@@ -115,7 +115,7 @@ class TentSitesController extends Controller
             $tentSites = $this->getWithinArea($lat, $lng, $rad);
         } else {
             $m = self::MODEL;
-            $tentSites= $m::all();
+            $tentSites= $m::all()->where('approved', 1);
         }
         return $this->listResponse($tentSites);
     }
@@ -141,6 +141,7 @@ class TentSitesController extends Controller
         return DB::table($m::DB)
             ->whereBetween('latitude', [$minLat, $maxLat])
             ->whereBetween('longitude', [$minLng, $maxLng])
+            ->where('approved', 1)
             ->get();
     }
 
