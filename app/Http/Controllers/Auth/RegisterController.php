@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\MailingListController;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -62,6 +63,11 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+
+        if($data['subscribe'] == 'on' && isset($data['email'])) {
+            MailingListController::subscribe($data['email']);
+        }
+
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],

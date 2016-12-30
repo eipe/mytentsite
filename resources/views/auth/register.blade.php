@@ -48,6 +48,13 @@
                 </div>
 
                 <div class="row">
+                    <div class="medium-5 columns large-centered text-left">
+                        <input id="subscribe" type="checkbox" name="subscribe">
+                        <label for="subscribe">Subscribe to our mailinglist</label>
+                    </div>
+                </div>
+                <div class="row">
+
                     <div class="medium-5 columns large-centered text-right">
                         <button type="submit" class="button expanded">
                             Create a new account
