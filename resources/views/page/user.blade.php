@@ -35,7 +35,7 @@
             <div id="user-contributions" class="large-8 large-centered is-hidden" data-toggler=".is-hidden">
             @foreach(Auth::user()->tentSites()->getResults() as $tentSite)
                 <div class="medium-4 column">
-                    <img src="/storage/photos/tentsites/{{ $tentSite->img_location }}" />
+                    <img src="/storage/photos/tentsite_thumbnails/{{ $tentSite->thumbnail_location }}" />
                     <p>
                         <small>
                             {{ $tentSite->created_at }} |
