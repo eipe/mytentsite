@@ -12,12 +12,17 @@
 */
 
 Route::get('/', function () {
+    if(env('APP_ENV') == 'staging' && !Auth::check()) {
+        return view('errors.503');
+    }
     return view('welcome');
 });
 
 Route::get('auth/sign_out', 'Auth\SocialController@signOut');
 Route::get('auth/{provider}', 'Auth\SocialController@redirectToProvider');
 Route::get('auth/handle/{provider}', 'Auth\SocialController@handleProviderCallback');
+Route::get('/beta', 'StagingController@showForm');
+Route::post('/beta', 'StagingController@handle');
 Auth::routes();
 
 /**
