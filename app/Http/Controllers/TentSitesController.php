@@ -115,7 +115,7 @@ class TentSitesController extends Controller
             $tentSites = $this->getWithinArea($lat, $lng, $rad);
         } else {
             $m = self::MODEL;
-            $tentSites= $m::all()->where('approved', 1);
+            $tentSites= $m::where('approved', 1)->paginate(9);
         }
         return $this->listResponse($tentSites);
     }
