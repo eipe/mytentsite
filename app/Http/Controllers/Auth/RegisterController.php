@@ -64,7 +64,7 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
 
-        if($data['subscribe'] == 'on' && isset($data['email'])) {
+        if(isset($data['subscribe']) && ($data['subscribe'] == 'on') && isset($data['email'])) {
             MailingListController::subscribe($data['email']);
         }
 
