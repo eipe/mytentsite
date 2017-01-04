@@ -46,22 +46,24 @@
                     url: config.apiUrl,
                     success: function(response) {
                         var tentSites = [];
-                        if(parseInt(response.code) === 200 && typeof response.data !== typeof undefined) {
-                            $.each(response.data, function(key, photo) {
-                                tentSites.push({
-                                    id: photo["id"],
-                                    reported_by: photo["reported_by"],
-                                    lat: photo["latitude"],
-                                    lng: photo["longitude"],
-                                    likes: photo["likes"],
-                                    img_location: config.photoFolder + photo["img_location"],
-                                    thumbnail: config.thumbnailFolder + photo["thumbnail_location"],
-                                    caption: photo["caption"],
-                                    created_at: photo["created_at"],
-                                    updated_at: photo["updated_at"],
-                                    approved: photo["approved"]
+                        if(parseInt(response.code) === 200) {
+                            if(parseInt(response.data.total) > 0) {
+                                $.each(response.data.data, function(key, photo) {
+                                    tentSites.push({
+                                        id: photo["id"],
+                                        reported_by: photo["reported_by"],
+                                        lat: photo["latitude"],
+                                        lng: photo["longitude"],
+                                        likes: photo["likes"],
+                                        img_location: config.photoFolder + photo["img_location"],
+                                        thumbnail: config.thumbnailFolder + photo["thumbnail_location"],
+                                        caption: photo["caption"],
+                                        created_at: photo["created_at"],
+                                        updated_at: photo["updated_at"],
+                                        approved: photo["approved"]
+                                    });
                                 });
-                            });
+                            }
                         }
 
                         if(!storedPhotos) {
