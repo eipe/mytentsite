@@ -43,7 +43,8 @@ elixir(function(mix) {
         config.bowerDir + '/exif-js/exif.js',
         config.bowerDir + '/what-input/dist/what-input.js',
         config.bowerDir + '/cropit/dist/jquery.cropit.js',
-        config.bowerDir + '/jquery-unveil/jquery.unveil.js'
+        config.bowerDir + '/jquery-unveil/jquery.unveil.js',
+        config.bowerDir + '/vue/dist/vue.js'
     ], 'public/js/vendor.js');
 });
 
