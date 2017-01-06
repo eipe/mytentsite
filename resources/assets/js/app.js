@@ -215,7 +215,6 @@
 
     function Wall() {
         var $wall = $("#wall"),
-            $wallPhotoContainer = $("#wall-photos"),
             $wallFullscreen = $("#wall-fullscreen"),
             $wallFullscreenPhoto = $wallFullscreen.find("img"),
             $wallFullscreenCaption = $("#wall-fullscreen-caption"),
@@ -223,25 +222,76 @@
             $wallLoadMore = $("#wall-load-more"),
             loaded = false;
 
-        function createPhotoWall(sites) {
-            $.each(sites, function(key, photo) {
-                var $container = $("<div>").addClass("wall-photo-container").appendTo($wallPhotoContainer);
-                $container.attr("data-photo-id", photo.id)
-                    .attr("data-photo-latitude", photo.lat)
-                    .attr("data-photo-longitude", photo.lng)
-                    .attr("data-photo-location", photo.img_location)
-                    .attr("data-photo-caption", photo.caption)
-                    .attr("data-photo-reported-by", photo.reported_by)
-                    .attr("data-photo-created-at", photo.created_at);
+        Vue.component('photo', Vue.extend({
+            template: '<div class="wall-photo-container" ' +
+                        ':data-photo-id="id"' +
+                        ':data-photo-latitude="latitude"' +
+                        ':data-photo-longitude="longitude"' +
+                        ':data-photo-caption="caption"' +
+                        ':data-photo-reported-by="reported_by"' +
+                        ':data-photo-created-at="created_at"' +
+                        ':data-photo-location="img_location"><img :src="thumbnail" :data-src="img_location" />' +
+                        '<div class="wall-photo-controllers is-hidden"> ' +
+                        '<i class="wall-photo-view-map fa fa-map-marker" title="View photo on map"></i> ' +
+                        '<i class="wall-photo-enlarge fa fa-arrows-alt fa-3x" title="View enlarged photo"></i> ' +
+                        '</div></div>',
+            props: {
+                id: {
+                    type: Number,
+                    required: true
+                },
+                img_location: {
+                    type: String,
+                    required: true
+                },
+                thumbnail: {
+                    type: String,
+                    required: true
+                },
+                latitude: {
+                    type: Number,
+                    required: true
+                },
+                longitude: {
+                    type: Number,
+                    required: true
+                },
+                caption: {
+                    type: String,
+                    required: true
+                },
+                created_at: {
+                    type: String,
+                    required: true
+                },
+                reported_by: {
+                    type: String,
+                    required: true
+                }
+            },
+            data: function () {
+                return {};
+            }
+        }));
 
-                $container.append($("<img>").attr("src", photo.thumbnail).attr("data-src", photo.img_location));
-                $container.append('<div class="wall-photo-controllers is-hidden">' +
-                    '<i class="wall-photo-view-map fa fa-map-marker" title="View photo on map"></i>' +
-                    '<i class="wall-photo-enlarge fa fa-arrows-alt fa-3x" title="View enlarged photo"></i>' +
-                    '</div>');
+        function createPhotoWall(sites) {
+            var PhotoWall = new Vue({
+                el: '#wall-photos',
+                data: { photos: [] },
+                methods: {
+                    addPhoto: function(photo) {
+                        this.photos.push(photo);
+                    }
+                }
             });
 
-            $(".wall-photo-view-map").on("click", function(e) {
+            $.each(sites, function(key, photo) {
+                photo.latitude = photo.lat;
+                photo.longitude = photo.lng;
+                PhotoWall.addPhoto(photo);
+            });
+
+            $(document).on("click", ".wall-photo-view-map", function(e) {
                 e.stopPropagation();
                 var $photoContainer = $(this).closest(".wall-photo-container");
                 if($photoContainer.hasClass("reveal")) {
@@ -251,7 +301,7 @@
                 map.updateView($photoContainer.data("photo-latitude"), $photoContainer.data("photo-longitude"), 9);
             });
 
-            $(".wall-photo-enlarge").on("click", function(e) {
+            $(document).on("click", ".wall-photo-enlarge", function(e) {
                 e.stopPropagation();
                 var $photoContainer = $(this).closest(".wall-photo-container");
                 $wallFullscreen.data("photo-latitude", $photoContainer.data("photo-latitude")).
