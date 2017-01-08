@@ -25,7 +25,6 @@
             };
 
         function hasExtendedCacheLifeTime() {
-            return true;
             var intLastFetchTime = localStorage.getItem("Sites.lastFetchTime");
             if(!intLastFetchTime) {
                 return true;
