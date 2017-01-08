@@ -24,7 +24,8 @@ class TentSiteTableSeeder extends Seeder
                 'img_location' => $faker->imageUrl(),
                 'external_id' => $index,
                 'thumbnail_location' => $faker->imageUrl(200, 200),
-                'caption' => $faker->sentence
+                'caption' => $faker->sentence,
+                'approved' => false
             ]);
         }
     }
