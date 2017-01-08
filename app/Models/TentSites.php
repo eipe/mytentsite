@@ -81,4 +81,14 @@ class TentSites extends Model
         $formatDate = new \DateTime($date);
         return $formatDate->format('d. M. Y');
     }
+
+    public function getImgLocationAttribute($imageName)
+    {
+        return '/storage'.env('TENT_SITE_PHOTO_DIR').$imageName;
+    }
+
+    public function getThumbnailLocationAttribute($imageName)
+    {
+        return '/storage'.env('TENT_SITE_THUMBNAIL_DIR').$imageName;
+    }
 }
