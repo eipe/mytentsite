@@ -21,7 +21,7 @@
             config = {
                 apiUrl : "/api/tentsites",
                 photoFolder : "/storage/photos/tentsites/",
-                thumbnailFolder : "storage/photos/tentsite_thumbnails/"
+                thumbnailFolder : "/storage/photos/tentsite_thumbnails/"
             };
 
         function hasExtendedCacheLifeTime() {
