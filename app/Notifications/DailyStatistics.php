@@ -4,7 +4,6 @@ namespace App\Notifications;
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Models\TentSites;
-use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\SlackMessage;
 use Illuminate\Notifications\Notification;
@@ -89,7 +88,7 @@ class DailyStatistics extends Notification
             ->success()
             ->content('Daily statistics!')
             ->attachment(function ($attachment) use ($data, $notifiable) {
-                $attachment->title(date('Y-m-d'))
+                $attachment->title(date('d.m.Y'))
                     ->fields([
                         'New users' => $data[0],
                         'Total users' => $data[1],
