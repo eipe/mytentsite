@@ -15,7 +15,9 @@
     }
 
     function Sites() {
-        var fncCallbackOnFetchedSites,
+        var tentSites = [],
+            nextPageUrl,
+            loadedAll = false,
             config = {
                 apiUrl : "/api/tentsites",
                 photoFolder : "/storage/photos/tentsites/",
@@ -23,6 +25,7 @@
             };
 
         function hasExtendedCacheLifeTime() {
+            return true;
             var intLastFetchTime = localStorage.getItem("Sites.lastFetchTime");
             if(!intLastFetchTime) {
                 return true;
@@ -32,62 +35,83 @@
             }
         }
 
-        function fetchSites() {
-            if(hasExtendedCacheLifeTime()) {
-                localStorage.removeItem("Sites.all");
-            }
-
+        function getCachedPhotos() {
             var storedPhotos = localStorage.getItem("Sites.all");
-
             if(storedPhotos) {
-                fncCallbackOnFetchedSites(JSON.parse(localStorage.getItem("Sites.all")));
-            } else {
-                $.ajax({
-                    url: config.apiUrl,
-                    success: function(response) {
-                        var tentSites = [];
-                        if(parseInt(response.code) === 200) {
-                            if(parseInt(response.data.total) > 0) {
-                                $.each(response.data.data, function(key, photo) {
-                                    tentSites.push({
-                                        id: photo["id"],
-                                        reported_by: photo["reported_by"],
-                                        lat: photo["latitude"],
-                                        lng: photo["longitude"],
-                                        likes: photo["likes"],
-                                        img_location: config.photoFolder + photo["img_location"],
-                                        thumbnail: config.thumbnailFolder + photo["thumbnail_location"],
-                                        caption: photo["caption"],
-                                        created_at: photo["created_at"],
-                                        updated_at: photo["updated_at"],
-                                        approved: photo["approved"]
-                                    });
-                                });
-                            }
-                        }
-
-                        if(!storedPhotos) {
-                            storedPhotos = [];
-                        } else {
-                            storedPhotos = JSON.parse(storedPhotos);
-                        }
-
-                        storedPhotos = storedPhotos.concat(tentSites);
-
-                        localStorage.setItem("Sites.lastFetchTime", getTime());
-                        localStorage.setItem("Sites.all", JSON.stringify(storedPhotos));
-                        fncCallbackOnFetchedSites(tentSites);
-                    }, error: function(error) {
-                        console.log(error);
-                    }
-                });
+                return JSON.parse(storedPhotos);
             }
+            return [];
+        }
+
+        function fetchSites() {
+
+            var url = config.apiUrl;
+            if(nextPageUrl) {
+                url = nextPageUrl;
+            }
+
+            $.ajax({
+                url: url,
+                success: function(response) {
+                    if(parseInt(response.code) === 200) {
+                        nextPageUrl = response.data.next_page_url;
+                        if(!nextPageUrl) {
+                            loadedAll = true;
+                        }
+
+                        if(typeof response.data.data !== typeof undefined && response.data.data.length > 0) {
+                            var newPhotos = [];
+                            $.each(response.data.data, function (key, photo) {
+                                var tentSite = {
+                                    id: photo["id"],
+                                    reported_by: photo["reported_by"],
+                                    lat: photo["latitude"],
+                                    lng: photo["longitude"],
+                                    likes: photo["likes"],
+                                    img_location: config.photoFolder + photo["img_location"],
+                                    thumbnail: config.thumbnailFolder + photo["thumbnail_location"],
+                                    caption: photo["caption"],
+                                    created_at: photo["created_at"],
+                                    updated_at: photo["updated_at"],
+                                    approved: photo["approved"]
+                                };
+                                tentSites.push(tentSite);
+                                newPhotos.push(tentSite);
+                            });
+
+                            localStorage.setItem("Sites.lastFetchTime", getTime());
+                            localStorage.setItem("Sites.all", JSON.stringify(getCachedPhotos().concat(newPhotos)));
+                        }
+                    }
+                }, error: function(error) {
+                    console.log(error);
+                }
+            });
         }
 
         return {
-            "onFetchedSites" : function(fncCallback) {
-                fncCallbackOnFetchedSites = fncCallback;
-                fetchSites();
+            "loadMore": function() {
+                if(!loadedAll) {
+                    fetchSites();
+                }
+            },
+            "getTentSites": function() {
+                if(tentSites.length === 0) {
+                    if(hasExtendedCacheLifeTime()) {
+                        localStorage.removeItem("Sites.all");
+                    }
+
+                    var storedPhotos = localStorage.getItem("Sites.all");
+                    if(storedPhotos) {
+                        tentSites = JSON.parse(storedPhotos);
+                    } else {
+                        fetchSites();
+                    }
+                }
+                return tentSites;
+            },
+            "hasLoadedAll": function() {
+                return loadedAll;
             }
         }
     }
@@ -190,9 +214,7 @@
                     view.displayModalMessage("Could not detect your location", event.message);
                 });
 
-                sites.onFetchedSites(function(sites) {
-                    placeSites(sites);
-                });
+                placeSites(sites.getTentSites());
             },
             updateView: function(latitude, longitude, zoom) {
                 if(!latitude || !longitude) {
@@ -219,14 +241,13 @@
             $wallFullscreenPhoto = $wallFullscreen.find("img"),
             $wallFullscreenCaption = $("#wall-fullscreen-caption"),
             $wallFullscreenReported = $("#wall-fullscreen-reported"),
-            $wallLoadMore = $("#wall-load-more"),
             loaded = false;
 
         Vue.component('photo', Vue.extend({
             template: '<div class="wall-photo-container" ' +
                         ':data-photo-id="id"' +
-                        ':data-photo-latitude="latitude"' +
-                        ':data-photo-longitude="longitude"' +
+                        ':data-photo-latitude="lat"' +
+                        ':data-photo-longitude="lng"' +
                         ':data-photo-caption="caption"' +
                         ':data-photo-reported-by="reported_by"' +
                         ':data-photo-created-at="created_at"' +
@@ -248,11 +269,11 @@
                     type: String,
                     required: true
                 },
-                latitude: {
+                lat: {
                     type: Number,
                     required: true
                 },
-                longitude: {
+                lng: {
                     type: Number,
                     required: true
                 },
@@ -274,21 +295,13 @@
             }
         }));
 
-        function createPhotoWall(sites) {
-            var PhotoWall = new Vue({
-                el: '#wall-photos',
-                data: { photos: [] },
-                methods: {
-                    addPhoto: function(photo) {
-                        this.photos.push(photo);
-                    }
+        function createPhotoWall() {
+            new Vue({
+                el: '#wall-content',
+                data: {
+                    photos: sites.getTentSites(),
+                    hasMore: !sites.hasLoadedAll()
                 }
-            });
-
-            $.each(sites, function(key, photo) {
-                photo.latitude = photo.lat;
-                photo.longitude = photo.lng;
-                PhotoWall.addPhoto(photo);
             });
 
             $(document).on("click", ".wall-photo-view-map", function(e) {
@@ -333,17 +346,12 @@
             initialize: function() {
                 if(loaded === false) {
                     loaded = true;
-                    sites.onFetchedSites(function(sites) {
-                        createPhotoWall(sites);
-                        $wallLoadMore.removeClass("is-hidden");
-                    });
+                    createPhotoWall();
 
                     $("#wall img").unveil();
 
-                    $wallLoadMore.on("click", function() {
-                        sites.onFetchedSites(function(sites) {
-                            createPhotoWall(sites);
-                        });
+                    $(document).on("click", "#wall-load-more", function() {
+                        sites.loadMore();
                         $wall.animate({scrollTop: $wall.prop("scrollHeight") - 80}, 1000);
                     });
                 }
