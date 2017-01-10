@@ -35,7 +35,8 @@
                 </span>
                 <span data-step="3" class="is-hidden">
                     We are uploading your tent site
-                    <i class="fa fa-circle-o-notch fa-spin"></i>
+                    <i class="fa fa-circle-o-notch fa-spin"></i><br><br>
+                    <button id="photo-cancel-upload" class="button secondary">Cancel upload</button>
                 </span>
             </div>
         </div>

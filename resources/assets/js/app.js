@@ -361,8 +361,8 @@
     }
 
     function Photo() {
-        var $frame, $preview, $previewLoading, $uploader, $uploaderLabel, $caption,
-            $rotate, $store, loaded = false, $controllersContainer,
+        var $frame, $preview, $previewLoading, $uploader, $uploaderLabel, uploadEvent, $caption,
+            $rotate, $store, $cancel, loaded = false, $controllersContainer,
             photoExifData = {
                 location: {
                     latitude: null,
@@ -410,7 +410,7 @@
                     photoData.append("taken_date", photoExifData.taken_date);
                 }
                 photoControllerNext();
-                $.ajax({
+                uploadEvent = $.ajax({
                     url: options.target,
                     method: "POST",
                     data: photoData,
@@ -421,6 +421,10 @@
                     view.closeModalMessage();
                     callback(200, "Photo successfully uploaded");
                 }).error(function(response) {
+                    // Handle canceled upload
+                    if(parseInt(response.readyState) === 0 && response.statusText === "abort") {
+                        return;
+                    }
                     photoControllerPrevious();
                     var error = '',
                         errors = $.parseJSON(response.responseText);
@@ -519,6 +523,7 @@
             $uploaderLabel = $('label[for="photo-file"]');
             $rotate = $("#photo-rotate");
             $controllersContainer = $("#photo-controllers");
+            $cancel = $("#photo-cancel-upload");
 
             var maxStep = $controllersContainer.data("current-step");
             $controllersContainer.find("*[data-step]").each(function() {
@@ -560,6 +565,11 @@
                         view.displayModalMessage("Upload of photo was not successful", responseText);
                     }
                 });
+            });
+
+            $cancel.on("click", function() {
+                uploadEvent.abort();
+                photoControllerPrevious();
             });
 
             $frame.cropit(options.cropItSettings);
