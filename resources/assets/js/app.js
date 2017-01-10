@@ -19,9 +19,7 @@
             nextPageUrl,
             loadedAll = false,
             config = {
-                apiUrl : "/api/tentsites",
-                photoFolder : "/storage/photos/tentsites/",
-                thumbnailFolder : "/storage/photos/tentsite_thumbnails/"
+                apiUrl : "/api/tentsites"
             };
 
         function hasExtendedCacheLifeTime() {
