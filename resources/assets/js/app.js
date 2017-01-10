@@ -32,7 +32,7 @@
             }
         }
 
-        function getCachedPhotos() {
+        function getCachedPhotosAsArray() {
             var storedPhotos = localStorage.getItem("Sites.all");
             if(storedPhotos) {
                 return JSON.parse(storedPhotos);
@@ -77,7 +77,7 @@
                             });
 
                             localStorage.setItem("Sites.lastFetchTime", getTime());
-                            localStorage.setItem("Sites.all", JSON.stringify(getCachedPhotos().concat(newPhotos)));
+                            localStorage.setItem("Sites.all", JSON.stringify(getCachedPhotosAsArray().concat(newPhotos)));
                         }
                     }
                 }, error: function(error) {
