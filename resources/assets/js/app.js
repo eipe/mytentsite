@@ -633,14 +633,28 @@
             });
         }
 
+        function hasActiveUpload() {
+            return ($uploader.val());
+        }
+
         return {
             initialize: function() {
                 if(!loaded) {
                     loaded = true;
                     setupListeners();
                 }
+
+                window.onbeforeunload = function() {
+                    if(hasActiveUpload() &&
+                        !confirm("You have a pending photo upload - want to finish that before leaving this page?")) {
+                        return false;
+                    }
+                };
             },
             destruct: function() {
+                if(hasActiveUpload() === false) {
+                    window.onbeforeunload = null;
+                }
             }
         }
     }
