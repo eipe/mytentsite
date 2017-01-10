@@ -33,27 +33,54 @@
         }
 
         function getCachedPhotosAsArray() {
-            var storedPhotos = localStorage.getItem("Sites.all");
+            var storedPhotos = getCachedPhotos();
             if(storedPhotos) {
                 return JSON.parse(storedPhotos);
             }
             return [];
         }
 
-        function fetchSites() {
+        function getCachedPhotos() {
+            return localStorage.getItem("Sites.all");
+        }
 
-            var url = config.apiUrl;
-            if(nextPageUrl) {
-                url = nextPageUrl;
+        function setSiteApiUrl(strUrl) {
+            localStorage.setItem("Sites.nextPageUrl", strUrl);
+        }
+
+        function getSiteApiUrl() {
+            if(hasExtendedCacheLifeTime()) {
+                localStorage.removeItem("Sites.nextPageUrl");
+            }
+            var cachedNextUrl = localStorage.getItem("Sites.nextPageUrl");
+            if(cachedNextUrl) {
+                if(cachedNextUrl === "lastPage") {
+                    loadedAll = true;
+                    return null;
+                } else {
+                    return cachedNextUrl;
+                }
+            } else {
+                return config.apiUrl;
+            }
+        }
+
+        function fetchSites() {
+            var apiUrl = getSiteApiUrl();
+            if(!apiUrl) {
+                return false;
             }
 
             $.ajax({
-                url: url,
+                url: apiUrl,
                 success: function(response) {
                     if(parseInt(response.code) === 200) {
                         nextPageUrl = response.data.next_page_url;
                         if(!nextPageUrl) {
+                            setSiteApiUrl("lastPage");
                             loadedAll = true;
+                        } else {
+                            setSiteApiUrl(nextPageUrl);
                         }
 
                         if(typeof response.data.data !== typeof undefined && response.data.data.length > 0) {
@@ -98,9 +125,9 @@
                         localStorage.removeItem("Sites.all");
                     }
 
-                    var storedPhotos = localStorage.getItem("Sites.all");
-                    if(storedPhotos) {
-                        tentSites = JSON.parse(storedPhotos);
+                    var cachedPhotos = getCachedPhotos();
+                    if(cachedPhotos) {
+                        tentSites = JSON.parse(cachedPhotos);
                     } else {
                         fetchSites();
                     }
