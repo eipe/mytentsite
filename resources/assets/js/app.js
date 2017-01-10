@@ -456,18 +456,27 @@
                 .find("span[data-step=" + $controllersContainer.data("current-step") + "]")
                 .addClass("is-hidden");
             $controllersContainer.find("span[data-step=1]").removeClass("is-hidden");
-            $controllersContainer.data("current-step", 1);
+            setPhotoControllerCurrentStep(1);
+        }
+
+        function getPhotoControllerCurrentStep()
+        {
+            return $controllersContainer.data("current-step");
+        }
+
+        function setPhotoControllerCurrentStep(intStep) {
+            $controllersContainer.data("current-step", intStep);
         }
 
         function photoControllerNext() {
-            var currentStep = $controllersContainer.data("current-step");
+            var currentStep = getPhotoControllerCurrentStep();
             if($controllersContainer.data("max-step") === currentStep) {
                 return false;
             }
             $controllersContainer.find("span[data-step=" + currentStep + "]").toggleClass("is-hidden");
             currentStep++;
             $controllersContainer.find("span[data-step=" + currentStep + "]").toggleClass("is-hidden");
-            $controllersContainer.data("current-step", currentStep);
+            setPhotoControllerCurrentStep(currentStep);
 
             // Disable photo editing when user has moved away from step 1
             if(currentStep > 1) {
@@ -476,14 +485,14 @@
         }
 
         function photoControllerPrevious() {
-            var currentStep = $controllersContainer.data("current-step");
+            var currentStep = getPhotoControllerCurrentStep();
             if(currentStep === 1) {
                 return false;
             }
             $controllersContainer.find("span[data-step=" + currentStep + "]").toggleClass("is-hidden");
             currentStep--;
             $controllersContainer.find("span[data-step=" + currentStep + "]").toggleClass("is-hidden");
-            $controllersContainer.data("current-step", currentStep);
+            setPhotoControllerCurrentStep(currentStep);
 
             // Enable photo editing if user is back on step 1
             if(currentStep === 1) {
