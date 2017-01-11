@@ -278,7 +278,6 @@
                         ':data-photo-location="img_location"><img :src="thumbnail" :data-src="img_location" />' +
                         '<div class="wall-photo-controllers is-hidden"> ' +
                         '<i class="wall-photo-view-map fa fa-map-marker" title="View photo on map"></i> ' +
-                        '<i class="wall-photo-enlarge fa fa-arrows-alt fa-3x" title="View enlarged photo"></i> ' +
                         '</div></div>',
             props: {
                 id: {
@@ -338,11 +337,12 @@
                 map.updateView($photoContainer.data("photo-latitude"), $photoContainer.data("photo-longitude"), 9);
             });
 
-            $(document).on("click", ".wall-photo-enlarge", function(e) {
+            $wall.on("click", ".wall-photo-container", function(e) {
                 e.stopPropagation();
-                var $photoContainer = $(this).closest(".wall-photo-container");
-                $wallFullscreen.data("photo-latitude", $photoContainer.data("photo-latitude")).
-                data("photo-longitude", $photoContainer.data("photo-longitude"));
+                var $photoContainer = $(this);
+                $wallFullscreen
+                    .data("photo-latitude", $photoContainer.data("photo-latitude"))
+                    .data("photo-longitude", $photoContainer.data("photo-longitude"));
                 $wallFullscreenPhoto.attr("src", $photoContainer.data("photo-location"));
                 $wallFullscreenCaption.text($photoContainer.data("photo-caption"));
                 $wallFullscreenReported.text(
@@ -352,10 +352,6 @@
             });
 
             // Support for non-mouse interaction
-            $(document).on("click", ".wall-photo-container", function(e) {
-                e.stopPropagation();
-                $(this).find(".wall-photo-controllers").toggleClass("is-hidden");
-            });
             $(document).on("mouseover", ".wall-photo-container", function(e) {
                 e.stopPropagation();
                 $(this).find(".wall-photo-controllers").removeClass("is-hidden");

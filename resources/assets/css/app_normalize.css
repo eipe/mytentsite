@@ -62,12 +62,13 @@
     max-width: 100%;
 }
 
-.wall-photo-container.reveal {
-    padding: 0;
+.row.row-padding {
+    padding: 5px 0;
 }
 
-.wall-photo-container p {
-    padding: 10px;
+#wall-fullscreen.reveal {
+    padding: 0;
+    font-size: 0.9em;
 }
 
 #footer a {

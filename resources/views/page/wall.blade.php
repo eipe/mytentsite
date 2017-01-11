@@ -1,12 +1,21 @@
 <div id="wall-fullscreen" class="wall-photo-container reveal" data-reveal data-close-on-click="true">
-    <div class="wall-photo-controllers">
-        <i class="wall-photo-view-map wall-photo-enlarged fa fa-map-marker"
-           title="View photo on map"></i>
-        <i class="wall-photo-close fa fa-times" data-close title="Close"></i>
-    </div>
     <img src="">
-    <p id="wall-fullscreen-caption"></p>
-    <p id="wall-fullscreen-reported"></p>
+    <div class="row background-light-gray row-padding">
+        <div class="small-12 medium-9 columns" id="wall-fullscreen-reported"></div>
+        <div class="small-12 medium-3 columns text-right">
+            <span class="wall-photo-view-map pointer small">View on map</span>
+        </div>
+    </div>
+    <div class="row row-padding">
+        <div class="small-12 columns">
+            <p id="wall-fullscreen-caption"></p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="small-12 columns">
+            <button class="button secondary small" data-close>Close</button>
+        </div>
+    </div>
 </div>
 <div id="wall-content">
     <div id="wall-photos">

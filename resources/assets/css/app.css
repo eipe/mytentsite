@@ -108,6 +108,7 @@ nav {
 #wall img {
     width: 100%;
     height: auto;
+    cursor: pointer;
 }
 
 /* General rules */
@@ -119,6 +120,10 @@ nav {
 
 .background-light-gray {
     background-color: #eee;
+}
+
+.pointer {
+    cursor: pointer;
 }
 
 .color-gray {
