@@ -93,11 +93,10 @@ nav {
 
 .wall-photo-controllers {
     position: absolute;
-    top: calc(50% - 25px);
-    left: calc(50% - 75px);
-    width: 150px;
-    max-width: 150px;
-    height: 50px;
+    top: calc(50% - 20px);
+    left: calc(50% - 20px);
+    width: 40px;
+    height: 40px;
     text-align: center;
 }
 
