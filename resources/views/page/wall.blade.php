@@ -18,21 +18,25 @@
     </div>
 </div>
 <div id="wall-content">
-    <div id="wall-photos">
-        <template v-for="photo in photos">
-            <photo :id="photo.id"
-                   :img_location="photo.img_location"
-                   :thumbnail="photo.thumbnail"
-                   :lat="photo.lat"
-                   :lng="photo.lng"
-                   :caption="photo.caption"
-                   :reported_by="photo.reported_by"
-                   :created_at="photo.created_at">
-            </photo>
-        </template>
+    <div class="row">
+        <div id="wall-photos" class="small-12 large-9 large-centered columns">
+            <template v-for="photo in photos">
+                <photo :id="photo.id"
+                       :img_location="photo.img_location"
+                       :thumbnail="photo.thumbnail"
+                       :lat="photo.lat"
+                       :lng="photo.lng"
+                       :caption="photo.caption"
+                       :reported_by="photo.reported_by"
+                       :created_at="photo.created_at">
+                </photo>
+            </template>
+        </div>
     </div>
     <div class="row">
-        <button class="button float-center" id="wall-load-more" v-if="hasMore">Load more tent site photos</button>
+        <div class="small-uncentered large-centered columns">
+            <button class="button float-center" id="wall-load-more" v-if="hasMore">Load more tent site photos</button>
+        </div>
     </div>
 </div>
 @include('page.footer')
