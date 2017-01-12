@@ -337,9 +337,9 @@
                 map.updateView($photoContainer.data("photo-latitude"), $photoContainer.data("photo-longitude"), 9);
             });
 
-            $(document).on("click", ".wall-photo-container", function(e) {
+            $wall.on("click", ".wall-photo-container img", function(e) {
                 e.stopPropagation();
-                var $photoContainer = $(this);
+                var $photoContainer = $(this).closest(".wall-photo-container");
                 $wallFullscreen
                     .data("photo-latitude", $photoContainer.data("photo-latitude"))
                     .data("photo-longitude", $photoContainer.data("photo-longitude"));
