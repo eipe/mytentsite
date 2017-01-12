@@ -36,6 +36,7 @@
     <div class="row">
         <div class="small-uncentered large-centered columns">
             <button class="button float-center" id="wall-load-more" v-if="hasMore">Load more tent site photos</button>
+            <button class="button disabled float-center" v-else>All tent site photos are loaded</button>
         </div>
     </div>
 </div>

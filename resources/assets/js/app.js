@@ -71,6 +71,7 @@
                 return false;
             }
 
+            var loadedMoreSites = false;
             $.ajax({
                 url: apiUrl,
                 success: function(response) {
@@ -105,19 +106,23 @@
 
                             localStorage.setItem("Sites.lastFetchTime", getTime());
                             localStorage.setItem("Sites.all", JSON.stringify(getCachedPhotosAsArray().concat(newPhotos)));
+                            loadedMoreSites = true;
                         }
                     }
                 }, error: function(error) {
                     console.log(error);
                 }
             });
+            return loadedMoreSites;
         }
 
         return {
             "loadMore": function() {
-                if(!loadedAll) {
-                    fetchSites();
+                // Prevent fetching sites if all is already loaded
+                if(loadedAll) {
+                    return false;
                 }
+                return fetchSites();
             },
             "getTentSites": function() {
                 if(tentSites.length === 0) {
@@ -133,9 +138,6 @@
                     }
                 }
                 return tentSites;
-            },
-            "hasLoadedAll": function() {
-                return loadedAll;
             }
         }
     }
@@ -265,7 +267,8 @@
             $wallFullscreenPhoto = $wallFullscreen.find("img"),
             $wallFullscreenCaption = $("#wall-fullscreen-caption"),
             $wallFullscreenReported = $("#wall-fullscreen-reported"),
-            loaded = false;
+            loaded = false,
+            vm;
 
         Vue.component('photo', Vue.extend({
             template: '<div class="wall-photo-container" ' +
@@ -319,11 +322,16 @@
         }));
 
         function createPhotoWall() {
-            new Vue({
+            vm = new Vue({
                 el: '#wall-content',
                 data: {
                     photos: sites.getTentSites(),
-                    hasMore: !sites.hasLoadedAll()
+                    hasMore: true
+                },
+                methods: {
+                    setHasMore: function(value) {
+                        this.hasMore = value;
+                    }
                 }
             });
 
@@ -371,8 +379,11 @@
                     $("#wall img").unveil();
 
                     $(document).on("click", "#wall-load-more", function() {
-                        sites.loadMore();
-                        $wall.animate({scrollTop: $wall.prop("scrollHeight") - 80}, 1000);
+                        var hasMore = sites.loadMore();
+                        vm.setHasMore(hasMore);
+                        if(hasMore) {
+                            $wall.animate({scrollTop: $wall.prop("scrollHeight") - 80}, 1000);
+                        }
                     });
                 }
             },
