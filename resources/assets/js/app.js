@@ -125,9 +125,9 @@
                         localStorage.removeItem("Sites.all");
                     }
 
-                    var cachedPhotos = getCachedPhotos();
-                    if(cachedPhotos) {
-                        tentSites = JSON.parse(cachedPhotos);
+                    var cachedPhotos = getCachedPhotosAsArray();
+                    if(cachedPhotos.length > 0) {
+                        tentSites = cachedPhotos;
                     } else {
                         fetchSites();
                     }
