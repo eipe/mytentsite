@@ -50,4 +50,9 @@ class User extends Authenticatable
     public function isAdmin() {
         return (bool) $this->getAttribute('is_admin');
     }
+
+    public function getLikedTentSites()
+    {
+        return $this->hasMany('App\Models\Like')->whereDeletedAt(null);
+    }
 }

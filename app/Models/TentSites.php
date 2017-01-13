@@ -87,4 +87,16 @@ class TentSites extends Model
     {
         return '/storage'.env('TENT_SITE_THUMBNAIL_DIR').$imageName;
     }
+
+    public function likes()
+    {
+        //return $this->hasManyThrough('App\Models\Like', 'App\Models\User')->whereDeletedAt(null);
+        return $this->hasMany('App\Models\Like')->whereDeletedAt(null)->count();
+    }
+
+    public function getIsLikedAttribute()
+    {
+        $like = $this->likes()->whereUserId(Auth::id())->first();
+        return (!is_null($like)) ? true : false;
+    }
 }

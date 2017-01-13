@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLikesTable extends Migration
+class RemoveLikesFromTentsites extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,8 @@ class CreateLikesTable extends Migration
      */
     public function up()
     {
-        Schema::create('likes', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('user_id');
-            $table->integer('tent_sites_id');
-            $table->softDeletes();
-            $table->timestamps();
+        Schema::table('tent_sites', function (Blueprint $table) {
+            $table->dropColumn('likes');
         });
     }
 
@@ -29,6 +25,8 @@ class CreateLikesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('likes');
+        Schema::table('tent_sites', function (Blueprint $table) {
+            $table->date('likes')->nullable();
+        });
     }
 }
