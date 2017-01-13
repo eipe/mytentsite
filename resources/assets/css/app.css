@@ -73,20 +73,30 @@ nav {
 #wall div.wall-photo-container {
     background: url("/images/250.png") no-repeat center #eee;
     -webkit-box-flex: auto;
-    -ms-flex: auto;
-    flex: auto;
+    -ms-flex: 30%;
+    flex: 30%;
     width: 300px;
     margin: 0 20px 20px 0;
     position: relative;
 }
 
+@media (max-width: 720px) {
+
+    #wall-photos {
+        padding: 2px 0 0 2px;
+    }
+
+    #wall div.wall-photo-container {
+        margin: 0 2px 2px 0;
+    }
+}
+
 .wall-photo-controllers {
     position: absolute;
-    top: calc(50% - 25px);
-    left: calc(50% - 75px);
-    width: 150px;
-    max-width: 150px;
-    height: 50px;
+    top: calc(50% - 20px);
+    left: calc(50% - 20px);
+    width: 40px;
+    height: 40px;
     text-align: center;
 }
 
@@ -108,6 +118,7 @@ nav {
 #wall img {
     width: 100%;
     height: auto;
+    cursor: pointer;
 }
 
 /* General rules */
@@ -119,6 +130,10 @@ nav {
 
 .background-light-gray {
     background-color: #eee;
+}
+
+.pointer {
+    cursor: pointer;
 }
 
 .color-gray {

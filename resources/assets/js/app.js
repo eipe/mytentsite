@@ -71,6 +71,7 @@
                 return false;
             }
 
+            var loadedMoreSites = false;
             $.ajax({
                 url: apiUrl,
                 success: function(response) {
@@ -105,19 +106,23 @@
 
                             localStorage.setItem("Sites.lastFetchTime", getTime());
                             localStorage.setItem("Sites.all", JSON.stringify(getCachedPhotosAsArray().concat(newPhotos)));
+                            loadedMoreSites = true;
                         }
                     }
                 }, error: function(error) {
                     console.log(error);
                 }
             });
+            return loadedMoreSites;
         }
 
         return {
             "loadMore": function() {
-                if(!loadedAll) {
-                    fetchSites();
+                // Prevent fetching sites if all is already loaded
+                if(loadedAll) {
+                    return false;
                 }
+                return fetchSites();
             },
             "getTentSites": function() {
                 if(tentSites.length === 0) {
@@ -125,17 +130,14 @@
                         localStorage.removeItem("Sites.all");
                     }
 
-                    var cachedPhotos = getCachedPhotos();
-                    if(cachedPhotos) {
-                        tentSites = JSON.parse(cachedPhotos);
+                    var cachedPhotos = getCachedPhotosAsArray();
+                    if(cachedPhotos.length > 0) {
+                        tentSites = cachedPhotos;
                     } else {
                         fetchSites();
                     }
                 }
                 return tentSites;
-            },
-            "hasLoadedAll": function() {
-                return loadedAll;
             }
         }
     }
@@ -265,7 +267,8 @@
             $wallFullscreenPhoto = $wallFullscreen.find("img"),
             $wallFullscreenCaption = $("#wall-fullscreen-caption"),
             $wallFullscreenReported = $("#wall-fullscreen-reported"),
-            loaded = false;
+            loaded = false,
+            vm;
 
         Vue.component('photo', Vue.extend({
             template: '<div class="wall-photo-container" ' +
@@ -278,7 +281,6 @@
                         ':data-photo-location="img_location"><img :src="thumbnail" :data-src="img_location" />' +
                         '<div class="wall-photo-controllers is-hidden"> ' +
                         '<i class="wall-photo-view-map fa fa-map-marker" title="View photo on map"></i> ' +
-                        '<i class="wall-photo-enlarge fa fa-arrows-alt fa-3x" title="View enlarged photo"></i> ' +
                         '</div></div>',
             props: {
                 id: {
@@ -320,11 +322,16 @@
         }));
 
         function createPhotoWall() {
-            new Vue({
+            vm = new Vue({
                 el: '#wall-content',
                 data: {
                     photos: sites.getTentSites(),
-                    hasMore: !sites.hasLoadedAll()
+                    hasMore: true
+                },
+                methods: {
+                    setHasMore: function(value) {
+                        this.hasMore = value;
+                    }
                 }
             });
 
@@ -338,11 +345,12 @@
                 map.updateView($photoContainer.data("photo-latitude"), $photoContainer.data("photo-longitude"), 9);
             });
 
-            $(document).on("click", ".wall-photo-enlarge", function(e) {
+            $wall.on("click", ".wall-photo-container img", function(e) {
                 e.stopPropagation();
                 var $photoContainer = $(this).closest(".wall-photo-container");
-                $wallFullscreen.data("photo-latitude", $photoContainer.data("photo-latitude")).
-                data("photo-longitude", $photoContainer.data("photo-longitude"));
+                $wallFullscreen
+                    .data("photo-latitude", $photoContainer.data("photo-latitude"))
+                    .data("photo-longitude", $photoContainer.data("photo-longitude"));
                 $wallFullscreenPhoto.attr("src", $photoContainer.data("photo-location"));
                 $wallFullscreenCaption.text($photoContainer.data("photo-caption"));
                 $wallFullscreenReported.text(
@@ -352,10 +360,6 @@
             });
 
             // Support for non-mouse interaction
-            $(document).on("click", ".wall-photo-container", function(e) {
-                e.stopPropagation();
-                $(this).find(".wall-photo-controllers").toggleClass("is-hidden");
-            });
             $(document).on("mouseover", ".wall-photo-container", function(e) {
                 e.stopPropagation();
                 $(this).find(".wall-photo-controllers").removeClass("is-hidden");
@@ -375,8 +379,11 @@
                     $("#wall img").unveil();
 
                     $(document).on("click", "#wall-load-more", function() {
-                        sites.loadMore();
-                        $wall.animate({scrollTop: $wall.prop("scrollHeight") - 80}, 1000);
+                        var hasMore = sites.loadMore();
+                        vm.setHasMore(hasMore);
+                        if(hasMore) {
+                            $wall.animate({scrollTop: $wall.prop("scrollHeight") - 80}, 1000);
+                        }
                     });
                 }
             },
