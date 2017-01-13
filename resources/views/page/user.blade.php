@@ -39,7 +39,7 @@
                     <p>
                         <small>
                             {{ $tentSite->created_at }} |
-                            <i class="fa fa-thumbs-up"></i> {{ $tentSite->likes() }}  {{}}|
+                            <i class="fa fa-thumbs-up"></i> {{ $tentSite->likes() }} |
                             @if($tentSite->approved)
                                 <i class="fa fa-check"></i> Approved
                             @else
