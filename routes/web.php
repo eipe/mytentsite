@@ -23,6 +23,7 @@ Route::get('auth/{provider}', 'Auth\SocialController@redirectToProvider');
 Route::get('auth/handle/{provider}', 'Auth\SocialController@handleProviderCallback');
 Route::get('/beta', 'StagingController@showForm');
 Route::post('/beta', 'StagingController@handle');
+Route::get('/like/{id}', 'LikeController@handleLike');
 Auth::routes();
 
 /**

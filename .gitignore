@@ -12,3 +12,4 @@ Homestead.yaml
 /public/css/*.map
 .phpstorm.meta.php
 _ide_helper.php
+/storage/app/
