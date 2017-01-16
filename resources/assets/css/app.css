@@ -61,23 +61,16 @@ nav {
 #wall-photos {
     padding: 20px 0 0 20px;
     font-size: 0;
-    display: -ms-flexbox;
-    -ms-flex-wrap: wrap;
-    -ms-flex-direction: column;
-    -webkit-flex-flow: row wrap;
-    flex-flow: row wrap;
-    display: -webkit-box;
     display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
 }
 
 #wall div.wall-photo-container {
     background: url("/images/250.png") no-repeat center #eee;
-    -webkit-box-flex: auto;
-    -ms-flex: 30%;
-    flex: 30%;
-    width: 300px;
     margin: 0 20px 20px 0;
     position: relative;
+    width: calc(calc(100% / 3) - 20px);
 }
 
 @media (max-width: 720px) {
@@ -88,6 +81,7 @@ nav {
 
     #wall div.wall-photo-container {
         margin: 0 2px 2px 0;
+        width: calc(calc(100% / 3 ) - 2px);
     }
 }
 
