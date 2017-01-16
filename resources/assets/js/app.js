@@ -336,13 +336,15 @@
             });
 
             $(document).on("click", ".wall-photo-view-map", function(e) {
-                e.stopPropagation();
                 var $photoContainer = $(this).closest(".wall-photo-container");
-                if($photoContainer.hasClass("reveal")) {
-                    $photoContainer.foundation("close");
+                if($photoContainer.is(":visible")) {
+                    e.stopPropagation();
+                    if($photoContainer.hasClass("reveal")) {
+                        $photoContainer.foundation("close");
+                    }
+                    view.changePage("map");
+                    map.updateView($photoContainer.data("photo-latitude"), $photoContainer.data("photo-longitude"), 9);
                 }
-                view.changePage("map");
-                map.updateView($photoContainer.data("photo-latitude"), $photoContainer.data("photo-longitude"), 9);
             });
 
             $wall.on("click", ".wall-photo-container img", function(e) {
