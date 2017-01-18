@@ -32,6 +32,13 @@ class TentSites extends Model
     protected $hidden = [];
 
     /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['likes'];
+
+    /**
      * Route notifications for the Slack channel.
      *
      * @return string
@@ -94,9 +101,13 @@ class TentSites extends Model
         return $this->hasMany('App\Models\Like')->whereDeletedAt(null)->count();
     }
 
-    public function getIsLikedAttribute()
+    public function getHasLikedAttribute()
     {
         $like = $this->likes()->whereUserId(Auth::id())->first();
         return (!is_null($like)) ? true : false;
+    }
+
+    public function getLikesAttribute() {
+        return $this->likes();
     }
 }
