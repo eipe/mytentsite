@@ -19,5 +19,6 @@ Route::resource('/tentsites', 'TentSitesController', ['except' => [
 Route::get('/tentsites/{lat?}/{lng?}/{rad?}', 'TentSitesController@index');
 Route::post('/tentsites', 'TentSitesController@store')->middleware('auth:api');
 Route::put('/tentsites', 'TentSitesController@update')->middleware('auth:api');
+Route::post('/like/{id}', 'LikeController@handleLike')->middleware('auth:api');
 
 

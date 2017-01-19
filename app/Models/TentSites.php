@@ -101,7 +101,7 @@ class TentSites extends Model
         return $this->hasMany('App\Models\Like')->whereDeletedAt(null)->count();
     }
 
-    public function getHasLikedAttribute()
+    public function getUserHasLiked()
     {
         $like = $this->likes()->whereUserId(Auth::id())->first();
         return (!is_null($like)) ? true : false;
