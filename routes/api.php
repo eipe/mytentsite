@@ -22,3 +22,4 @@ Route::put('/tentsites', 'TentSitesController@update')->middleware('auth:api');
 Route::post('/like/{id}', 'LikeController@handleLike')->middleware('auth:api');
 
 
+
