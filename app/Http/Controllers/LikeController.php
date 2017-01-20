@@ -26,6 +26,6 @@ class LikeController extends Controller
                 $existing_like->restore();
             }
         }
-        redirect()->back();
+        return $existing_like;
     }
 }
