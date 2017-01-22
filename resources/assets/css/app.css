@@ -58,34 +58,19 @@ nav {
     width: 300px;
 }
 
-#wall-photos {
-    padding: 20px 0 0 20px;
-    font-size: 0;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-}
-
-#wall div.wall-photo-container {
-    background: url("/images/250.png") no-repeat center #eee;
-    margin: 0 20px 20px 0;
-    position: relative;
-    width: calc(calc(100% / 3) - 20px);
-}
-
 @media (max-width: 720px) {
 
     #wall-photos {
         padding: 2px 0 0 2px;
     }
 
-    #wall div.wall-photo-container {
+    #wall div.photo-container {
         margin: 0 2px 2px 0;
         width: calc(calc(100% / 3 ) - 2px);
     }
 }
 
-.wall-photo-controllers {
+.photo-controllers {
     position: absolute;
     top: calc(50% - 20px);
     left: calc(50% - 20px);
@@ -94,7 +79,7 @@ nav {
     text-align: center;
 }
 
-.wall-photo-controllers i {
+.photo-controllers i {
     color: #eee;
     opacity: 0.6;
     font-size: 40px;
@@ -104,15 +89,32 @@ nav {
     cursor: pointer;
 }
 
-.wall-photo-controllers i:hover,
-.wall-photo-container.wall-photo-focus .wall-photo-controllers i {
+.photo-controllers i:hover,
+.photo-container.photo-focus .photo-controllers i {
     opacity: 0.9;
 }
 
-#wall img {
+/* Photo wall */
+
+.photo-wall {
+    padding: 20px 0 0 20px;
+    font-size: 0;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+.photo-wall img {
     width: 100%;
     height: auto;
     cursor: pointer;
+}
+
+div.photo-container {
+    background: url("/images/250.png") no-repeat center #eee;
+    margin: 0 20px 20px 0;
+    position: relative;
+    width: calc(calc(100% / 3) - 20px);
 }
 
 /* General rules */

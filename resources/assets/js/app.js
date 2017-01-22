@@ -14,6 +14,160 @@
         }
     }
 
+    $(document).on("click", ".wall-photo-view-map", function(e) {
+        var $photoContainer = $(this).closest(".wall-photo-container");
+        if($photoContainer.is(":visible")) {
+            e.stopPropagation();
+            if($photoContainer.hasClass("reveal")) {
+                $photoContainer.foundation("close");
+            }
+            view.changePage("map");
+            map.updateView($photoContainer.data("photo-latitude"), $photoContainer.data("photo-longitude"), 9);
+        }
+    });
+
+    var vmPhotoControllers = Vue.component('photo-controllers', {
+        template: '<div class="photo-controllers"> ' +
+        '<i class="photo-view-map fa fa-map-marker" title="View photo on map" @click="viewOnMap"></i> ' +
+        '</div>',
+        methods: {
+            viewOnMap: function(event) {
+                var $photoContainer = $(event.target).closest(".photo-container");
+                event.stopPropagation();
+                view.changePage("map");
+                map.updateView($photoContainer.data("photo-latitude"), $photoContainer.data("photo-longitude"), 9);
+            }
+        }
+    });
+
+    var vmPhoto = Vue.component('photo', {
+        template: '<div class="photo-container" ' +
+        ':data-photo-id="id"' +
+        ':data-photo-latitude="lat"' +
+        ':data-photo-longitude="lng"' +
+        ':data-photo-caption="caption"' +
+        ':data-photo-reported-by="reported_by"' +
+        ':data-photo-created-at="created_at"' +
+        ':data-photo-location="img_location" @mouseenter="showControllers=true" @mouseleave="showControllers=false">' +
+        '<img :src="thumbnail" :data-src="img_location" @click="open" />' +
+        '<slot v-if="showControllers"><photo-controllers></photo-controllers></slot></div>',
+        props: {
+            id: {
+                type: Number,
+                required: true
+            },
+            img_location: {
+                type: String,
+                required: true
+            },
+            thumbnail: {
+                type: String,
+                required: true
+            },
+            lat: {
+                type: Number,
+                required: true
+            },
+            lng: {
+                type: Number,
+                required: true
+            },
+            caption: {
+                type: String,
+                required: true
+            },
+            created_at: {
+                type: String,
+                required: true
+            },
+            reported_by: {
+                type: String,
+                required: true
+            }
+        },
+        data: function () {
+            return {
+                showControllers: false
+            };
+        },
+        methods: {
+            open: function(event) {
+                var $me = $(event.target),
+                    $wallFullscreen = $("#wall-fullscreen"),
+                    $wallFullscreenPhoto = $wallFullscreen.find("img"),
+                    $wallFullscreenCaption = $("#wall-fullscreen-caption"),
+                    $wallFullscreenReported = $("#wall-fullscreen-reported"),
+                    $photoContainer = $me.closest(".photo-container");
+
+                $wallFullscreen
+                    .data("photo-latitude", $photoContainer.data("photo-latitude"))
+                    .data("photo-longitude", $photoContainer.data("photo-longitude"));
+                $wallFullscreenPhoto.attr("src", $photoContainer.data("photo-location"));
+                $wallFullscreenCaption.text($photoContainer.data("photo-caption"));
+                $wallFullscreenReported.text(
+                    $photoContainer.data("photo-reported-by") + " - " + $photoContainer.data("photo-created-at")
+                );
+                $wallFullscreen.foundation("open");
+            }
+        },
+
+        components: {
+            'photo-controllers' : vmPhotoControllers
+        }
+    });
+
+    Vue.component('photo-wall', {
+        template: '<div>' +
+            '<div class="row">' +
+                '<div class="photo-wall small-12 large-9 large-centered columns">' +
+                    '<template v-for="photo in photos">' +
+                        '<photo :id="photo.id"' +
+                        ':img_location="photo.img_location"' +
+                        ':thumbnail="photo.thumbnail"' +
+                        ':lat="photo.lat"' +
+                        ':lng="photo.lng"' +
+                        ':caption="photo.caption"' +
+                        ':reported_by="photo.reported_by"' +
+                        ':created_at="photo.created_at"> ' +
+                        '</photo>' +
+                    '</template>' +
+                '</div>' +
+            '</div>' +
+            '<div class="row">' +
+                '<div class="small-uncentered large-centered columns">' +
+                    '<button class="button float-center" v-if="hasMore" @click="loadMore">Load more tent site photos</button> ' +
+                    '<button class="button disabled float-center" v-else>All tent site photos are loaded</button>' +
+                '</div>' +
+            '</div>' +
+        '</div>',
+        data: function() {
+            return {
+                showControllers: {
+                    type: Boolean,
+                    default: true
+                },
+                photos: [],
+                hasMore: {
+                    type: Boolean,
+                    default: true
+                }
+            }
+        },
+        created: function() {
+            this.photos = sites.getTentSites();
+        },
+
+        methods: {
+            loadMore: function() {
+                this.hasMore = sites.loadMore();
+            }
+        },
+
+        components: {
+            'photo' : vmPhoto
+        }
+    });
+
     function Sites() {
         var tentSites = [],
             nextPageUrl,
@@ -262,113 +416,11 @@
     }
 
     function Wall() {
-        var $wall = $("#wall"),
-            $wallFullscreen = $("#wall-fullscreen"),
-            $wallFullscreenPhoto = $wallFullscreen.find("img"),
-            $wallFullscreenCaption = $("#wall-fullscreen-caption"),
-            $wallFullscreenReported = $("#wall-fullscreen-reported"),
-            loaded = false,
-            vm;
-
-        Vue.component('photo', Vue.extend({
-            template: '<div class="wall-photo-container" ' +
-                        ':data-photo-id="id"' +
-                        ':data-photo-latitude="lat"' +
-                        ':data-photo-longitude="lng"' +
-                        ':data-photo-caption="caption"' +
-                        ':data-photo-reported-by="reported_by"' +
-                        ':data-photo-created-at="created_at"' +
-                        ':data-photo-location="img_location"><img :src="thumbnail" :data-src="img_location" />' +
-                        '<div class="wall-photo-controllers is-hidden"> ' +
-                        '<i class="wall-photo-view-map fa fa-map-marker" title="View photo on map"></i> ' +
-                        '</div></div>',
-            props: {
-                id: {
-                    type: Number,
-                    required: true
-                },
-                img_location: {
-                    type: String,
-                    required: true
-                },
-                thumbnail: {
-                    type: String,
-                    required: true
-                },
-                lat: {
-                    type: Number,
-                    required: true
-                },
-                lng: {
-                    type: Number,
-                    required: true
-                },
-                caption: {
-                    type: String,
-                    required: true
-                },
-                created_at: {
-                    type: String,
-                    required: true
-                },
-                reported_by: {
-                    type: String,
-                    required: true
-                }
-            },
-            data: function () {
-                return {};
-            }
-        }));
+        var loaded = false;
 
         function createPhotoWall() {
-            vm = new Vue({
-                el: '#wall-content',
-                data: {
-                    photos: sites.getTentSites(),
-                    hasMore: true
-                },
-                methods: {
-                    setHasMore: function(value) {
-                        this.hasMore = value;
-                    }
-                }
-            });
-
-            $(document).on("click", ".wall-photo-view-map", function(e) {
-                var $photoContainer = $(this).closest(".wall-photo-container");
-                if($photoContainer.is(":visible")) {
-                    e.stopPropagation();
-                    if($photoContainer.hasClass("reveal")) {
-                        $photoContainer.foundation("close");
-                    }
-                    view.changePage("map");
-                    map.updateView($photoContainer.data("photo-latitude"), $photoContainer.data("photo-longitude"), 9);
-                }
-            });
-
-            $wall.on("click", ".wall-photo-container img", function(e) {
-                e.stopPropagation();
-                var $photoContainer = $(this).closest(".wall-photo-container");
-                $wallFullscreen
-                    .data("photo-latitude", $photoContainer.data("photo-latitude"))
-                    .data("photo-longitude", $photoContainer.data("photo-longitude"));
-                $wallFullscreenPhoto.attr("src", $photoContainer.data("photo-location"));
-                $wallFullscreenCaption.text($photoContainer.data("photo-caption"));
-                $wallFullscreenReported.text(
-                    $photoContainer.data("photo-reported-by") + " - " + $photoContainer.data("photo-created-at")
-                );
-                $wallFullscreen.foundation("open");
-            });
-
-            // Support for non-mouse interaction
-            $(document).on("mouseover", ".wall-photo-container", function(e) {
-                e.stopPropagation();
-                $(this).find(".wall-photo-controllers").removeClass("is-hidden");
-            });
-            $(document).on("mouseout", ".wall-photo-container", function(e) {
-                e.stopPropagation();
-                $(this).find(".wall-photo-controllers").addClass("is-hidden");
+            new Vue({
+                el: '#wall-content'
             });
         }
 
@@ -377,16 +429,7 @@
                 if(loaded === false) {
                     loaded = true;
                     createPhotoWall();
-
                     $("#wall img").unveil();
-
-                    $(document).on("click", "#wall-load-more", function() {
-                        var hasMore = sites.loadMore();
-                        vm.setHasMore(hasMore);
-                        if(hasMore) {
-                            $wall.animate({scrollTop: $wall.prop("scrollHeight") - 80}, 1000);
-                        }
-                    });
                 }
             },
             destruct: function() {

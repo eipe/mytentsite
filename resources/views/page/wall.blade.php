@@ -18,26 +18,6 @@
     </div>
 </div>
 <div id="wall-content">
-    <div class="row">
-        <div id="wall-photos" class="small-12 large-9 large-centered columns">
-            <template v-for="photo in photos">
-                <photo :id="photo.id"
-                       :img_location="photo.img_location"
-                       :thumbnail="photo.thumbnail"
-                       :lat="photo.lat"
-                       :lng="photo.lng"
-                       :caption="photo.caption"
-                       :reported_by="photo.reported_by"
-                       :created_at="photo.created_at">
-                </photo>
-            </template>
-        </div>
-    </div>
-    <div class="row">
-        <div class="small-uncentered large-centered columns">
-            <button class="button float-center" id="wall-load-more" v-if="hasMore">Load more tent site photos</button>
-            <button class="button disabled float-center" v-else>All tent site photos are loaded</button>
-        </div>
-    </div>
+    <photo-wall></photo-wall>
 </div>
 @include('page.footer')
