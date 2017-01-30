@@ -48,6 +48,7 @@
         ':data-photo-caption="caption"' +
         ':data-photo-reported-by="reported_by"' +
         ':data-photo-created-at="created_at"' +
+        ':data-photo-likes="likes"' +
         ':data-photo-location="img_location" @mouseenter="showControllers=true" @mouseleave="showControllers=false">' +
         '<img :src="thumbnail" :data-src="img_location" @click="open" />' +
         '<slot v-if="showControllers"><photo-controllers></photo-controllers></slot></div>',
@@ -83,6 +84,10 @@
             reported_by: {
                 type: String,
                 required: true
+            },
+            likes: {
+                type: Number,
+                required: true
             }
         },
         data: function () {
@@ -96,6 +101,8 @@
                     $wallFullscreen = $("#wall-fullscreen"),
                     $wallFullscreenPhoto = $wallFullscreen.find("img"),
                     $wallFullscreenCaption = $("#wall-fullscreen-caption"),
+                    $wallFullscreenId = $("#wall-fullscreen-id"),
+                    $wallFullscreenLikes = $("#wall-fullscreen-likes"),
                     $wallFullscreenReported = $("#wall-fullscreen-reported"),
                     $photoContainer = $me.closest(".photo-container");
 
@@ -104,6 +111,8 @@
                     .data("photo-longitude", $photoContainer.data("photo-longitude"));
                 $wallFullscreenPhoto.attr("src", $photoContainer.data("photo-location"));
                 $wallFullscreenCaption.text($photoContainer.data("photo-caption"));
+                $wallFullscreenId.text($photoContainer.data("photo-id"));
+                $wallFullscreenLikes.text($photoContainer.data("photo-likes"));
                 $wallFullscreenReported.text(
                     $photoContainer.data("photo-reported-by") + " - " + $photoContainer.data("photo-created-at")
                 );
@@ -128,7 +137,8 @@
                         ':lng="photo.lng"' +
                         ':caption="photo.caption"' +
                         ':reported_by="photo.reported_by"' +
-                        ':created_at="photo.created_at"> ' +
+                        ':created_at="photo.created_at"' +
+                        ':likes="photo.likes"> ' +
                         '</photo>' +
                     '</template>' +
                 '</div>' +
@@ -421,6 +431,34 @@
         function createPhotoWall() {
             new Vue({
                 el: '#wall-content'
+            });
+
+            new Vue({
+                el: '#wall-fullscreen',
+                data: {
+                    likes: null // Missing start value
+                },
+                methods: {
+                    like: function () {
+                        var self = this;
+                        // Have to check current state for user to update this instantly
+                        self.likes += 1;
+                        var $apiToken = $("#api_token");
+                        var id = $("#wall-fullscreen-id").text();
+                        $.ajax({
+                            url: "/api/like/"+ id +"/?api_token=" +  $apiToken.text(),
+                            method: "POST",
+                            cache : false,
+                            contentType : false,
+                            processData : false
+                        }).success(function(data) {
+                            self.likes = data.total;
+                        }).error(function(response) {
+                            console.log(response.data)
+                        });
+
+                    }
+                }
             });
         }
 

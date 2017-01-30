@@ -13,7 +13,7 @@ class Like extends Model
 
     protected $fillable = [
         'user_id',
-        'tent_site_id'
+        'tent_sites_id'
     ];
 
 

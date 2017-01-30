@@ -15,9 +15,9 @@ class LikeController extends Controller
         $existing_like = Like::withTrashed()->whereTentSitesId($id)->whereUserId(Auth::id())->first();
 
         if (is_null($existing_like)) {
-            Like::create([
+            $existing_like = Like::create([
                 'user_id'       => Auth::id(),
-                'tent_sites_id'   => $id
+                'tent_sites_id' => $id
             ]);
         } else {
             if (is_null($existing_like->deleted_at)) {
@@ -26,6 +26,8 @@ class LikeController extends Controller
                 $existing_like->restore();
             }
         }
+
+        $existing_like->total = Like::all()->where('tent_sites_id', $id)->count();
         return $existing_like;
     }
 }
