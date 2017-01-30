@@ -58,18 +58,6 @@ nav {
     width: 300px;
 }
 
-@media (max-width: 720px) {
-
-    #wall-photos {
-        padding: 2px 0 0 2px;
-    }
-
-    #wall div.photo-container {
-        margin: 0 2px 2px 0;
-        width: calc(calc(100% / 3 ) - 2px);
-    }
-}
-
 .photo-controllers {
     position: absolute;
     top: calc(50% - 20px);
@@ -110,11 +98,27 @@ nav {
     cursor: pointer;
 }
 
-div.photo-container {
-    background: url("/images/250.png") no-repeat center #eee;
+.photo-container {
+    background-color: #eee;
     margin: 0 20px 20px 0;
     position: relative;
     width: calc(calc(100% / 3) - 20px);
+}
+
+@media screen and (max-width: 400px) {
+    .photo-container { margin: 0; }
+}
+
+@media (max-width: 720px) {
+
+    .photo-wall {
+        padding: 2px 0 0 2px;
+    }
+
+    .photo-container {
+        margin: 0 2px 2px 0;
+        width: calc(calc(100% / 3 ) - 2px);
+    }
 }
 
 /* General rules */
@@ -142,9 +146,4 @@ div.photo-container {
 
 hr.border-dashed {
     border-style: dashed;
-}
-
-@media screen and (max-width: 400px) {
-    #wall div { margin: 0; }
-    #wall { padding: 0; }
 }
