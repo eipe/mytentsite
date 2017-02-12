@@ -1,8 +1,10 @@
 var elixir = require('laravel-elixir'),
+    webpack = require('laravel-elixir-webpack-official'),
     gulp = require('gulp');
 
 var config = {
-    bowerDir: '../../../vendor/bower_components'
+    bowerDir: '../../../vendor/bower_components',
+    nodeDir: '../../../node_modules'
 };
 
 /*
@@ -32,7 +34,7 @@ elixir(function(mix) {
         config.bowerDir + '/foundation-sites/dist/css/foundation.css'
     ], 'public/css/vendor.css');
 
-    mix.scripts('app.js', 'public/js/app.js')
+    mix.webpack('app.js', 'public/js/app.js')
         .scripts([
         config.bowerDir + '/jquery/dist/jquery.js',
         config.bowerDir + '/leaflet/dist/leaflet.js',
@@ -43,8 +45,8 @@ elixir(function(mix) {
         config.bowerDir + '/exif-js/exif.js',
         config.bowerDir + '/what-input/dist/what-input.js',
         config.bowerDir + '/cropit/dist/jquery.cropit.js',
-        config.bowerDir + '/jquery-unveil/jquery.unveil.js',
-        config.bowerDir + '/vue/dist/vue.js'
+        config.nodeDir + '/vue/dist/vue.js',
+        config.nodeDir + '/vue-progressive-image/dist/vue-progressive-image.js'
     ], 'public/js/vendor.js');
 });
 
