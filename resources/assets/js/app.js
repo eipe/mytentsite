@@ -1,6 +1,8 @@
 /**
  * Created by Eivind Røe <eivindroe@gmail.com> on 06.08.2016.
  */
+var VueProgressiveImage = require('vue-progressive-image');
+
 (function($) {
     'use strict';
     var view, photo, map, wall, sites;
@@ -40,6 +42,8 @@
         }
     });
 
+    Vue.use(VueProgressiveImage, {delay: 0});
+
     var vmPhoto = Vue.component('photo', {
         template: '<div class="photo-container" ' +
         ':data-photo-id="id"' +
@@ -49,8 +53,8 @@
         ':data-photo-reported-by="reported_by"' +
         ':data-photo-created-at="created_at"' +
         ':data-photo-likes="likes"' +
-        ':data-photo-location="img_location" @mouseenter="showControllers=true" @mouseleave="showControllers=false">' +
-        '<img :src="thumbnail" :data-src="img_location" @click="open" />' +
+        ':data-photo-location="img_location" @mouseenter="showControllers=true" @mouseleave="showControllers=false" @click="openImage">' +
+        '<progressive-img :src="img_location" :placeholder="thumbnail" :blur="30" />' +
         '<slot v-if="showControllers"><photo-controllers></photo-controllers></slot></div>',
         props: {
             id: {
@@ -96,7 +100,7 @@
             };
         },
         methods: {
-            open: function(event) {
+            openImage: function(event) {
                 var $me = $(event.target),
                     $wallFullscreen = $("#wall-fullscreen"),
                     $wallFullscreenPhoto = $wallFullscreen.find("img"),
@@ -467,7 +471,6 @@
                 if(loaded === false) {
                     loaded = true;
                     createPhotoWall();
-                    $("#wall img").unveil();
                 }
             },
             destruct: function() {
