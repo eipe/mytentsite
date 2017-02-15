@@ -18,6 +18,7 @@ Route::resource('/tentsites', 'TentSitesController', ['except' => [
     'index', 'store', 'update','destroy'
 ]]);
 Route::get('/tentsites/{lat?}/{lng?}/{rad?}', 'TentSitesController@index');
+Route::get('/usersites', 'TentSitesController@getUserTentSites')->middleware('auth:api');
 Route::post('/tentsites', 'TentSitesController@store')->middleware('auth:api');
 Route::put('/tentsites', 'TentSitesController@update')->middleware('auth:api');
 
@@ -28,5 +29,7 @@ Route::post('/like/{id}', 'LikeController@handleLike')->middleware('auth:api');
 Route::get('/comments/{id}', 'CommentController@index');
 Route::post('/comments/{id}', 'CommentController@store')->middleware('auth:api');
 
+// User
+Route::get('/user', 'UserController@index')->middleware('auth:api');
 
 
