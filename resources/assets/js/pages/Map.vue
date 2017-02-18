@@ -10,8 +10,6 @@
 <script>
     var TentMap, locationCircle;
 
-    var Sites = require('../tentsites.js');
-
     // Configure layers
     var WorldImagery = L.tileLayer(
         "http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", {
@@ -64,12 +62,15 @@
         }).addTo(TentMap);
     }
 
-    export default{
-
+    export default {
         name: 'Map',
-
-        data(){
+        data() {
             return {
+            }
+        },
+        computed: {
+            tentSites() {
+                return this.$store.state.tentSites.data;
             }
         },
         props: {
@@ -119,7 +120,7 @@
                     alert("Could not detect your location:" + event.message);
                 });
 
-                placeSites(Sites().getTentSites());
+                placeSites(this.tentSites);
             },
             updateView: function() {
                 if(!this.latitude || !this.longitude) {
@@ -132,9 +133,10 @@
                 );
             }
         },
-        components:{
-        },
         watch: {
+            tentSites(newSites) {
+                placeSites(newSites);
+            },
             'latitude': function() {
                 this.updateView();
             },

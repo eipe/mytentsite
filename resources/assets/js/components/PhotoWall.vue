@@ -33,15 +33,22 @@
                 showControllers: {
                     type: Boolean,
                     default: true
-                },
-                photos: this.$store.state.tentSites.data,
-                hasMore: this.$store.state.tentSites.hasMore
+                }
+            }
+        },
+        computed: {
+            hasMore() {
+                return this.$store.state.tentSites.hasMore;
+            },
+            photos() {
+                return this.$store.state.tentSites.data;
             }
         },
         created() {
-            this.$store.commit('loadMoreTentSites');
+            if(typeof this.photo === typeof undefined || this.photos.length === 0) {
+                this.$store.commit('loadMoreTentSites');
+            }
         },
-
         methods: {
             loadMore() {
                 this.$store.commit('loadMoreTentSites');

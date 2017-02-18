@@ -50,14 +50,12 @@ const router = new VueRouter({
     linkActiveClass: 'is-active'
 });
 
-var Sites = require('./tentsites.js'),
-    Provider = new Sites();
-
 const store = new Vuex.Store({
     state: {
         tentSites: {
+            apiUrl: '/api/tentsites',
             hasMore: true,
-            data: {}
+            data: []
         },
         user: {
             name: '',
@@ -88,15 +86,39 @@ const store = new Vuex.Store({
             state.gallery.isActive = false;
         },
         loadMoreTentSites(state) {
-            let mxdResponse = Provider.getTentSites();
+            if(state.tentSites.hasMore) {
+                $.ajax({
+                    url: state.tentSites.apiUrl,
+                    success: function (response) {
+                        if(parseInt(response.code) === 200) {
+                            if(response.data.next_page_url) {
+                                state.tentSites.apiUrl = response.data.next_page_url;
+                            } else {
+                                state.tentSites.hasMore = false;
+                            }
 
-            if(mxdResponse) {
-                $.each(mxdResponse, function(key, value) {
-                    state.tentSites.data[value.id] = value;
+                            if(typeof response.data.data !== typeof undefined && response.data.data.length > 0) {
+                                $.each(response.data.data, function (key, photo) {
+                                    state.tentSites.data.push({
+                                        id: photo["id"],
+                                        reported_by: photo["reported_by"],
+                                        lat: photo["latitude"],
+                                        lng: photo["longitude"],
+                                        likes: photo["likes"],
+                                        img_location: photo["img_location"],
+                                        thumbnail: photo["thumbnail_location"],
+                                        caption: photo["caption"],
+                                        created_at: photo["created_at"],
+                                        updated_at: photo["updated_at"],
+                                        approved: photo["approved"]
+                                    });
+                                });
+                            }
+                        }
+                    }, error: function (error) {
+                        console.log(error);
+                    }
                 });
-            }
-            else {
-                state.tentSites.hasMore = false;
             }
         },
         setUser(state, user) {
