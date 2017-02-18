@@ -1,6 +1,6 @@
 <template>
     <div v-if="isActive">
-        <div class="overlay"></div>
+        <div class="overlay" @click="destroy"></div>
         <div class="photo-view">
             <div style="width: 70%">
             <photo
