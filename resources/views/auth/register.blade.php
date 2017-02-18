@@ -73,6 +73,5 @@
             </form>
         </div>
     </div>
-    @include('page.footer')
 </div>
 @endsection

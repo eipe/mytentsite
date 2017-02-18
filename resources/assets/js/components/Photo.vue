@@ -1,0 +1,104 @@
+<template>
+    <div class="photo-container"
+        :data-photo-id="id"
+        :data-photo-latitude="lat"
+        :data-photo-longitude="lng"
+        :data-photo-caption="caption"
+        :data-photo-reported-by="reported_by"
+        :data-photo-created-at="created_at"
+        :data-photo-likes="likes"
+        :data-photo-location="img_location"
+        :data-photo-approved="approved"
+         @mouseenter="showControllers=true"
+         @mouseleave="showControllers=false"
+         @click="openImage">
+        <progressive-img
+                :src="img_location"
+                :placeholder="thumbnail"
+                :blur="30" />
+        <slot v-if="showControllers">
+            <photo-controllers></photo-controllers>
+        </slot>
+        <div v-if="showDetails">
+            Status: {{ status }}
+        </div>
+    </div>
+</template>
+<script>
+    import PhotoControllers from './PhotoControllers.vue'
+
+    export default {
+        data () {
+            return{
+                showControllers: false
+            }
+        },
+        props: {
+            id: {
+                type: Number,
+                required: true
+            },
+            img_location: {
+                type: String,
+                required: true
+            },
+            thumbnail: {
+                type: String,
+                required: true
+            },
+            lat: {
+                type: Number,
+                required: true
+            },
+            lng: {
+                type: Number,
+                required: true
+            },
+            caption: {
+                type: String,
+                required: true
+            },
+            created_at: {
+                type: String,
+                required: false
+            },
+            reported_by: {
+                type: String,
+                required: false
+            },
+            likes: {
+                type: Number,
+                required: true
+            },
+            approved: {
+                type: Boolean,
+                required: false
+            },
+            showDetails: {
+                type: Boolean,
+                default: false
+            }
+        },
+        computed: {
+            status() {
+                if(typeof this.approved === typeof undefined) {
+                    return 'Waiting for approval';
+                }
+
+                if(this.approved === true) {
+                    return 'Approved';
+                } else {
+                    return 'Not approved';
+                }
+            }
+        },
+        components:{
+            PhotoControllers
+        },
+        methods: {
+            openImage() {
+                this.$store.dispatch('openPhoto', this.id);
+            }
+        },
+    }
+</script>

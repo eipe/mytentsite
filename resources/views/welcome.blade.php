@@ -7,57 +7,19 @@
             &nbsp;&nbsp;<small><strong>BETA</strong></small>
         </div>
     @endif
-    <ul id="menu" class="menu align-center" data-page-default="info">
-        <li data-page="photo">
-            <a href="{{ url('/#/photo') }}" title="Upload photo of your tent site"><i class="fa fa-camera"></i></a>
-        </li>
-        <li data-page="map">
-            <a href="{{ url('/#/map') }}" title="Get a view of shared tent sites on the map">
-                <i class="fa fa-map-o"></i>
-            </a>
-        </li>
-        <li data-page="wall">
-            <a href="{{ url('/#/wall') }}" title="Explore shared tent sites by viewing our photo wall">
-                <i class="fa fa-th"></i>
-            </a>
-        </li>
-        <li data-page="info">
-            <a href="{{ url('/#/info') }}" title="Information about this service"><i class="fa fa-info"></i></a>
-        </li>
-
-        @if (Auth::check())
-            <li data-page="user">
-                <a href="{{ url('/#/user') }}"><i class="fa fa-user"></i></a>
-            </li>
-            @if (Auth::user()->isAdmin())
-                <li data-page="login">
-                    <a href="{{ url('/admin') }}" title="Admin"><i class="fa fa-unlock-alt"></i></a>
-                </li>
-            @endif
-        @else
-            <li data-page="login">
-                <a href="{{ url('/login') }}" title="Log in"><i class="fa fa-user-o"></i></a>
-            </li>
-        @endif
-
+    <ul id="menu" class="menu align-center">
+        <li><router-link to="/share"><i class="fa fa-camera"></i></router-link></li>
+        <li><router-link to="/map"><i class="fa fa-map-o"></i></router-link></li>
+        <li><router-link to="/wall"><i class="fa fa-th"></i></router-link></li>
+        <li><router-link to="/info"><i class="fa fa-info"></i></router-link></li>
+        <li><router-link to="/user"><i class="fa fa-user-o"></i></router-link></li>
+        <li><a href="{{ url('/admin/#admin') }}"><i class="fa fa-unlock-alt"></i></a></li>
     </ul>
 </nav>
 @endsection
 
 @section('content')
-    <div class="page is-hidden" id="photo">
-        @include('page.photo')
-    </div>
-    <div class="page is-hidden" id="map"></div>
-    <div class="page is-hidden page-allow-overflow" id="wall">
-        @include('page.wall')
-    </div>
-    <div class="page is-hidden page-allow-overflow" id="info">
-        @include('page.info')
-    </div>
-    @if(Auth::check())
-        <div class="page is-hidden page-allow-overflow" id="user">
-            @include('page.user')
-        </div>
-    @endif
+    <keep-alive>
+            <router-view :staging="{{ (Config::get('app.env') === 'staging') }}"></router-view>
+    </keep-alive>
 @endsection

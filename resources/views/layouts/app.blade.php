@@ -14,23 +14,17 @@
     <link href="{{ asset('/css/app.css') }}" rel="stylesheet" type="text/css">
 </head>
 <body>
+<div id="app">
     @section('navigation')
     @show
     <div id="content">
         @section('content')
         @show
     </div>
-    <div class="reveal" id="app-modal" data-reveal>
-        <h4></h4>
-        <p></p>
-        <button class="close-button" data-close aria-label="Close" type="button">
-            <span aria-hidden="true">&times;</span>
-        </button>
-        <button data-close aria-label="Close" class="secondary button hollow">OK</button>
-    </div>
     @if(Auth::check())
         <div class="is-hidden" id="api_token">{{Auth::user()->getAttribute('api_token')}}</div>
     @endif
+    <photo-gallery></photo-gallery>
     <script src="{{ asset('/js/vendor.js') }}"></script>
     <script src="{{ asset('/js/app.js') }}"></script>
     @if(env('GOOGLE_ANALYTICS_TRACKING_ID'))
@@ -44,5 +38,6 @@
         ga("send", "pageview");
     </script>
     @endif
+</div>
 </body>
 </html>
