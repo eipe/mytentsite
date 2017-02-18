@@ -97,6 +97,14 @@
                 }
             }
         },
+        created() {
+            var me = this;
+            window.addEventListener('keyup', function(event) {
+                if(me.isActive && event.keyCode === 27) {
+                    me.destroy();
+                }
+            });
+        },
         methods: {
             destroy() {
                 this.$store.dispatch('destroyGallery');
