@@ -46,7 +46,9 @@ elixir(function(mix) {
         config.bowerDir + '/what-input/dist/what-input.js',
         config.bowerDir + '/cropit/dist/jquery.cropit.js',
         config.nodeDir + '/vue/dist/vue.js',
-        config.nodeDir + '/vue-progressive-image/dist/vue-progressive-image.js'
+        config.nodeDir + '/vue-progressive-image/dist/vue-progressive-image.js',
+        config.nodeDir + '/vue-router/dist/vue-router.js',
+        config.nodeDir + '/vuex/dist/vuex.js'
     ], 'public/js/vendor.js');
 });
 
