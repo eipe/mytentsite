@@ -17,7 +17,7 @@
                 :placeholder="thumbnail"
                 :blur="30" />
         <slot v-if="showControllers">
-            <photo-controllers></photo-controllers>
+            <photo-controllers :id="id"></photo-controllers>
         </slot>
         <div v-if="showDetails">
             Status: {{ status }}

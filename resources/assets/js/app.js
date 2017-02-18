@@ -62,8 +62,6 @@ const store = new Vuex.Store({
             tentSites: {}
         },
         gallery: {
-            activeIndex: 0,
-            activeId: 0,
             activePhoto: {},
             isActive: false
         }
@@ -77,13 +75,11 @@ const store = new Vuex.Store({
             });
 
             if(index) {
-                state.gallery.activeId = id;
                 state.gallery.activePhoto = state.tentSites.data[index];
                 state.gallery.isActive = true;
             }
         },
         destroyGallery(state) {
-            state.gallery.activeId = 0;
             state.gallery.activePhoto = {};
             state.gallery.isActive = false;
         },
@@ -130,6 +126,11 @@ const store = new Vuex.Store({
     actions: {
         openPhoto(state, id) {
             state.commit('setActivePhoto', id);
+        },
+        viewPhotoOnMap(state, id) {
+            state.commit('destroyGallery');
+            router.push({ path: 'map' });
+            // Todo: move to photo coordinates on map
         },
         destroyGallery(state) {
             state.commit('destroyGallery');
