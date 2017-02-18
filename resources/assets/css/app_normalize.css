@@ -50,11 +50,11 @@
     color: #777;
 }
 
-.menu li.is-active a {
+.menu li a.is-active {
     color: #eee;
 }
 
-.menu li:hover:not(.is-active) a {
+.menu li:hover a:not(.is-active) {
     color: #999;
 }
 
