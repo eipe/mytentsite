@@ -53,11 +53,6 @@ nav {
     overflow: hidden;
 }
 
-#map img, #map video {
-    max-width: 300px;
-    width: 300px;
-}
-
 .photo-controllers {
     position: absolute;
     top: calc(50% - 20px);
@@ -93,16 +88,24 @@ nav {
     flex-direction: row;
 }
 
-.photo-wall img {
+.photo-container img {
     width: 100%;
     height: auto;
     cursor: pointer;
+}
+
+.photo-container .photo-container {
+    background-color: #eee;
+    margin: 0 20px 20px 0;
 }
 
 .photo-container {
     background-color: #eee;
     margin: 0 20px 20px 0;
     position: relative;
+}
+
+.photo-wall .photo-container {
     width: calc(calc(100% / 3) - 20px);
 }
 
