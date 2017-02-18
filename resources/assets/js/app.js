@@ -70,15 +70,17 @@ const store = new Vuex.Store({
     },
     mutations: {
         setActivePhoto(state, id) {
-            if(typeof state.tentSites.data[id] === typeof undefined) {
-                state.gallery.activeId = 0;
-                state.gallery.activePhoto = {};
-                state.gallery.isActive = false;
-            }
+            let index = state.tentSites.data.findIndex(function(photo) {
+                if(photo.id === id) {
+                    return true;
+                }
+            });
 
-            state.gallery.activeId = id;
-            state.gallery.activePhoto = state.tentSites.data[id];
-            state.gallery.isActive = true;
+            if(index) {
+                state.gallery.activeId = id;
+                state.gallery.activePhoto = state.tentSites.data[index];
+                state.gallery.isActive = true;
+            }
         },
         destroyGallery(state) {
             state.gallery.activeId = 0;
