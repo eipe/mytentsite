@@ -27,42 +27,6 @@
 <script>
     import Photo from './Photo.vue';
 
-    var TentSiteProvider = require('../tentsites.js');
-
-    function createPhotoWall() {
-        new Vue({
-            el: '#wall-content'
-        });
-
-        new Vue({
-            el: '#wall-fullscreen',
-            data: {
-                likes: null // Missing start value
-            },
-            methods: {
-                like: function () {
-                    var self = this;
-                    // Have to check current state for user to update this instantly
-                    self.likes += 1;
-                    var $apiToken = $("#api_token");
-                    var id = $("#wall-fullscreen-id").text();
-                    $.ajax({
-                        url: "/api/like/"+ id +"/?api_token=" +  $apiToken.text(),
-                        method: "POST",
-                        cache : false,
-                        contentType : false,
-                        processData : false
-                    }).success(function(data) {
-                        self.likes = data.total;
-                    }).error(function(response) {
-                        console.log(response.data)
-                    });
-
-                }
-            }
-        });
-    }
-
     export default{
         data() {
             return {
