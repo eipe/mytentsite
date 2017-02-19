@@ -23,24 +23,6 @@ Route::get('auth/{provider}', 'Auth\SocialController@redirectToProvider');
 Route::get('auth/handle/{provider}', 'Auth\SocialController@handleProviderCallback');
 Route::get('/beta', 'StagingController@showForm');
 Route::post('/beta', 'StagingController@handle');
-Auth::routes();
-
-/**
- * Admin
- */
-Route::group(['middleware' => 'admin'], function () {
-    Route::get('admin', 'Admin\DashboardController@index');
-    Route::get('admin/approve/{id}', 'TentSitesController@approve');
-    Route::get('admin/deny/{id}', 'TentSitesController@deny');
-    Route::get('admin/logs', 'Admin\LogsController@index');
-    Route::get('admin/tentsites', function () {
-        return view('admin.tentsites');
-    });
-
-});
-
-
-
 
 /**
  * Errors
