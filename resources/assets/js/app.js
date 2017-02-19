@@ -59,11 +59,25 @@ const store = new Vuex.Store({
         },
         user: {
             name: '',
-            tentSites: {}
+            id: null
         },
         gallery: {
             activePhoto: {},
             isActive: false
+        }
+    },
+    getters: {
+        getUserTentSites: state => {
+            if(state.user.id) {
+                // Todo: Secure that all user photos are loaded
+                return state.tentSites.data.filter(photo => {
+                    if(photo.reported_by === state.user.name) {
+                        return true;
+                    }
+                    return false;
+                });
+            }
+            return [];
         }
     },
     mutations: {

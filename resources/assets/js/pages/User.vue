@@ -15,7 +15,7 @@
                 </slot>
             </div>
         </div>
-        <div v-if="hasContributed">
+        <div v-if="tentSites">
             <div class="row background-light-gray">
                 <div class="large-8 large-centered columns text-center">
                     <br>
@@ -48,6 +48,7 @@
 
     import Photo from '../components/Photo.vue';
     import Footer from '../components/Footer.vue';
+    import { mapGetters } from 'vuex'
 
     var $apiToken = document.getElementById('api_token'),
         apiToken = $apiToken.innerHTML.toString();
@@ -55,8 +56,6 @@
     export default {
         data() {
             return {
-                hasContributed: false,
-                tentSites: [],
                 socialLogin: {
                     valid: {
                         type: Boolean
@@ -70,6 +69,9 @@
                 }
             }
         },
+        computed: {
+            ...mapGetters({tentSites: 'getUserTentSites'})
+        },
         methods: {
             loadUserData() {
                 var me = this;
@@ -78,39 +80,9 @@
                     success: function(response) {
                         if(parseInt(response.code) === 200) {
                             if(typeof response.data !== typeof undefined) {
-                                var user = response.data;
-                                me.$store.commit('setUser', user);
+                                me.$store.commit('setUser', response.data);
                             }
                         }
-                    }
-                });
-            },
-            loadTentSites() {
-                var me = this;
-                $.ajax({
-                    url: '/api/usersites/?api_token=' +  apiToken,
-                    success: function(response) {
-                        if(parseInt(response.code) === 200) {
-                            if(typeof response.data !== typeof undefined && response.data.length > 0) {
-                                me.hasContributed = true;
-                                $.each(response.data, function (key, photo) {
-                                    me.tentSites.push({
-                                        id: photo["id"],
-                                        lat: photo["latitude"],
-                                        lng: photo["longitude"],
-                                        likes: parseInt(photo["likes"]),
-                                        img_location: '/storage/photos/tentsites/' + photo["img_location"],
-                                        thumbnail: '/storage/photos/tentsite_thumbnails/' + photo["thumbnail_location"],
-                                        caption: photo["caption"],
-                                        created_at: photo["created_at"],
-                                        reported_by: String(photo["reported_by"]),
-                                        approved: (photo["approved"] == true)
-                                    });
-                                });
-                            }
-                        }
-                    }, error: function(error) {
-                        console.log(error);
                     }
                 });
             },
@@ -122,11 +94,8 @@
                 //</form>
             }
         },
-        beforeCreated() {
-        },
         created() {
             this.loadUserData();
-            this.loadTentSites();
         },
         components: {
             Photo,
