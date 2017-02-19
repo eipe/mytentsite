@@ -34,3 +34,11 @@ Route::post('/comments/{id}', 'CommentController@store')->middleware('auth:api')
 Route::get('/user', 'UserController@index')->middleware('auth:api');
 
 
+/**
+ * Admin
+ */
+Route::group(['middleware' => 'admin'], function () {
+    Route::post('admin/approve/{id}', 'TentSitesController@approve');
+    Route::post('admin/deny/{id}', 'TentSitesController@deny');
+});
+
