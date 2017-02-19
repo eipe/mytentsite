@@ -18,5 +18,4 @@
         </div>
     </div>
     <br><br>
-    @include('page.footer')
 @endsection
