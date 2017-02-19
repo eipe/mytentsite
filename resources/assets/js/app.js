@@ -13,6 +13,11 @@ import Map from './pages/Map.vue';
 import Wall from './pages/Wall.vue';
 import User from './pages/User.vue';
 import Login from './pages/Login.vue';
+import Admin from './pages/admin/Admin.vue';
+import AdminDashboard from './pages/admin/Dashboard.vue';
+import AdminTentSites from './pages/admin/TentSites.vue';
+import AdminUsers from './pages/admin/Users.vue';
+import AdminStatitics from './pages/admin/Statistics.vue';
 import PhotoGallery from './components/PhotoGallery.vue';
 
 const routes = [{
@@ -43,6 +48,27 @@ const routes = [{
     path: '/login',
     name: 'Login',
     component: Login
+}, {
+    path: '/admin',
+    name: 'Admin',
+    component: Admin,
+    children: [{
+        path: '/admin/dashboard',
+        name: 'Dashboard',
+        component: AdminDashboard
+    }, {
+        path: '/admin/tentsites',
+        name: 'Tent sites',
+        component: AdminTentSites
+    }, {
+        path: '/admin/users',
+        name: 'Users',
+        component: AdminUsers
+    }, {
+        path: '/admin/statistics',
+        name: 'Statistics',
+        component: AdminStatitics
+    }]
 }];
 
 const router = new VueRouter({
