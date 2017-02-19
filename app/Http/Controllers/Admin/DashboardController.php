@@ -9,12 +9,6 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    //
-    public function index() {
-        $status = json_decode($this->getStatusData());
-
-        return view('admin.dashboard', ['status' => $status]);
-    }
 
     public function getStatusData() {
         $client = new Client();

@@ -9,12 +9,6 @@ use Illuminate\Support\Facades\Log;
 
 class LogsController extends Controller
 {
-    //
-    public function index() {
-        $data = [];
-
-        return view('admin.logs', $data);
-    }
 
 
 }
