@@ -19,6 +19,7 @@ Route::resource('/tentsites', 'TentSitesController', ['except' => [
 ]]);
 Route::get('/tentsites/{lat?}/{lng?}/{rad?}', 'TentSitesController@index');
 Route::get('/usersites', 'TentSitesController@getUserTentSites')->middleware('auth:api');
+Route::get('/unapproved', 'TentSitesController@getUnapproved')->middleware('auth:api');
 Route::post('/tentsites', 'TentSitesController@store')->middleware('auth:api');
 Route::put('/tentsites', 'TentSitesController@update')->middleware('auth:api');
 
