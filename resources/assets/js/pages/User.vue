@@ -50,9 +50,6 @@
     import Footer from '../components/Footer.vue';
     import { mapGetters } from 'vuex'
 
-    var $apiToken = document.getElementById('api_token'),
-        apiToken = $apiToken.innerHTML.toString();
-
     export default {
         data() {
             return {
@@ -76,7 +73,7 @@
             loadUserData() {
                 var me = this;
                 $.ajax({
-                    url: '/api/user/?api_token=' +  apiToken,
+                    url: '/api/user/?api_token=' +  me.$store.state.user.apiToken,
                     success: function(response) {
                         if(parseInt(response.code) === 200) {
                             if(typeof response.data !== typeof undefined) {

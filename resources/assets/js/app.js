@@ -59,7 +59,8 @@ const store = new Vuex.Store({
         },
         user: {
             name: '',
-            id: null
+            id: null,
+            apiToken: document.getElementById('api_token').innerHTML.toString()
         },
         gallery: {
             activePhoto: {},
@@ -133,6 +134,48 @@ const store = new Vuex.Store({
                 });
             }
         },
+        likePhoto(state, id) {
+            if(!state.user.apiToken) {
+                return false;
+            }
+
+            let index = state.tentSites.data.findIndex(function(photo) {
+                if(photo.id === id) {
+                    return true;
+                }
+            });
+
+            if(index && !state.tentSites.data[index].hasLiked) {
+                state.tentSites.data[index].likes += 1;
+                state.tentSites.data[index].hasLiked = true;
+
+                $.ajax({
+                    url: "/api/like/" + id + "/?api_token=" + state.user.apiToken,
+                    method: "POST"
+                });
+            }
+        },
+        unlikePhoto(state, id) {
+            if(!state.user.apiToken) {
+                return false;
+            }
+
+            let index = state.tentSites.data.findIndex(function(photo) {
+                if(photo.id === id) {
+                    return true;
+                }
+            });
+
+            if(index && state.tentSites.data[index].hasLiked) {
+                state.tentSites.data[index].likes -= 1;
+                state.tentSites.data[index].hasLiked = false;
+            }
+
+            $.ajax({
+                url: "/api/unlike/" + id + "/?api_token=" + state.user.apiToken,
+                method: "POST"
+            });
+        },
         setUser(state, user) {
             state.user = user;
         }
@@ -148,6 +191,12 @@ const store = new Vuex.Store({
         },
         destroyGallery(state) {
             state.commit('destroyGallery');
+        },
+        likePhoto(state, id) {
+            state.commit('likePhoto', id);
+        },
+        unlikePhoto(state, id) {
+            state.commit('unlikePhoto', id);
         }
     }
 });

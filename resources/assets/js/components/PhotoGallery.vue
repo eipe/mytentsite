@@ -13,10 +13,12 @@
                 :lng="activePhoto.lng"></photo>
             </div>
             <div class="photo-info" style="width: 30%">
-                <i class="fa fa-times close" @click="destroy()"></i>
+                <i class="fa fa-times close" @click="destroy"></i>
                 <strong>{{ activePhoto.reported_by }}</strong><br>
                 <small>{{ activePhoto.created_at }}</small><br><br>
                 <small>{{ activePhoto.caption }}</small>
+                <br>
+                <i class="pointer fa" v-bind:class="likeIcon" @click="toggleLike"></i> {{ activePhoto.likes }}
             </div>
         </div>
     </div>
@@ -91,9 +93,23 @@
                 return this.$store.state.gallery.isActive;
             },
             activePhoto() {
-                var a = this.$store.state.gallery.activePhoto;
-                if(a) {
-                    return a;
+                let photo = this.$store.state.gallery.activePhoto;
+                if(photo) {
+                    return photo;
+                }
+            },
+            hasLiked() {
+                let photo = this.activePhoto;
+                if(photo) {
+                    return photo.hasLiked;
+                }
+                return false;
+            },
+            likeIcon() {
+                if(this.hasLiked) {
+                    return 'fa-thumbs-up';
+                } else {
+                    return 'fa-thumbs-o-up';
                 }
             }
         },
@@ -108,6 +124,13 @@
         methods: {
             destroy() {
                 this.$store.dispatch('destroyGallery');
+            },
+            toggleLike() {
+                if(this.activePhoto.hasLiked) {
+                    this.$store.dispatch('unlikePhoto', this.activePhoto.id);
+                } else {
+                    this.$store.dispatch('likePhoto', this.activePhoto.id);
+                }
             }
         },
         components: {
