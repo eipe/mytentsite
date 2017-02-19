@@ -115,7 +115,7 @@ const store = new Vuex.Store({
                 }
             });
 
-            if(index) {
+            if(typeof state.tentSites.data[index] !== typeof undefined) {
                 state.gallery.activePhoto = state.tentSites.data[index];
                 state.gallery.isActive = true;
             }
@@ -171,7 +171,7 @@ const store = new Vuex.Store({
                 }
             });
 
-            if(index && !state.tentSites.data[index].hasLiked) {
+            if(typeof state.tentSites.data[index] !== typeof undefined && !state.tentSites.data[index].hasLiked) {
                 state.tentSites.data[index].likes += 1;
                 state.tentSites.data[index].hasLiked = true;
 
@@ -192,7 +192,7 @@ const store = new Vuex.Store({
                 }
             });
 
-            if(index && state.tentSites.data[index].hasLiked) {
+            if(typeof state.tentSites.data[index] !== typeof undefined && state.tentSites.data[index].hasLiked) {
                 state.tentSites.data[index].likes -= 1;
                 state.tentSites.data[index].hasLiked = false;
             }
