@@ -1,19 +1,18 @@
 <template>
     <div class="page">
-        <div class="row">
-            <div id="photo-frame" class="medium-centered text-center">
-                <label for="photo-file" class="button" data-text="I want to share a tent site!">
-                    I want to share a tent site!
-                </label>
-                <div id="photo-preview" class="cropit-preview small-centered color-gray">
-                    <div id="photo-preview-loading" class="is-hidden">
-                        <br>
-                        <i class="fa fa-5x fa-circle-o-notch fa-spin"></i><br>
-                        <small>We are preparing your photo, please hold on!</small>
-                    </div>
+        <div id="photo-frame" class="container has-text-centered">
+            <label for="photo-file" class="button is-info" data-text="I want to share a tent site!">
+                I want to share a tent site!
+            </label>
+            <div id="photo-preview" class="cropit-preview color-gray">
+                <div id="photo-preview-loading" class="is-hidden">
+                    <br>
+                    <i class="fa fa-5x fa-circle-o-notch fa-spin"></i><br>
+                    <small>We are preparing your photo, please hold on!</small>
                 </div>
-                <input type="file" id="photo-file" class="cropit-image-input show-for-sr" />
-                <div id="photo-controllers" data-current-step="1" class="is-hidden small-centered color-gray">
+            </div>
+            <input type="file" id="photo-file" class="cropit-image-input is-hidden" />
+            <div id="photo-controllers" data-current-step="1" class="is-hidden color-gray">
                 <span data-step="1">
                     <i title="Cancel" class="photo-cancel is-clickable fa fa-trash-o"></i>
                     <i id="photo-rotate" title="Rotate clockwise"
@@ -39,11 +38,15 @@
                     <i class="fa fa-circle-o-notch fa-spin"></i><br><br>
                     <button id="photo-cancel-upload" class="button secondary">Cancel upload</button>
                 </span>
-                </div>
             </div>
         </div>
     </div>
 </template>
+<style>
+    #photo-preview {
+        margin: 0 auto;
+    }
+</style>
 <script>
     var Share = require('../share.js');
 

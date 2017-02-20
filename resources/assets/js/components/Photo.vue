@@ -15,7 +15,7 @@
         <progressive-img
                 :src="img_location"
                 :placeholder="thumbnail"
-                :blur="30" />
+                :blur="30" class="is-clickable" />
         <slot v-if="showControllers">
             <photo-controllers :id="id"></photo-controllers>
         </slot>

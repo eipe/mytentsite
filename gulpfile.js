@@ -19,19 +19,16 @@ var config = {
  */
 
 elixir(function(mix) {
-    //mix.sass('app.scss', 'public/css/app.css');
+    mix.sass('app.scss', 'public/css/app.css');
 
-    mix.styles('app.css', 'public/css/app.css')
-        .styles('app_normalize.css', 'public/css/app_normalize.css')
+    mix.styles('app_normalize.css', 'public/css/app_normalize.css')
         .styles([
         config.bowerDir + '/leaflet/dist/leaflet.css',
         config.bowerDir + '/leaflet.markercluster/dist/MarkerCluster.css',
         config.bowerDir + '/leaflet.markercluster/dist/MarkerCluster.Default.css',
         config.bowerDir + '/Leaflet.Photo/Leaflet.Photo.css',
         config.bowerDir + '/Leaflet.EasyButton/src/easy-button.css',
-        config.bowerDir + '/font-awesome/css/font-awesome.css',
-        config.bowerDir + '/foundation-sites/dist/css/foundation-flex.css',
-        config.bowerDir + '/foundation-sites/dist/css/foundation.css'
+        config.bowerDir + '/font-awesome/css/font-awesome.css'
     ], 'public/css/vendor.css');
 
     mix.webpack('app.js', 'public/js/app.js')
@@ -41,7 +38,6 @@ elixir(function(mix) {
         config.bowerDir + '/leaflet.markercluster/dist/leaflet.markercluster.js',
         config.bowerDir + '/Leaflet.Photo/Leaflet.Photo.js',
         config.bowerDir + '/Leaflet.EasyButton/src/easy-button.js',
-        config.bowerDir + '/foundation-sites/dist/js/foundation.js',
         config.bowerDir + '/exif-js/exif.js',
         config.bowerDir + '/what-input/dist/what-input.js',
         config.bowerDir + '/cropit/dist/jquery.cropit.js',

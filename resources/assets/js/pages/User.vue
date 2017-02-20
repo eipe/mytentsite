@@ -1,45 +1,43 @@
 <template>
     <div class="page page-allow-overflow">
-        <div class="row"><br /></div>
-        <div class="row">
-            <div class="large-8 large-centered columns text-center">
-                <h4>Hi, {{ this.$store.state.user.name }}!</h4>
-                <hr>
-                <slot v-if="socialLogin.valid">
-                    <p>You signed up through {{ socialLogin.provider }},<br>
-                    and the last authentication was {{ socialLogin.time }}.</p>
-                    <a href="/auth/sign_out" class="button">Sign out</a>
-                </slot>
-                <slot v-else>
-                    <a class="button" href="/logout" @click="logout()">Logout</a>
-                </slot>
+        <section class="hero">
+            <div class="hero-body">
+                <div class="container">
+                    <h1 class="title">Hi, {{ this.$store.state.user.name }}!</h1>
+                    <hr>
+                    <slot v-if="socialLogin.valid">
+                        <p>You signed up through {{ socialLogin.provider }},<br>
+                        and the last authentication was {{ socialLogin.time }}.</p>
+                        <a href="/auth/sign_out" class="button is-info">Sign out</a>
+                    </slot>
+                    <slot v-else>
+                        <a class="button is-info" href="/logout" @click="logout()">Logout</a>
+                    </slot>
+                </div>
             </div>
-        </div>
+        </section>
         <div v-if="tentSites">
-            <div class="row background-light-gray">
-                <div class="large-8 large-centered columns text-center">
-                    <br>
-                    <h5><a data-toggle="user-contributions" title="Click to toggle view of contributions">
-                        Your contributions ({{ tentSites.length }})</a></h5>
-                    <br>
+            <section class="hero is-light">
+                <div class="hero-body">
+                    <div class="container">
+                        <h2 class="title">Your contributions ({{ tentSites.length }})</h2>
+                        <div class="columns is-multiline is-mobile">
+                            <template v-for="tentSite in tentSites">
+                                <photo class="column is-2" :id="tentSite.id"
+                                       :img_location="tentSite.img_location"
+                                       :thumbnail="tentSite.thumbnail"
+                                       :lat="tentSite.lat"
+                                       :lng="tentSite.lng"
+                                       :caption="tentSite.caption"
+                                       :reported_by="tentSite.reported_by"
+                                       :created_at="tentSite.created_at"
+                                       :likes="tentSite.likes" :approved="tentSite.approved" :showDetails="true">
+                                </photo>
+                            </template>
+                        </div>
+                    </div>
                 </div>
-                <div id="user-contributions" class="photo-wall large-8 large-centered">
-                    <template v-for="tentSite in tentSites">
-                        <photo :id="tentSite.id"
-                               :img_location="tentSite.img_location"
-                               :thumbnail="tentSite.thumbnail"
-                               :lat="tentSite.lat"
-                               :lng="tentSite.lng"
-                               :caption="tentSite.caption"
-                               :reported_by="tentSite.reported_by"
-                               :created_at="tentSite.created_at"
-                               :likes="tentSite.likes" :approved="tentSite.approved" :showDetails="true">
-                        </photo>
-                    </template>
-                    <br><br>
-                </div>
-            </div>
-            <br><br>
+            </section>
         </div>
         <footer-component/>
     </div>

@@ -1,6 +1,6 @@
 <template>
     <div class="page page-allow-overflow">
-        <div id="wall-content">
+        <div class="container">
             <photo-wall/>
         </div>
         <footer-component/>

@@ -15,19 +15,17 @@
 </head>
 <body>
 <div id="app">
-    <nav class="top-bar">
+    <nav class="nav">
         @if(Config::get('app.env') === 'staging')
-            <div style="position: absolute; top: 10px; color: #e00;">
-                &nbsp;&nbsp;<small><strong>BETA</strong></small>
-            </div>
+            <div class="is-pulled-left is-danger is-bold">BETA</div>
         @endif
-        <ul id="menu" class="menu align-center">
-            <li><router-link to="/share"><i class="fa fa-camera"></i></router-link></li>
-            <li><router-link to="/map"><i class="fa fa-map-o"></i></router-link></li>
-            <li><router-link to="/wall"><i class="fa fa-th"></i></router-link></li>
-            <li><router-link to="/info"><i class="fa fa-info"></i></router-link></li>
-            <li><router-link to="/user"><i class="fa fa-user-o"></i></router-link></li>
-            <li><router-link to="/admin"><i class="fa fa-unlock-alt"></i></router-link></li>
+        <ul class="nav-center">
+            <li><router-link to="/share" class="nav-item"><i class="fa fa-camera"></i></router-link></li>
+            <li><router-link to="/map" class="nav-item"><i class="fa fa-map-o"></i></router-link></li>
+            <li><router-link to="/wall" class="nav-item"><i class="fa fa-th"></i></router-link></li>
+            <li><router-link to="/info" class="nav-item"><i class="fa fa-info"></i></router-link></li>
+            <li><router-link to="/user" class="nav-item"><i class="fa fa-user-o"></i></router-link></li>
+            <li><router-link to="/admin" class="nav-item"><i class="fa fa-unlock-alt"></i></router-link></li>
         </ul>
     </nav>
     <div id="content">

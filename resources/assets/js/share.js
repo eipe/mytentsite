@@ -241,7 +241,7 @@ module.exports = function Share() {
                             "the map, which indeed is the whole concept of this service. <br /><br />" +
                             "Please try a new photo");
                         $uploaderLabel
-                            .addClass("alert")
+                            .addClass("is-danger")
                             .text("Photo does not contain location data, try a new one!");
                         return false;
                     }

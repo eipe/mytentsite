@@ -13,12 +13,12 @@
                 :lng="activePhoto.lng"></photo>
             </div>
             <div class="photo-info" style="width: 30%">
-                <i class="fa fa-times close" @click="destroy"></i>
+                <i class="fa fa-times close is-clickable" @click="destroy"></i>
                 <strong>{{ activePhoto.reported_by }}</strong><br>
                 <small>{{ activePhoto.created_at }}</small><br><br>
                 <small>{{ activePhoto.caption }}</small>
                 <br>
-                <i class="pointer fa" v-bind:class="likeIcon" @click="toggleLike"></i> {{ activePhoto.likes }}
+                <i class="is-clickable fa" v-bind:class="likeIcon" @click="toggleLike"></i> {{ activePhoto.likes }}
             </div>
         </div>
     </div>
@@ -76,7 +76,6 @@
         position: absolute;
         right: 0;
         top: 0;
-        cursor: pointer;
     }
 </style>
 <script>

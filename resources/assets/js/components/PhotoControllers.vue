@@ -1,6 +1,6 @@
 <template>
     <div class="photo-controllers" :data-photo-controllers-id="id">
-        <i class="photo-view-map fa fa-map-marker" title="View photo on map" @click.stop="viewOnMap"></i>
+        <i class="photo-view-map fa fa-map-marker is-clickable" title="View photo on map" @click.stop="viewOnMap"></i>
     </div>
 </template>
 <script>

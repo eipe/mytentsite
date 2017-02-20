@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h2>Dashboard</h2>
+        <h1>Dashboard</h1>
         <ul>
             <li>Apdex: {{ apDex }}</li>
             <li>- redirect: {{ redirect }}</li>

@@ -1,8 +1,33 @@
 <template>
     <div>
         <h1>Tent sites</h1>
-        <table class="hover">
+        <table class="table">
             <thead>
+                <tr>
+                    <th width="20">Id</th>
+                    <th>Caption</th>
+                    <th width="50">Photo</th>
+                    <th width="50">Map</th>
+                    <th width="50">Handle</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="tentSite in tentSites">
+                    <td>{{ tentSite.id }}</td>
+                    <td>{{ tentSite.caption }}</td>
+                    <td><img :src="tentSite.thumbnail_location" /></td>
+                    <td>
+                        <i @click="viewOnMap(tentSite.id)" title="View on map" class="fa fa-map-o is-clickable"></i>
+                    </td>
+                    <td>
+                        <i class="fa fa-thumbs-up is-success is-clickable"
+                           title="Approve" @click="approve(tentSite.id)"></i>
+                        <i class="fa fa-thumbs-down is-warning is-clickable"
+                           title="Deny" @click="deny(tentSite.id)"></i>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
             <tr>
                 <th width="20">Id</th>
                 <th>Caption</th>
@@ -10,19 +35,7 @@
                 <th width="50">Map</th>
                 <th width="50">Handle</th>
             </tr>
-            </thead>
-            <tbody>
-            <tr v-for="tentSite in tentSites">
-                <td>{{ tentSite.id }}</td>
-                <td>{{ tentSite.caption }}</td>
-                <td><img :src="tentSite.thumbnail_location" /></td>
-                <td><i @click="viewOnMap(tentSite.id)" title="View on map" class="fa fa-map-o pointer"></i></td>
-                <td>
-                    <i class="fa fa-thumbs-up badge success pointer" title="Approve" @click="approve(tentSite.id)"></i>
-                    <i class="fa fa-thumbs-down badge alert pointer" title="Deny" @click="deny(tentSite.id)"></i>
-                </td>
-            </tr>
-            </tbody>
+            </tfoot>
         </table>
     </div>
 </template>
