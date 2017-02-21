@@ -90,7 +90,8 @@ const store = new Vuex.Store({
         },
         user: {
             name: '',
-            id: null
+            id: null,
+            apiToken: document.getElementById('api_token').innerHTML.toString()
         },
         gallery: {
             activePhoto: {},
