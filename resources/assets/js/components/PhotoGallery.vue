@@ -2,13 +2,13 @@
     <div>
         <div class="modal" v-bind:class="{ 'is-active' : isActive }">
             <div class="modal-background" @click="destroy"></div>
-            <div class="modal-content" style="width: 80%;">
+            <div class="modal-content" style="width: 70%;">
                 <div class="content is-paddingless is-marginless">
                     <div class="columns is-paddingless is-marginless">
                         <div class="column is-paddingless">
                             <img :src="activePhoto.img_location" />
                         </div>
-                        <div class="column is-3" style="background-color: #fff; ">
+                        <div class="column is-3" style="background-color: #fff;">
                             <div class="media">
                                 <div class="media-content">
                                     <p><strong>{{ activePhoto.reported_by }}</strong>
