@@ -205,7 +205,7 @@ module.exports = function Share() {
             storePhoto(function(responseCode, responseText) {
                 if(responseCode === 200) {
                     $uploaderLabel
-                        .addClass("success")
+                        .addClass("is-success")
                         .text("Tent site successfully uploaded. Click to share another tent site!");
                     clearPhotoDetails();
                 } else {
