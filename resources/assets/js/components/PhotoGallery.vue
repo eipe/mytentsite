@@ -32,6 +32,7 @@
                 <button class="modal-close" @click="destroy"></button>
             </div>
         </div>
+    </div>
 </template>
 <script>
 
