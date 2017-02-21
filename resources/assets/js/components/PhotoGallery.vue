@@ -86,9 +86,6 @@
                     this.$store.dispatch('likePhoto', this.activePhoto.id);
                 }
             }
-        },
-        components: {
-            Photo
         }
     }
 </script>
