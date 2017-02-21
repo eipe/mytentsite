@@ -1,5 +1,5 @@
 module.exports = function Share() {
-    var $frame, $preview, $previewLoading, $uploader, $uploaderLabel, uploadEvent, $caption,
+    let $frame, $preview, $previewLoading, $uploader, $uploaderLabel, uploadEvent, $caption,
         $rotate, $store, $cancel, loaded = false, $controllersContainer,
         photoExifData = {
             location: {
@@ -32,14 +32,14 @@ module.exports = function Share() {
             }
         };
 
-    var $apiToken = $("#api_token");
+    let $apiToken = $("#api_token");
     if($apiToken.length > 0) {
         options.target += "?api_token=" +  $apiToken.text();
     }
 
     function storePhoto(callback) {
         if(typeof $uploader.prop("files") !== typeof undefined) {
-            var photoData = new FormData();
+            let photoData = new FormData();
             photoData.append("latitude", photoExifData.location.latitude);
             photoData.append("longitude", photoExifData.location.longitude);
             photoData.append("caption", $caption.val());
@@ -64,7 +64,7 @@ module.exports = function Share() {
                     return;
                 }
                 photoControllerPrevious();
-                var error = '',
+                let error = '',
                     errors = $.parseJSON(response.responseText);
                 if(typeof errors.error !== typeof undefined) {
                     error = errors.error;
@@ -107,7 +107,7 @@ module.exports = function Share() {
     }
 
     function photoControllerNext() {
-        var currentStep = getPhotoControllerCurrentStep();
+        let currentStep = getPhotoControllerCurrentStep();
         if($controllersContainer.data("max-step") === currentStep) {
             return false;
         }
@@ -123,7 +123,7 @@ module.exports = function Share() {
     }
 
     function photoControllerPrevious() {
-        var currentStep = getPhotoControllerCurrentStep();
+        let currentStep = getPhotoControllerCurrentStep();
         if(currentStep === 1) {
             return false;
         }
@@ -172,9 +172,9 @@ module.exports = function Share() {
         $controllersContainer = $("#photo-controllers");
         $cancel = $("#photo-cancel-upload");
 
-        var maxStep = $controllersContainer.data("current-step");
+        let maxStep = $controllersContainer.data("current-step");
         $controllersContainer.find("*[data-step]").each(function() {
-            var $stepContainer = $(this),
+            let $stepContainer = $(this),
                 step = $stepContainer.data("step");
             if(step > maxStep) {
                 maxStep = step;
@@ -229,7 +229,7 @@ module.exports = function Share() {
             toggleUploaderLabel();
             $previewLoading.removeClass("is-hidden");
 
-            var file = $(this).prop("files")[0];
+            let file = $(this).prop("files")[0];
 
             if(typeof file !== typeof undefined) {
                 EXIF.getData(file, function() {
@@ -246,13 +246,13 @@ module.exports = function Share() {
                         return false;
                     }
 
-                    var exifData = EXIF.getAllTags(this),
+                    let exifData = EXIF.getAllTags(this),
                         lat = exifData.GPSLatitude,
                         lng = exifData.GPSLongitude;
 
                     // Convert coordinates to WGS84 decimal
-                    var latRef = exifData.GPSLatitudeRef || "N";
-                    var lngRef = exifData.GPSLongitudeRef || "W";
+                    let latRef = exifData.GPSLatitudeRef || "N",
+                        lngRef = exifData.GPSLongitudeRef || "W";
                     lat = (lat[0] + lat[1]/60 + lat[2]/3600) * (latRef == "N" ? 1 : -1);
                     lng = (lng[0] + lng[1]/60 + lng[2]/3600) * (lngRef == "W" ? -1 : 1);
 
