@@ -12,12 +12,6 @@ import Info from './pages/Info.vue';
 import Map from './pages/Map.vue';
 import Wall from './pages/Wall.vue';
 import User from './pages/User.vue';
-import Login from './pages/Login.vue';
-import Admin from './pages/admin/Admin.vue';
-import AdminDashboard from './pages/admin/Dashboard.vue';
-import AdminTentSites from './pages/admin/TentSites.vue';
-import AdminUsers from './pages/admin/Users.vue';
-import AdminStatitics from './pages/admin/Statistics.vue';
 import PhotoGallery from './components/PhotoGallery.vue';
 
 const routes = [{
@@ -47,7 +41,7 @@ const routes = [{
 }, {
     path: '/login',
     name: 'Login',
-    component: Login
+    component: require('./pages/Login.vue')
 }, {
     path: '/register',
     name: 'Register',
@@ -59,26 +53,26 @@ const routes = [{
 },{
     path: '/admin',
     name: 'Admin',
-    component: Admin,
+    component: require('./pages/admin/Admin.vue'),
     children: [{
         path: '/admin',
         redirect: '/admin/dashboard'
     }, {
         path: '/admin/dashboard',
         name: 'Dashboard',
-        component: AdminDashboard
+        component: require('./pages/admin/Dashboard.vue')
     }, {
         path: '/admin/tentsites',
         name: 'Tent sites',
-        component: AdminTentSites
+        component: require('./pages/admin/TentSites.vue')
     }, {
         path: '/admin/users',
         name: 'Users',
-        component: AdminUsers
+        component: require('./pages/admin/Users.vue')
     }, {
         path: '/admin/statistics',
         name: 'Statistics',
-        component: AdminStatitics
+        component: require('./pages/admin/Statistics.vue')
     }]
 }];
 
