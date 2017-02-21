@@ -20,7 +20,10 @@ const routes = [{
 }, {
     path: '/share',
     name: 'Share',
-    component: Share
+    component: Share,
+    meta: {
+        auth: true
+    },
 }, {
     path: '/map',
     name: 'Map',
@@ -37,7 +40,10 @@ const routes = [{
 }, {
     path: '/user',
     name: 'User',
-    component: User
+    component: User,
+    meta: {
+        auth: true
+    }
 }, {
     path: '/login',
     name: 'Login',
@@ -54,25 +60,40 @@ const routes = [{
     path: '/admin',
     name: 'Admin',
     component: require('./pages/admin/Admin.vue'),
+    meta: {
+        auth: true
+    },
     children: [{
         path: '/admin',
         redirect: '/admin/dashboard'
     }, {
         path: '/admin/dashboard',
         name: 'Dashboard',
-        component: require('./pages/admin/Dashboard.vue')
+        component: require('./pages/admin/Dashboard.vue'),
+        meta: {
+            auth: true
+        }
     }, {
         path: '/admin/tentsites',
         name: 'Tent sites',
-        component: require('./pages/admin/TentSites.vue')
+        component: require('./pages/admin/TentSites.vue'),
+        meta: {
+            auth: true
+        }
     }, {
         path: '/admin/users',
         name: 'Users',
-        component: require('./pages/admin/Users.vue')
+        component: require('./pages/admin/Users.vue'),
+        meta: {
+            auth: true
+        }
     }, {
         path: '/admin/statistics',
         name: 'Statistics',
-        component: require('./pages/admin/Statistics.vue')
+        component: require('./pages/admin/Statistics.vue'),
+        meta: {
+            auth: true
+        }
     }]
 }];
 
@@ -80,6 +101,13 @@ const router = new VueRouter({
     routes: routes,
     linkActiveClass: 'is-active'
 });
+
+let $apiToken = document.getElementById('api_token'),
+    apiToken = null;
+
+if($apiToken) {
+    apiToken = $apiToken.innerHTML.toString();
+}
 
 const store = new Vuex.Store({
     state: {
@@ -91,7 +119,7 @@ const store = new Vuex.Store({
         user: {
             name: '',
             id: null,
-            apiToken: document.getElementById('api_token').innerHTML.toString()
+            apiToken: apiToken
         },
         gallery: {
             activePhoto: {},
@@ -229,6 +257,14 @@ const store = new Vuex.Store({
         unlikePhoto(state, id) {
             state.commit('unlikePhoto', id);
         }
+    }
+});
+
+router.beforeEach((to, from, next) => {
+    if(to.meta.auth && !apiToken) {
+        next('/login');
+    } else {
+        next();
     }
 });
 
