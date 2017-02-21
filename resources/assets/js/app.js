@@ -49,6 +49,14 @@ const routes = [{
     name: 'Login',
     component: Login
 }, {
+    path: '/register',
+    name: 'Register',
+    component: require('./pages/Register.vue')
+}, {
+    path: '/password/reset',
+    name: 'Reset password',
+    component: require('./pages/PasswordReset.vue')
+},{
     path: '/admin',
     name: 'Admin',
     component: Admin,
@@ -88,8 +96,7 @@ const store = new Vuex.Store({
         },
         user: {
             name: '',
-            id: null,
-            apiToken: document.getElementById('api_token').innerHTML.toString()
+            id: null
         },
         gallery: {
             activePhoto: {},
