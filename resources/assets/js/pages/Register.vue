@@ -50,7 +50,8 @@
                             </p>
                             <p class="control">
                                 <a href="/auth/facebook" class="button is-info">
-                                    <i class="fa fa-facebook"></i>&nbsp;Sign up using Facebook
+                                    <span class="icon is-small"><i class="fa fa-facebook"></i></span>
+                                    <span>Sign up using Facebook</span>
                                 </a>
                             </p>
                             <p class="control">

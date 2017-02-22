@@ -50,7 +50,8 @@
                         <div class="control is-grouped">
                             <p class="control">
                                 <a class="button is-info" href="/auth/facebook">
-                                    <i class="fa fa-facebook"></i>&nbsp;&nbsp;Facebook
+                                    <span class="icon is-small"><i class="fa fa-facebook"></i></span>
+                                    <span>Facebook</span>
                                 </a>
                             </p>
                         </div>
