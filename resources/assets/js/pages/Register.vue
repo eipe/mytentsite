@@ -1,66 +1,64 @@
 <template>
     <div class="page page-allow-overflow">
-        <div class="container content">
-            <div class="columns">
-                <div class="column is-half is-offset-one-quarter">
-                    <h1>Create a new account</h1>
-                    <form method="POST" action="/register">
-                        <!--{{ csrf_field() }}-->
+        <section class="section">
+            <div class="content container">
+                <h1>Create a new account</h1>
+                <form method="POST" action="/register">
+                    <!--{{ csrf_field() }}-->
 
-                        <label for="name" class="label">Name</label>
-                        <p class="controls">
-                            <input id="name" type="text" name="name" value="" class="input" required autofocus>
-                            <!--<input id="name" type="text" name="name" value="{{ old('name') }}" required autofocus>-->
-                            <!--@if ($errors->has('name'))-->
-                            <!--<span class="round alert label">{{ $errors->first('name') }}</span>-->
-                            <!--@endif-->
+                    <label for="name" class="label">Name</label>
+                    <p class="controls">
+                        <input id="name" type="text" name="name" value="" class="input" required autofocus>
+                        <!--<input id="name" type="text" name="name" value="{{ old('name') }}" required autofocus>-->
+                        <!--@if ($errors->has('name'))-->
+                        <!--<span class="round alert label">{{ $errors->first('name') }}</span>-->
+                        <!--@endif-->
+                    </p>
+
+                    <label for="email" class="label">E-Mail address</label>
+                    <p class="controls">
+                        <input id="email" type="email" name="email" value="" class="input" required>
+                        <!--<input id="email" type="email" name="email" value="{{ old('email') }}" required>-->
+                        <!--@if ($errors->has('email'))-->
+                        <!--<span class="round alert label">{{ $errors->first('email') }}</span>-->
+                        <!--@endif-->
+                    </p>
+
+                    <label for="password" class="label">Password</label>
+                    <p class="controls">
+                        <input id="password" type="password" name="password" class="input" required>
+                        <!--@if ($errors->has('password'))-->
+                        <!--<span class="round alert label">{{ $errors->first('password') }}</span>-->
+                        <!--@endif-->
+                    </p>
+
+                    <label for="password-confirm" class="label">Confirm password</label>
+                    <p class="controls">
+                        <input id="password-confirm" type="password"
+                               name="password_confirmation" class="input" required>
+                    </p>
+
+                    <label for="subscribe" class="label">
+                        <input id="subscribe" type="checkbox"
+                               name="subscribe" class="checkbox"> Subscribe to our mailinglist
+                    </label>
+
+                    <div class="control is-grouped">
+                        <p class="control">
+                            <button type="submit" class="button is-primary">Create a new account</button>
                         </p>
-
-                        <label for="email" class="label">E-Mail address</label>
-                        <p class="controls">
-                            <input id="email" type="email" name="email" value="" class="input" required>
-                            <!--<input id="email" type="email" name="email" value="{{ old('email') }}" required>-->
-                            <!--@if ($errors->has('email'))-->
-                            <!--<span class="round alert label">{{ $errors->first('email') }}</span>-->
-                            <!--@endif-->
+                        <p class="control">
+                            <a href="/auth/facebook" class="button is-info">
+                                <i class="fa fa-facebook"></i>&nbsp;Sign up using Facebook
+                            </a>
                         </p>
-
-                        <label for="password" class="label">Password</label>
-                        <p class="controls">
-                            <input id="password" type="password" name="password" class="input" required>
-                            <!--@if ($errors->has('password'))-->
-                            <!--<span class="round alert label">{{ $errors->first('password') }}</span>-->
-                            <!--@endif-->
+                        <p class="control">
+                            <button @click="back" class="button is-link">Back</button>
                         </p>
-
-                        <label for="password-confirm" class="label">Confirm password</label>
-                        <p class="controls">
-                            <input id="password-confirm" type="password"
-                                   name="password_confirmation" class="input" required>
-                        </p>
-
-                        <label for="subscribe" class="label">
-                            <input id="subscribe" type="checkbox"
-                                   name="subscribe" class="checkbox"> Subscribe to our mailinglist
-                        </label>
-
-                        <div class="control is-grouped">
-                            <p class="control">
-                                <button type="submit" class="button is-primary">Create a new account</button>
-                            </p>
-                            <p class="control">
-                                <a href="/auth/facebook" class="button is-info">
-                                    <i class="fa fa-facebook"></i>&nbsp;Sign up using Facebook
-                                </a>
-                            </p>
-                            <p class="control">
-                                <button @click="back" class="button is-link">Back</button>
-                            </p>
-                        </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
-        </div>
+        </section>
     </div>
 </template>
 <script>
