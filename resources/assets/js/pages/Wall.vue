@@ -1,7 +1,9 @@
 <template>
     <div class="page page-allow-overflow">
         <div class="container">
+            <br>
             <photo-wall/>
+            <br>
         </div>
         <footer-component/>
     </div>

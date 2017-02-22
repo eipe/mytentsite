@@ -46,6 +46,40 @@
     #photo-preview {
         margin: 0 auto;
     }
+
+    #photo-controllers {
+        padding-top: 20px;
+        white-space: nowrap;
+    }
+
+    #photo-controllers i {
+        margin: 0 8px;
+    }
+
+    #photo-controllers i.fa-2x {
+        font-size: 1.6em;
+    }
+
+    #photo-controllers i:not(.fa-2x) {
+        font-size: 1.2em;
+    }
+
+    #photo-controllers * {
+        vertical-align: middle;
+    }
+
+    #photo-controllers textarea {
+        box-shadow: none;
+        border: 0;
+        display: inline-block;
+        font-size: 0.9em;
+        max-width: 60%;
+        height: 80px;
+        padding: 4px 0 0 0;
+        resize: none;
+        vertical-align: top;
+        overflow: hidden;
+    }
 </style>
 <script>
     var Share = require('../share.js');

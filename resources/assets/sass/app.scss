@@ -22,76 +22,11 @@
   width: 100vw;
 }
 
-/* Page specific rules */
-#photo-controllers {
-  padding-top: 20px;
-  white-space: nowrap;
-}
-
-#photo-controllers i {
-  margin: 0 8px;
-}
-
-#photo-controllers i.fa-2x {
-  font-size: 1.6em;
-}
-
-#photo-controllers i:not(.fa-2x) {
-  font-size: 1.2em;
-}
-
-#photo-controllers * {
-  vertical-align: middle;
-}
-
-#photo-controllers textarea {
-  box-shadow: none;
-  border: 0;
-  display: inline-block;
-  font-size: 0.9em;
-  max-width: 60%;
-  height: 80px;
-  padding: 4px 0 0 0;
-  resize: none;
-  vertical-align: top;
-  overflow: hidden;
-}
-
-.photo-controllers {
-  position: absolute;
-  top: calc(50% - 20px);
-  left: calc(50% - 20px);
-  width: 40px;
-  height: 40px;
-  text-align: center;
-  z-index: 1;
-}
-
-.photo-controllers i {
-  color: #eee;
-  opacity: 0.6;
-  font-size: 40px;
-  display: inline-block;
-  margin: 0 15px;
-  text-shadow: 1px 1px 1px #333;
-}
-
-.photo-controllers i:hover,
-.photo-container.photo-focus .photo-controllers i {
-  opacity: 0.9;
-}
-
-/* Photo wall */
-.photo-container {
-  position: relative;
-}
-
 /* General rules */
 .page-allow-overflow {
   overflow-y: auto;
   /* Add padding bottom matching the reduced height */
   padding-bottom: 40px;
-  margin-top: 20px;
 }
 
 .color-gray {

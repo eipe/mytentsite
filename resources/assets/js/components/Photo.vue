@@ -24,6 +24,36 @@
         </div>
     </div>
 </template>
+<style>
+    .photo-controllers {
+        position: absolute;
+        top: calc(50% - 20px);
+        left: calc(50% - 20px);
+        width: 40px;
+        height: 40px;
+        text-align: center;
+        z-index: 1;
+    }
+
+    .photo-controllers i {
+        color: #eee;
+        opacity: 0.6;
+        font-size: 40px;
+        display: inline-block;
+        margin: 0 15px;
+        text-shadow: 1px 1px 1px #333;
+    }
+
+    .photo-controllers i:hover,
+    .photo-container.photo-focus .photo-controllers i {
+        opacity: 0.9;
+    }
+
+    /* Photo wall */
+    .photo-container {
+        position: relative;
+    }
+</style>
 <script>
     import PhotoControllers from './PhotoControllers.vue'
 

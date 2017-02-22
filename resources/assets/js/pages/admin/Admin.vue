@@ -1,5 +1,6 @@
 <template>
     <div class="page page-allow-overflow">
+        <br>
         <div class="container">
             <div class="columns">
                 <div class="column is-narrow">
