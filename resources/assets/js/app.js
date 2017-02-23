@@ -246,7 +246,17 @@ const store = new Vuex.Store({
         viewPhotoOnMap(state, id) {
             state.commit('destroyGallery');
             router.push({ path: 'map' });
-            // Todo: move to photo coordinates on map
+
+            let index = state.state.tentSites.data.findIndex(function(photo) {
+                if(photo.id === id) {
+                    return true;
+                }
+            });
+
+            if(typeof state.state.tentSites.data[index] !== typeof undefined) {
+                let photo = state.state.tentSites.data[index];
+                Map.setters.setLocation(photo.lat, photo.lng);
+            }
         },
         destroyGallery(state) {
             state.commit('destroyGallery');

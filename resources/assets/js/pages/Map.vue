@@ -92,6 +92,12 @@
                 this.initializeMap();
             });
         },
+        setters: {
+            setLocation(latitude, longitude) {
+                this.latitude = latitude;
+                this.longitude = longitude;
+            }
+        },
         methods: {
             initializeMap() {
                 TentMap = L.map("tentmap").setView([this.latitude, this.longitude], this.zoom);
