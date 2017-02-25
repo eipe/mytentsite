@@ -71,6 +71,9 @@
         computed: {
             tentSites() {
                 return this.$store.state.tentSites.data;
+            },
+            position() {
+                return new L.LatLng(this.latitude, this.longitude);
             }
         },
         props: {
@@ -100,7 +103,7 @@
         },
         methods: {
             initializeMap() {
-                TentMap = L.map("tentmap").setView([this.latitude, this.longitude], this.zoom);
+                TentMap = L.map("tentmap").setView(this.position, this.zoom);
                 OpenStreetMap.addTo(TentMap);
                 L.control.layers(baseMaps, overlayMaps).addTo(TentMap);
 
@@ -133,7 +136,7 @@
                     return false;
                 }
                 TentMap.setView(
-                    new L.LatLng(this.latitude, this.longitude),
+                    this.position,
                     zoom,
                     {animate: true, duration: 0.2, noMoveStart: true, easyLinearity: 0.25}
                 );
@@ -142,12 +145,6 @@
         watch: {
             tentSites(newSites) {
                 placeSites(newSites);
-            },
-            'latitude': function() {
-                this.updateView();
-            },
-            'longitude': function() {
-                this.updateView();
             }
         }
     }
