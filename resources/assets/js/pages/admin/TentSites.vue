@@ -1,20 +1,22 @@
 <template>
     <div>
         <h1>Tent sites</h1>
-        <table class="table">
+        <table class="table is-striped">
             <thead>
                 <tr>
-                    <th width="20">Id</th>
+                    <th>Id</th>
                     <th>Caption</th>
-                    <th width="50">Photo</th>
-                    <th width="50">Map</th>
-                    <th width="50">Handle</th>
+                    <th>Created</th>
+                    <th width="50">Preview</th>
+                    <th>Map</th>
+                    <th>Handle</th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="tentSite in tentSites">
                     <td>{{ tentSite.id }}</td>
                     <td>{{ tentSite.caption }}</td>
+                    <td>{{ tentSite.created_at }}</td>
                     <td><img :src="tentSite.thumbnail_location" /></td>
                     <td>
                         <i @click="viewOnMap(tentSite.id)" title="View on map" class="fa fa-map-o is-clickable"></i>
@@ -28,13 +30,14 @@
                 </tr>
             </tbody>
             <tfoot>
-            <tr>
-                <th width="20">Id</th>
-                <th>Caption</th>
-                <th width="50">Photo</th>
-                <th width="50">Map</th>
-                <th width="50">Handle</th>
-            </tr>
+                <tr>
+                    <th>Id</th>
+                    <th>Caption</th>
+                    <th>Created</th>
+                    <th>Preview</th>
+                    <th>Map</th>
+                    <th>Handle</th>
+                </tr>
             </tfoot>
         </table>
     </div>
