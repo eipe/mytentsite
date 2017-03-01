@@ -70,15 +70,10 @@
         methods: {
             loadUserData() {
                 var me = this;
-                $.ajax({
-                    url: '/api/user/?api_token=' +  me.$store.state.user.apiToken,
-                    success: function(response) {
-                        if(parseInt(response.code) === 200) {
-                            if(typeof response.data !== typeof undefined) {
-                                me.$store.commit('setUser', response.data);
-                            }
-                        }
-                    }
+                axios.get('/user/').then(function(response) {
+                    me.$store.commit('setUser', response.data.data);
+                }).catch(function(response) {
+                    console.log(response);
                 });
             },
             logout(event) {

@@ -52,60 +52,48 @@
         },
         created() {
             let me = this;
-            $.ajax({
-                url: "/api/unapproved/?api_token=" + me.$store.state.user.apiToken,
-                method: "GET",
-                success(response) {
-                    $.each(response, function(key, value) {
-                        value.thumbnail_location = '/storage/photos/tentsite_thumbnails/' + value.thumbnail_location;
-                        me.tentSites.push(value);
-                    });
-                }, error() {
-                }
+            axios.get('/unapproved/').then(function(response) {
+                $.each(response.data, function(key, value) {
+                    value.thumbnail_location = '/storage/photos/tentsite_thumbnails/' + value.thumbnail_location;
+                    me.tentSites.push(value);
+                });
+            }).catch(function() {
             });
         },
         methods: {
             approve(id) {
                 let me = this;
-                $.ajax({
-                    url: "/api/admin/approve/" + id + "?api_token=" + me.$store.state.user.apiToken,
-                    method: "POST",
-                    success() {
-                        let index = me.tentSites.data.findIndex(function(photo) {
-                            if(photo.id === id) {
-                                return true;
-                            }
-                        });
-
-                        if(typeof me.tentSites.index !== typeof undefined) {
-                            delete me.tentSites.index;
+                axios.post('/admin/approve/' + id).then(function() {
+                    let index = me.tentSites.data.findIndex(function(photo) {
+                        if(photo.id === id) {
+                            return true;
                         }
-                        console.log("Approval successful");
-                    }, error(error) {
-                        console.log("Could not approve");
-                        console.log(error);
+                    });
+
+                    if(typeof me.tentSites.index !== typeof undefined) {
+                        delete me.tentSites.index;
                     }
+                    console.log("Approval successful");
+                }).catch(function(error) {
+                    console.log("Could not approve");
+                    console.log(error);
                 });
             },
             deny(id) {
                 let me = this;
-                $.ajax({
-                    url: "/api/admin/deny/" + id + "?api_token=" + me.$store.state.user.apiToken,
-                    method: "POST",
-                    success() {
-                        let index = me.tentSites.data.findIndex(function(photo) {
-                            if(photo.id === id) {
-                                return true;
-                            }
-                        });
-
-                        if(typeof me.tentSites.index !== typeof undefined) {
-                            delete me.tentSites.index;
+                axios.post('/admin/deny/' + id).then(function() {
+                    let index = me.tentSites.data.findIndex(function(photo) {
+                        if(photo.id === id) {
+                            return true;
                         }
-                        console.log("Denied successful");
-                    }, error() {
-                        console.log("Could not deny");
+                    });
+
+                    if(typeof me.tentSites.index !== typeof undefined) {
+                        delete me.tentSites.index;
                     }
+                    console.log("Denied successful");
+                }).catch(function() {
+                    console.log("Could not deny");
                 });
             },
             viewOnMap(id) {

@@ -9,7 +9,6 @@ module.exports = function Share() {
             taken_date: null
         },
         options = {
-            target: "/api/tentsites",
             cropItSettings: {
                 exportZoom: 1,
                 imageBackground: true,
@@ -32,11 +31,6 @@ module.exports = function Share() {
             }
         };
 
-    let $apiToken = $("#api_token");
-    if($apiToken.length > 0) {
-        options.target += "?api_token=" +  $apiToken.text();
-    }
-
     function storePhoto(callback) {
         if(typeof $uploader.prop("files") !== typeof undefined) {
             let photoData = new FormData();
@@ -48,17 +42,10 @@ module.exports = function Share() {
                 photoData.append("taken_date", photoExifData.taken_date);
             }
             photoControllerNext();
-            uploadEvent = $.ajax({
-                url: options.target,
-                method: "POST",
-                data: photoData,
-                cache : false,
-                contentType : false,
-                processData : false
-            }).success(function() {
+            uploadEvent = axios.post('/tentsites', photoData).then(function() {
                 alert("Photo successfully uploaded");
                 callback(200, "Photo successfully uploaded");
-            }).error(function(response) {
+            }).catch(function(response) {
                 // Handle canceled upload
                 if(parseInt(response.readyState) === 0 && response.statusText === "abort") {
                     return;

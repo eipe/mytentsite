@@ -102,24 +102,28 @@ const router = new VueRouter({
     linkActiveClass: 'is-active'
 });
 
+axios.defaults.baseURL = '/api/';
+
 let $apiToken = document.getElementById('api_token'),
     apiToken = null;
 
 if($apiToken) {
     apiToken = $apiToken.innerHTML.toString();
+    axios.defaults.params = {
+        'api_token' : apiToken
+    };
 }
 
 const store = new Vuex.Store({
     state: {
         tentSites: {
-            apiUrl: '/api/tentsites',
+            apiUrl: '/tentsites',
             hasMore: true,
             data: []
         },
         user: {
             name: '',
-            id: null,
-            apiToken: apiToken
+            id: null
         },
         gallery: {
             activePhoto: {},
@@ -159,45 +163,39 @@ const store = new Vuex.Store({
         },
         loadMoreTentSites(state) {
             if(state.tentSites.hasMore) {
-                $.ajax({
-                    url: state.tentSites.apiUrl,
-                    success: function (response) {
-                        if(parseInt(response.code) === 200) {
-                            if(response.data.next_page_url) {
-                                state.tentSites.apiUrl = response.data.next_page_url;
-                            } else {
-                                state.tentSites.hasMore = false;
-                            }
-
-                            if(typeof response.data.data !== typeof undefined && response.data.data.length > 0) {
-                                $.each(response.data.data, function (key, photo) {
-                                    state.tentSites.data.push({
-                                        id: photo["id"],
-                                        reported_by: photo["reported_by"],
-                                        lat: photo["latitude"],
-                                        lng: photo["longitude"],
-                                        likes: photo["likes"],
-                                        img_location: photo["img_location"],
-                                        thumbnail: photo["thumbnail_location"],
-                                        caption: photo["caption"],
-                                        created_at: photo["created_at"],
-                                        updated_at: photo["updated_at"],
-                                        approved: photo["approved"]
-                                    });
-                                });
-                            }
-                        }
-                    }, error: function (error) {
-                        console.log(error);
+                axios.get(state.tentSites.apiUrl).then(function(response) {
+                    let responseData = response.data.data;
+                    if(responseData.next_page_url) {
+                        state.tentSites.apiUrl = responseData.next_page_url;
+                    } else {
+                        state.tentSites.hasMore = false;
                     }
+
+                    console.log(response);
+
+                    if(typeof responseData.data !== typeof undefined && responseData.data.length > 0) {
+                        $.each(responseData.data, function (key, photo) {
+                            state.tentSites.data.push({
+                                id: photo["id"],
+                                reported_by: photo["reported_by"],
+                                lat: photo["latitude"],
+                                lng: photo["longitude"],
+                                likes: photo["likes"],
+                                img_location: photo["img_location"],
+                                thumbnail: photo["thumbnail_location"],
+                                caption: photo["caption"],
+                                created_at: photo["created_at"],
+                                updated_at: photo["updated_at"],
+                                approved: photo["approved"]
+                            });
+                        });
+                    }
+                }).catch(function(error) {
+                    console.log(error);
                 });
             }
         },
         likePhoto(state, id) {
-            if(!state.user.apiToken) {
-                return false;
-            }
-
             let index = state.tentSites.data.findIndex(function(photo) {
                 if(photo.id === id) {
                     return true;
@@ -207,18 +205,10 @@ const store = new Vuex.Store({
             if(typeof state.tentSites.data[index] !== typeof undefined && !state.tentSites.data[index].hasLiked) {
                 state.tentSites.data[index].likes += 1;
                 state.tentSites.data[index].hasLiked = true;
-
-                $.ajax({
-                    url: "/api/like/" + id + "/?api_token=" + state.user.apiToken,
-                    method: "POST"
-                });
+                axios.post('/like/' + id + '/');
             }
         },
         unlikePhoto(state, id) {
-            if(!state.user.apiToken) {
-                return false;
-            }
-
             let index = state.tentSites.data.findIndex(function(photo) {
                 if(photo.id === id) {
                     return true;
@@ -229,11 +219,7 @@ const store = new Vuex.Store({
                 state.tentSites.data[index].likes -= 1;
                 state.tentSites.data[index].hasLiked = false;
             }
-
-            $.ajax({
-                url: "/api/unlike/" + id + "/?api_token=" + state.user.apiToken,
-                method: "POST"
-            });
+            axios.post('/unlike/' + id + '/');
         },
         setUser(state, user) {
             state.user = user;
