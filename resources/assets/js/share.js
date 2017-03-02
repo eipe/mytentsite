@@ -45,23 +45,20 @@ module.exports = function Share() {
             uploadEvent = axios.post('/tentsites', photoData).then(function() {
                 alert("Photo successfully uploaded");
                 callback(200, "Photo successfully uploaded");
-            }).catch(function(response) {
+            }).catch(function(error) {
                 // Handle canceled upload
-                if(parseInt(response.readyState) === 0 && response.statusText === "abort") {
+                if(parseInt(error.response.readyState) === 0 && error.response.statusText === "abort") {
                     return;
                 }
                 photoControllerPrevious();
-                let error = '',
-                    errors = $.parseJSON(response.responseText);
-                if(typeof errors.error !== typeof undefined) {
-                    error = errors.error;
-                }
-                else if(typeof errors.data.form_validations !== typeof undefined) {
-                    $.each(errors.data.form_validations, function(field, fieldError) {
-                        error += fieldError + "<br>";
+                let errorText = '';
+
+                if(typeof error.response.data.form_validations !== typeof undefined) {
+                    error.response.data.form_validations.forEach(function(field, fieldError) {
+                        errorText += fieldError + "<br>";
                     });
                 }
-                callback(400, error);
+                callback(400, errorText);
             });
         } else {
             callback(400, "Missing file to upload");

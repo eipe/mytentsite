@@ -179,7 +179,7 @@ const store = new Vuex.Store({
                     }
 
                     if(typeof responseData.data !== typeof undefined && responseData.data.length > 0) {
-                        $.each(responseData.data, function (key, photo) {
+                        responseData.data.forEach(function (photo) {
                             state.tentSites.data.push({
                                 id: photo["id"],
                                 reported_by: photo["reported_by"],

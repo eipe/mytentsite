@@ -56,7 +56,7 @@
         created() {
             let me = this;
             axios.get('/unapproved/').then(function(response) {
-                $.each(response.data, function(key, value) {
+                response.data.forEach(function(value) {
                     value.thumbnail_location = '/storage/photos/tentsite_thumbnails/' + value.thumbnail_location;
                     me.tentSites.push(value);
                 });
