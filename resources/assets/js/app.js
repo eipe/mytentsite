@@ -155,6 +155,13 @@ const store = new Vuex.Store({
             if(typeof state.tentSites.data[index] !== typeof undefined) {
                 state.gallery.activePhoto = state.tentSites.data[index];
                 state.gallery.isActive = true;
+
+                if(state.tentSites.data[index].comments.length === 0) {
+                    axios.get('/comments/' + id).then(function(response) {
+                        state.tentSites.data[index].comments = response.data.data;
+                    }).catch(function(error) {
+                    });
+                }
             }
         },
         destroyGallery(state) {
@@ -184,7 +191,8 @@ const store = new Vuex.Store({
                                 caption: photo["caption"],
                                 created_at: photo["created_at"],
                                 updated_at: photo["updated_at"],
-                                approved: photo["approved"]
+                                approved: photo["approved"],
+                                comments: []
                             });
                         });
                     }

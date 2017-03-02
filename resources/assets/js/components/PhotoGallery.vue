@@ -2,13 +2,13 @@
     <div>
         <div class="modal" v-bind:class="{ 'is-active' : isActive }">
             <div class="modal-background" @click="destroy"></div>
-            <div class="modal-content" style="width: 70%;">
+            <div class="modal-content" style="width: 80%;">
                 <div class="content is-paddingless is-marginless">
                     <div class="columns is-paddingless is-marginless">
                         <div class="column is-paddingless">
                             <img :src="activePhoto.img_location" />
                         </div>
-                        <div class="column is-3" style="background-color: #fff;">
+                        <div class="column is-4" style="background-color: #fff;">
                             <div class="media">
                                 <div class="media-content">
                                     <p><strong>{{ activePhoto.reported_by }}</strong>
@@ -24,8 +24,35 @@
                                         <i class="fa is-clickable" v-bind:class="likeIcon" @click="toggleLike"></i>
                                         &nbsp;&nbsp;{{ activePhoto.likes }}
                                     </div>
+                                    <div class="level-item">
+                                        <span @click="viewOnMap" class="button is-small">View on map</span>
+                                    </div>
                                 </div>
                             </nav>
+                            <hr>
+                            <div v-if="activePhotoComments" style="max-height: 300px; overflow-y: auto">
+                                <div class="content" v-for="comment in activePhotoComments">
+                                    <p>
+                                        <strong>{{ comment.user_id }}</strong> <small>{{ comment.created_at }}</small>
+                                        <br>
+                                        {{ comment.comment }}
+                                    </p>
+                                </div>
+                            </div><br>
+                            <form @submit.prevent="submitComment" name="comment" id="comment"
+                                  target="/api/comments/activePhoto.id">
+                                <div class="control is-grouped">
+                                    <p class="control is-expanded">
+                                        <input class="input" v-model="comment" type="text" placeholder="Write a comment">
+                                    </p>
+                                    <p class="control">
+                                        <button type="submit" class="button is-primary"
+                                                v-bind:class="{ 'is-loading' : isPostingComment }">
+                                            Post
+                                        </button>
+                                    </p>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -41,6 +68,8 @@
     export default {
         data() {
             return {
+                comment: '',
+                isPostingComment: false
             }
         },
         computed: {
@@ -52,6 +81,9 @@
                 if(photo) {
                     return photo;
                 }
+            },
+            activePhotoComments() {
+                return this.activePhoto.comments;
             },
             hasLiked() {
                 let photo = this.activePhoto;
@@ -79,6 +111,7 @@
         methods: {
             destroy() {
                 this.$store.dispatch('destroyGallery');
+                this.comment = null;
             },
             toggleLike() {
                 if(this.activePhoto.hasLiked) {
@@ -86,6 +119,22 @@
                 } else {
                     this.$store.dispatch('likePhoto', this.activePhoto.id);
                 }
+            },
+            viewOnMap() {
+                this.$store.dispatch('viewPhotoOnMap', this.activePhoto.id);
+            },
+            submitComment() {
+                let me = this;
+                me.isPostingComment = true;
+                axios.post('/comments/' + this.activePhoto.id, {
+                    comment: this.comment
+                }).then(function(response) {
+                    me.activePhoto.comments.push(response.data);
+                    me.isPostingComment = false;
+                    me.comment = '';
+                }).catch(function(error) {
+                    me.isPostingComment = false;
+                });
             }
         }
     }
