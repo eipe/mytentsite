@@ -22,7 +22,7 @@ class CommentController extends Controller
         return $this->listResponse($m::all()->where('tent_site_id', $tentSiteId));
     }
 
-    public function store(Request $request)
+    public function store(Request $request, $tentSiteId)
     {
         /**
          * @var Comment $m
@@ -43,7 +43,9 @@ class CommentController extends Controller
 
             // We don't want to store the api token
             unset($post['api_token']);
-            $post['reported_by'] = Auth::user()->getAttribute('id');
+            $post['user_id'] = Auth::user()->getAttribute('id');
+            $post['tent_site_id'] = $tentSiteId;
+
             $data = $m::create($post);
 
             // Fire event
