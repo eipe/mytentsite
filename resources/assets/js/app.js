@@ -171,8 +171,6 @@ const store = new Vuex.Store({
                         state.tentSites.hasMore = false;
                     }
 
-                    console.log(response);
-
                     if(typeof responseData.data !== typeof undefined && responseData.data.length > 0) {
                         $.each(responseData.data, function (key, photo) {
                             state.tentSites.data.push({
