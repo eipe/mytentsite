@@ -27,10 +27,14 @@
                                     <div class="level-item">
                                         <span @click="viewOnMap" class="button is-small">View on map</span>
                                     </div>
+                                    <div class="level-item">
+                                        <span @click="writeComment" class="button is-small">Comment</span>
+                                    </div>
                                 </div>
                             </nav>
                             <hr>
-                            <div v-if="activePhotoComments" style="max-height: 300px; overflow-y: auto">
+                            <div v-if="activePhotoComments" id="photo-comments"
+                                 style="max-height: 300px; overflow-y: auto">
                                 <div class="content" v-for="comment in activePhotoComments">
                                     <p>
                                         <strong>{{ comment.user_id }}</strong> <small>{{ comment.created_at }}</small>
@@ -39,11 +43,14 @@
                                     </p>
                                 </div>
                             </div><br>
-                            <form @submit.prevent="submitComment" name="comment" id="comment"
-                                  target="/api/comments/activePhoto.id">
+                            <form @submit.prevent="submitComment">
                                 <div class="control is-grouped">
-                                    <p class="control is-expanded">
-                                        <input class="input" v-model="comment" type="text" placeholder="Write a comment">
+                                    <p class="control is-expanded has-icon has-icon-right">
+                                        <input class="input" ref="comment" v-model="comment" type="text"
+                                               placeholder="Write a comment">
+                                        <span class="icon is-small">
+                                            <i class="fa fa-warning" title="Required field"></i>
+                                        </span>
                                     </p>
                                     <p class="control">
                                         <button type="submit" class="button is-primary"
@@ -135,6 +142,11 @@
                 }).catch(function(error) {
                     me.isPostingComment = false;
                 });
+            },
+            writeComment() {
+                this.$refs.comment.focus();
+                let container = this.$el.querySelector("#photo-comments");
+                container.scrollTop = container.scrollHeight;
             }
         }
     }
