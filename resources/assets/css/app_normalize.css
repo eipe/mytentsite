@@ -28,6 +28,17 @@
     margin-bottom: 0;
 }
 
+/* Bulma / leaflet overrides */
+.easy-button-button {
+    cursor: pointer;
+}
+
+.easy-button-button .fa {
+    font-size: 16px;
+    vertical-align: text-top;
+    text-align: center;
+}
+
 /* Cropit specific rules */
 .cropit-preview {
     background-color: transparent;
