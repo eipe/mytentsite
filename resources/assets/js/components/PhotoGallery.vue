@@ -47,7 +47,7 @@
                                 <div class="control is-grouped">
                                     <p class="control is-expanded has-icon has-icon-right">
                                         <input class="input" ref="comment" v-model="comment" type="text"
-                                               placeholder="Write a comment">
+                                               placeholder="Write a comment" v-bind:class="{ 'is-danger' : hasErrors }">
                                         <span class="icon is-small">
                                             <i class="fa fa-warning" title="Required field"></i>
                                         </span>
@@ -76,7 +76,8 @@
         data() {
             return {
                 comment: '',
-                isPostingComment: false
+                isPostingComment: false,
+                errors: []
             }
         },
         computed: {
@@ -91,6 +92,9 @@
             },
             activePhotoComments() {
                 return this.activePhoto.comments;
+            },
+            hasErrors() {
+                return (typeof this.errors['comment'] !== typeof undefined);
             },
             hasLiked() {
                 let photo = this.activePhoto;
