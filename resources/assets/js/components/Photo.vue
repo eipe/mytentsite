@@ -115,7 +115,7 @@
                     return 'Waiting for approval';
                 }
 
-                if(this.approved === true) {
+                if(this.approved == true) {
                     return 'Approved';
                 } else {
                     return 'Not approved';
