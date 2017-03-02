@@ -41,7 +41,7 @@
             }
         },
         created() {
-            if(typeof this.photo === typeof undefined || this.photos.length === 0) {
+            if(typeof this.photos === typeof undefined || this.photos.length === 0) {
                 this.$store.commit('loadMoreTentSites');
             }
         },
