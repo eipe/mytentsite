@@ -36,7 +36,6 @@ const routes = [{
     path: '/info',
     name: 'Info',
     component: Info,
-    data: { staging: true }
 }, {
     path: '/user',
     name: 'User',
@@ -128,7 +127,8 @@ const store = new Vuex.Store({
         gallery: {
             activePhoto: {},
             isActive: false
-        }
+        },
+        beta: false
     },
     getters: {
         getUserTentSites: state => {
@@ -276,5 +276,12 @@ new Vue({
     router,
     components: {
         PhotoGallery
+    },
+    created() {
+        let environment = document.getElementById('environment').innerHTML.toString();
+
+        if(environment !== 'production') {
+            store.state.beta = true;
+        }
     }
 });

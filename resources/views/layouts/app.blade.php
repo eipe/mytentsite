@@ -31,12 +31,13 @@
     </nav>
     <div id="content">
         <keep-alive>
-            <router-view :staging="{{ (Config::get('app.env') === 'staging') }}"></router-view>
+            <router-view></router-view>
         </keep-alive>
     </div>
     @if(Auth::check())
         <div class="is-hidden" id="api_token">{{Auth::user()->getAttribute('api_token')}}</div>
     @endif
+    <div class="is-hidden" id="environment">{{ Config::get('app.env') }}</div>
     <photo-gallery></photo-gallery>
     <script src="{{ asset('/js/vendor.js') }}"></script>
     <script src="{{ asset('/js/app.js') }}"></script>
