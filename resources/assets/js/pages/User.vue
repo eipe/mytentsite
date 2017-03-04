@@ -49,6 +49,7 @@
     import { mapGetters } from 'vuex'
 
     export default {
+        name: 'User',
         data() {
             return {
                 socialLogin: {

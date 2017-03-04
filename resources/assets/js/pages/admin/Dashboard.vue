@@ -14,6 +14,7 @@
 </template>
 <script>
     export default {
+        name: 'Admin - Dashboard',
         data() {
             return {
                 apDex: '',

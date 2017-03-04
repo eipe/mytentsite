@@ -47,7 +47,7 @@
     import Photo from '../../components/Photo.vue'
 
     export default {
-
+        name: 'Admin - Tent sites',
         data() {
             return {
                 tentSites: []

@@ -5,6 +5,7 @@
 </template>
 <script>
     export default {
+        name: 'Admin - Statistics',
         data() {
             return {
             }
