@@ -33,33 +33,8 @@
                                 </div>
                             </nav>
                             <hr>
-                            <div v-if="activePhotoComments" id="photo-comments"
-                                 style="max-height: 300px; overflow-y: auto">
-                                <div class="content" v-for="comment in activePhotoComments">
-                                    <p>
-                                        <strong>{{ comment.user_id }}</strong> <small>{{ comment.created_at }}</small>
-                                        <br>
-                                        {{ comment.comment }}
-                                    </p>
-                                </div>
-                            </div><br>
-                            <form @submit.prevent="submitComment">
-                                <div class="control is-grouped">
-                                    <p class="control is-expanded has-icon has-icon-right">
-                                        <input class="input" ref="comment" v-model="comment" type="text"
-                                               placeholder="Write a comment" v-bind:class="{ 'is-danger' : hasErrors }">
-                                        <span class="icon is-small">
-                                            <i class="fa fa-warning" title="Required field"></i>
-                                        </span>
-                                    </p>
-                                    <p class="control">
-                                        <button type="submit" class="button is-primary"
-                                                v-bind:class="{ 'is-loading' : isPostingComment }">
-                                            Post
-                                        </button>
-                                    </p>
-                                </div>
-                            </form>
+                            <photo-comments :comments="activePhotoComments" id="photo-comments" />
+                            <photo-comment-form :id="activePhoto.id" :focus="focus" />
                         </div>
                     </div>
                 </div>
@@ -71,13 +46,13 @@
 <script>
 
     import Photo from './Photo.vue'
+    import PhotoComments from './PhotoComments.vue'
+    import PhotoCommentForm from './PhotoCommentForm.vue'
 
     export default {
         data() {
             return {
-                comment: '',
-                isPostingComment: false,
-                errors: []
+                focus: false
             }
         },
         computed: {
@@ -92,9 +67,6 @@
             },
             activePhotoComments() {
                 return this.activePhoto.comments;
-            },
-            hasErrors() {
-                return (typeof this.errors['comment'] !== typeof undefined);
             },
             hasLiked() {
                 let photo = this.activePhoto;
@@ -123,6 +95,7 @@
             destroy() {
                 this.$store.dispatch('destroyGallery');
                 this.comment = null;
+                this.focus = false;
             },
             toggleLike() {
                 if(this.activePhoto.hasLiked) {
@@ -134,24 +107,12 @@
             viewOnMap() {
                 this.$store.dispatch('viewPhotoOnMap', this.activePhoto.id);
             },
-            submitComment() {
-                let me = this;
-                me.isPostingComment = true;
-                axios.post('/comments/' + this.activePhoto.id, {
-                    comment: this.comment
-                }).then(function(response) {
-                    me.activePhoto.comments.push(response.data);
-                    me.isPostingComment = false;
-                    me.comment = '';
-                }).catch(function(error) {
-                    me.isPostingComment = false;
-                });
-            },
             writeComment() {
-                this.$refs.comment.focus();
+                this.focus = true;
                 let container = this.$el.querySelector("#photo-comments");
                 container.scrollTop = container.scrollHeight;
             }
-        }
+        },
+        components: { Photo, PhotoComments, PhotoCommentForm }
     }
 </script>

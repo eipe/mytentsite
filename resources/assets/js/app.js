@@ -227,6 +227,17 @@ const store = new Vuex.Store({
             }
             axios.post('/unlike/' + id + '/');
         },
+        addCommentOnPhoto(state, id, comment) {
+            let index = state.tentSites.data.findIndex(function(photo) {
+                if(photo.id === id) {
+                    return true;
+                }
+            });
+
+            if(typeof state.tentSites.data[index] !== typeof undefined && state.tentSites.data[index].hasLiked) {
+                state.tentSites.data[index].comments.push(comment);
+            }
+        },
         setUser(state, user) {
             state.user = user;
         }
@@ -258,6 +269,9 @@ const store = new Vuex.Store({
         },
         unlikePhoto(state, id) {
             state.commit('unlikePhoto', id);
+        },
+        addCommentOnPhoto(state, photoId, comment) {
+            state.commit('addCommentOnPhoto', photoId, comment);
         }
     }
 });
