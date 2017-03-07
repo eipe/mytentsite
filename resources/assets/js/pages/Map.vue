@@ -123,9 +123,6 @@
                 placeSites(this.tentSites);
             },
             updateView: function() {
-                if(!this.latitude || !this.longitude) {
-                    return false;
-                }
                 TentMap.setView(
                     this.position,
                     this.zoom,
