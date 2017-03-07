@@ -9,7 +9,7 @@
 </template>
 <script>
     export default {
-        name: 'Photo comment',
+        name: 'PhotoComment',
         data() {
             return {
             }

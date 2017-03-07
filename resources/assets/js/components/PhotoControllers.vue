@@ -8,7 +8,7 @@
     import Map from '../pages/Map.vue';
 
     export default {
-        name: 'Photo controllers',
+        name: 'PhotoControllers',
         data() {
             return {
             }

@@ -65,7 +65,7 @@
 </template>
 <script>
     export default {
-        name: 'Password reset',
+        name: 'PasswordResetForm',
         data() {
             return {
             }

@@ -5,7 +5,7 @@
 </template>
 <script>
     export default {
-        name: 'Admin users',
+        name: 'AdminUsers',
         data() {
             return {
             }

@@ -13,7 +13,7 @@
 <script>
     import PhotoComment from './PhotoComment.vue'
     export default {
-        name: 'Photo comments',
+        name: 'PhotoComments',
         data() {
             return {
             }

@@ -24,7 +24,7 @@
     import Photo from './Photo.vue';
 
     export default {
-        name: 'Photo wall',
+        name: 'PhotoWall',
         data() {
             return {
                 showControllers: {
