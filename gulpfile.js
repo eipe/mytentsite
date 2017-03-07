@@ -39,7 +39,6 @@ elixir(function(mix) {
         config.bowerDir + '/Leaflet.Photo/Leaflet.Photo.js',
         config.bowerDir + '/Leaflet.EasyButton/src/easy-button.js',
         config.bowerDir + '/exif-js/exif.js',
-        config.bowerDir + '/what-input/dist/what-input.js',
         config.bowerDir + '/cropit/dist/jquery.cropit.js',
         config.nodeDir + '/vue/dist/vue.js',
         config.nodeDir + '/vue-progressive-image/dist/vue-progressive-image.js',
