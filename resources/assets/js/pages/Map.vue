@@ -66,6 +66,9 @@
         name: 'Map',
         data() {
             return {
+                latitude: 63.412222,
+                longitude: 10.404722,
+                zoom: 4
             }
         },
         computed: {
@@ -76,29 +79,17 @@
                 return new L.LatLng(this.latitude, this.longitude);
             }
         },
-        props: {
-            latitude: {
-                type: Number,
-                default: 63.412222
-            },
-            longitude: {
-                type: Number,
-                default: 10.404722
-            },
-            zoom: {
-                type: Number,
-                default: 4
-            }
-        },
         created: function() {
             this.$nextTick(function() {
                 this.initializeMap();
             });
         },
-        setters: {
-            setLocation(latitude, longitude) {
-                this.latitude = latitude;
-                this.longitude = longitude;
+        activated() {
+            if(typeof this.$route.query.latitude !== typeof undefined &&
+                typeof this.$route.query.longitude !== typeof undefined) {
+                this.latitude = this.$route.query.latitude;
+                this.longitude = this.$route.query.longitude;
+                this.zoom = 11;
             }
         },
         methods: {
@@ -137,7 +128,7 @@
                 }
                 TentMap.setView(
                     this.position,
-                    zoom,
+                    this.zoom,
                     {animate: true, duration: 0.2, noMoveStart: true, easyLinearity: 0.25}
                 );
             }
@@ -145,6 +136,9 @@
         watch: {
             tentSites(newSites) {
                 placeSites(newSites);
+            },
+            position() {
+                this.updateView();
             }
         }
     }

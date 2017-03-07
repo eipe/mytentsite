@@ -248,8 +248,7 @@ const store = new Vuex.Store({
         },
         viewPhotoOnMap(state, id) {
             state.commit('destroyGallery');
-            router.push({ path: 'map' });
-
+            let routerVariables = { path: 'map', query: {}};
             let index = state.state.tentSites.data.findIndex(function(photo) {
                 if(photo.id === id) {
                     return true;
@@ -258,8 +257,10 @@ const store = new Vuex.Store({
 
             if(typeof state.state.tentSites.data[index] !== typeof undefined) {
                 let photo = state.state.tentSites.data[index];
-                Map.setters.setLocation(photo.lat, photo.lng);
+                routerVariables.query.latitude = photo.lat;
+                routerVariables.query.longitude = photo.lng;
             }
+            router.push(routerVariables);
         },
         destroyGallery(state) {
             state.commit('destroyGallery');
