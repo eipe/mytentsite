@@ -10,6 +10,7 @@ module.exports = function Share() {
         },
         options = {
             cropItSettings: {
+                allowDragNDrop: false,
                 exportZoom: 1,
                 imageBackground: true,
                 imageBackgroundBorderWidth: 1,
