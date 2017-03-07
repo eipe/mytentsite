@@ -79,12 +79,10 @@
                 return new L.LatLng(this.latitude, this.longitude);
             }
         },
-        created: function() {
-            this.$nextTick(function() {
-                this.initializeMap();
-            });
-        },
         activated() {
+            if(!TentMap) {
+                this.initializeMap();
+            }
             if(typeof this.$route.query.latitude !== typeof undefined &&
                 typeof this.$route.query.longitude !== typeof undefined) {
                 this.latitude = this.$route.query.latitude;
