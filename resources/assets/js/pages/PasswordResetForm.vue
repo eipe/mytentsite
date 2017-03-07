@@ -15,9 +15,10 @@
                         <!--<input type="hidden" name="token" value="{{ $token }}">-->
 
                         <!--<div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">-->
-                        <label for="email" class="label">E-Mail address</label>
+                        <label for="email" class="label">E-mail address</label>
                         <p class="controls">
-                            <input id="email" type="email" name="email" class="input" value="" required autofocus>
+                            <input id="email" type="email" name="email" class="input" value=""
+                                   placeholder="E-mail address" required autofocus>
                             <!--<input id="email" type="email" class="form-control" name="email" value="{{ $email or old('email') }}" required autofocus>-->
                             <!--@if ($errors->has('email'))-->
                             <!--<span class="help-block">-->
@@ -29,7 +30,8 @@
                         <!--<div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">-->
                         <label for="password" class="label">Password</label>
                         <p class="controls">
-                            <input id="password" type="password" class="input" name="password" required>
+                            <input id="password" type="password" class="input" name="password"
+                                   placeholder="Password" required>
                             <!--@if ($errors->has('password'))-->
                             <!--<span class="help-block">-->
                             <!--<strong>{{ $errors->first('password') }}</strong>-->
@@ -38,9 +40,10 @@
                         </p>
 
                         <!--<div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">-->
-                        <label for="password-confirm" class="label">Confirm Password</label>
+                        <label for="password-confirm" class="label">Confirm password</label>
                         <p class="controls">
-                            <input id="password-confirm" type="password" class="input" name="password_confirmation" required>
+                            <input id="password-confirm" type="password" class="input" name="password_confirmation"
+                                   placeholder="Confirm password" required>
                             <!--<input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>-->
                             <!--@if ($errors->has('password_confirmation'))-->
                             <!--<span class="help-block">-->

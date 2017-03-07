@@ -15,7 +15,8 @@
                         <label for="email" class="label">E-mail address</label>
                         <!--<label for="email" class="col-md-4 control-label">E-mail address</label>-->
                         <p class="controls">
-                            <input id="email" type="email" class="input" name="email" value="" required>
+                            <input id="email" type="email" class="input" name="email" value=""
+                                   placeholder="E-mail address" required>
                         </p>
                             <!--<input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>-->
                             <!--@if ($errors->has('email'))-->

@@ -9,16 +9,18 @@
 
                         <label for="name" class="label">Name</label>
                         <p class="controls">
-                            <input id="name" type="text" name="name" value="" class="input" required autofocus>
+                            <input id="name" type="text" name="name" value="" class="input"
+                                   placeholder="Name" required autofocus>
                             <!--<input id="name" type="text" name="name" value="{{ old('name') }}" required autofocus>-->
                             <!--@if ($errors->has('name'))-->
                             <!--<span class="round alert label">{{ $errors->first('name') }}</span>-->
                             <!--@endif-->
                         </p>
 
-                        <label for="email" class="label">E-Mail address</label>
+                        <label for="email" class="label">E-mail address</label>
                         <p class="controls">
-                            <input id="email" type="email" name="email" value="" class="input" required>
+                            <input id="email" type="email" name="email" value="" class="input"
+                                   placeholder="E-mail address" required>
                             <!--<input id="email" type="email" name="email" value="{{ old('email') }}" required>-->
                             <!--@if ($errors->has('email'))-->
                             <!--<span class="round alert label">{{ $errors->first('email') }}</span>-->
@@ -27,7 +29,8 @@
 
                         <label for="password" class="label">Password</label>
                         <p class="controls">
-                            <input id="password" type="password" name="password" class="input" required>
+                            <input id="password" type="password" name="password" class="input"
+                                   placeholder="Password" required>
                             <!--@if ($errors->has('password'))-->
                             <!--<span class="round alert label">{{ $errors->first('password') }}</span>-->
                             <!--@endif-->
@@ -36,7 +39,7 @@
                         <label for="password-confirm" class="label">Confirm password</label>
                         <p class="controls">
                             <input id="password-confirm" type="password"
-                                   name="password_confirmation" class="input" required>
+                                   name="password_confirmation" class="input" placeholder="Confirm password" required>
                         </p>
 
                         <label for="subscribe" class="label">
