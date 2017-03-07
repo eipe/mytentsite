@@ -56,7 +56,7 @@
 
     import Footer from '../components/Footer.vue';
 
-    export default{
+    export default {
         name: 'Info',
         components: {
             'footer-component': Footer

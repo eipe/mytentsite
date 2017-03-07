@@ -58,6 +58,7 @@
     import PhotoControllers from './PhotoControllers.vue'
 
     export default {
+        name: 'Photo',
         data () {
             return{
                 showControllers: false

@@ -23,7 +23,8 @@
 <script>
     import Photo from './Photo.vue';
 
-    export default{
+    export default {
+        name: 'Photo wall',
         data() {
             return {
                 showControllers: {

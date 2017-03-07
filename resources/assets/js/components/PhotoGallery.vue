@@ -50,6 +50,7 @@
     import PhotoCommentForm from './PhotoCommentForm.vue'
 
     export default {
+        name: 'Photo gallery',
         data() {
             return {
                 focus: false

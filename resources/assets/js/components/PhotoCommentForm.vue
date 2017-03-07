@@ -21,6 +21,7 @@
 </template>
 <script>
     export default {
+        name: 'Photo comment form',
         data() {
             return {
                 comment: '',
