@@ -23,7 +23,6 @@
     "bower": "*",
     "install": "^1.0.4",
     "font-awesome": "fontawesome#^4.6.3",
-    "foundation-sites": "^6.2.3",
     "cropit": "^0.5.1",
     "exif-js": "^2.1.1"
   },
