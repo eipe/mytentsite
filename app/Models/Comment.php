@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -35,6 +36,16 @@ class Comment extends Model
         }
         return $id;
 
+    }
+
+    /**
+     * Get the created at as human readable date
+     *
+     * @return string
+     */
+    public function getCreatedAtAttribute()
+    {
+        return Carbon::createFromTimeStamp(strtotime($this->attributes['created_at']) )->diffForHumans();
     }
 
 
