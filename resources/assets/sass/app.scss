@@ -12,7 +12,7 @@
 }
 
 #content {
-  height: calc(100vh - 49px);
+  height: calc(100vh - #{$size-1});
   width: 100vw;
   overflow: hidden;
 }
@@ -26,7 +26,7 @@
 .page-allow-overflow {
   overflow-y: auto;
   /* Add padding bottom matching the reduced height */
-  padding-bottom: 49px;
+  padding-bottom: $size-1;
 }
 
 .color-gray {
