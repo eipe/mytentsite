@@ -12,7 +12,9 @@
         "guzzlehttp/guzzle": "^6.2",
         "laravel/socialite": "^2.0",
         "sentry/sentry": "^1.6",
-        "sentry/sentry-laravel": "^0.5.0"
+        "sentry/sentry-laravel": "^0.5.0",
+        "dingo/api": "1.0.x@dev",
+        "tymon/jwt-auth": "0.5.*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

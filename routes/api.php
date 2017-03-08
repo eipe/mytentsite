@@ -13,6 +13,15 @@ use Illuminate\Http\Request;
 |
 */
 
+$api = app('Dingo\Api\Routing\Router');
+$api->version(['v1'], function(\Dingo\Api\Routing\Router $api) {
+
+    $api->post('/login', 'App\Http\Controllers\Auth\AuthenticateController@authenticate');
+    $api->get('/tentsites/{lat?}/{lng?}/{rad?}', 'App\Http\Controllers\TentSitesController@index');
+    $api->get('/tentsites/{lat?}/{lng?}/{rad?}', 'App\Http\Controllers\TentSitesController@index');
+   // $api->get('usersites/', 'App\Http\Controllers\TentSitesController@getUserTentSites')->middelware('api.auth');
+});
+
 // Tent sites
 Route::resource('/tentsites', 'TentSitesController', ['except' => [
     'index', 'store', 'update','destroy'
