@@ -45,3 +45,13 @@
 hr.border-dashed {
   border-style: dashed;
 }
+
+@media (max-width: $tablet) {
+  .has-page-margin-top {
+    margin: 0;
+    padding: 0;
+  }
+  .has-tablet-no-padding .column {
+    padding: 0;
+  }
+}
