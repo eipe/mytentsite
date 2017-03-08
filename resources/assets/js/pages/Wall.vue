@@ -1,9 +1,7 @@
 <template>
-    <div class="page page-allow-overflow">
+    <div class="page page-allow-overflow has-page-margin-top">
         <div class="container">
-            <br>
             <photo-wall/>
-            <br>
         </div>
         <footer-component/>
     </div>
