@@ -4,35 +4,31 @@
             <div class="content columns">
                 <div class="column is-half is-offset-one-quarter">
                     <h1>Login</h1>
-                        <!--<form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">-->
-                    <form action="/login" method="POST">
-                        <!--{{ csrf_field() }}-->
-                        <label class="label" for="email">E-Mail Address</label>
+                    <form @submit.prevent="submitForm" action="/login" method="POST">
                         <p class="control">
-                        <!--<input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus>-->
-                            <input id="email" type="email" name="email" value="" class="input" required autofocus>
+                            <input id="email" type="email" name="email" v-model="email"
+                                   value="" class="input" placeholder="E-mail address" required autofocus>
                         </p>
-                        <!--@if ($errors->has('email'))-->
-                        <!--<span class="round alert label">{{ $errors->first('email') }}</span>-->
-                        <!--@endif-->
+                        <p class="control">
+                            <input id="password" type="password" name="password" v-model="password"
+                                   class="input" placeholder="Password" required>
+                        </p>
 
-                        <label class="label" for="password">Password</label>
-                        <p class="control">
-                            <input id="password" type="password" name="password" class="input" required>
-                        </p>
-                        <!--@if ($errors->has('password'))-->
-                        <!--<span class="round alert label">{{ $errors->first('password') }}</span>-->
-                        <!--@endif-->
+                        <div class="notification is-danger" v-if="error">
+                            <button class="delete" @click.prevent="error = null"></button>
+                            {{ error }}
+                        </div>
 
                         <p class="control">
                             <label class="checkbox">
-                                <input type="checkbox" name="remember" class="checkbox"> Remember me
+                                <input type="checkbox" name="remember" v-model="remember" class="checkbox"> Remember me
                             </label>
                         </p>
 
                         <div class="control is-grouped">
                             <p class="control">
-                                <button type="submit" class="button is-primary">Login</button>
+                                <button type="submit" class="button is-primary"
+                                        v-bind:class="{ 'is-loading' : isPosting }">Login</button>
                             </p>
                             <p class="control">
                                 <router-link to="/password/reset" tag="button" class="button is-link">
@@ -65,6 +61,30 @@
     export default {
         data() {
             return {
+                email: '',
+                password: '',
+                remember: false,
+                isPosting: false,
+                error: null
+            }
+        },
+        methods: {
+            submitForm() {
+                let me = this,
+                    form = new FormData();
+                me.isPosting = true;
+                me.error = null;
+
+                form.append('email', me.email);
+                form.append('password', me.password);
+
+                axios.post('/login', form).
+                then(function(success) {
+                    me.isPosting = false;
+                }).catch(function(error) {
+                    me.error = error.response.data.error;
+                    me.isPosting = false;
+                });
             }
         }
     }
