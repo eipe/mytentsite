@@ -53,7 +53,8 @@
         name: 'PhotoGallery',
         data() {
             return {
-                focus: false
+                focus: false,
+                hasLiked: false
             }
         },
         computed: {
@@ -68,13 +69,6 @@
             },
             activePhotoComments() {
                 return this.activePhoto.comments;
-            },
-            hasLiked() {
-                let photo = this.activePhoto;
-                if(photo) {
-                    return photo.hasLiked;
-                }
-                return false;
             },
             likeIcon() {
                 if(this.hasLiked) {
@@ -99,9 +93,11 @@
                 this.focus = false;
             },
             toggleLike() {
-                if(this.activePhoto.hasLiked) {
+                if(this.hasLiked) {
+                    this.hasLiked = false;
                     this.$store.dispatch('unlikePhoto', this.activePhoto.id);
                 } else {
+                    this.hasLiked = true;
                     this.$store.dispatch('likePhoto', this.activePhoto.id);
                 }
             },
@@ -112,6 +108,11 @@
                 this.focus = true;
                 let container = this.$el.querySelector("#photo-comments");
                 container.scrollTop = container.scrollHeight;
+            }
+        },
+        watch: {
+            activePhoto() {
+                this.hasLiked = this.activePhoto.hasLiked;
             }
         },
         components: { Photo, PhotoComments, PhotoCommentForm }
