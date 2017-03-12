@@ -11,7 +11,7 @@
                         <a href="/auth/sign_out" class="button is-info">Sign out</a>
                     </slot>
                     <slot v-else>
-                        <a class="button is-info" href="/logout" @click="logout()">Logout</a>
+                        <a class="button is-info" href="/logout" @click.prevent="logout">Logout</a>
                     </slot>
                 </div>
             </div>
@@ -53,15 +53,9 @@
         data() {
             return {
                 socialLogin: {
-                    valid: {
-                        type: Boolean
-                    },
-                    provider: {
-                        type: String
-                    },
-                    time: {
-                        type: String
-                    }
+                    valid: false,
+                    provider: null,
+                    time: null
                 }
             }
         },
@@ -74,15 +68,10 @@
                 axios.get('/user/').then(function(response) {
                     me.$store.commit('setUser', response.data.data);
                 }).catch(function(response) {
-                    console.log(response);
                 });
             },
-            logout(event) {
-                event.preventDefault();
-                //document.getElementById('logout-form').submit();
-                //<form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
-                //{{ csrf_field()
-                //</form>
+            logout() {
+                this.$store.dispatch('logout');
             }
         },
         created() {

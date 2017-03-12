@@ -78,11 +78,13 @@
                 form.append('email', me.email);
                 form.append('password', me.password);
 
-                axios.post('/login', form).
-                then(function(success) {
+                axios.post('/login', form).then(function(success) {
+                    me.$store.dispatch('loginWithToken', success.data.token);
                     me.isPosting = false;
                 }).catch(function(error) {
-                    me.error = error.response.data.error;
+                    if(typeof error.response !== typeof undefined) {
+                        me.error = error.response.data.error;
+                    }
                     me.isPosting = false;
                 });
             }

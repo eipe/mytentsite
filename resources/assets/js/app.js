@@ -102,16 +102,7 @@ const router = new VueRouter({
 });
 
 axios.defaults.baseURL = '/api/';
-
-let $apiToken = document.getElementById('api_token'),
-    apiToken = null;
-
-if($apiToken) {
-    apiToken = $apiToken.innerHTML.toString();
-    axios.defaults.params = {
-        'api_token' : apiToken
-    };
-}
+axios.defaults.params = {};
 
 const store = new Vuex.Store({
     state: {
@@ -128,7 +119,9 @@ const store = new Vuex.Store({
             activePhoto: {},
             isActive: false
         },
-        beta: false
+        beta: false,
+        apiToken: null,
+        blockedRoute: null,
     },
     getters: {
         getUserTentSites: state => {
@@ -240,6 +233,12 @@ const store = new Vuex.Store({
         },
         setUser(state, user) {
             state.user = user;
+        },
+        setToken(state, token) {
+            state.apiToken = token;
+        },
+        clearToken(state) {
+            state.apiToken = null;
         }
     },
     actions: {
@@ -273,12 +272,48 @@ const store = new Vuex.Store({
         },
         addCommentOnPhoto(state, photoId, comment) {
             state.commit('addCommentOnPhoto', photoId, comment);
+        },
+        storeToken(state, token) {
+            localStorage.setItem('api_token', token);
+            state.commit('setToken', token);
+            axios.defaults.params.apiToken = token;
+            axios.defaults.headers.common['Authorization'] = token;
+        },
+        loginWithToken(state, token) {
+            state.dispatch('storeToken', token);
+            if(state.state.blockedRoute) {
+                router.push(state.state.blockedRoute.path);
+                state.state.blockedRoute = null;
+            } else {
+                router.push('/user');
+            }
+        },
+        logout(state) {
+            localStorage.removeItem('api_token');
+            state.commit('clearToken');
+            axios.defaults.params.apiToken = null;
+            axios.defaults.headers.common['Authorization'] = null;
+            router.push('/info');
         }
     }
 });
 
+let cachedToken = localStorage.getItem('api_token');
+if(cachedToken) {
+    store.dispatch('storeToken', cachedToken);
+} else {
+    let $apiToken = document.getElementById('api_token');
+
+    if($apiToken) {
+        store.dispatch('storeToken', $apiToken.innerHTML.toString());
+    }
+}
+
+axios.defaults.headers.common['Authorization'] = store.state.apiToken;
+
 router.beforeEach((to, from, next) => {
-    if(to.meta.auth && !apiToken) {
+    if(to.meta.auth && !store.state.apiToken) {
+        store.state.blockedRoute = to;
         next('/login');
     } else {
         next();
