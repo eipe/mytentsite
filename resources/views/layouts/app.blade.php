@@ -10,7 +10,8 @@
     <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16">
     <link rel="manifest" href="/manifest.json">
     <link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#333333">
-    <link href="{{ asset('/css/vendor.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('/css/core-dep.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('/css/map-dep.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('/css/app_normalize.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('/css/app.css') }}" rel="stylesheet" type="text/css">
 </head>
@@ -39,7 +40,9 @@
     @endif
     <div class="is-hidden" id="environment">{{ Config::get('app.env') }}</div>
     <photo-gallery></photo-gallery>
-    <script src="{{ asset('/js/vendor.js') }}"></script>
+    <script src="{{ asset('/js/core-dep.js') }}"></script>
+    <script src="{{ asset('/js/map-dep.js') }}"></script>
+    <script src="{{ asset('/js/share-dep.js') }}"></script>
     <script src="{{ asset('/js/app.js') }}"></script>
     @if(env('GOOGLE_ANALYTICS_TRACKING_ID'))
     <script>
