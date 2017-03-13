@@ -18,29 +18,20 @@ $api->version(['v1'], function(\Dingo\Api\Routing\Router $api) {
 
     $api->post('/login', 'App\Http\Controllers\Auth\AuthenticateController@authenticate');
     $api->get('/tentsites/{lat?}/{lng?}/{rad?}', 'App\Http\Controllers\TentSitesController@index');
-    $api->get('/tentsites/{lat?}/{lng?}/{rad?}', 'App\Http\Controllers\TentSitesController@index');
-   // $api->get('usersites/', 'App\Http\Controllers\TentSitesController@getUserTentSites')->middelware('api.auth');
+    $api->get('/comments/{id}', 'App\Http\Controllers\CommentController@index');
+
+    $api->group(['middleware' => 'jwt.auth'], function (\Dingo\Api\Routing\Router $api) {
+        // Endpoints registered here will have the "auth" middleware applied.
+        $api->get('/usersites', 'App\Http\Controllers\TentSitesController@getUserTentSites');
+        $api->get('/unapproved', 'App\Http\Controllers\TentSitesController@getUnapproved');
+        $api->post('/tentsites', 'App\Http\Controllers\TentSitesController@store');
+        $api->put('/tentsites', 'App\Http\Controllers\TentSitesController@update');
+        $api->post('/like/{id}', 'App\Http\Controllers\LikeController@handleLike');
+        $api->post('/comments/{id}', 'App\Http\Controllers\CommentController@store');
+
+    });
+
 });
-
-// Tent sites
-Route::resource('/tentsites', 'TentSitesController', ['except' => [
-    'index', 'store', 'update','destroy'
-]]);
-Route::get('/tentsites/{lat?}/{lng?}/{rad?}', 'TentSitesController@index');
-Route::get('/usersites', 'TentSitesController@getUserTentSites')->middleware('auth:api');
-Route::get('/unapproved', 'TentSitesController@getUnapproved')->middleware('auth:api');
-Route::post('/tentsites', 'TentSitesController@store')->middleware('auth:api');
-Route::put('/tentsites', 'TentSitesController@update')->middleware('auth:api');
-
-// Likes
-Route::post('/like/{id}', 'LikeController@handleLike')->middleware('auth:api');
-
-// Comments
-Route::get('/comments/{id}', 'CommentController@index');
-Route::post('/comments/{id}', 'CommentController@store')->middleware('auth:api');
-
-// User
-Route::get('/user', 'UserController@index')->middleware('auth:api');
 
 
 /**
