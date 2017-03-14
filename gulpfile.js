@@ -23,7 +23,8 @@ elixir(function(mix) {
 
     mix.styles('app_normalize.css', 'public/css/app_normalize.css')
         .styles([
-            config.bowerDir + '/font-awesome/css/font-awesome.css'
+            config.bowerDir + '/font-awesome/css/font-awesome.css',
+            config.nodeDir + '/animate.css/animate.css'
         ], 'public/css/core-dep.css')
         .styles([
             config.bowerDir + '/leaflet/dist/leaflet.css',
