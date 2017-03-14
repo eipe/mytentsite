@@ -31,9 +31,11 @@
             </ul>
         </nav>
         <div id="content">
-            <keep-alive>
-                <router-view></router-view>
-            </keep-alive>
+            <transition enter-active-class="animated fadeIn">
+                <keep-alive>
+                    <router-view></router-view>
+                </keep-alive>
+            </transition>
         </div>
         <photo-gallery></photo-gallery>
     </div>
