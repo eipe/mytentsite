@@ -276,7 +276,7 @@ const store = new Vuex.Store({
         storeToken(state, token) {
             localStorage.setItem('api_token', token);
             state.commit('setToken', token);
-            axios.defaults.params.apiToken = token;
+            axios.defaults.params.token = token;
             axios.defaults.headers.common['Authorization'] = token;
         },
         loginWithToken(state, token) {
