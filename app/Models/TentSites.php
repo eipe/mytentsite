@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
@@ -75,14 +76,12 @@ class TentSites extends Model
 
     public function getCreatedAtAttribute($date)
     {
-        $formatDate = new \DateTime($date);
-        return $formatDate->format('d. M. Y');
+        return Carbon::createFromTimeStamp(strtotime($date))->diffForHumans();
     }
 
     public function getTakenDateAttribute($date)
     {
-        $formatDate = new \DateTime($date);
-        return $formatDate->format('d. M. Y');
+        return Carbon::createFromTimeStamp(strtotime($date))->diffForHumans();
     }
 
     public function getImgLocationAttribute($imageName)
