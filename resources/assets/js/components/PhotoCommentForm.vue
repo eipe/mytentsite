@@ -4,7 +4,7 @@
             <div class="control is-grouped">
                 <p class="control is-expanded has-icon has-icon-right">
                     <input class="input" ref="comment" v-model="comment" type="text"
-                           placeholder="Write a comment" v-bind:class="{ 'is-danger' : hasErrors }">
+                           placeholder="Write a comment" v-bind:class="{ 'is-danger' : errors.comment }">
                     <span class="icon is-small">
                         <i class="fa fa-warning" title="Required field"></i>
                     </span>
@@ -26,7 +26,7 @@
             return {
                 comment: '',
                 isPostingComment: false,
-                errors: []
+                errors: {}
             }
         },
         props: {
@@ -35,11 +35,6 @@
             },
             focus: false
         },
-        computed: {
-            hasErrors() {
-                return (typeof this.errors['comment'] !== typeof undefined);
-            }
-        },
         methods: {
             submitComment() {
                 let me = this;
@@ -47,10 +42,14 @@
                 axios.post('/comments/' + this.id, {
                     comment: this.comment
                 }).then(function(response) {
+                    me.errors = {};
                     me.isPostingComment = false;
                     me.comment = '';
                     me.$store.dispatch('addCommentOnPhoto', response.data);
                 }).catch(function(error) {
+                    if(typeof error.response.data.data.form_validations !== typeof undefined) {
+                        me.errors = error.response.data.data.form_validations;
+                    }
                     me.isPostingComment = false;
                 });
             }
@@ -61,8 +60,6 @@
                     this.$refs.comment.focus();
                 }
             }
-        },
-        components: {
         }
     }
 </script>
