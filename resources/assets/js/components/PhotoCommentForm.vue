@@ -36,16 +36,19 @@
             focus: false
         },
         methods: {
+            reset() {
+                this.comment = '',
+                this.errors = {}
+            },
             submitComment() {
                 let me = this;
                 me.isPostingComment = true;
                 axios.post('/comments/' + this.id, {
                     comment: this.comment
                 }).then(function(response) {
-                    me.errors = {};
                     me.isPostingComment = false;
-                    me.comment = '';
                     me.$store.dispatch('addCommentOnPhoto', response.data);
+                    me.reset();
                 }).catch(function(error) {
                     if(typeof error.response.data.data.form_validations !== typeof undefined) {
                         me.errors = error.response.data.data.form_validations;
