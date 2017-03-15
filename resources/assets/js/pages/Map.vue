@@ -118,6 +118,10 @@
                     alert("Could not detect your location:" + event.message);
                 });
 
+                if(this.tentSites.length === 0) {
+                    this.$store.commit('loadMoreTentSites');
+                }
+
                 placeSites(this.tentSites);
             },
             updateView: function() {
