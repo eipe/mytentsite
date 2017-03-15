@@ -24,6 +24,7 @@ $api->version(['v1'], function(\Dingo\Api\Routing\Router $api) {
         // Endpoints registered here will have the "auth" middleware applied.
         $api->get('/usersites', 'App\Http\Controllers\TentSitesController@getUserTentSites');
         $api->get('/unapproved', 'App\Http\Controllers\TentSitesController@getUnapproved');
+        $api->get('/user', 'App\Http\Controllers\UserController@index');
         $api->post('/tentsites', 'App\Http\Controllers\TentSitesController@store');
         $api->put('/tentsites', 'App\Http\Controllers\TentSitesController@update');
         $api->post('/like/{id}', 'App\Http\Controllers\LikeController@handleLike');
