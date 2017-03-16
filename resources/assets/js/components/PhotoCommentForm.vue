@@ -4,7 +4,7 @@
             <div class="control is-grouped">
                 <p class="control is-expanded has-icon has-icon-right">
                     <input class="input" ref="comment" v-model="comment" type="text"
-                           placeholder="Write a comment" v-bind:class="{ 'is-danger' : errors.comment }">
+                           placeholder="Write a comment" v-bind:class="{ 'is-danger' : errors.comment }" required>
                     <span class="icon is-small">
                         <i class="fa fa-warning" title="Required field"></i>
                     </span>
