@@ -83,6 +83,9 @@
                 axios.post('/login', form).then(function(success) {
                     me.$store.dispatch('loginWithToken', success.data.token);
                     me.isPosting = false;
+                    me.email = null;
+                    me.password = null;
+                    me.remember = false;
                 }).catch(function(error) {
                     if(typeof error.response !== typeof undefined) {
                         me.error = error.response.data.error;
