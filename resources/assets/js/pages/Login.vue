@@ -14,10 +14,12 @@
                                    class="input" placeholder="Password" required>
                         </p>
 
-                        <div class="notification is-danger" v-if="error">
-                            <button class="delete" @click.prevent="error = null"></button>
-                            {{ error }}
-                        </div>
+                        <transition enter-active-class="animated shake" leave-active-class="animated fadeOut">
+                            <div class="notification is-danger" v-if="error">
+                                <span class="delete button" @click.prevent="error = null"></span>
+                                {{ error }}
+                            </div>
+                        </transition>
 
                         <p class="control">
                             <label class="checkbox">
