@@ -1,101 +1,291 @@
 <template>
     <div class="page">
-        <div id="photo-frame" class="container has-text-centered">
-            <label for="photo-file" class="button is-info" data-text="I want to share a tent site!">
-                I want to share a tent site!
-            </label>
-            <div id="photo-preview" class="cropit-preview color-gray">
-                <div id="photo-preview-loading" class="is-hidden">
-                    <br>
-                    <i class="fa fa-5x fa-circle-o-notch fa-spin"></i><br>
-                    <small>We are preparing your photo, please hold on!</small>
+        <section class="hero is-fullheight is-primary">
+            <div class="hero-head">
+                <form @submit.prevent="storePhoto">
+                    <div class="columns">
+                        <div class="column is-half is-offset-one-quarter has-text-centered" id="photo-frame">
+                            <transition enter-active-class="animated fadeIn">
+                                <div v-show="photoLoaded">
+                                    <figure class="cropit-preview" style="margin: 0 auto"
+                                            v-show="photoLoaded" title="Drag to adjust">
+                                    </figure>
+                                    <input type="file" ref="photo" @change="photoChanged"
+                                           class="cropit-image-input is-hidden" />
+                                </div>
+                            </transition>
+                            <br>
+                            <div v-show="photoLoaded">
+                                <transition enter-active-class="animated fadeIn">
+                                    <div class="columns is-mobile" v-show="step === 1">
+                                        <div class="column is-1">
+                                            <i title="Cancel" class="button is-primary is-large fa fa-trash-o"
+                                               @click="cancel"></i>
+                                        </div>
+                                        <div class="column is-1">
+                                            <i title="Rotate clockwise"
+                                               class="button fa fa-rotate-right is-primary"
+                                               @click="rotate"></i>
+                                        </div>
+                                        <div class="column is-1">
+                                            <i class="fa fa-image button is-primary"
+                                               title="Click to zoom out"
+                                               @click="zoom -= 0.1"></i>
+                                        </div>
+                                        <div class="column">
+                                            <input type="range" min="0" max="1" step="0.1"
+                                                   class="cropit-image-zoom-input" style="width: 100%" />
+                                        </div>
+                                        <div class="column is-1">
+                                            <i class="fa fa-image button is-primary"
+                                               title="Click to zoom in"
+                                               @click="zoom += 0.1"></i>
+                                        </div>
+                                        <div class="column is-1">
+                                            <i class="button fa fa-arrow-right is-primary" title="Proceed"
+                                               @click="goToNextStep"></i>
+                                        </div>
+                                    </div>
+                                </transition>
+                                <transition enter-active-class="animated fadeIn">
+                                    <div class="columns is-mobile" v-show="step === 2">
+                                        <div class="column is-1">
+                                            <i title="Cancel" class="button fa fa-trash-o is-primary"
+                                               @click="cancel"></i>
+                                        </div>
+                                        <div class="column is-1">
+                                            <i class="button fa fa-arrow-left is-primary"
+                                               @click="goToPreviousStep"></i>
+                                        </div>
+                                        <div class="column">
+                                            <textarea name="caption" title="Caption"
+                                                      placeholder="Caption" v-model="photo.caption"
+                                                      maxlength="255" class="textarea" required></textarea>
+                                        </div>
+                                        <div class="column is-1">
+                                            <button title="Share this tent site"
+                                                    data-icon-store="fa-check"
+                                                    data-icon-storing="fa-spin fa-circle-o-notch"
+                                                    class="button fa fa-check is-primary"></button>
+                                        </div>
+                                    </div>
+                                </transition>
+                                <transition enter-active-class="animated fadeIn">
+                                    <div v-if="step === 3" class="has-text-centered">
+                                        We are uploading your tent site
+                                        <i class="fa fa-circle-o-notch fa-spin"></i><br><br>
+                                        <button class="button is-danger" @click="abortStoring">Cancel upload</button>
+                                    </div>
+                                </transition>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="hero-body">
+                <transition enter-active-class="animated fadeIn">
+                    <div class="container has-text-centered is-clickable" v-if="photoShareSuccess">
+                        <h1 class="title" @click="photoShareSuccess = false">Thank's for your contribution!</h1>
+                        <h2 class="subtitle">Click me if you want to start over again</h2>
+                    </div>
+                </transition>
+                <div class="container has-text-centered" v-if="(!photoLoaded || photoLoading) && !photoShareSuccess">
+                    <transition enter-active-class="animated fadeIn">
+                        <div v-if="ready">
+                            <div class="columns">
+                                <div class="column"><h2 class="subtitle">1. Select photo</h2></div>
+                                <div class="column"><h2 class="subtitle">2. Adjust and set view</h2></div>
+                                <div class="column"><h2 class="subtitle">3. Add a caption</h2></div>
+                                <div class="column"><h2 class="subtitle">4. Share!</h2></div>
+                            </div>
+                            <div>
+                                <button class="button title is-primary is-large" @click="triggerSelectPhoto"
+                                        v-bind:class="{ 'is-loading' : photoLoading }">Click me to start sharing!</button>
+                            </div>
+                        </div>
+                    </transition>
                 </div>
             </div>
-            <input type="file" id="photo-file" class="cropit-image-input is-hidden" />
-            <div id="photo-controllers" data-current-step="1" class="is-hidden color-gray">
-                <span data-step="1">
-                    <i title="Cancel" class="photo-cancel is-clickable fa fa-trash-o"></i>
-                    <i id="photo-rotate" title="Rotate clockwise"
-                       class="is-clickable fa fa-rotate-right"></i>
-                    <i class="fa fa-image"></i>
-                    <input type="range" title="Drag to zoom" min="0" max="1" step="0.1"
-                           class="cropit-image-zoom-input" />
-                    <i class="fa fa-image fa-2x"></i>
-                    <i class="photo-controllers-next fa fa-arrow-right is-clickable" title="Proceed"></i>
-                </span>
-                    <span data-step="2" class="is-hidden">
-                    <i title="Cancel" class="photo-cancel is-clickable fa fa-trash-o"></i>
-                    <i class="photo-controllers-previous fa fa-arrow-left is-clickable"></i>
-                    <textarea name="caption" id="photo-caption" title="Caption"
-                              placeholder="Caption" maxlength="255"></textarea>
-                    <i id="photo-store" title="Share this tent site"
-                       data-icon-store="fa-check"
-                       data-icon-storing="fa-spin fa-circle-o-notch"
-                       class="is-clickable fa fa-check"></i>
-                </span>
-                    <span data-step="3" class="is-hidden">
-                    We are uploading your tent site
-                    <i class="fa fa-circle-o-notch fa-spin"></i><br><br>
-                    <button id="photo-cancel-upload" class="button secondary">Cancel upload</button>
-                </span>
-            </div>
-        </div>
+        </section>
     </div>
 </template>
-<style>
-    #photo-preview {
-        margin: 0 auto;
-    }
-
-    #photo-controllers {
-        padding-top: 20px;
-        white-space: nowrap;
-    }
-
-    #photo-controllers i {
-        margin: 0 8px;
-    }
-
-    #photo-controllers i.fa-2x {
-        font-size: 1.6em;
-    }
-
-    #photo-controllers i:not(.fa-2x) {
-        font-size: 1.2em;
-    }
-
-    #photo-controllers * {
-        vertical-align: middle;
-    }
-
-    #photo-controllers textarea {
-        box-shadow: none;
-        border: 0;
-        display: inline-block;
-        font-size: 0.9em;
-        max-width: 60%;
-        height: 80px;
-        padding: 4px 0 0 0;
-        resize: none;
-        vertical-align: top;
-        overflow: hidden;
-    }
-</style>
 <script>
-    var Share = require('../share.js');
 
     export default {
         name: 'Share',
         data() {
             return {
+                ready: false,
+                error: null,
+                step: 0,
+                zoom: 0,
+                photoShareSuccess: false,
+                photoLoading: false,
+                photoLoaded: false,
+                photo: {
+                    latitude: null,
+                    longitude: null,
+                    caption: null
+                },
+                photoObject: null,
+                cropItSettings: {
+                    allowDragNDrop: false,
+                    exportZoom: 1,
+                    imageBackground: true,
+                    imageBackgroundBorderWidth: 1,
+                    onImageLoading: function() {
+                        this.photoLoading = true;
+                    },
+                    onImageLoaded: function() {
+                        this.photoLoaded = true;
+                    },
+                    onImageError: function() {
+                        this.error = 'Could not load photo. Please try again, or try another photo';
+                    }
+                },
+                cropItExportOptions: {
+                    type: "image/jpeg",
+                    quality: 1,
+                    originalSize: true
+                }
             }
         },
-        created() {
+        mounted() {
+            this.ready = true;
+            let me = this;
+
             this.$nextTick(function() {
-                Share().initialize();
+                this.photoObject = jQuery("#photo-frame");
+                this.photoObject.cropit(this.cropItSettings);
             });
         },
-        components: {
+        methods: {
+            goToNextStep() {
+                this.step++;
+            },
+            goToPreviousStep() {
+                if(this.step > 1) {
+                    this.step--;
+                }
+            },
+            rotate() {
+                this.photoObject.cropit("rotateCW");
+            },
+            reset() {
+                this.error = null;
+                this.step = 0;
+                this.photoLoading = false;
+                this.photoLoaded = false;
+                this.photo.latitude = null;
+                this.photo.longitude = null;
+                this.photo.caption = null;
+            },
+            cancel() {
+                this.reset();
+            },
+            photoChanged(event) {
+                let file = event.target.files[0],
+                    me = this;
+
+                if(!file) {
+                    return;
+                }
+
+                this.photoLoading = true;
+
+                me.$nextTick(function() {
+                    EXIF.getData(file, function() {
+                        if(typeof EXIF.getTag(this, 'GPSLatitude') === typeof undefined) {
+                            me.error = 'Photo does not contain location data: ' +
+                                'We can not accept photos without location data as they are impossible to place on ' +
+                                'the map, which indeed is the whole concept of this service. <br /><br />' +
+                                'Please try a new photo';
+                            return false;
+                        }
+
+                        let exifData = EXIF.getAllTags(this),
+                            lat = exifData.GPSLatitude,
+                            lng = exifData.GPSLongitude;
+
+                        // Convert coordinates to WGS84 decimal
+                        let latRef = exifData.GPSLatitudeRef || "N",
+                            lngRef = exifData.GPSLongitudeRef || "W";
+
+                        me.photo.latitude = (lat[0] + lat[1]/60 + lat[2]/3600) * (latRef == "N" ? 1 : -1);
+                        me.photo.longitude = (lng[0] + lng[1]/60 + lng[2]/3600) * (lngRef == "W" ? -1 : 1);
+
+                        if(typeof exifData.DateTime !== typeof undefined) {
+                            me.photo.taken_date = exifData.DateTime;
+                        }
+                        me.photoLoaded = true;
+                    });
+                });
+            },
+            storePhoto() {
+                let me = this,
+                    photoData = me.photo;
+
+                me.goToNextStep();
+
+                photoData.photo = me.photoObject.cropit("export", me.cropItExportOptions);
+
+                axios.post('/tentsites', photoData).then(function(response) {
+                    me.photoStored();
+                }).catch(function(error) {
+                    if(parseInt(error.response.readyState) === 0 && error.response.statusText === "abort") {
+                        return;
+                    }
+                    let errorText = '';
+
+                    if(typeof error.response.data.form_validations !== typeof undefined) {
+                        error.response.data.form_validations.forEach(function(field, fieldError) {
+                            errorText += fieldError + ". ";
+                        });
+                    }
+                    me.error = errorText;
+                });
+            },
+            abortStoring() {
+                this.goToPreviousStep();
+            },
+            photoStored() {
+                this.reset();
+                this.photoShareSuccess = true;
+            },
+            triggerSelectPhoto() {
+                this.photoShareSuccess = false;
+                this.$refs.photo.click();
+            }
+        },
+        watch: {
+            zoom(newZoom) {
+                if(newZoom > 1) {
+                    this.zoom = 1;
+                }
+                else if(newZoom < 0) {
+                    this.zoom = 0;
+                }
+            },
+            step(newStep) {
+                if(this.photoLoaded) {
+                    if(newStep > 1) {
+                        this.photoObject.cropit("disable");
+                    } else {
+                        this.photoObject.cropit("reenable");
+                    }
+                }
+            },
+            photoLoaded() {
+                if(this.photoLoaded === true) {
+                    this.photoLoading = false;
+                    this.goToNextStep();
+                }
+            },
+            error() {
+                alert(this.error);
+                this.photoLoading = false;
+                this.photoLoaded = false;
+            }
         }
     }
 </script>
