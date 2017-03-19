@@ -158,6 +158,14 @@
                 this.photoObject = jQuery("#photo-frame");
                 this.photoObject.cropit(this.cropItSettings);
             });
+
+            window.onbeforeunload = function() {
+                if(me.photoLoaded &&
+                    !confirm("You have a pending photo upload, do you want to finish that before leaving this page?")) {
+                    return false;
+                }
+            };
+
         },
         methods: {
             goToNextStep() {
