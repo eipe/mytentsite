@@ -23,7 +23,6 @@
     "leaflet": "^1.0.3",
     "leaflet-easybutton": "^2.1.1",
     "leaflet.markercluster": "^1.0.4",
-    "lodash": "^4.16.2",
     "style-loader": "^0.13.1",
     "vue": "^2.1.10",
     "vue-hot-reload-api": "^1.2.0",
