@@ -247,7 +247,7 @@ const store = new Vuex.Store({
         },
         viewPhotoOnMap(state, id) {
             state.commit('destroyGallery');
-            let routerVariables = { path: 'map', query: {}};
+            let routerVariables = { path: '/map', query: {}};
             let index = state.state.tentSites.data.findIndex(function(photo) {
                 if(photo.id === id) {
                     return true;
