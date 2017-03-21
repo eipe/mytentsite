@@ -42,7 +42,23 @@ const routes = [{
     component: User,
     meta: {
         auth: true
-    }
+    },
+    children: [{
+        path: '/user',
+        redirect: '/user/profile'
+    }, {
+        path: '/user/profile',
+        component: require('./pages/user/Profile.vue'),
+        meta: {
+            auth: true
+        }
+    }, {
+        path: '/user/contributions',
+        component: require('./pages/user/Contributions.vue'),
+        meta: {
+            auth: true
+        }
+    }]
 }, {
     path: '/login',
     name: 'Login',
