@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="page page-allow-overflow">
         <section class="hero is-info is-primary">
             <div class="hero-body">
                 <div class="container">

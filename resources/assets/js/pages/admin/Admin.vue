@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="page page-allow-overflow">
         <section class="section">
             <div class="container">
                 <div class="columns">

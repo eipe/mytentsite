@@ -1,8 +1,5 @@
 <template>
-    <div>
-        <section id="tentmap" class="hero is-fullheight">
-        </section>
-    </div>
+    <div id="tentmap" class="page"></div>
 </template>
 <style>
     #tentmap img, #tentmap video {

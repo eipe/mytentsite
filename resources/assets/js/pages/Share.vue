@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="page">
         <section class="hero is-fullheight is-primary">
             <div class="hero-head">
                 <form @submit.prevent="storePhoto">
@@ -17,58 +17,89 @@
                             <br>
                             <div v-show="photoLoaded">
                                 <transition enter-active-class="animated fadeIn">
-                                    <div class="columns is-mobile" v-show="step === 1">
-                                        <div class="column is-1">
-                                            <i title="Cancel" class="button is-primary is-large fa fa-trash-o"
-                                               @click="cancel"></i>
+                                    <nav class="nav" v-show="step === 1">
+                                        <div class="nav-left">
+                                            <div class="nav-item button is-primary">
+                                                <span class="icon">
+                                                    <i title="Cancel"
+                                                       class="fa fa-trash-o"
+                                                       @click="cancel"></i>
+                                                </span>
+                                            </div>
+                                            <div class="nav-item button is-primary">
+                                                <span class="icon">
+                                                    <i title="Rotate clockwise"
+                                                       class="fa fa-rotate-right"
+                                                       @click="rotate"></i>
+                                                </span>
+                                            </div>
                                         </div>
-                                        <div class="column is-1">
-                                            <i title="Rotate clockwise"
-                                               class="button fa fa-rotate-right is-primary"
-                                               @click="rotate"></i>
+                                        <div class="nav-center">
+                                            <div class="nav-item button is-primary">
+                                                <span class="icon">
+                                                    <i class="fa fa-image"
+                                                       title="Click to zoom out"
+                                                       @click="zoom -= 0.1"></i>
+                                                </span>
+                                            </div>
+                                            <div class="nav-item">
+                                                <input type="range" min="0" max="1" step="0.1"
+                                                       class="cropit-image-zoom-input" style="width: 100%" />
+                                            </div>
+                                            <div class="nav-item button is-primary">
+                                                <span class="icon">
+                                                    <i class="fa fa-image"
+                                                       title="Click to zoom in"
+                                                       @click="zoom += 0.1"></i>
+                                                </span>
+                                            </div>
                                         </div>
-                                        <div class="column is-1">
-                                            <i class="fa fa-image button is-primary"
-                                               title="Click to zoom out"
-                                               @click="zoom -= 0.1"></i>
+                                        <div class="nav-right">
+                                            <div class="nav-item button is-primary">
+                                                <span class="icon">
+                                                    <i class="fa fa-arrow-right"
+                                                       title="Proceed"
+                                                       @click="goToNextStep"></i>
+                                                </span>
+                                            </div>
                                         </div>
-                                        <div class="column">
-                                            <input type="range" min="0" max="1" step="0.1"
-                                                   class="cropit-image-zoom-input" style="width: 100%" />
-                                        </div>
-                                        <div class="column is-1">
-                                            <i class="fa fa-image button is-primary"
-                                               title="Click to zoom in"
-                                               @click="zoom += 0.1"></i>
-                                        </div>
-                                        <div class="column is-1">
-                                            <i class="button fa fa-arrow-right is-primary" title="Proceed"
-                                               @click="goToNextStep"></i>
-                                        </div>
-                                    </div>
+                                    </nav>
                                 </transition>
                                 <transition enter-active-class="animated fadeIn">
-                                    <div class="columns is-mobile" v-show="step === 2">
-                                        <div class="column is-1">
-                                            <i title="Cancel" class="button fa fa-trash-o is-primary"
-                                               @click="cancel"></i>
+                                    <nav class="nav" v-show="step === 2">
+                                        <div class="nav-left">
+                                            <div class="nav-item button is-primary">
+                                                <span class="icon">
+                                                    <i title="Cancel"
+                                                       class="fa fa-trash-o"
+                                                       @click="cancel"></i>
+                                                </span>
+                                            </div>
+                                            <div class="nav-item button is-primary">
+                                                <span class="icon">
+                                                    <i class="fa fa-arrow-left"
+                                                       @click="goToPreviousStep"></i>
+                                                </span>
+                                            </div>
                                         </div>
-                                        <div class="column is-1">
-                                            <i class="button fa fa-arrow-left is-primary"
-                                               @click="goToPreviousStep"></i>
+                                        <div class="nav-center">
+                                            <div class="nav-item">
+                                                <textarea name="caption" title="Caption"
+                                                          placeholder="Caption"
+                                                          v-model="photo.caption"
+                                                          maxlength="255"
+                                                          class="textarea"required></textarea>
+                                            </div>
                                         </div>
-                                        <div class="column">
-                                            <textarea name="caption" title="Caption"
-                                                      placeholder="Caption" v-model="photo.caption"
-                                                      maxlength="255" class="textarea" required></textarea>
+                                        <div class="nav-right">
+                                            <div class="nav-item button is-primary">
+                                                <span class="icon">
+                                                    <i title="Share this tent site"
+                                                       class="fa fa-check"></i>
+                                                </span>
+                                            </div>
                                         </div>
-                                        <div class="column is-1">
-                                            <button title="Share this tent site"
-                                                    data-icon-store="fa-check"
-                                                    data-icon-storing="fa-spin fa-circle-o-notch"
-                                                    class="button fa fa-check is-primary"></button>
-                                        </div>
-                                    </div>
+                                    </nav>
                                 </transition>
                                 <transition enter-active-class="animated fadeIn">
                                     <div v-if="step === 3" class="has-text-centered">

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="page page-allow-overflow">
         <section class="section">
             <div class="content columns">
                 <div class="column is-half is-offset-one-quarter">
