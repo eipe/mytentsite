@@ -4,32 +4,31 @@
             <div class="content columns">
                 <div class="column is-half is-offset-one-quarter">
                     <h1>Reset password</h1>
-                    <!--@if (session('status'))-->
-                    <!--<div class="alert alert-success">-->
-                    <!--{{ session('status') }}-->
-                    <!--</div>-->
-                    <!--@endif-->
-                    <!--<div class="columns large-4 large-centered text-left form-group{{ $errors->has('email') ? ' has-error' : '' }}">-->
-                    <form method="POST" action="/password/email">
-                        <!--{{ csrf_field() }}-->
-                        <label for="email" class="label">E-mail address</label>
-                        <!--<label for="email" class="col-md-4 control-label">E-mail address</label>-->
+                    <form method="post" @submit.prevent="submitForm">
                         <p class="controls">
-                            <input id="email" type="email" class="input" name="email" value=""
-                                   placeholder="E-mail address" required>
+                            <input id="email" type="email" class="input" name="email"
+                                   placeholder="E-mail address"
+                                   v-model="info.email" required>
                         </p>
-                            <!--<input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>-->
-                            <!--@if ($errors->has('email'))-->
-                            <!--<span class="help-block">-->
-                            <!--<strong>{{ $errors->first('email') }}</strong>-->
-                            <!--</span>-->
-                            <!--@endif-->
+                        <transition enter-active-class="animated shake" leave-active-class="animated fadeOut">
+                            <div class="notification is-danger" v-if="errors.length > 0">
+                                <span class="delete" @click.prevent="errors = []"></span>
+                                <div v-for="error in errors">{{ error }}</div>
+                            </div>
+                        </transition>
+                        <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
+                            <div class="notification is-success" v-if="isSuccess">
+                                We sent an email with link to reset your password to <u>{{ info.email }}</u>.
+                                This link is active for 30 minutes.
+                            </div>
+                        </transition>
                         <div class="control is-grouped">
-                            <p class="control">
-                                <button type="submit" class="button is-primary">Send password reset link</button>
+                            <p class="control" v-if="!isSuccess">
+                                <button type="submit" class="button is-primary"
+                                        v-bind:class="{ 'is-loading' : isPosting }">Send password reset link</button>
                             </p>
                             <p class="control">
-                                <button @click="back" class="button is-link">Back</button>
+                                <button @click="back" class="button is-link">{{ backButtonText }}</button>
                             </p>
                         </div>
                     </form>
@@ -42,11 +41,50 @@
     export default {
         data() {
             return {
+                isPosting: false,
+                isSuccess: false,
+                errors: [],
+                info: {
+                    email: null
+                }
+            }
+        },
+        computed: {
+            backButtonText() {
+                if(this.isSuccess) {
+                    return 'Go back to login ';
+                } else {
+                    return 'Back';
+                }
             }
         },
         methods: {
             back() {
+                this.isSuccess = false;
+                this.errors = [];
+                this.info.email = null;
                 this.$router.go(-1);
+            },
+            submitForm() {
+                let me = this;
+                me.isSuccess = false;
+                me.isPosting = true;
+                me.errors = [];
+
+                axios.post('/password/email', me.info).then(function(success) {
+                    me.isSuccess = true;
+                    me.isPosting = false;
+                }).catch(function(error) {
+                    if(typeof error.response.data.error !== typeof undefined) {
+                        error.response.data.error.forEach(function(text) {
+                            me.errors.push(text);
+                        });
+                    }
+                    if(typeof error.message !== typeof undefined) {
+                        me.errors.push(error.message);
+                    }
+                    me.isPosting = false;
+                });
             }
         }
     }
