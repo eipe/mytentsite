@@ -11,24 +11,6 @@
   background-color: #333;
 }
 
-#content {
-  height: calc(100vh - #{$size-1});
-  width: 100vw;
-  overflow: hidden;
-}
-
-.page {
-  height: 100vh;
-  width: 100vw;
-}
-
-/* General rules */
-.page-allow-overflow {
-  overflow-y: auto;
-  /* Add padding bottom matching the reduced height */
-  padding-bottom: $size-1;
-}
-
 .has-page-margin-top {
   margin-top: $size-7;
   padding-top: $size-7;
@@ -40,6 +22,22 @@
 
 .is-clickable {
   cursor: pointer;
+}
+
+.has-fixed-header header {
+  position: fixed;
+  width: 100%;
+  z-index: 10;
+  top: 0;
+}
+
+.has-fixed-header #content {
+  margin-top: $size-1;
+}
+
+.has-fixed-header .is-fullheight {
+  max-height: calc(100vh - #{$size-1});
+  min-height: calc(100vh - #{$size-1});
 }
 
 hr.border-dashed {
