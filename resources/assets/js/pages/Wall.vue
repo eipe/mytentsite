@@ -1,5 +1,5 @@
 <template>
-    <div class="page page-allow-overflow has-page-margin-top">
+    <div class="has-page-margin-top">
         <div class="container">
             <photo-wall/>
         </div>

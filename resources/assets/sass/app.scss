@@ -17,18 +17,6 @@
   overflow: hidden;
 }
 
-.page {
-  height: 100vh;
-  width: 100vw;
-}
-
-/* General rules */
-.page-allow-overflow {
-  overflow-y: auto;
-  /* Add padding bottom matching the reduced height */
-  padding-bottom: $size-1;
-}
-
 .has-page-margin-top {
   margin-top: $size-7;
   padding-top: $size-7;
