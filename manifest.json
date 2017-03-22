@@ -1,17 +1,22 @@
 {
-	"name": "",
+	"name": "mytentsite",
+	"shortname": "mytentsite",
+	"description": "A place to locate and share tentsites around the world",
+	"theme_color": "#ffffff",
+	"background-color": "#ffffff",
+	"display": "standalone",
+	"lang": "en-US",
+	"dir": "ltr",
 	"icons": [
 		{
-			"src": "\/android-chrome-192x192.png",
+			"src": "\/circle-192x192.png",
 			"sizes": "192x192",
 			"type": "image\/png"
 		},
 		{
-			"src": "\/android-chrome-512x512.png",
+			"src": "\/circle-512x512.png",
 			"sizes": "512x512",
 			"type": "image\/png"
 		}
-	],
-	"theme_color": "#ffffff",
-	"display": "standalone"
+	]
 }
