@@ -9,28 +9,22 @@
                             <input id="name" type="text" name="name" class="input"
                                    placeholder="Name"
                                    v-model="info.name" required autofocus>
-                            <span class="round alert label" v-if="errors.name">{{ errors.name }}</span>
                         </p>
                         <p class="controls">
                             <input id="email" type="email" name="email" class="input"
                                    placeholder="E-mail address"
                                    v-model="info.email" required>
-                            <span class="round alert label" v-if="errors.email">{{ errors.email }}</span>
                         </p>
                         <p class="controls">
                             <input id="password" type="password" name="password" class="input"
                                    placeholder="Password"
                                    v-model="info.password" required>
-                            <span class="round alert label" v-if="errors.password">{{ errors.password }}</span>
                         </p>
                         <p class="controls">
                             <input id="password-confirm" type="password"
                                    name="password_confirmation" class="input"
                                    placeholder="Confirm password"
                                    v-model="info.password_confirmation" required>
-                            <span class="round alert label" v-if="errors.password_confirmation">
-                                {{ errors.password_confirmation }}
-                            </span>
                         </p>
 
                         <p class="controls">
