@@ -3,117 +3,13 @@
  */
 import VueProgressiveImage from 'vue-progressive-image'
 import Vuex from 'vuex'
-
+import PhotoGallery from './components/PhotoGallery.vue';
+import routes from './routes.js'
 
 Vue.use(VueProgressiveImage, {delay: 200});
 
-import Share from './pages/Share.vue';
-import Info from './pages/Info.vue';
-import Map from './pages/Map.vue';
-import Wall from './pages/Wall.vue';
-import User from './pages/User.vue';
-import PhotoGallery from './components/PhotoGallery.vue';
-
-const routes = [{
-    path: '/',
-    redirect: '/info'
-}, {
-    path: '/share',
-    name: 'Share',
-    component: Share,
-    meta: {
-        auth: true
-    },
-}, {
-    path: '/map',
-    name: 'Map',
-    component: Map
-}, {
-    path: '/wall',
-    name: 'Wall',
-    component: Wall
-}, {
-    path: '/info',
-    name: 'Info',
-    component: Info,
-}, {
-    path: '/user',
-    name: 'User',
-    component: User,
-    meta: {
-        auth: true
-    },
-    children: [{
-        path: '/user',
-        redirect: '/user/profile'
-    }, {
-        path: '/user/profile',
-        component: require('./pages/user/Profile.vue'),
-        meta: {
-            auth: true
-        }
-    }, {
-        path: '/user/contributions',
-        component: require('./pages/user/Contributions.vue'),
-        meta: {
-            auth: true
-        }
-    }]
-}, {
-    path: '/login',
-    name: 'Login',
-    component: require('./pages/Login.vue')
-}, {
-    path: '/register',
-    name: 'Register',
-    component: require('./pages/Register.vue')
-}, {
-    path: '/password/reset',
-    name: 'Reset password',
-    component: require('./pages/PasswordReset.vue')
-},{
-    path: '/admin',
-    name: 'Admin',
-    component: require('./pages/admin/Admin.vue'),
-    meta: {
-        auth: true
-    },
-    children: [{
-        path: '/admin',
-        redirect: '/admin/dashboard'
-    }, {
-        path: '/admin/dashboard',
-        name: 'Dashboard',
-        component: require('./pages/admin/Dashboard.vue'),
-        meta: {
-            auth: true
-        }
-    }, {
-        path: '/admin/tentsites',
-        name: 'Tent sites',
-        component: require('./pages/admin/TentSites.vue'),
-        meta: {
-            auth: true
-        }
-    }, {
-        path: '/admin/users',
-        name: 'Users',
-        component: require('./pages/admin/Users.vue'),
-        meta: {
-            auth: true
-        }
-    }, {
-        path: '/admin/statistics',
-        name: 'Statistics',
-        component: require('./pages/admin/Statistics.vue'),
-        meta: {
-            auth: true
-        }
-    }]
-}];
-
 const router = new VueRouter({
-    routes: routes,
+    routes: routes.routes,
     linkActiveClass: 'is-active'
 });
 
