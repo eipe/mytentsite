@@ -4,60 +4,35 @@
             <div class="content columns">
                 <div class="column is-half is-offset-one-quarter">
                     <h1>Reset password</h1>
-                    <!--@if (session('status'))-->
-                    <!--<div class="alert alert-success">-->
-                    <!--{{ session('status') }}-->
-                    <!--</div>-->
-                    <!--@endif-->
-
-                    <form method="POST" action="/password/reset">
-                        <!--{{ csrf_field() }}-->
-                        <!--<input type="hidden" name="token" value="{{ $token }}">-->
-
-                        <!--<div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">-->
-                        <label for="email" class="label">E-mail address</label>
-                        <p class="controls">
-                            <input id="email" type="email" name="email" class="input" value=""
-                                   placeholder="E-mail address" required autofocus>
-                            <!--<input id="email" type="email" class="form-control" name="email" value="{{ $email or old('email') }}" required autofocus>-->
-                            <!--@if ($errors->has('email'))-->
-                            <!--<span class="help-block">-->
-                            <!--<strong>{{ $errors->first('email') }}</strong>-->
-                            <!--</span>-->
-                            <!--@endif-->
-                        </p>
-
-                        <!--<div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">-->
-                        <label for="password" class="label">Password</label>
+                    <form method="post" @submit.prevent="submitForm">
                         <p class="controls">
                             <input id="password" type="password" class="input" name="password"
-                                   placeholder="Password" required>
-                            <!--@if ($errors->has('password'))-->
-                            <!--<span class="help-block">-->
-                            <!--<strong>{{ $errors->first('password') }}</strong>-->
-                            <!--</span>-->
-                            <!--@endif-->
+                                   placeholder="Password"
+                                   v-model="info.password" autofocus required>
                         </p>
 
-                        <!--<div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">-->
-                        <label for="password-confirm" class="label">Confirm password</label>
                         <p class="controls">
                             <input id="password-confirm" type="password" class="input" name="password_confirmation"
-                                   placeholder="Confirm password" required>
-                            <!--<input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>-->
-                            <!--@if ($errors->has('password_confirmation'))-->
-                            <!--<span class="help-block">-->
-                            <!--<strong>{{ $errors->first('password_confirmation') }}</strong>-->
-                            <!--</span>-->
-                            <!--@endif-->
+                                   placeholder="Confirm password"
+                                   v-model="info.password_confirmation" required>
                         </p>
+
+                        <transition enter-active-class="animated shake" leave-active-class="animated fadeOut">
+                            <div class="notification is-danger" v-if="errors.length > 0">
+                                <span class="delete" @click.prevent="errors = []"></span>
+                                <div v-for="error in errors">{{ error }}</div>
+                            </div>
+                        </transition>
 
                         <div class="control is-grouped">
                             <p class="control">
-                                <button type="submit" class="button is-primary">Reset password</button>
+                                <button type="submit" class="button is-primary"
+                                        v-bind:class="{ 'is-loading' : isPosting }">Reset password</button>
                             </p>
                             <p class="control">
-                                <button @click="back" class="button is-link">Back</button>
+                                <router-link to="/login" tag="button" class="button is-link">
+                                    Back to login
+                                </router-link>
                             </p>
                         </div>
                     </form>
@@ -68,14 +43,36 @@
 </template>
 <script>
     export default {
-        name: 'PasswordResetForm',
+        name: 'Password-reset-form',
         data() {
             return {
+                isPosting: false,
+                errors: [],
+                info: {
+                    password: null,
+                    password_confirmation: null
+                }
             }
         },
         methods: {
-            back() {
-                this.$router.go(-1);
+            submitForm() {
+                let me = this;
+                me.isPosting = true;
+                me.errors = [];
+
+                axios.post('/password/reset', me.info).then(function(success) {
+                    me.isPosting = false;
+                }).catch(function(error) {
+                    if(typeof error.response.data.error !== typeof undefined) {
+                        error.response.data.error.forEach(function(text) {
+                            me.errors.push(text);
+                        });
+                    }
+                    if(typeof error.message !== typeof undefined) {
+                        me.errors.push(error.message);
+                    }
+                    me.isPosting = false;
+                });
             }
         }
     }
