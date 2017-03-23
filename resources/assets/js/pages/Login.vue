@@ -6,26 +6,26 @@
                     <h1>Login</h1>
                     <form @submit.prevent="submitForm" action="/login" method="POST">
                         <p class="control">
-                            <input id="email" type="email" name="email" v-model="email"
+                            <input id="email" type="email" name="email" v-model="info.email"
                                    value="" class="input" placeholder="E-mail address" required autofocus>
                         </p>
                         <p class="control">
-                            <input id="password" type="password" name="password" v-model="password"
+                            <input id="password" type="password" name="password" v-model="info.password"
                                    class="input" placeholder="Password" required>
+                        </p>
+
+                        <p class="control">
+                            <label class="checkbox">
+                                <input type="checkbox" name="remember" v-model="info.remember" class="checkbox"> Remember me
+                            </label>
                         </p>
 
                         <transition enter-active-class="animated shake" leave-active-class="animated fadeOut">
                             <div class="notification is-danger" v-if="error">
-                                <span class="delete button" @click.prevent="error = null"></span>
+                                <span class="delete" @click.prevent="error = null"></span>
                                 {{ error }}
                             </div>
                         </transition>
-
-                        <p class="control">
-                            <label class="checkbox">
-                                <input type="checkbox" name="remember" v-model="remember" class="checkbox"> Remember me
-                            </label>
-                        </p>
 
                         <div class="control is-grouped">
                             <p class="control">
@@ -63,29 +63,28 @@
     export default {
         data() {
             return {
-                email: '',
-                password: '',
-                remember: false,
                 isPosting: false,
-                error: null
+                error: null,
+                info: {
+                    email: '',
+                    password: '',
+                    remember: false,
+                }
             }
         },
         methods: {
             submitForm() {
-                let me = this,
-                    form = new FormData();
+                let me = this;
                 me.isPosting = true;
                 me.error = null;
 
-                form.append('email', me.email);
-                form.append('password', me.password);
-
-                axios.post('/login', form).then(function(success) {
+                axios.post('/login', me.info).then(function(success) {
                     me.$store.dispatch('loginWithToken', success.data.token);
                     me.isPosting = false;
-                    me.email = null;
-                    me.password = null;
-                    me.remember = false;
+                    me.info.email = null;
+                    me.info.password = null;
+                    me.info.remember = false;
+                    me.error = null;
                 }).catch(function(error) {
                     if(typeof error.response !== typeof undefined) {
                         me.error = error.response.data.error;
