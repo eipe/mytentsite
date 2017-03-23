@@ -24,14 +24,14 @@
   cursor: pointer;
 }
 
-.has-fixed-header header {
+.is-fixed-top {
   position: fixed;
   width: 100%;
   z-index: 10;
   top: 0;
 }
 
-.has-fixed-header #content {
+#content.has-fixed-header-top {
   margin-top: $size-1;
 }
 
