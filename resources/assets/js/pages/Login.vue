@@ -47,10 +47,12 @@
                         <h2 class="is-small">Or use one of your existing accounts</h2>
                         <div class="control is-grouped">
                             <p class="control">
-                                <a class="button is-info" href="/auth/facebook">
+                                <button class="button is-info"
+                                        @click.prevent="socialLogin('/auth/facebook/', 'facebook')"
+                                        v-bind:class="{ 'is-loading' : socialLoginProvider == 'facebook' }">
                                     <span class="icon is-small"><i class="fa fa-facebook"></i></span>
                                     <span>Facebook</span>
-                                </a>
+                                </button>
                             </p>
                         </div>
                     </form>
@@ -64,6 +66,7 @@
         data() {
             return {
                 isPosting: false,
+                socialLoginProvider: '',
                 error: null,
                 info: {
                     email: '',
@@ -73,6 +76,25 @@
             }
         },
         methods: {
+            socialLogin(path, provider) {
+                let me = this;
+                me.error = null;
+                me.socialLoginProvider = provider;
+
+                let baseURL = axios.defaults.baseURL;
+
+                axios.defaults.baseURL = '';
+                axios.get(path).then(function(success) {
+                    me.$store.dispatch('loginWithToken', success.data.token);
+                    me.socialLoginProvider = '';
+                }).catch(function(error) {
+                    if(typeof error.response !== typeof undefined) {
+                        me.error = error.response.data.error;
+                    }
+                    me.socialLoginProvider = '';
+                });
+                axios.defaults.baseURL = baseURL;
+            },
             submitForm() {
                 let me = this;
                 me.isPosting = true;
