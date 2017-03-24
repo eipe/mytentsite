@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('navigation')
+@section('header')
     <header class="is-fixed-top">
         <nav class="nav">
             @if(Config::get('app.env') === 'staging')
