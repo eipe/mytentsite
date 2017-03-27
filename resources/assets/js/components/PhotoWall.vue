@@ -16,7 +16,7 @@
         </div>
         <div class="container has-text-centered">
             <button class="button is-info" v-if="hasMore" @click="loadMore">Load more tent site photos</button>
-            <button class="button disabled" v-else>All tent site photos are loaded</button>
+            <button class="button is-disabled" v-else>All tent site photos are loaded</button>
         </div>
     </div>
 </template>
