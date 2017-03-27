@@ -56,7 +56,11 @@ export default {
         path: '/password/reset',
         name: 'Reset password',
         component: require('./pages/PasswordReset.vue')
-    },{
+    }, {
+        path: '/password/reset-form',
+        name: 'Reset password form',
+        component: require('./pages/PasswordResetForm.vue')
+    }, {
         path: '/admin',
         name: 'Admin',
         component: require('./pages/admin/Admin.vue'),
