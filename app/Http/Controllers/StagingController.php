@@ -47,7 +47,7 @@ class StagingController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
-        return redirect('/register#/user');
+        return redirect('/');
     }
 
 }
