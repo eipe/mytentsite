@@ -6,19 +6,19 @@
                     <div class="container" v-show="isLoaded">
                         <div class="columns">
                             <div class="column has-text-centered">
+                                <h1 class="title">Share</h1>
+                                <h2 class="subtitle is-6">Your favourites with others</h2>
+                                <router-link to="share"><i class="fa fa-camera icon is-large"/></router-link>
+                            </div>
+                            <div class="column has-text-centered">
                                 <h1 class="title">Locate</h1>
                                 <h2 class="subtitle is-6">Tentsites all over the world</h2>
-                                <i class="fa fa-map icon is-large"/>
+                                <router-link to="map"><i class="fa fa-map icon is-large"/></router-link>
                             </div>
                             <div class="column has-text-centered">
                                 <h1 class="title">Explore</h1>
                                 <h2 class="subtitle is-6">Tentsites on the photo wall</h2>
-                                <i class="fa fa-th icon is-large"/>
-                            </div>
-                            <div class="column has-text-centered">
-                                <h1 class="title">Share</h1>
-                                <h2 class="subtitle is-6">Your favourites with others</h2>
-                                <i class="fa fa-camera icon is-large"/>
+                                <router-link to="wall"><i class="fa fa-th icon is-large"/></router-link>
                             </div>
                         </div>
                     </div>
