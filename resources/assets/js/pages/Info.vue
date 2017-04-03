@@ -1,15 +1,28 @@
 <template>
-    <div class="page page-allow-overflow">
-        <section class="hero is-info is-primary">
+    <div class="has-fixed-header">
+        <section class="hero is-fullheight is-info">
             <div class="hero-body">
-                <div class="container">
-                    <h1 class="title">The story and vision of mytentsite</h1>
-                    <h2 class="subtitle">Where it all started, and where we are now</h2>
-                    <p>As we have focused on developing the story has not yet been written in words.</p>
-                    <p>If you have the time and desire to help us, we would appreciate that a lot, and we think
-                        this project deserves a good description. So please, do not hesitate to contact us if you
-                        want to make your contribution to this project.</p>
-                </div>
+                <transition enter-active-class="animated fadeIn">
+                    <div class="container" v-show="isLoaded">
+                        <div class="columns">
+                            <div class="column has-text-centered">
+                                <h1 class="title">Locate</h1>
+                                <h2 class="subtitle is-6">Tentsites all over the world</h2>
+                                <i class="fa fa-map icon is-large"/>
+                            </div>
+                            <div class="column has-text-centered">
+                                <h1 class="title">Explore</h1>
+                                <h2 class="subtitle is-6">Tentsites on the photo wall</h2>
+                                <i class="fa fa-th icon is-large"/>
+                            </div>
+                            <div class="column has-text-centered">
+                                <h1 class="title">Share</h1>
+                                <h2 class="subtitle is-6">Your favourites with others</h2>
+                                <i class="fa fa-camera icon is-large"/>
+                            </div>
+                        </div>
+                    </div>
+                </transition>
             </div>
         </section>
         <section class="hero is-medium">
@@ -49,6 +62,18 @@
                 </div>
             </div>
         </section>
+        <section class="hero is-warning">
+            <div class="hero-body">
+                <div class="container">
+                    <h1 class="title">The story and vision of mytentsite</h1>
+                    <h2 class="subtitle">Where it all started, and where we are now</h2>
+                    <p>As we have focused on developing the story has not yet been written in words.</p>
+                    <p>If you have the time and desire to help us, we would appreciate that a lot, and we think
+                        this project deserves a good description. So please, do not hesitate to contact us if you
+                        want to make your contribution to this project.</p>
+                </div>
+            </div>
+        </section>
         <footer-component/>
     </div>
 </template>
@@ -58,6 +83,17 @@
 
     export default {
         name: 'Info',
+        data() {
+            return {
+                isLoaded: false
+            }
+        },
+        created() {
+            let me = this;
+            setTimeout(function() {
+                me.isLoaded = true;
+            }, 500)
+        },
         components: {
             'footer-component': Footer
         }
