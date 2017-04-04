@@ -1,7 +1,6 @@
 <template>
-    <div>
-        <section id="tentmap" class="hero is-fullheight">
-        </section>
+    <div class="has-fixed-header">
+        <section id="tentmap" class="hero is-fullheight"></section>
     </div>
 </template>
 <style>
