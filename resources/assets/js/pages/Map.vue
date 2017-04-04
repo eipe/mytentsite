@@ -94,6 +94,7 @@
         },
         methods: {
             initializeMap() {
+                let me = this;
                 TentMap = L.map("tentmap").setView(this.position, this.zoom);
                 OpenStreetMap.addTo(TentMap);
                 L.control.layers(baseMaps, overlayMaps).addTo(TentMap);
@@ -116,12 +117,11 @@
                 });
 
                 TentMap.on("locationerror", function(event) {
-                    //view.displayModalMessage("Could not detect your location", event.message);
-                    alert("Could not detect your location:" + event.message);
+                    me.$store.dispatch("displayError", "Could not detect your location:" + event.message);
                 });
 
                 if(this.tentSites.length === 0) {
-                    this.$store.commit('loadMoreTentSites');
+                    me.$store.commit('loadMoreTentSites');
                 }
 
                 placeSites(this.tentSites);
