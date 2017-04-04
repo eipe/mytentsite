@@ -3,6 +3,7 @@
         <nav class="nav white">
             <div class="nav-center">
                 <div class="nav-item"><router-link to="/user/profile">Profile</router-link></div>
+                <div class="nav-item"><router-link to="/user/bookmarks">Bookmarked</router-link></div>
                 <div class="nav-item"><router-link to="/user/contributions">Contributions</router-link></div>
             </div>
         </nav>

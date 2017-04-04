@@ -38,6 +38,12 @@ export default {
                 auth: true
             }
         }, {
+            path: '/user/bookmarks',
+            component: require('./pages/user/Bookmarks.vue'),
+            meta: {
+                auth: true
+            }
+        }, {
             path: '/user/contributions',
             component: require('./pages/user/Contributions.vue'),
             meta: {
