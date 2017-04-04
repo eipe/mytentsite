@@ -28,9 +28,9 @@
         <section class="hero is-medium">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title">How does it work?</h1>
+                    <h1 class="title">How do I share?</h1>
                     <h2 class="subtitle">Select a photo with location, add a caption and share it!</h2>
-                    <br><br>
+                    <hr/>
                     <div class="columns">
                         <div class="column">
                             <p class="subtitle is-4">1. Select a photo <small>- with location</small></p>
