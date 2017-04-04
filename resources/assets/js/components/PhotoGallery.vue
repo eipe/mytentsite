@@ -21,14 +21,17 @@
                                 <nav class="level">
                                     <div class="level-left">
                                         <div class="level-item">
-                                            <i class="fa is-clickable" v-bind:class="likeIcon" @click="toggleLike"></i>
+                                            <i class="fa is-clickable" title="Bookmark tentsite"
+                                               v-bind:class="likeIcon" @click="toggleLike"></i>
                                             &nbsp;&nbsp;{{ activePhoto.likes }}
                                         </div>
                                         <div class="level-item">
-                                            <span @click="checkIn" class="button is-small">Check in</span>
+                                            <span @click="checkIn"
+                                                  class="button is-small">Check in</span>
                                         </div>
                                         <div class="level-item">
-                                            <span @click="viewOnMap" class="button is-small">View on map</span>
+                                            <span @click="viewOnMap" title="View tentsite on map"
+                                                  class="button is-small">View on map</span>
                                         </div>
                                     </div>
                                 </nav>
