@@ -19,17 +19,17 @@
                     <td>{{ tentSite.created_at }}</td>
                     <td><img :src="tentSite.thumbnail_location" /></td>
                     <td>
-                        <button class="button" title="View on Google Map" @click.prevent="viewOnMap(tentSite)">
+                        <button class="button is-outlined" title="View on Google Map" @click.prevent="viewOnMap(tentSite)">
                             <span class="icon is-small">
                                 <i class="fa fa-map-o"></i>
                             </span>
                         </button>
                     </td>
                     <td>
-                        <button class="button is-success" title="Approve" @click.prevent="approve(tentSite)">
+                        <button class="button is-success is-outlined" title="Approve" @click.prevent="approve(tentSite)">
                             <span class="icon is-small"><i class="fa fa-thumbs-up"></i></span>
                         </button>
-                        <button class="button is-danger" title="Deny" @click.prevent="deny(tentSite)">
+                        <button class="button is-danger is-outlined" title="Deny" @click.prevent="deny(tentSite)">
                             <span class="icon is-small"><i class="fa fa-thumbs-down"></i></span>
                         </button>
                     </td>
