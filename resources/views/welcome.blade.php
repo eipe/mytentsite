@@ -27,4 +27,5 @@
         </transition>
     </div>
     <photo-gallery></photo-gallery>
+    <error></error>
 @endsection

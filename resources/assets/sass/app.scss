@@ -12,8 +12,8 @@
 }
 
 .has-page-margin-top {
-  margin-top: $size-7;
-  padding-top: $size-7;
+  margin-top: $size-3;
+  padding-top: $size-3;
 }
 
 .color-gray {
@@ -45,10 +45,6 @@ hr.border-dashed {
 }
 
 @media (max-width: $tablet) {
-  .has-page-margin-top {
-    margin: 0;
-    padding: 0;
-  }
   .has-tablet-no-padding .column {
     padding: 0;
   }

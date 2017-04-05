@@ -4,6 +4,7 @@
 import VueProgressiveImage from 'vue-progressive-image'
 import Vuex from 'vuex'
 import PhotoGallery from './components/PhotoGallery.vue';
+import Error from './components/Error.vue';
 import routes from './routes.js'
 
 Vue.use(VueProgressiveImage, {delay: 200});
@@ -34,6 +35,7 @@ const store = new Vuex.Store({
         beta: false,
         apiToken: null,
         blockedRoute: null,
+        error: null
     },
     getters: {
         getUserTentSites: state => {
@@ -149,6 +151,9 @@ const store = new Vuex.Store({
         setToken(state, token) {
             state.apiToken = token;
         },
+        setError(state, error) {
+            state.error = error;
+        },
         clearToken(state) {
             state.apiToken = null;
         }
@@ -200,6 +205,9 @@ const store = new Vuex.Store({
                 router.push('/user');
             }
         },
+        displayError(state, error) {
+            state.commit("setError", error);
+        },
         logout(state) {
             localStorage.removeItem('api_token');
             state.commit('clearToken');
@@ -237,7 +245,7 @@ new Vue({
     store,
     router,
     components: {
-        PhotoGallery
+        PhotoGallery, Error
     },
     created() {
         let environment = document.getElementById('environment').innerHTML.toString();

@@ -19,13 +19,19 @@
                     <td>{{ tentSite.created_at }}</td>
                     <td><img :src="tentSite.thumbnail_location" /></td>
                     <td>
-                        <i @click="viewOnMap(tentSite.id)" title="View on map" class="fa fa-map-o is-clickable"></i>
+                        <button class="button is-outlined" title="View on Google Map" @click.prevent="viewOnMap(tentSite)">
+                            <span class="icon is-small">
+                                <i class="fa fa-map-o"></i>
+                            </span>
+                        </button>
                     </td>
                     <td>
-                        <i class="fa fa-thumbs-up is-success is-clickable"
-                           title="Approve" @click="approve(tentSite.id)"></i>
-                        <i class="fa fa-thumbs-down is-warning is-clickable"
-                           title="Deny" @click="deny(tentSite.id)"></i>
+                        <button class="button is-success is-outlined" title="Approve" @click.prevent="approve(tentSite)">
+                            <span class="icon is-small"><i class="fa fa-thumbs-up"></i></span>
+                        </button>
+                        <button class="button is-danger is-outlined" title="Deny" @click.prevent="deny(tentSite)">
+                            <span class="icon is-small"><i class="fa fa-thumbs-down"></i></span>
+                        </button>
                     </td>
                 </tr>
             </tbody>
@@ -64,8 +70,9 @@
             });
         },
         methods: {
-            approve(id) {
-                let me = this;
+            approve(tentSite) {
+                let me = this,
+                    id = tentSite.id;
                 axios.post('/admin/approve/' + id).then(function() {
                     let index = me.tentSites.data.findIndex(function(photo) {
                         if(photo.id === id) {
@@ -76,14 +83,13 @@
                     if(typeof me.tentSites.index !== typeof undefined) {
                         delete me.tentSites.index;
                     }
-                    console.log("Approval successful");
                 }).catch(function(error) {
-                    console.log("Could not approve");
-                    console.log(error);
+                    me.$store.dispatch("displayError", "Could not approve<br>" + error + "<br><br>Please try again");
                 });
             },
-            deny(id) {
-                let me = this;
+            deny(tentSite) {
+                let me = this,
+                    id = tentSite.id;
                 axios.post('/admin/deny/' + id).then(function() {
                     let index = me.tentSites.data.findIndex(function(photo) {
                         if(photo.id === id) {
@@ -94,22 +100,12 @@
                     if(typeof me.tentSites.index !== typeof undefined) {
                         delete me.tentSites.index;
                     }
-                    console.log("Denied successful");
-                }).catch(function() {
-                    console.log("Could not deny");
+                }).catch(function(error) {
+                    me.$store.dispatch("displayError", "Could not deny<br>" + error + "<br><br>Please try again");
                 });
             },
-            viewOnMap(id) {
-                let index = this.tentSites.findIndex(function(photo) {
-                    if(photo.id === id) {
-                        return true;
-                    }
-                });
-
-                if(typeof this.tentSites[index] !== typeof undefined) {
-                    let tentSite = this.tentSites[index];
-                    window.open('https://google.com/maps/?q=' + tentSite.latitude + ',' + tentSite.longitude);
-                }
+            viewOnMap(tentSite) {
+                window.open('https://google.com/maps/?q=' + tentSite.latitude + ',' + tentSite.longitude);
             }
         },
         components: {

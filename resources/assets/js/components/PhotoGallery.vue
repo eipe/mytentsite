@@ -2,44 +2,48 @@
     <div>
         <div class="modal" v-bind:class="{ 'is-active' : isActive }">
             <div class="modal-background" @click="destroy"></div>
-            <div class="modal-content" style="width: 80%;">
-                <div class="content is-paddingless is-marginless">
-                    <div class="columns is-paddingless is-marginless">
-                        <div class="column is-paddingless">
-                            <img :src="activePhoto.img_location" />
-                        </div>
-                        <div class="column is-4" style="background-color: #fff;">
-                            <div class="media">
-                                <div class="media-content">
-                                    <p><strong>{{ activePhoto.reported_by }}</strong>
-                                        <small>{{ activePhoto.created_at }}</small>
-                                    </p>
-                                </div>
+            <transition enter-active-class="animated zoomIn">
+                <div class="modal-content" style="width: 80%;" v-show="isActive">
+                    <div class="content is-paddingless is-marginless">
+                        <div class="columns is-paddingless is-marginless">
+                            <div class="column is-paddingless">
+                                <img :src="activePhoto.img_location" />
                             </div>
-                            <p>{{ activePhoto.caption }}</p>
-
-                            <nav class="level">
-                                <div class="level-left">
-                                    <div class="level-item">
-                                        <i class="fa is-clickable" v-bind:class="likeIcon" @click="toggleLike"></i>
-                                        &nbsp;&nbsp;{{ activePhoto.likes }}
-                                    </div>
-                                    <div class="level-item">
-                                        <span @click="viewOnMap" class="button is-small">View on map</span>
-                                    </div>
-                                    <div class="level-item">
-                                        <span @click="writeComment" class="button is-small">Comment</span>
+                            <div class="column is-4" style="background-color: #fff;">
+                                <div class="media">
+                                    <div class="media-content">
+                                        <p><strong>{{ activePhoto.reported_by }}</strong>
+                                            <small>{{ activePhoto.created_at }}</small>
+                                        </p>
                                     </div>
                                 </div>
-                            </nav>
-                            <hr>
-                            <photo-comments :comments="activePhotoComments" id="photo-comments" />
-                            <photo-comment-form :id="activePhoto.id" :focus="focus" />
+                                <p>{{ activePhoto.caption }}</p>
+                                <nav class="level">
+                                    <div class="level-left">
+                                        <div class="level-item">
+                                            <i class="fa is-clickable" title="Bookmark tentsite"
+                                               v-bind:class="likeIcon" @click="toggleLike"></i>
+                                            &nbsp;&nbsp;{{ activePhoto.likes }}
+                                        </div>
+                                        <div class="level-item">
+                                            <span @click="checkIn"
+                                                  class="button is-small">Check in</span>
+                                        </div>
+                                        <div class="level-item">
+                                            <span @click="viewOnMap" title="View tentsite on map"
+                                                  class="button is-small">View on map</span>
+                                        </div>
+                                    </div>
+                                </nav>
+                                <hr>
+                                <photo-comments :comments="activePhotoComments" id="photo-comments" />
+                                <photo-comment-form :id="activePhoto.id" :focus="focus" />
+                            </div>
                         </div>
                     </div>
+                    <button class="modal-close" @click="destroy"></button>
                 </div>
-                <button class="modal-close" @click="destroy"></button>
-            </div>
+            </transition>
         </div>
     </div>
 </template>
@@ -72,9 +76,9 @@
             },
             likeIcon() {
                 if(this.hasLiked) {
-                    return 'fa-thumbs-up';
+                    return 'fa-bookmark';
                 } else {
-                    return 'fa-thumbs-o-up';
+                    return 'fa-bookmark-o';
                 }
             }
         },
@@ -104,7 +108,7 @@
             viewOnMap() {
                 this.$store.dispatch('viewPhotoOnMap', this.activePhoto.id);
             },
-            writeComment() {
+            checkIn() {
                 this.focus = true;
                 let container = this.$el.querySelector("#photo-comments");
                 container.scrollTop = container.scrollHeight;

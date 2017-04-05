@@ -235,10 +235,10 @@
                 me.$nextTick(function() {
                     EXIF.getData(file, function() {
                         if(typeof EXIF.getTag(this, 'GPSLatitude') === typeof undefined) {
-                            me.error = 'Photo does not contain location data: ' +
-                                'We can not accept photos without location data as they are impossible to place on ' +
-                                'the map, which indeed is the whole concept of this service. <br /><br />' +
-                                'Please try a new photo';
+                            me.error = "Photo does not contain location data.<br>" +
+                                "We can not accept photos without location data as they are impossible to place on " +
+                                "the map, which indeed is the whole concept of this service. <br><br>" +
+                                "Please try a new photo";
                             return false;
                         }
 
@@ -321,7 +321,7 @@
                 }
             },
             error() {
-                alert(this.error);
+                this.$store.dispatch("displayError", this.error);
                 this.photoLoading = false;
                 this.photoLoaded = false;
             }

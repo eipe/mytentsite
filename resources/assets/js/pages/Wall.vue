@@ -3,6 +3,7 @@
         <div class="container">
             <photo-wall/>
         </div>
+        <br>
         <footer-component/>
     </div>
 </template>
