@@ -49,6 +49,18 @@ class User extends Authenticatable
         return env('§SLACK_NOTIFICATION_ROUTE');
     }
 
+
+    /**
+     * Route notifications for the mail channel.
+     *
+     * @return string
+     */
+    public function routeNotificationForMail()
+    {
+        return $this->email_address;
+    }
+
+
     public function isAdmin() {
         return (bool) $this->getAttribute('is_admin');
     }
