@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Response;
 use Laravel\Socialite\Facades\Socialite;
+use App\Http\Controllers\Auth\AuthenticateController as Authenticate;
 
 class SocialController
 {
@@ -101,8 +102,9 @@ class SocialController
                 event(new UserRegisteredThroughSocialite($socialUser));
             }
         }
-        Auth::login($socialUser, true);
-        return Redirect::to('/#/user');
+        //Auth::login($socialUser, true);
+        return (Authenticate::authFromUser($socialUser));
+       // return Redirect::to('/#/user');
     }
 
 
