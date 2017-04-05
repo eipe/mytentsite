@@ -19,7 +19,11 @@
                     <td>{{ tentSite.created_at }}</td>
                     <td><img :src="tentSite.thumbnail_location" /></td>
                     <td>
-                        <i @click="viewOnMap(tentSite.id)" title="View on map" class="fa fa-map-o is-clickable"></i>
+                        <button class="button" title="View on Google Map" @click.prevent="viewOnMap(tentSite)">
+                            <span class="icon is-small">
+                                <i class="fa fa-map-o"></i>
+                            </span>
+                        </button>
                     </td>
                     <td>
                         <button class="button is-success" title="Approve" @click.prevent="approve(tentSite)">
@@ -100,17 +104,8 @@
                     me.$store.dispatch("displayError", "Could not deny<br>" + error + "<br><br>Please try again");
                 });
             },
-            viewOnMap(id) {
-                let index = this.tentSites.findIndex(function(photo) {
-                    if(photo.id === id) {
-                        return true;
-                    }
-                });
-
-                if(typeof this.tentSites[index] !== typeof undefined) {
-                    let tentSite = this.tentSites[index];
-                    window.open('https://google.com/maps/?q=' + tentSite.latitude + ',' + tentSite.longitude);
-                }
+            viewOnMap(tentSite) {
+                window.open('https://google.com/maps/?q=' + tentSite.latitude + ',' + tentSite.longitude);
             }
         },
         components: {
