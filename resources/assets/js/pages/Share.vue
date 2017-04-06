@@ -95,7 +95,7 @@
                                             <div class="nav-item button is-primary">
                                                 <span class="icon">
                                                     <i title="Share this tent site"
-                                                       class="fa fa-check"></i>
+                                                       class="fa fa-check" @click.prevent="storePhoto"></i>
                                                 </span>
                                             </div>
                                         </div>
@@ -105,7 +105,8 @@
                                     <div v-if="step === 3" class="has-text-centered">
                                         We are uploading your tent site
                                         <i class="fa fa-circle-o-notch fa-spin"></i><br><br>
-                                        <button class="button is-danger" @click="abortStoring">Cancel upload</button>
+                                        <button class="button is-danger" @click.prevent="abortStoring">
+                                            Cancel upload</button>
                                     </div>
                                 </transition>
                             </div>
@@ -323,7 +324,6 @@
             error() {
                 this.$store.dispatch("displayError", this.error);
                 this.photoLoading = false;
-                this.photoLoaded = false;
             }
         }
     }
