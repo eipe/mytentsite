@@ -15,7 +15,8 @@
             </template>
         </div>
         <div class="container has-text-centered">
-            <button class="button is-info" v-if="hasMore" @click="loadMore">Load more tent site photos</button>
+            <button class="button is-info" v-if="hasMore" @click="loadMore"
+                    v-bind:class="{ 'is-loading' : isLoadingMore }">Load more tent site photos</button>
             <button class="button" disabled v-else>All tent site photos are loaded</button>
         </div>
     </div>
@@ -30,7 +31,8 @@
                 showControllers: {
                     type: Boolean,
                     default: true
-                }
+                },
+                isLoadingMore: false
             }
         },
         computed: {
@@ -48,11 +50,17 @@
         },
         methods: {
             loadMore() {
+                this.isLoadingMore = true;
                 this.$store.commit('loadMoreTentSites');
             }
         },
         components:{
             Photo, Map
+        },
+        watch: {
+            photos() {
+                this.isLoadingMore = false;
+            }
         }
     }
 </script>
