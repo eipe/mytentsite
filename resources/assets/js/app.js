@@ -211,7 +211,7 @@ const store = new Vuex.Store({
         logout(state) {
             localStorage.removeItem('api_token');
             state.commit('clearToken');
-            axios.defaults.params.apiToken = null;
+            axios.defaults.params.token = null;
             axios.defaults.headers.common['Authorization'] = null;
             router.push('/info');
         }
