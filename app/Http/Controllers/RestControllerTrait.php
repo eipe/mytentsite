@@ -138,4 +138,15 @@ trait RestControllerTrait
         ];
         return response()->json($response, $response['code']);
     }
+
+    protected function badRequestResponse($data, $message = 'Bad Request')
+    {
+        $response = [
+            'code' => 400,
+            'status' => 'error',
+            'data' => $data,
+            'message' => $message
+        ];
+        return response()->json($response, $response['code']);
+    }
 }
