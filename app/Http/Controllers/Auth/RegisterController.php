@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\MailingListController;
+use App\Http\Controllers\RestControllerTrait;
 use App\Models\User;
 use App\Http\Controllers\Controller;
+use Dingo\Api\Http\Request;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -22,13 +25,7 @@ class RegisterController extends Controller
     */
 
     use RegistersUsers;
-
-    /**
-     * Where to redirect users after login / registration.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/#/user';
+    use RestControllerTrait;
 
     /**
      * Create a new controller instance.
@@ -68,11 +65,45 @@ class RegisterController extends Controller
             MailingListController::subscribe($data['email']);
         }
 
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'api_token' => str_random(60)
         ]);
+
+
+        return $user;
     }
+
+    /**
+     * Handle a registration request for the application.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        event(new Registered($token = $this->create($request->all())));
+
+        return $this->registered($request, $token);
+    }
+
+
+    /**
+     * Handle a registration request for the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param $user
+     * @return \Illuminate\Http\Response
+     */
+    public function registered(Request $request, $token)
+    {
+
+        $authenticateController = new AuthenticateController();
+        return $authenticateController->authenticate($request);
+    }
+
 }

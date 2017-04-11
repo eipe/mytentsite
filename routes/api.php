@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -17,6 +15,7 @@ $api = app('Dingo\Api\Routing\Router');
 $api->version(['v1'], function(\Dingo\Api\Routing\Router $api) {
 
     $api->post('/login', 'App\Http\Controllers\Auth\AuthenticateController@authenticate');
+    $api->post('/register', 'App\Http\Controllers\Auth\RegisterController@register');
     $api->get('/tentsites/{lat?}/{lng?}/{rad?}', 'App\Http\Controllers\TentSitesController@index');
     $api->get('/comments/{id}', 'App\Http\Controllers\CommentController@index');
     $api->post('/password/email', 'App\Http\Controllers\Auth\ForgotPasswordController@sendResetLinkEmail');
