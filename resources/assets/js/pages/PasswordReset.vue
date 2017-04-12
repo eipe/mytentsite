@@ -11,9 +11,9 @@
                                    v-model="info.email" required>
                         </p>
                         <transition enter-active-class="animated shake" leave-active-class="animated fadeOut">
-                            <div class="notification is-danger" v-if="errors.length > 0">
-                                <span class="delete" @click.prevent="errors = []"></span>
-                                <div v-for="error in errors">{{ error }}</div>
+                            <div class="notification is-danger" v-if="error">
+                                <span class="delete" @click.prevent="error = null"></span>
+                                {{ error }}
                             </div>
                         </transition>
                         <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
@@ -43,7 +43,7 @@
             return {
                 isPosting: false,
                 isSuccess: false,
-                errors: [],
+                error: null,
                 info: {
                     email: null
                 }
@@ -52,7 +52,7 @@
         computed: {
             backButtonText() {
                 if(this.isSuccess) {
-                    return 'Go back to login ';
+                    return 'Go back to login';
                 } else {
                     return 'Back';
                 }
@@ -61,7 +61,7 @@
         methods: {
             back() {
                 this.isSuccess = false;
-                this.errors = [];
+                this.error = null;
                 this.info.email = null;
                 this.$router.go(-1);
             },
@@ -69,19 +69,14 @@
                 let me = this;
                 me.isSuccess = false;
                 me.isPosting = true;
-                me.errors = [];
+                me.error = null;
 
                 axios.post('/password/email', me.info).then(function(success) {
                     me.isSuccess = true;
                     me.isPosting = false;
                 }).catch(function(error) {
-                    if(typeof error.response.data.error !== typeof undefined) {
-                        error.response.data.error.forEach(function(text) {
-                            me.errors.push(text);
-                        });
-                    }
-                    if(typeof error.message !== typeof undefined) {
-                        me.errors.push(error.message);
+                    if(typeof error.response !== typeof undefined) {
+                        me.error = error.response.data.message;
                     }
                     me.isPosting = false;
                 });
