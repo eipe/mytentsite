@@ -84,7 +84,11 @@
                         delete me.tentSites.index;
                     }
                 }).catch(function(error) {
-                    me.$store.dispatch("displayError", "Could not approve<br>" + error + "<br><br>Please try again");
+                    let errorMessage = "Could not approve";
+                    if(typeof error.response !== typeof undefined) {
+                        errorMessage += "<br>"+error.response.data.message;
+                    }
+                    me.$store.dispatch("displayError", errorMessage + "<br><br>Please try again");
                 });
             },
             deny(tentSite) {
@@ -101,7 +105,11 @@
                         delete me.tentSites.index;
                     }
                 }).catch(function(error) {
-                    me.$store.dispatch("displayError", "Could not deny<br>" + error + "<br><br>Please try again");
+                    let errorMessage = "Could not deny";
+                    if(typeof error.response !== typeof undefined) {
+                        errorMessage += "<br>"+error.response.data.message;
+                    }
+                    me.$store.dispatch("displayError", errorMessage + "<br><br>Please try again");
                 });
             },
             viewOnMap(tentSite) {
