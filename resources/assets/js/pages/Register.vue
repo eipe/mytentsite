@@ -36,9 +36,9 @@
                         </p>
 
                         <transition enter-active-class="animated shake" leave-active-class="animated fadeOut">
-                            <div class="notification is-danger" v-if="errors.message">
-                                <span class="delete" @click.prevent="errors.message = null"></span>
-                                {{ errors.message }}
+                            <div class="notification is-danger" v-if="error">
+                                <span class="delete" @click.prevent="error = null"></span>
+                                {{ error }}
                             </div>
                         </transition>
 
@@ -63,7 +63,7 @@
         data() {
             return {
                 isPosting: false,
-                errors: {},
+                error: null,
                 info: {
                     name: null,
                     email: null,
@@ -80,16 +80,13 @@
             submitForm() {
                 let me = this;
                 me.isPosting = true;
-                me.errors = {};
+                me.error = null;
 
                 axios.post('/register', me.info).then(function(success) {
                     me.isPosting = false;
                 }).catch(function(error) {
-                    if(typeof error.response.data.error !== typeof undefined) {
-                        me.errors = error.response.data.error;
-                    }
-                    if(typeof error.message !== typeof undefined) {
-                        me.errors.message = error.message;
+                    if(typeof error.response !== typeof undefined) {
+                        me.error = error.response.data.message;
                     }
                     me.isPosting = false;
                 });
