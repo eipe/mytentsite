@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="has-fixed-header">
         <section class="hero is-fullheight is-primary">
             <div class="hero-head">
                 <form @submit.prevent="storePhoto">
