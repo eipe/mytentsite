@@ -5,19 +5,14 @@
                 <form @submit.prevent="storePhoto">
                     <div class="columns">
                         <div class="column is-half is-offset-one-quarter has-text-centered" id="photo-frame">
-                            <transition enter-active-class="animated fadeIn">
-                                <div v-show="photoLoaded">
-                                    <figure class="cropit-preview" style="margin: 0 auto"
+                            <input type="file" ref="photo" @change="photoChanged"
+                                   class="cropit-image-input is-hidden" />
+                            <div v-show="photoLoaded">
+                                <transition-group enter-active-class="animated fadeIn">
+                                    <figure key="Preview" class="cropit-preview"
                                             v-show="photoLoaded" title="Drag to adjust">
                                     </figure>
-                                    <input type="file" ref="photo" @change="photoChanged"
-                                           class="cropit-image-input is-hidden" />
-                                </div>
-                            </transition>
-                            <br>
-                            <div v-show="photoLoaded">
-                                <transition enter-active-class="animated fadeIn">
-                                    <nav class="nav" v-show="step === 1">
+                                    <nav key="First step" class="nav" v-show="step === 1">
                                         <div class="nav-left">
                                             <div class="nav-item button is-primary">
                                                 <span class="icon">
@@ -64,9 +59,7 @@
                                             </div>
                                         </div>
                                     </nav>
-                                </transition>
-                                <transition enter-active-class="animated fadeIn">
-                                    <nav class="nav" v-show="step === 2">
+                                    <nav key="Second step" class="nav" v-show="step === 2">
                                         <div class="nav-left">
                                             <div class="nav-item button is-primary">
                                                 <span class="icon">
@@ -100,15 +93,13 @@
                                             </div>
                                         </div>
                                     </nav>
-                                </transition>
-                                <transition enter-active-class="animated fadeIn">
-                                    <div v-if="step === 3" class="has-text-centered">
+                                    <div key="Third step" v-if="step === 3" class="has-text-centered">
                                         We are uploading your tent site
                                         <i class="fa fa-circle-o-notch fa-spin"></i><br><br>
                                         <button class="button is-danger" @click.prevent="abortStoring">
                                             Cancel upload</button>
                                     </div>
-                                </transition>
+                                </transition-group>
                             </div>
                         </div>
                     </div>

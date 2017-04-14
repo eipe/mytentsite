@@ -48,6 +48,7 @@
     max-width: 100vw;
     max-height: 75vw;
     /* Aspect ratio 4:3 */
+    margin: 0 auto 10px auto;
 }
 
 .cropit-preview img {
