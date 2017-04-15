@@ -159,12 +159,16 @@ class TentSitesController extends Controller
 
 
     public function approve($id) {
-        $m = self::MODEL;
-        /* @var TentSites $tentSite */
-        $tentSite = $m::get()->where('id', $id)->first();
-        $tentSite->approved = true;
-        $tentSite->save();
-        return redirect('/admin');
+        try {
+            $m = self::MODEL;
+            /* @var TentSites $tentSite */
+            $tentSite = $m::get()->where('id', $id)->first();
+            $tentSite->setAttribute('approved', true);
+            $tentSite->save();
+            return $this->showResponse($tentSite);
+        } catch(\Exception $exception) {
+            return $this->clientErrorResponse(['exception' => $exception->getMessage()]);
+        }
     }
 
 }

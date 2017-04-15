@@ -74,14 +74,14 @@
                 let me = this,
                     id = tentSite.id;
                 axios.post('/admin/approve/' + id).then(function() {
-                    let index = me.tentSites.data.findIndex(function(photo) {
+                    let index = me.tentSites.findIndex(function(photo) {
                         if(photo.id === id) {
                             return true;
                         }
                     });
 
-                    if(typeof me.tentSites.index !== typeof undefined) {
-                        delete me.tentSites.index;
+                    if(typeof me.tentSites[index] !== typeof undefined) {
+                        me.tentSites.splice(index, 1);
                     }
                 }).catch(function(error) {
                     let errorMessage = "Could not approve";
