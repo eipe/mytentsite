@@ -20,9 +20,6 @@
         @yield('header')
         @yield('content')
     </div>
-    @if(Auth::check())
-        <div class="is-hidden" id="api_token">{{Auth::user()->getAttribute('api_token')}}</div>
-    @endif
     <div class="is-hidden" id="environment">{{ Config::get('app.env') }}</div>
     <script src="{{ asset('/js/core-dep.js') }}"></script>
     <script src="{{ asset('/js/map-dep.js') }}"></script>
