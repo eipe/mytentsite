@@ -70,19 +70,22 @@
             });
         },
         methods: {
+            removeTentSite(id) {
+                let index = this.tentSites.findIndex(function(photo) {
+                    if(photo.id === id) {
+                        return true;
+                    }
+                });
+
+                if(typeof this.tentSites[index] !== typeof undefined) {
+                    this.tentSites.splice(index, 1);
+                }
+            },
             approve(tentSite) {
                 let me = this,
                     id = tentSite.id;
                 axios.post('/admin/approve/' + id).then(function() {
-                    let index = me.tentSites.findIndex(function(photo) {
-                        if(photo.id === id) {
-                            return true;
-                        }
-                    });
-
-                    if(typeof me.tentSites[index] !== typeof undefined) {
-                        me.tentSites.splice(index, 1);
-                    }
+                    me.removeTentSite(id);
                 }).catch(function(error) {
                     let errorMessage = "Could not approve";
                     if(typeof error.response !== typeof undefined) {
@@ -95,15 +98,7 @@
                 let me = this,
                     id = tentSite.id;
                 axios.post('/admin/deny/' + id).then(function() {
-                    let index = me.tentSites.data.findIndex(function(photo) {
-                        if(photo.id === id) {
-                            return true;
-                        }
-                    });
-
-                    if(typeof me.tentSites.index !== typeof undefined) {
-                        delete me.tentSites.index;
-                    }
+                    me.removeTentSite(id);
                 }).catch(function(error) {
                     let errorMessage = "Could not deny";
                     if(typeof error.response !== typeof undefined) {
