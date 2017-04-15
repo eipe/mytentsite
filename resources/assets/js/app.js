@@ -52,24 +52,9 @@ const store = new Vuex.Store({
         }
     },
     mutations: {
-        setActivePhoto(state, id) {
-            let index = state.tentSites.data.findIndex(function(photo) {
-                if(photo.id === id) {
-                    return true;
-                }
-            });
-
-            if(typeof state.tentSites.data[index] !== typeof undefined) {
-                state.gallery.activePhoto = state.tentSites.data[index];
-                state.gallery.isActive = true;
-
-                if(state.tentSites.data[index].comments.length === 0) {
-                    axios.get('/comments/' + id).then(function(response) {
-                        state.tentSites.data[index].comments = response.data.data;
-                    }).catch(function(error) {
-                    });
-                }
-            }
+        setActivePhoto(state, photo) {
+            state.gallery.activePhoto = photo;
+            state.gallery.isActive = true;
         },
         destroyGallery(state) {
             state.gallery.activePhoto = {};
@@ -159,8 +144,8 @@ const store = new Vuex.Store({
         }
     },
     actions: {
-        openPhoto(state, id) {
-            state.commit('setActivePhoto', id);
+        openPhoto(state, photo) {
+            state.commit('setActivePhoto', photo);
         },
         viewPhotoOnMap(state, id) {
             state.commit('destroyGallery');

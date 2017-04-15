@@ -128,7 +128,7 @@
         },
         methods: {
             openImage() {
-                this.$store.dispatch('openPhoto', this.id);
+                this.$store.dispatch('openPhoto', this);
             }
         },
     }

@@ -36,7 +36,7 @@
                                     </div>
                                 </nav>
                                 <hr>
-                                <photo-comments :comments="activePhotoComments" id="photo-comments" />
+                                <photo-comments :comments="comments" id="photo-comments" />
                                 <photo-comment-form :id="activePhoto.id" :focus="focus" />
                             </div>
                         </div>
@@ -57,8 +57,9 @@
         name: 'PhotoGallery',
         data() {
             return {
+                hasLiked: false,
                 focus: false,
-                hasLiked: false
+                comments: []
             }
         },
         computed: {
@@ -70,9 +71,6 @@
                 if(photo) {
                     return photo;
                 }
-            },
-            activePhotoComments() {
-                return this.activePhoto.comments;
             },
             likeIcon() {
                 if(this.hasLiked) {
@@ -93,7 +91,8 @@
         methods: {
             destroy() {
                 this.$store.dispatch('destroyGallery');
-                this.comment = null;
+                this.comments = null;
+                this.hasLiked = false;
                 this.focus = false;
             },
             toggleLike() {
@@ -115,8 +114,18 @@
             }
         },
         watch: {
-            activePhoto() {
-                this.hasLiked = this.activePhoto.hasLiked;
+            activePhoto(photo) {
+                if(typeof photo.id !== typeof undefined) {
+                    this.hasLiked = photo.hasLiked;
+                    let me = this;
+                    axios.get("comments/" + photo.id).then(function handleSuccess(response) {
+                        if(typeof response.data !== typeof undefined) {
+                            me.comments = response.data.data;
+                        }
+                    }).catch(function handleError(error) {
+                        me.$store.dispatch("displayError", "Could not load comments.<br>Please try again later");
+                    });
+                }
             }
         },
         components: { Photo, PhotoComments, PhotoCommentForm }
