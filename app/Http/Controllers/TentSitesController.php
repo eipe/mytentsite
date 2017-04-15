@@ -171,4 +171,17 @@ class TentSitesController extends Controller
         }
     }
 
+    public function deny($id) {
+        try {
+            $m = self::MODEL;
+            /* @var TentSites $tentSite */
+            $tentSite = $m::get()->where('id', $id)->first();
+            $tentSite->setAttribute('approved', false);
+            $tentSite->save();
+            return $this->deletedResponse();
+        } catch(\Exception $exception) {
+            return $this->clientErrorResponse(['exception' => $exception->getMessage()]);
+        }
+    }
+
 }
