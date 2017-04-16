@@ -51,14 +51,9 @@ $api->version(['v1'], function(\Dingo\Api\Routing\Router $api) {
         // #Admin routes
         // Fetch unapproved tent sites
         $api->get('/unapproved', 'App\Http\Controllers\TentSitesController@getUnapproved');
+        // Approve tent site
+        $api->post('/admin/approve/{id}', 'App\Http\Controllers\TentSitesController@approve');
+        // Deny tent site
+        $api->post('/admin/deny/{id}', 'App\Http\Controllers\TentSitesController@deny');
     });
 });
-
-/**
- * Admin
- */
-Route::group(['middleware' => 'admin'], function () {
-    Route::post('/admin/approve/{id}', 'TentSitesController@approve');
-    Route::post('/admin/deny/{id}', 'TentSitesController@deny');
-});
-
