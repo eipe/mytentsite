@@ -37,20 +37,6 @@ const store = new Vuex.Store({
         blockedRoute: null,
         error: null
     },
-    getters: {
-        getUserTentSites: state => {
-            if(state.user.id) {
-                // Todo: Secure that all user photos are loaded
-                return state.tentSites.data.filter(photo => {
-                    if(photo.reported_by === state.user.name) {
-                        return true;
-                    }
-                    return false;
-                });
-            }
-            return [];
-        }
-    },
     mutations: {
         setActivePhoto(state, photo) {
             state.gallery.activePhoto = photo;
