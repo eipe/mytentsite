@@ -1,5 +1,5 @@
 <template>
-    <div class="photo-controllers" :data-photo-controllers-id="id">
+    <div class="photo-controllers" :data-photo="photo">
         <i class="photo-view-map fa fa-map-marker is-clickable" title="View photo on map" @click.stop="viewOnMap"></i>
     </div>
 </template>
@@ -13,11 +13,11 @@
             return {
             }
         },
-        props: ["id"],
+        props: ["photo"],
         components: { Map },
         methods: {
             viewOnMap() {
-                this.$store.dispatch('viewPhotoOnMap', this.id);
+                this.$store.dispatch("viewPhotoOnMap", this.photo);
             }
         }
     }

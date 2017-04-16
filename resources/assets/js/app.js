@@ -133,21 +133,15 @@ const store = new Vuex.Store({
         openPhoto(state, photo) {
             state.commit('setActivePhoto', photo);
         },
-        viewPhotoOnMap(state, id) {
+        viewPhotoOnMap(state, photo) {
             state.commit('destroyGallery');
-            let routerVariables = { path: '/map', query: {}};
-            let index = state.state.tentSites.data.findIndex(function(photo) {
-                if(photo.id === id) {
-                    return true;
+            router.push({
+                path: '/map',
+                query: {
+                    latitude: photo.lat,
+                    longitude: photo.lng
                 }
             });
-
-            if(typeof state.state.tentSites.data[index] !== typeof undefined) {
-                let photo = state.state.tentSites.data[index];
-                routerVariables.query.latitude = photo.lat;
-                routerVariables.query.longitude = photo.lng;
-            }
-            router.push(routerVariables);
         },
         destroyGallery(state) {
             state.commit('destroyGallery');
