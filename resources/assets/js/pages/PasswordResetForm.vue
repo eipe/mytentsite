@@ -60,7 +60,7 @@
                 me.isPosting = true;
                 me.errors = [];
 
-                axios.post('/password/reset', me.info).then(function(success) {
+                axios.post("/password/reset", me.info).then(function(success) {
                     me.isPosting = false;
                 }).catch(function(error) {
                     if(typeof error.response.data.error !== typeof undefined) {

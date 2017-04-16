@@ -85,10 +85,10 @@
 </template>
 <script>
 
-    import Footer from '../components/Footer.vue';
+    import Footer from "../components/Footer.vue";
 
     export default {
-        name: 'Info',
+        name: "Info",
         data() {
             return {
                 isLoaded: false
@@ -101,7 +101,7 @@
             }, 500)
         },
         components: {
-            'footer-component': Footer
+            "footer-component": Footer
         }
     }
 </script>

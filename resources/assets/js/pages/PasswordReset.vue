@@ -52,9 +52,9 @@
         computed: {
             backButtonText() {
                 if(this.isSuccess) {
-                    return 'Go back to login';
+                    return "Go back to login";
                 } else {
-                    return 'Back';
+                    return "Back";
                 }
             }
         },
@@ -71,7 +71,7 @@
                 me.isPosting = true;
                 me.error = null;
 
-                axios.post('/password/email', me.info).then(function(success) {
+                axios.post("/password/email", me.info).then(function(success) {
                     me.isSuccess = true;
                     me.isPosting = false;
                 }).catch(function(error) {

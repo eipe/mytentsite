@@ -22,10 +22,10 @@
     </div>
 </template>
 <script>
-    import Photo from './Photo.vue';
+    import Photo from "./Photo.vue";
 
     export default {
-        name: 'PhotoWall',
+        name: "PhotoWall",
         data() {
             return {
                 showControllers: {
@@ -45,13 +45,13 @@
         },
         created() {
             if(typeof this.photos === typeof undefined || this.photos.length === 0) {
-                this.$store.commit('loadMoreTentSites');
+                this.$store.commit("loadMoreTentSites");
             }
         },
         methods: {
             loadMore() {
                 this.isLoadingMore = true;
-                this.$store.commit('loadMoreTentSites');
+                this.$store.commit("loadMoreTentSites");
             }
         },
         components:{

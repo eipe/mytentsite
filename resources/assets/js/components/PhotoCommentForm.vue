@@ -37,17 +37,17 @@
         },
         methods: {
             reset() {
-                this.comment = '',
+                this.comment = "",
                 this.errors = {}
             },
             submitComment() {
                 let me = this;
                 me.isPostingComment = true;
-                axios.post('/comments/' + this.id, {
+                axios.post("/comments/" + this.id, {
                     comment: this.comment
                 }).then(function(response) {
                     me.isPostingComment = false;
-                    me.$store.dispatch('addCommentOnPhoto', response.data);
+                    me.$store.dispatch("addCommentOnPhoto", response.data);
                     me.reset();
                 }).catch(function(error) {
                     if(typeof error.response.data.data.form_validations !== typeof undefined) {

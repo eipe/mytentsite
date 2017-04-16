@@ -55,10 +55,10 @@
     }
 </style>
 <script>
-    import PhotoControllers from './PhotoControllers.vue'
+    import PhotoControllers from "./PhotoControllers.vue"
 
     export default {
-        name: 'Photo',
+        name: "Photo",
         data () {
             return{
                 showControllers: false
@@ -113,13 +113,13 @@
         computed: {
             status() {
                 if(typeof this.approved === typeof undefined) {
-                    return 'Waiting for approval';
+                    return "Waiting for approval";
                 }
 
                 if(this.approved == true) {
-                    return 'Approved';
+                    return "Approved";
                 } else {
-                    return 'Not approved';
+                    return "Not approved";
                 }
             }
         },
@@ -128,7 +128,7 @@
         },
         methods: {
             openImage() {
-                this.$store.dispatch('openPhoto', this);
+                this.$store.dispatch("openPhoto", this);
             }
         },
     }

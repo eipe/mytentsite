@@ -20,7 +20,7 @@
         },
         components: {
             PhotoWall,
-            'footer-component': Footer
+            "footer-component": Footer
         }
     }
 </script>

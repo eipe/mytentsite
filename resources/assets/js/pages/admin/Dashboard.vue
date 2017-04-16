@@ -14,16 +14,16 @@
 </template>
 <script>
     export default {
-        name: 'AdminDashboard',
+        name: "AdminDashboard",
         data() {
             return {
-                apDex: '',
-                redirect: '',
-                nameLookup: '',
-                connection: '',
-                handshake: '',
-                response: '',
-                total: ''
+                apDex: "",
+                redirect: "",
+                nameLookup: "",
+                connection: "",
+                handshake: "",
+                response: "",
+                total: ""
             }
         },
         components: {

@@ -29,10 +29,10 @@
 </template>
 <script>
 
-    import Photo from '../../components/Photo.vue';
+    import Photo from "../../components/Photo.vue";
 
     export default {
-        name: 'User-contributions',
+        name: "User-contributions",
         data() {
             return {
                 tentSites: [],

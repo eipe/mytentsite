@@ -50,10 +50,10 @@
 </template>
 <script>
 
-    import Photo from '../../components/Photo.vue'
+    import Photo from "../../components/Photo.vue"
 
     export default {
-        name: 'AdminTentSites',
+        name: "AdminTentSites",
         data() {
             return {
                 tentSites: []
@@ -61,9 +61,9 @@
         },
         created() {
             let me = this;
-            axios.get('/unapproved/').then(function(response) {
+            axios.get("/unapproved/").then(function(response) {
                 response.data.forEach(function(value) {
-                    value.thumbnail_location = '/storage/photos/tentsite_thumbnails/' + value.thumbnail_location;
+                    value.thumbnail_location = "/storage/photos/tentsite_thumbnails/" + value.thumbnail_location;
                     me.tentSites.push(value);
                 });
             }).catch(function() {
@@ -84,7 +84,7 @@
             approve(tentSite) {
                 let me = this,
                     id = tentSite.id;
-                axios.post('/admin/approve/' + id).then(function() {
+                axios.post("/admin/approve/" + id).then(function() {
                     me.removeTentSite(id);
                 }).catch(function(error) {
                     let errorMessage = "Could not approve";
@@ -97,7 +97,7 @@
             deny(tentSite) {
                 let me = this,
                     id = tentSite.id;
-                axios.post('/admin/deny/' + id).then(function() {
+                axios.post("/admin/deny/" + id).then(function() {
                     me.removeTentSite(id);
                 }).catch(function(error) {
                     let errorMessage = "Could not deny";
@@ -108,7 +108,7 @@
                 });
             },
             viewOnMap(tentSite) {
-                window.open('https://google.com/maps/?q=' + tentSite.latitude + ',' + tentSite.longitude);
+                window.open("https://google.com/maps/?q=" + tentSite.latitude + "," + tentSite.longitude);
             }
         },
         components: {

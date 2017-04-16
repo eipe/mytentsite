@@ -9,21 +9,21 @@
 </template>
 <script>
     export default {
-        name: 'PhotoComment',
+        name: "PhotoComment",
         data() {
             return {
             }
         },
         props: {
-            'comment_by': {
+            "comment_by": {
                 type: String,
                 required: true
             },
-            'created_at': {
+            "created_at": {
                 type: String,
                 require: true
             },
-            'comment': {
+            "comment": {
                 type: String,
                 required: true
             }

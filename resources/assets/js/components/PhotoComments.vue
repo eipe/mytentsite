@@ -11,16 +11,16 @@
 <style>
 </style>
 <script>
-    import PhotoComment from './PhotoComment.vue'
+    import PhotoComment from "./PhotoComment.vue"
     export default {
-        name: 'PhotoComments',
+        name: "PhotoComments",
         data() {
             return {
             }
         },
-        props: ['comments'],
+        props: ["comments"],
         components: {
-            'photo-comment': PhotoComment
+            "photo-comment": PhotoComment
         }
     }
 </script>

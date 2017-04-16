@@ -66,11 +66,11 @@
         data() {
             return {
                 isPosting: false,
-                socialLoginProvider: '',
+                socialLoginProvider: "",
                 error: null,
                 info: {
-                    email: '',
-                    password: '',
+                    email: "",
+                    password: "",
                     remember: false,
                 }
             }
@@ -83,15 +83,15 @@
 
                 let baseURL = axios.defaults.baseURL;
 
-                axios.defaults.baseURL = '';
+                axios.defaults.baseURL = "";
                 axios.get(path).then(function(success) {
-                    me.$store.dispatch('loginWithToken', success.data.token);
-                    me.socialLoginProvider = '';
+                    me.$store.dispatch("loginWithToken", success.data.token);
+                    me.socialLoginProvider = "";
                 }).catch(function(error) {
                     if(typeof error.response !== typeof undefined) {
                         me.error = error.response.data.error;
                     }
-                    me.socialLoginProvider = '';
+                    me.socialLoginProvider = "";
                 });
                 axios.defaults.baseURL = baseURL;
             },
@@ -100,8 +100,8 @@
                 me.isPosting = true;
                 me.error = null;
 
-                axios.post('/login', me.info).then(function(success) {
-                    me.$store.dispatch('loginWithToken', success.data.token);
+                axios.post("/login", me.info).then(function(success) {
+                    me.$store.dispatch("loginWithToken", success.data.token);
                     me.isPosting = false;
                     me.info.email = null;
                     me.info.password = null;

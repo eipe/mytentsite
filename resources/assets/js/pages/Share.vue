@@ -135,7 +135,7 @@
 <script>
 
     export default {
-        name: 'Share',
+        name: "Share",
         data() {
             return {
                 ready: false,
@@ -163,7 +163,7 @@
                         this.photoLoaded = true;
                     },
                     onImageError: function() {
-                        this.error = 'Could not load photo. Please try again, or try another photo';
+                        this.error = "Could not load photo. Please try again, or try another photo";
                     }
                 },
                 cropItExportOptions: {
@@ -226,7 +226,7 @@
 
                 me.$nextTick(function() {
                     EXIF.getData(file, function() {
-                        if(typeof EXIF.getTag(this, 'GPSLatitude') === typeof undefined) {
+                        if(typeof EXIF.getTag(this, "GPSLatitude") === typeof undefined) {
                             me.error = "Photo does not contain location data.<br>" +
                                 "We can not accept photos without location data as they are impossible to place on " +
                                 "the map, which indeed is the whole concept of this service. <br><br>" +
@@ -260,13 +260,13 @@
 
                 photoData.photo = me.photoObject.cropit("export", me.cropItExportOptions);
 
-                axios.post('/tentsites', photoData).then(function(response) {
+                axios.post("/tentsites", photoData).then(function(response) {
                     me.photoStored();
                 }).catch(function(error) {
                     if(parseInt(error.response.readyState) === 0 && error.response.statusText === "abort") {
                         return;
                     }
-                    let errorText = '';
+                    let errorText = "";
 
                     if(typeof error.response.data.form_validations !== typeof undefined) {
                         error.response.data.form_validations.forEach(function(field, fieldError) {

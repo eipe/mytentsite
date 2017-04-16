@@ -65,7 +65,7 @@
     }
 
     export default {
-        name: 'Map',
+        name: "Map",
         data() {
             return {
                 latitude: 63.412222,
@@ -121,7 +121,7 @@
                 });
 
                 if(this.tentSites.length === 0) {
-                    me.$store.commit('loadMoreTentSites');
+                    me.$store.commit("loadMoreTentSites");
                 }
 
                 placeSites(this.tentSites);

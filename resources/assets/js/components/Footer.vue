@@ -38,7 +38,7 @@
 </template>
 <script>
     export default {
-        name: 'Footer',
+        name: "Footer",
         computed: {
             beta() {
                 return this.$store.state.beta;

@@ -15,16 +15,16 @@
 </template>
 <script>
     export default {
-        name: 'User-bookmarks',
+        name: "User-bookmarks",
         data() {
             return {
-                subtitle: ''
+                subtitle: ""
             }
         },
         created() {
             let me = this;
             setTimeout(function() {
-                me.subtitle = 'Stay tuned - it won\'t take long time!';
+                me.subtitle = "Stay tuned - it won't take long time!";
             }, 1000);
         }
     }

@@ -74,15 +74,15 @@
             },
             likeIcon() {
                 if(this.hasLiked) {
-                    return 'fa-bookmark';
+                    return "fa-bookmark";
                 } else {
-                    return 'fa-bookmark-o';
+                    return "fa-bookmark-o";
                 }
             }
         },
         created() {
             var me = this;
-            window.addEventListener('keyup', function(event) {
+            window.addEventListener("keyup", function(event) {
                 if(me.isActive && event.keyCode === 27) {
                     me.destroy();
                 }
@@ -90,7 +90,7 @@
         },
         methods: {
             destroy() {
-                this.$store.dispatch('destroyGallery');
+                this.$store.dispatch("destroyGallery");
                 this.comments = null;
                 this.hasLiked = false;
                 this.focus = false;
@@ -98,14 +98,14 @@
             toggleLike() {
                 if(this.hasLiked) {
                     this.hasLiked = false;
-                    this.$store.dispatch('unlikePhoto', this.activePhoto.id);
+                    this.$store.dispatch("unlikePhoto", this.activePhoto.id);
                 } else {
                     this.hasLiked = true;
-                    this.$store.dispatch('likePhoto', this.activePhoto.id);
+                    this.$store.dispatch("likePhoto", this.activePhoto.id);
                 }
             },
             viewOnMap() {
-                this.$store.dispatch('viewPhotoOnMap', this.activePhoto.id);
+                this.$store.dispatch("viewPhotoOnMap", this.activePhoto.id);
             },
             checkIn() {
                 this.focus = true;

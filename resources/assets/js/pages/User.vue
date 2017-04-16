@@ -17,16 +17,16 @@
 </template>
 <script>
 
-    import Footer from '../components/Footer.vue';
+    import Footer from "../components/Footer.vue";
 
     export default {
-        name: 'User',
+        name: "User",
         data() {
             return {
             }
         },
         components: {
-            'footer-component': Footer
+            "footer-component": Footer
         }
     }
 </script>

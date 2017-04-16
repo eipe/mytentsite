@@ -11,21 +11,21 @@ Vue.use(VueProgressiveImage, {delay: 200});
 
 const router = new VueRouter({
     routes: routes.routes,
-    linkActiveClass: 'is-active'
+    linkActiveClass: "is-active"
 });
 
-axios.defaults.baseURL = '/api/';
+axios.defaults.baseURL = "/api/";
 axios.defaults.params = {};
 
 const store = new Vuex.Store({
     state: {
         tentSites: {
-            apiUrl: '/tentsites',
+            apiUrl: "/tentsites",
             hasMore: true,
             data: []
         },
         user: {
-            name: '',
+            name: "",
             id: null
         },
         gallery: {
@@ -89,7 +89,7 @@ const store = new Vuex.Store({
             if(typeof state.tentSites.data[index] !== typeof undefined && !state.tentSites.data[index].hasLiked) {
                 state.tentSites.data[index].likes += 1;
                 state.tentSites.data[index].hasLiked = true;
-                axios.post('/like/' + id + '/');
+                axios.post("/like/" + id + "/");
             }
         },
         unlikePhoto(state, id) {
@@ -103,7 +103,7 @@ const store = new Vuex.Store({
                 state.tentSites.data[index].likes -= 1;
                 state.tentSites.data[index].hasLiked = false;
             }
-            axios.post('/unlike/' + id + '/');
+            axios.post("/unlike/" + id + "/");
         },
         addCommentOnPhoto(state, id, comment) {
             let index = state.tentSites.data.findIndex(function(photo) {
@@ -131,12 +131,12 @@ const store = new Vuex.Store({
     },
     actions: {
         openPhoto(state, photo) {
-            state.commit('setActivePhoto', photo);
+            state.commit("setActivePhoto", photo);
         },
         viewPhotoOnMap(state, photo) {
-            state.commit('destroyGallery');
+            state.commit("destroyGallery");
             router.push({
-                path: '/map',
+                path: "/map",
                 query: {
                     latitude: photo.lat,
                     longitude: photo.lng
@@ -144,78 +144,78 @@ const store = new Vuex.Store({
             });
         },
         destroyGallery(state) {
-            state.commit('destroyGallery');
+            state.commit("destroyGallery");
         },
         likePhoto(state, id) {
-            state.commit('likePhoto', id);
+            state.commit("likePhoto", id);
         },
         unlikePhoto(state, id) {
-            state.commit('unlikePhoto', id);
+            state.commit("unlikePhoto", id);
         },
         addCommentOnPhoto(state, photoId, comment) {
-            state.commit('addCommentOnPhoto', photoId, comment);
+            state.commit("addCommentOnPhoto", photoId, comment);
         },
         storeToken(state, token) {
-            localStorage.setItem('api_token', token);
-            state.commit('setToken', token);
+            localStorage.setItem("api_token", token);
+            state.commit("setToken", token);
             axios.defaults.params.token = token;
-            axios.defaults.headers.common['Authorization'] = token;
+            axios.defaults.headers.common["Authorization"] = token;
         },
         loginWithToken(state, token) {
-            state.dispatch('storeToken', token);
+            state.dispatch("storeToken", token);
             if(state.state.blockedRoute) {
                 router.push(state.state.blockedRoute.path);
                 state.state.blockedRoute = null;
             } else {
-                router.push('/user');
+                router.push("/user");
             }
         },
         displayError(state, error) {
             state.commit("setError", error);
         },
         logout(state) {
-            localStorage.removeItem('api_token');
-            state.commit('clearToken');
+            localStorage.removeItem("api_token");
+            state.commit("clearToken");
             axios.defaults.params.token = null;
-            axios.defaults.headers.common['Authorization'] = null;
-            router.push('/info');
+            axios.defaults.headers.common["Authorization"] = null;
+            router.push("/info");
         }
     }
 });
 
-let cachedToken = localStorage.getItem('api_token');
+let cachedToken = localStorage.getItem("api_token");
 if(cachedToken) {
-    store.dispatch('storeToken', cachedToken);
+    store.dispatch("storeToken", cachedToken);
 } else {
-    let $apiToken = document.getElementById('api_token');
+    let $apiToken = document.getElementById("api_token");
 
     if($apiToken) {
-        store.dispatch('storeToken', $apiToken.innerHTML.toString());
+        store.dispatch("storeToken", $apiToken.innerHTML.toString());
     }
 }
 
-axios.defaults.headers.common['Authorization'] = store.state.apiToken;
+axios.defaults.headers.common["Authorization"] = store.state.apiToken;
 
 router.beforeEach((to, from, next) => {
     if(to.meta.auth && !store.state.apiToken) {
         store.state.blockedRoute = to;
-        next('/login');
+        next("/login");
     } else {
         next();
     }
 });
 
 new Vue({
-    el: '#app',
+    el: "#app",
     store,
     router,
     components: {
         PhotoGallery, Error
     },
     created() {
-        let environment = document.getElementById('environment').innerHTML.toString();
+        let environment = document.getElementById("environment").innerHTML.toString();
 
-        if(environment !== 'production') {
+        if(environment !== "production") {
             store.state.beta = true;
         }
     }

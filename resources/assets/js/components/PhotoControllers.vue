@@ -5,10 +5,10 @@
 </template>
 <script>
 
-    import Map from '../pages/Map.vue';
+    import Map from "../pages/Map.vue";
 
     export default {
-        name: 'PhotoControllers',
+        name: "PhotoControllers",
         data() {
             return {
             }

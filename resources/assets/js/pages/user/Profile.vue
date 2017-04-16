@@ -17,10 +17,10 @@
             </div>
         </section>
     </div>
-</template>
+</template>r
 <script>
     export default {
-        name: 'User-profile',
+        name: "User-profile",
         data() {
             return {
                 socialLogin: {
@@ -33,13 +33,13 @@
         methods: {
             loadUserData() {
                 var me = this;
-                axios.get('/user/').then(function(response) {
-                    me.$store.commit('setUser', response.data.data);
+                axios.get("/user/").then(function(response) {
+                    me.$store.commit("setUser", response.data.data);
                 }).catch(function(response) {
                 });
             },
             logout() {
-                this.$store.dispatch('logout');
+                this.$store.dispatch("logout");
             }
         },
         created() {
