@@ -186,12 +186,6 @@ const store = new Vuex.Store({
 let cachedToken = localStorage.getItem("api_token");
 if(cachedToken) {
     store.dispatch("storeToken", cachedToken);
-} else {
-    let $apiToken = document.getElementById("api_token");
-
-    if($apiToken) {
-        store.dispatch("storeToken", $apiToken.innerHTML.toString());
-    }
 }
 
 axios.defaults.headers.common["Authorization"] = store.state.apiToken;
