@@ -30,7 +30,6 @@
 <script>
 
     import Photo from '../../components/Photo.vue';
-    import { mapGetters } from 'vuex'
 
     export default {
         name: 'User-contributions',
