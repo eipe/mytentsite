@@ -20,12 +20,12 @@
                                 <p>{{ activePhoto.caption }}</p>
                                 <nav class="level">
                                     <div class="level-left">
-                                        <div class="level-item">
+                                        <div class="level-item" v-if="activePhoto.showControllers">
                                             <i class="fa is-clickable" title="Bookmark tentsite"
                                                v-bind:class="likeIcon" @click="toggleLike"></i>
                                             &nbsp;&nbsp;{{ activePhoto.likes }}
                                         </div>
-                                        <div class="level-item">
+                                        <div class="level-item" v-if="activePhoto.showControllers">
                                             <span @click="checkIn"
                                                   class="button is-small">Check in</span>
                                         </div>
@@ -37,7 +37,8 @@
                                 </nav>
                                 <hr>
                                 <photo-comments :comments="comments" id="photo-comments" />
-                                <photo-comment-form :id="activePhoto.id" :focus="focus" />
+                                <photo-comment-form :id="activePhoto.id" :focus="focus"
+                                                    v-if="activePhoto.showControllers" />
                             </div>
                         </div>
                     </div>

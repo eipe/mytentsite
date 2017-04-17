@@ -17,7 +17,10 @@
                                        :caption="tentSite.caption"
                                        :reported_by="tentSite.reported_by"
                                        :created_at="tentSite.created_at"
-                                       :likes="tentSite.likes" :approved="tentSite.approved" :showDetails="true">
+                                       :likes="tentSite.likes"
+                                       :approved="tentSite.approved"
+                                       :showDetails="true"
+                                       :showControllers="false">
                                 </photo>
                             </template>
                         </div>

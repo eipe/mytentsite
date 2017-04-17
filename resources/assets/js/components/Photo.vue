@@ -9,14 +9,14 @@
         :data-photo-likes="likes"
         :data-photo-location="img_location"
         :data-photo-approved="approved"
-         @mouseenter="showControllers=true"
-         @mouseleave="showControllers=false"
+         @mouseenter="displayControllers()"
+         @mouseleave="hideControllers()"
          @click="openImage">
         <progressive-img
                 :src="img_location"
                 :placeholder="thumbnail"
                 :blur="5" class="is-clickable" />
-        <slot v-if="showControllers">
+        <slot v-if="isControllersVisible">
             <photo-controllers :photo="this"></photo-controllers>
         </slot>
         <div v-if="showDetails">
@@ -61,7 +61,7 @@
         name: "Photo",
         data () {
             return{
-                showControllers: false
+                isControllersVisible: false
             }
         },
         props: {
@@ -108,6 +108,10 @@
             showDetails: {
                 type: Boolean,
                 default: false
+            },
+            showControllers: {
+                type: Boolean,
+                default: true
             }
         },
         computed: {
@@ -129,6 +133,14 @@
         methods: {
             openImage() {
                 this.$store.dispatch("openPhoto", this);
+            },
+            displayControllers() {
+                if(this.showControllers) {
+                    this.isControllersVisible = true;
+                }
+            },
+            hideControllers() {
+                this.isControllersVisible = false;
             }
         },
     }
