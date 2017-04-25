@@ -21,7 +21,7 @@
                                 <nav class="level">
                                     <div class="level-left">
                                         <div class="level-item" v-if="activePhoto.showControllers">
-                                            <i class="fa" title="Bookmarks"
+                                            <i class="fa" :title="bookmarkTitle"
                                                v-bind:class="bookmarkIcon" @click="toggleBookmark"></i>
                                             &nbsp;&nbsp;{{ activePhoto.bookmarks }}
                                         </div>
@@ -73,6 +73,16 @@
                 if(photo) {
                     return photo;
                 }
+            },
+            bookmarkTitle() {
+                if(this.isUserActionsAvailable) {
+                    if(this.hasUserBookmarked) {
+                        return 'Click to remove bookmark';
+                    } else {
+                        return 'Click to add bookmark';
+                    }
+                }
+                return 'Number of users who has bookmarked this tent site';
             },
             bookmarkIcon() {
                 let icon = '';
