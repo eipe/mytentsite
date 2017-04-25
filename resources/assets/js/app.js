@@ -191,6 +191,15 @@ if(cachedToken) {
     store.dispatch("storeToken", cachedToken);
 }
 
+axios.interceptors.response.use(function (response) {
+    if(typeof response.headers.authorization !== typeof undefined) {
+        store.dispatch("storeToken", response.headers.authorization);
+    }
+    return response;
+}, function (error) {
+    return Promise.reject(error);
+});
+
 router.beforeEach((to, from, next) => {
     if(to.meta.auth && !store.state.apiToken) {
         store.state.blockedRoute = to;
