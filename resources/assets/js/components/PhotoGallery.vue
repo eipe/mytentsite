@@ -22,8 +22,8 @@
                                     <div class="level-left">
                                         <div class="level-item" v-if="activePhoto.showControllers">
                                             <i class="fa is-clickable" title="Bookmark tentsite"
-                                               v-bind:class="likeIcon" @click="toggleLike"></i>
-                                            &nbsp;&nbsp;{{ activePhoto.likes }}
+                                               v-bind:class="bookmarkIcon" @click="toggleBookmark"></i>
+                                            &nbsp;&nbsp;{{ activePhoto.bookmarks }}
                                         </div>
                                         <div class="level-item" v-if="activePhoto.showControllers">
                                             <span @click="checkIn"
@@ -58,7 +58,7 @@
         name: 'PhotoGallery',
         data() {
             return {
-                hasLiked: false,
+                hasUserBookmarked: false,
                 focus: false,
                 comments: []
             }
@@ -73,8 +73,8 @@
                     return photo;
                 }
             },
-            likeIcon() {
-                if(this.hasLiked) {
+            bookmarkIcon() {
+                if(this.hasUserBookmarked) {
                     return "fa-bookmark";
                 } else {
                     return "fa-bookmark-o";
@@ -93,16 +93,16 @@
             destroy() {
                 this.$store.dispatch("destroyGallery");
                 this.comments = null;
-                this.hasLiked = false;
+                this.hasUserBookmarked = false;
                 this.focus = false;
             },
-            toggleLike() {
-                if(this.hasLiked) {
-                    this.hasLiked = false;
-                    this.$store.dispatch("unlikePhoto", this.activePhoto.id);
+            toggleBookmark() {
+                if(this.hasUserBookmarked) {
+                    this.hasUserBookmarked = false;
+                    this.$store.dispatch("removeBookmark", this.activePhoto.id);
                 } else {
-                    this.hasLiked = true;
-                    this.$store.dispatch("likePhoto", this.activePhoto.id);
+                    this.hasUserBookmarked = true;
+                    this.$store.dispatch("addBookmark", this.activePhoto.id);
                 }
             },
             viewOnMap() {
@@ -117,7 +117,7 @@
         watch: {
             activePhoto(photo) {
                 if(typeof photo.id !== typeof undefined) {
-                    this.hasLiked = photo.hasLiked;
+                    this.hasUserBookmarked = photo.hasUserBookmarked;
                     let me = this;
                     axios.get("comments/" + photo.id).then(function handleSuccess(response) {
                         if(typeof response.data !== typeof undefined) {

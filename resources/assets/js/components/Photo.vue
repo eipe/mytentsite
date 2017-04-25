@@ -6,7 +6,7 @@
         :data-photo-caption="caption"
         :data-photo-reported-by="reported_by"
         :data-photo-created-at="created_at"
-        :data-photo-likes="likes"
+        :data-photo-bookmarks="bookmarks"
         :data-photo-location="img_location"
         :data-photo-approved="approved"
          @mouseenter="displayControllers()"
@@ -97,7 +97,7 @@
                 type: String,
                 required: false
             },
-            likes: {
+            bookmarks: {
                 type: Number,
                 required: true
             },

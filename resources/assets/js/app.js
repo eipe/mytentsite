@@ -63,7 +63,7 @@ const store = new Vuex.Store({
                                 reported_by: photo["reported_by"],
                                 lat: photo["latitude"],
                                 lng: photo["longitude"],
-                                likes: photo["likes"],
+                                bookmarks: photo["likes"],
                                 img_location: photo["img_location"],
                                 thumbnail: photo["thumbnail_location"],
                                 caption: photo["caption"],
@@ -79,29 +79,31 @@ const store = new Vuex.Store({
                 });
             }
         },
-        likePhoto(state, id) {
+        addBookmark(state, id) {
             let index = state.tentSites.data.findIndex(function(photo) {
                 if(photo.id === id) {
                     return true;
                 }
             });
 
-            if(typeof state.tentSites.data[index] !== typeof undefined && !state.tentSites.data[index].hasLiked) {
-                state.tentSites.data[index].likes += 1;
-                state.tentSites.data[index].hasLiked = true;
+            if(typeof state.tentSites.data[index] !== typeof undefined &&
+                !state.tentSites.data[index].hasUserBookmarked) {
+                state.tentSites.data[index].bookmarks += 1;
+                state.tentSites.data[index].hasUserBookmarked = true;
                 axios.post("/like/" + id + "/");
             }
         },
-        unlikePhoto(state, id) {
+        removeBookmark(state, id) {
             let index = state.tentSites.data.findIndex(function(photo) {
                 if(photo.id === id) {
                     return true;
                 }
             });
 
-            if(typeof state.tentSites.data[index] !== typeof undefined && state.tentSites.data[index].hasLiked) {
-                state.tentSites.data[index].likes -= 1;
-                state.tentSites.data[index].hasLiked = false;
+            if(typeof state.tentSites.data[index] !== typeof undefined &&
+                state.tentSites.data[index].hasUserBookmarked) {
+                state.tentSites.data[index].bookmarks -= 1;
+                state.tentSites.data[index].hasUserBookmarked = false;
             }
             axios.post("/unlike/" + id + "/");
         },
@@ -112,7 +114,8 @@ const store = new Vuex.Store({
                 }
             });
 
-            if(typeof state.tentSites.data[index] !== typeof undefined && state.tentSites.data[index].hasLiked) {
+            if(typeof state.tentSites.data[index] !== typeof undefined &&
+                state.tentSites.data[index].hasUserBookmarked) {
                 state.tentSites.data[index].comments.push(comment);
             }
         },
@@ -146,11 +149,11 @@ const store = new Vuex.Store({
         destroyGallery(state) {
             state.commit("destroyGallery");
         },
-        likePhoto(state, id) {
-            state.commit("likePhoto", id);
+        addBookmark(state, id) {
+            state.commit("addBookmark", id);
         },
-        unlikePhoto(state, id) {
-            state.commit("unlikePhoto", id);
+        removeBookmark(state, id) {
+            state.commit("removeBookmark", id);
         },
         addCommentOnPhoto(state, photoId, comment) {
             state.commit("addCommentOnPhoto", photoId, comment);

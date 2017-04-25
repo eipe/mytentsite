@@ -17,7 +17,7 @@
                                        :caption="tentSite.caption"
                                        :reported_by="tentSite.reported_by"
                                        :created_at="tentSite.created_at"
-                                       :likes="tentSite.likes"
+                                       :bookmarks="tentSite.bookmarks"
                                        :approved="tentSite.approved"
                                        :showDetails="true"
                                        :showControllers="false">
@@ -56,7 +56,7 @@
                                 reported_by: photo["reported_by"],
                                 lat: photo["latitude"],
                                 lng: photo["longitude"],
-                                likes: photo["likes"],
+                                bookmarks: photo["likes"],
                                 img_location: "storage/photos/tentsites/" + photo["img_location"],
                                 thumbnail: "storage/photos/tentsite_thumbnails/" + photo["thumbnail_location"],
                                 caption: photo["caption"],

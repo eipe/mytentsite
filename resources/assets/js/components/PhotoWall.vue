@@ -10,7 +10,7 @@
                 :caption="photo.caption"
                 :reported_by="photo.reported_by"
                 :created_at="photo.created_at"
-                :likes="photo.likes">
+                :bookmarks="photo.bookmarks">
                 </photo>
             </template>
         </div>
