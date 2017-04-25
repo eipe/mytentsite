@@ -21,11 +21,12 @@
                                 <nav class="level">
                                     <div class="level-left">
                                         <div class="level-item" v-if="activePhoto.showControllers">
-                                            <i class="fa is-clickable" title="Bookmark tentsite"
+                                            <i class="fa" title="Bookmarks"
                                                v-bind:class="bookmarkIcon" @click="toggleBookmark"></i>
                                             &nbsp;&nbsp;{{ activePhoto.bookmarks }}
                                         </div>
-                                        <div class="level-item" v-if="activePhoto.showControllers">
+                                        <div class="level-item"
+                                             v-if="activePhoto.showControllers && isUserActionsAvailable">
                                             <span @click="checkIn"
                                                   class="button is-small">Check in</span>
                                         </div>
@@ -38,7 +39,7 @@
                                 <hr>
                                 <photo-comments :comments="comments" id="photo-comments" />
                                 <photo-comment-form :id="activePhoto.id" :focus="focus"
-                                                    v-if="activePhoto.showControllers" />
+                                                    v-if="activePhoto.showControllers && isUserActionsAvailable" />
                             </div>
                         </div>
                     </div>
@@ -74,11 +75,20 @@
                 }
             },
             bookmarkIcon() {
+                let icon = '';
                 if(this.hasUserBookmarked) {
-                    return "fa-bookmark";
+                    icon = "fa-bookmark";
                 } else {
-                    return "fa-bookmark-o";
+                    icon = "fa-bookmark-o";
                 }
+
+                if(this.isUserActionsAvailable) {
+                    icon += ' is-clickable';
+                }
+                return icon;
+            },
+            isUserActionsAvailable() {
+                return (this.$store.state.apiToken ? true : false);
             }
         },
         created() {
@@ -97,12 +107,14 @@
                 this.focus = false;
             },
             toggleBookmark() {
-                if(this.hasUserBookmarked) {
-                    this.hasUserBookmarked = false;
-                    this.$store.dispatch("removeBookmark", this.activePhoto.id);
-                } else {
-                    this.hasUserBookmarked = true;
-                    this.$store.dispatch("addBookmark", this.activePhoto.id);
+                if(this.isUserActionsAvailable) {
+                    if(this.hasUserBookmarked) {
+                        this.hasUserBookmarked = false;
+                        this.$store.dispatch("removeBookmark", this.activePhoto.id);
+                    } else {
+                        this.hasUserBookmarked = true;
+                        this.$store.dispatch("addBookmark", this.activePhoto.id);
+                    }
                 }
             },
             viewOnMap() {
