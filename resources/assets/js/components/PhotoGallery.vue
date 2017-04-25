@@ -128,7 +128,7 @@
                 }
             },
             viewOnMap() {
-                this.$store.dispatch("viewPhotoOnMap", this.activePhoto.id);
+                this.$store.dispatch("viewPhotoOnMap", this.activePhoto);
             },
             checkIn() {
                 this.focus = true;
