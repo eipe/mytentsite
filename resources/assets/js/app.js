@@ -191,8 +191,6 @@ if(cachedToken) {
     store.dispatch("storeToken", cachedToken);
 }
 
-axios.defaults.headers.common["Authorization"] = store.state.apiToken;
-
 router.beforeEach((to, from, next) => {
     if(to.meta.auth && !store.state.apiToken) {
         store.state.blockedRoute = to;
