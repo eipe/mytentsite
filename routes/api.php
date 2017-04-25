@@ -29,7 +29,7 @@ $api->version(['v1'], function(\Dingo\Api\Routing\Router $api) {
     // Fetch tent site comments
     $api->get('/comments/{id}', 'App\Http\Controllers\CommentController@index');
 
-    $api->group(['middleware' => 'jwt.auth'], function (\Dingo\Api\Routing\Router $api) {
+    $api->group(['middleware' => ['jwt.auth', 'jwt.refresh']], function (\Dingo\Api\Routing\Router $api) {
         // Endpoints registered here will have the "auth" middleware applied.
 
         // #User routes
