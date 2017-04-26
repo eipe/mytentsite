@@ -76,4 +76,13 @@ class AuthenticateController extends \App\Http\Controllers\Controller
             // all good so return the token
             return response()->json(compact('token'));
     }
+
+
+    /**
+     * Logout action
+     */
+    public function logout() {
+        \JWTAuth::invalidate(\JWTAuth::getToken());
+    }
+
 }
