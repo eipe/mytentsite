@@ -181,7 +181,7 @@ const store = new Vuex.Store({
             state.commit("clearToken");
             axios.defaults.params.token = null;
             axios.defaults.headers.common["Authorization"] = null;
-            router.push("/info");
+            router.push("/login");
         }
     }
 });
