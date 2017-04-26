@@ -16,6 +16,8 @@ $api->version(['v1'], function(\Dingo\Api\Routing\Router $api) {
     // #Authentication routes
     // Login with registered profile
     $api->post('/login', 'App\Http\Controllers\Auth\AuthenticateController@authenticate');
+    // Logout
+    $api->post('/logout', 'App\Http\Controllers\Auth\AuthenticateController@logout');
     // Register new profile
     $api->post('/register', 'App\Http\Controllers\Auth\RegisterController@register');
     // Forgot password
