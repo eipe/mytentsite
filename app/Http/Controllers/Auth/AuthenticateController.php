@@ -82,7 +82,18 @@ class AuthenticateController extends \App\Http\Controllers\Controller
      * Logout action
      */
     public function logout() {
-        \JWTAuth::invalidate(\JWTAuth::getToken());
+        try {
+            \JWTAuth::invalidate(\JWTAuth::getToken());
+        } catch (TokenExpiredException $e) {
+            return response()->json(['token_expired']);
+        } catch (TokenInvalidException $e) {
+            return response()->json(['token_invalid']);
+        } catch (JWTException $e) {
+            return response()->json(['token_absent']);
+        } catch (JWTException $e) {
+            return response()->json([('token_invalid')]);
+        }
+        return response()->json([('token_invalid')]);
     }
 
 }
