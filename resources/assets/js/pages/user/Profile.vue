@@ -33,13 +33,20 @@
         methods: {
             loadUserData() {
                 var me = this;
-                axios.get("/user/").then(function(response) {
+                Vue.axios.get("/user").then(function(response) {
                     me.$store.commit("setUser", response.data.data);
                 }).catch(function(response) {
                 });
             },
             logout() {
-                this.$store.dispatch("logout");
+                this.$auth.logout({
+                    url: "/logout",
+                    makeRequest: true,
+                    success() {
+                    },
+                    error() {
+                    }
+                });
             }
         },
         created() {
