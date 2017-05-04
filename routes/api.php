@@ -31,10 +31,12 @@ $api->version(['v1'], function(\Dingo\Api\Routing\Router $api) {
     // Fetch tent site comments
     $api->get('/comments/{id}', 'App\Http\Controllers\CommentController@index');
 
-    $api->group(['middleware' => ['jwt.auth', 'jwt.refresh']], function (\Dingo\Api\Routing\Router $api) {
+    $api->group(['middleware' => ['jwt.auth']], function (\Dingo\Api\Routing\Router $api) {
         // Endpoints registered here will have the "auth" middleware applied.
 
         // #User routes
+        // Refresh token
+        $api->get('/refresh', 'App\Http\Controllers\Auth\AuthenticateController@refresh');
         // Fetch user contributed tent sites
         $api->get('/usersites', 'App\Http\Controllers\TentSitesController@getUserTentSites');
         // Fetch user profile data
