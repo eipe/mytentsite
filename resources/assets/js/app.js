@@ -1,22 +1,42 @@
 /**
  * Created by Eivind Røe <eivindroe@gmail.com> on 06.08.2016.
  */
-import VueProgressiveImage from 'vue-progressive-image'
-import Vuex from 'vuex'
 import PhotoGallery from './components/PhotoGallery.vue';
 import Error from './components/Error.vue';
 import routes from './routes.js'
+import VueProgressiveImage from 'vue-progressive-image'
+import Vuex from 'vuex'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+import VueAuth from '@websanova/vue-auth'
 
-Vue.use(VueProgressiveImage, {delay: 200});
-
-const router = new VueRouter({
+Vue.router = new VueRouter({
     routes: routes.routes,
-    linkActiveClass: "is-active"
+    linkActiveClass: "is-active",
+    path: "/"
 });
 
-axios.defaults.baseURL = "/api/";
-axios.defaults.params = {};
+Vue.use(VueAxios, axios);
+Vue.use(VueAuth, {
+    auth: require('@websanova/vue-auth/drivers/auth/bearer.js'),
+    http: require('@websanova/vue-auth/drivers/http/axios.1.x.js'),
+    router: require('@websanova/vue-auth/drivers/router/vue-router.2.x.js'),
+    fetchData: {
+        url: "/user",
+        enabled: false
+    },
+    refreshData: {
+        url: "/refresh",
+        enabled: false,
+        interval: 0
+    },
+});
+Vue.use(VueProgressiveImage, {delay: 200});
 
+// Set default base url used for all requests in application
+Vue.axios.defaults.baseURL = "/api/";
+
+// Define store
 const store = new Vuex.Store({
     state: {
         tentSites: {
@@ -33,8 +53,6 @@ const store = new Vuex.Store({
             isActive: false
         },
         beta: false,
-        apiToken: null,
-        blockedRoute: null,
         error: null
     },
     mutations: {
@@ -48,7 +66,7 @@ const store = new Vuex.Store({
         },
         loadMoreTentSites(state) {
             if(state.tentSites.hasMore) {
-                axios.get(state.tentSites.apiUrl).then(function(response) {
+                Vue.axios.get(state.tentSites.apiUrl).then(function(response) {
                     let responseData = response.data.data;
                     if(responseData.next_page_url) {
                         state.tentSites.apiUrl = responseData.next_page_url;
@@ -90,7 +108,7 @@ const store = new Vuex.Store({
                 !state.tentSites.data[index].hasUserBookmarked) {
                 state.tentSites.data[index].bookmarks += 1;
                 state.tentSites.data[index].hasUserBookmarked = true;
-                axios.post("/like/" + id + "/");
+                Vue.axios.post("/like/" + id + "/");
             }
         },
         removeBookmark(state, id) {
@@ -105,7 +123,7 @@ const store = new Vuex.Store({
                 state.tentSites.data[index].bookmarks -= 1;
                 state.tentSites.data[index].hasUserBookmarked = false;
             }
-            axios.post("/unlike/" + id + "/");
+            Vue.axios.post("/unlike/" + id + "/");
         },
         addCommentOnPhoto(state, id, comment) {
             let index = state.tentSites.data.findIndex(function(photo) {
@@ -122,14 +140,8 @@ const store = new Vuex.Store({
         setUser(state, user) {
             state.user = user;
         },
-        setToken(state, token) {
-            state.apiToken = token;
-        },
         setError(state, error) {
             state.error = error;
-        },
-        clearToken(state) {
-            state.apiToken = null;
         }
     },
     actions: {
@@ -138,7 +150,7 @@ const store = new Vuex.Store({
         },
         viewPhotoOnMap(state, photo) {
             state.commit("destroyGallery");
-            router.push({
+            Vue.router.push({
                 path: "/map",
                 query: {
                     latitude: photo.lat,
@@ -158,65 +170,16 @@ const store = new Vuex.Store({
         addCommentOnPhoto(state, photoId, comment) {
             state.commit("addCommentOnPhoto", photoId, comment);
         },
-        storeToken(state, token) {
-            localStorage.setItem("api_token", token);
-            state.commit("setToken", token);
-            axios.defaults.params.token = token;
-            axios.defaults.headers.common["Authorization"] = token;
-        },
-        loginWithToken(state, token) {
-            state.dispatch("storeToken", token);
-            if(state.state.blockedRoute) {
-                router.push(state.state.blockedRoute.path);
-                state.state.blockedRoute = null;
-            } else {
-                router.push("/user");
-            }
-        },
         displayError(state, error) {
             state.commit("setError", error);
-        },
-        logout(state) {
-            axios.post("/logout").then(function handleLogout() {
-                localStorage.removeItem("api_token");
-                state.commit("clearToken");
-                axios.defaults.params.token = null;
-                axios.defaults.headers.common["Authorization"] = null;
-                router.push("/login");
-            }).catch(function handleError() {
-                state.dispatch("displayError", "Could not logout. Please try again");
-            });
         }
-    }
-});
-
-let cachedToken = localStorage.getItem("api_token");
-if(cachedToken) {
-    store.dispatch("storeToken", cachedToken);
-}
-
-axios.interceptors.response.use(function (response) {
-    if(typeof response.headers.authorization !== typeof undefined) {
-        store.dispatch("storeToken", response.headers.authorization);
-    }
-    return response;
-}, function (error) {
-    return Promise.reject(error);
-});
-
-router.beforeEach((to, from, next) => {
-    if(to.meta.auth && !store.state.apiToken) {
-        store.state.blockedRoute = to;
-        next("/login");
-    } else {
-        next();
     }
 });
 
 new Vue({
     el: "#app",
     store,
-    router,
+    router: Vue.router,
     components: {
         PhotoGallery, Error
     },
