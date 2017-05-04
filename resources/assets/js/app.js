@@ -177,11 +177,15 @@ const store = new Vuex.Store({
             state.commit("setError", error);
         },
         logout(state) {
-            localStorage.removeItem("api_token");
-            state.commit("clearToken");
-            axios.defaults.params.token = null;
-            axios.defaults.headers.common["Authorization"] = null;
-            router.push("/info");
+            axios.post("/logout").then(function handleLogout() {
+                localStorage.removeItem("api_token");
+                state.commit("clearToken");
+                axios.defaults.params.token = null;
+                axios.defaults.headers.common["Authorization"] = null;
+                router.push("/login");
+            }).catch(function handleError() {
+                state.dispatch("displayError", "Could not logout. Please try again");
+            });
         }
     }
 });
