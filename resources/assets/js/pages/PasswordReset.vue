@@ -71,7 +71,7 @@
                 me.isPosting = true;
                 me.error = null;
 
-                axios.post("/password/email", me.info).then(function(success) {
+                Vue.axios.post("/password/email", me.info).then(function(success) {
                     me.isSuccess = true;
                     me.isPosting = false;
                 }).catch(function(error) {

@@ -48,7 +48,7 @@
                 let me = this;
                 me.tentSites = [];
                 me.isLoading = true;
-                axios.get("usersites").then(function success(success) {
+                Vue.axios.get("usersites").then(function success(success) {
                     if(typeof success.data !== typeof undefined) {
                         success.data.data.forEach(function (photo) {
                             me.tentSites.push({

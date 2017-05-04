@@ -43,7 +43,7 @@
             submitComment() {
                 let me = this;
                 me.isPostingComment = true;
-                axios.post("/comments/" + this.id, {
+                Vue.axios.post("/comments/" + this.id, {
                     comment: this.comment
                 }).then(function(response) {
                     me.isPostingComment = false;

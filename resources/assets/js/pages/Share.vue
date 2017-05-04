@@ -260,7 +260,7 @@
 
                 photoData.photo = me.photoObject.cropit("export", me.cropItExportOptions);
 
-                axios.post("/tentsites", photoData).then(function(response) {
+                Vue.axios.post("/tentsites", photoData).then(function(response) {
                     me.photoStored();
                 }).catch(function(error) {
                     if(parseInt(error.response.readyState) === 0 && error.response.statusText === "abort") {

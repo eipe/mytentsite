@@ -98,7 +98,7 @@
                 return icon;
             },
             isUserActionsAvailable() {
-                return (this.$store.state.apiToken ? true : false);
+                return this.$auth.check();
             }
         },
         created() {
@@ -141,7 +141,7 @@
                 if(typeof photo.id !== typeof undefined) {
                     this.hasUserBookmarked = photo.hasUserBookmarked;
                     let me = this;
-                    axios.get("comments/" + photo.id).then(function handleSuccess(response) {
+                    Vue.axios.get("comments/" + photo.id).then(function handleSuccess(response) {
                         if(typeof response.data !== typeof undefined) {
                             me.comments = response.data.data;
                         }

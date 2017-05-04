@@ -61,7 +61,7 @@
         },
         created() {
             let me = this;
-            axios.get("/unapproved/").then(function(response) {
+            Vue.axios.get("/unapproved/").then(function(response) {
                 response.data.forEach(function(value) {
                     value.thumbnail_location = "/storage/photos/tentsite_thumbnails/" + value.thumbnail_location;
                     me.tentSites.push(value);
@@ -84,7 +84,7 @@
             approve(tentSite) {
                 let me = this,
                     id = tentSite.id;
-                axios.post("/admin/approve/" + id).then(function() {
+                Vue.axios.post("/admin/approve/" + id).then(function() {
                     me.removeTentSite(id);
                 }).catch(function(error) {
                     let errorMessage = "Could not approve";
@@ -97,7 +97,7 @@
             deny(tentSite) {
                 let me = this,
                     id = tentSite.id;
-                axios.post("/admin/deny/" + id).then(function() {
+                Vue.axios.post("/admin/deny/" + id).then(function() {
                     me.removeTentSite(id);
                 }).catch(function(error) {
                     let errorMessage = "Could not deny";

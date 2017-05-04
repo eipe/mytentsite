@@ -82,10 +82,7 @@
                 me.isPosting = true;
                 me.error = null;
 
-                axios.post("/register", me.info).then(function(success) {
-                    if(typeof success.data !== typeof undefined) {
-                        me.$store.dispatch("loginWithToken", success.data.token);
-                    }
+                Vue.axios.post("/register", me.info).then(function(success) {
                     me.isPosting = false;
                 }).catch(function(error) {
                     if(typeof error.response !== typeof undefined) {
