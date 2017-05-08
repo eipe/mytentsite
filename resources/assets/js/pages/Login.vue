@@ -103,7 +103,7 @@
                     url: "/login",
                     rememberMe: me.info.remember,
                     redirect: "/user",
-                    fetchUser: false,
+                    fetchUser: true,
                     success(response) {
                         me.isPosting = false;
                     },

@@ -3,7 +3,7 @@
         <section class="hero">
             <div class="hero-body">
                 <div class="container">
-                    <h1 class="title">Hi, {{ this.$store.state.user.name }}!</h1>
+                    <h1 class="title">Hi, {{ $auth.user().name }}!</h1>
                     <hr>
                     <slot v-if="socialLogin.valid">
                         <p>You signed up through {{ socialLogin.provider }},<br>
@@ -31,13 +31,6 @@
             }
         },
         methods: {
-            loadUserData() {
-                var me = this;
-                Vue.axios.get("/user").then(function(response) {
-                    me.$store.commit("setUser", response.data.data);
-                }).catch(function(response) {
-                });
-            },
             logout() {
                 this.$auth.logout({
                     url: "/logout",
@@ -50,7 +43,9 @@
             }
         },
         created() {
-            this.loadUserData();
+            if(!this.$auth.user().name) {
+                this.$auth.fetch();
+            }
         }
     }
 </script>

@@ -44,10 +44,6 @@ const store = new Vuex.Store({
             hasMore: true,
             data: []
         },
-        user: {
-            name: "",
-            id: null
-        },
         gallery: {
             activePhoto: {},
             isActive: false
@@ -136,9 +132,6 @@ const store = new Vuex.Store({
                 state.tentSites.data[index].hasUserBookmarked) {
                 state.tentSites.data[index].comments.push(comment);
             }
-        },
-        setUser(state, user) {
-            state.user = user;
         },
         setError(state, error) {
             state.error = error;
