@@ -22,7 +22,11 @@ class UserController extends Controller
     public function index()
     {
         $m = self::MODEL;
-        $user = DB::table($m::DB)->select('name', 'id')->where('id', Auth::id())->first();
+        $user = DB::table($m::DB)->select('name', 'id', 'is_admin')->where('id', Auth::id())->first();
+        if($user->is_admin)
+        {
+            $user->roles = array('admin');
+        }
         return $this->showResponse($user);
     }
 

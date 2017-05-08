@@ -12,7 +12,9 @@
                 <li class="nav-item"><router-link to="/wall"><i class="fa fa-th"></i></router-link></li>
                 <li class="nav-item"><router-link to="/info"><i class="fa fa-info"></i></router-link></li>
                 <li class="nav-item"><router-link to="/user"><i class="fa fa-user-o"></i></router-link></li>
-                <li class="nav-item" v-if="$auth.check()"><router-link to="/admin"><i class="fa fa-unlock-alt"></i></router-link></li>
+                <li class="nav-item" v-if="$auth.check('admin')">
+                    <router-link to="/admin"><i class="fa fa-unlock-alt"></i></router-link>
+                </li>
             </ul>
         </nav>
     </header>

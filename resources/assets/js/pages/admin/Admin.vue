@@ -1,6 +1,6 @@
 <template>
     <div>
-        <section class="section">
+        <section class="section" v-if="this.$auth.check('admin')">
             <div class="container">
                 <div class="columns">
                     <div class="column is-narrow">
@@ -34,6 +34,17 @@
             }
         },
         components: {
+        },
+        activated() {
+            if(!this.$auth.check("admin")) {
+                this.$store.dispatch(
+                    "displayError",
+                    "You don\'t have access to this page and was therefore redirected back to the main page"
+                );
+                Vue.router.push({
+                    path: "/"
+                });
+            }
         }
     }
 </script>
