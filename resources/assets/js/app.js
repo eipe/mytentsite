@@ -27,7 +27,7 @@ Vue.use(VueAuth, {
     },
     refreshData: {
         url: "/refresh",
-        enabled: false,
+        enabled: true,
         interval: 0
     },
 });
