@@ -124,7 +124,7 @@ class AuthenticateController extends \App\Http\Controllers\Controller
         } catch (JWTException $e) {
             return response()->json('token_invalid', $e->getStatusCode());
         }
-        return response()->json(compact('token'), 200, ['Authorization' => 'Bearer '.$token]);
+        return response()->json(compact('token'))->header('Authorization', $token);
     }
 
 }
