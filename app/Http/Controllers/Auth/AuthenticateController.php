@@ -114,9 +114,12 @@ class AuthenticateController extends \App\Http\Controllers\Controller
     /**
      * Refresh token
      *
+     * @param Request $request
+     *
      * @return mixed
      */
-    public function refresh() {
+    public function refresh(Request $request) {
+        $response = $request;
         try {
             $token =  \JWTAuth::refresh();
         } catch (TokenExpiredException $e) {
@@ -124,7 +127,8 @@ class AuthenticateController extends \App\Http\Controllers\Controller
         } catch (JWTException $e) {
             return response()->json('token_invalid', $e->getStatusCode());
         }
-        return response()->json(compact('token'));
+        $response->headers->set('Authorization', 'Bearer '.$token);
+        return $response;
     }
 
 }
