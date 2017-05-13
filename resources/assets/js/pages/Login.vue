@@ -81,16 +81,12 @@
                 me.error = null;
                 me.socialLoginProvider = provider;
 
-                let baseURL = axios.defaults.baseURL;
-
-                axios.defaults.baseURL = "";
-                axios.get(path).then(function(success) {
-                    me.socialLoginProvider = "";
-                }).catch(function(error) {
-                    if(typeof error.response !== typeof undefined) {
-                        me.error = error.response.data.error;
+                this.$auth.oauth2({
+                    provider: provider,
+                    success: function handleSuccess(response) {
+                    },
+                    error: function handleError(error) {
                     }
-                    me.socialLoginProvider = "";
                 });
             },
             submitForm() {
