@@ -30,7 +30,7 @@ Vue.use(VueAuth, {
     },
     fetchData: {
         url: "/user",
-        enabled: false
+        enabled: true
     },
     refreshData: {
         url: "/refresh",
