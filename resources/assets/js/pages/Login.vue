@@ -43,17 +43,19 @@
                                 </router-link>
                             </p>
                         </div>
-                        <hr>
-                        <h2 class="is-small">Or use one of your existing accounts</h2>
-                        <div class="control is-grouped">
-                            <p class="control">
-                                <button class="button is-info"
-                                        @click.prevent="socialLogin('/auth/facebook/', 'facebook')"
-                                        v-bind:class="{ 'is-loading' : socialLoginProvider == 'facebook' }">
-                                    <span class="icon is-small"><i class="fa fa-facebook"></i></span>
-                                    <span>Facebook</span>
-                                </button>
-                            </p>
+                        <div v-if="socialLoginEnabled">
+                            <hr>
+                            <h2 class="is-small">Or use one of your existing accounts</h2>
+                            <div class="control is-grouped">
+                                <p class="control">
+                                    <button class="button is-info"
+                                            @click.prevent="socialLogin('/auth/facebook/', 'facebook')"
+                                            v-bind:class="{ 'is-loading' : socialLoginProvider == 'facebook' }">
+                                        <span class="icon is-small"><i class="fa fa-facebook"></i></span>
+                                        <span>Facebook</span>
+                                    </button>
+                                </p>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -66,6 +68,7 @@
         data() {
             return {
                 isPosting: false,
+                socialLoginEnabled: false,
                 socialLoginProvider: "",
                 error: null,
                 info: {
