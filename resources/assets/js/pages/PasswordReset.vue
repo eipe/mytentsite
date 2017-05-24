@@ -22,7 +22,7 @@
                                 This link is active for 30 minutes.
                             </div>
                         </transition>
-                        <div class="control is-grouped">
+                        <div class="field is-grouped">
                             <p class="control" v-if="!isSuccess">
                                 <button type="submit" class="button is-primary"
                                         v-bind:class="{ 'is-loading' : isPosting }">Send password reset link</button>

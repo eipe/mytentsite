@@ -24,7 +24,7 @@
                             </div>
                         </transition>
 
-                        <div class="control is-grouped">
+                        <div class="field is-grouped">
                             <p class="control">
                                 <button type="submit" class="button is-primary"
                                         v-bind:class="{ 'is-loading' : isPosting }">Reset password</button>
