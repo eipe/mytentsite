@@ -12,16 +12,18 @@
                                     <figure key="Preview" class="cropit-preview"
                                             v-show="photoLoaded" title="Drag to adjust">
                                     </figure>
-                                    <nav key="First step" class="nav" v-show="step === 1">
-                                        <div class="nav-left">
-                                            <div class="nav-item button is-primary">
+                                    <div class="field has-addons is-mobile" key="First step" v-show="step === 1">
+                                        <div class="control">
+                                            <div class="button is-primary is-hovered">
                                                 <span class="icon">
                                                     <i title="Cancel"
                                                        class="fa fa-trash-o"
                                                        @click="cancel"></i>
                                                 </span>
                                             </div>
-                                            <div class="nav-item button is-primary">
+                                        </div>
+                                        <div class="control">
+                                            <div class="button is-primary is-hovered">
                                                 <span class="icon">
                                                     <i title="Rotate clockwise"
                                                        class="fa fa-rotate-right"
@@ -29,19 +31,21 @@
                                                 </span>
                                             </div>
                                         </div>
-                                        <div class="nav-center">
-                                            <div class="nav-item button is-primary">
+                                        <div class="control">
+                                            <div class="button is-primary is-hovered">
                                                 <span class="icon">
                                                     <i class="fa fa-image"
                                                        title="Click to zoom out"
                                                        @click="zoom -= 0.1"></i>
                                                 </span>
                                             </div>
-                                            <div class="nav-item">
-                                                <input type="range" min="0" max="1" step="0.1"
-                                                       class="cropit-image-zoom-input" style="width: 100%" />
-                                            </div>
-                                            <div class="nav-item button is-primary">
+                                        </div>
+                                        <div class="control is-expanded" style="padding: 7px 20px">
+                                            <input type="range" min="0" max="1" step="0.1"
+                                                   class="cropit-image-zoom-input" style="width: 100%" />
+                                        </div>
+                                        <div class="control">
+                                            <div class="button is-primary is-hovered">
                                                 <span class="icon">
                                                     <i class="fa fa-image"
                                                        title="Click to zoom in"
@@ -49,8 +53,8 @@
                                                 </span>
                                             </div>
                                         </div>
-                                        <div class="nav-right">
-                                            <div class="nav-item button is-primary">
+                                        <div class="control">
+                                            <div class="button is-primary is-hovered">
                                                 <span class="icon">
                                                     <i class="fa fa-arrow-right"
                                                        title="Proceed"
@@ -58,41 +62,41 @@
                                                 </span>
                                             </div>
                                         </div>
-                                    </nav>
-                                    <nav key="Second step" class="nav" v-show="step === 2">
-                                        <div class="nav-left">
-                                            <div class="nav-item button is-primary">
+                                    </div>
+                                    <div class="field has-addons" key="Second step" v-show="step === 2">
+                                        <div class="control">
+                                            <div class="button is-primary is-hovered">
                                                 <span class="icon">
                                                     <i title="Cancel"
                                                        class="fa fa-trash-o"
                                                        @click="cancel"></i>
                                                 </span>
                                             </div>
-                                            <div class="nav-item button is-primary">
+                                        </div>
+                                        <div class="control">
+                                            <div class="button is-primary is-hovered">
                                                 <span class="icon">
                                                     <i class="fa fa-arrow-left"
                                                        @click="goToPreviousStep"></i>
                                                 </span>
                                             </div>
                                         </div>
-                                        <div class="nav-center">
-                                            <div class="nav-item">
-                                                <textarea name="caption" title="Caption"
-                                                          placeholder="Caption"
-                                                          v-model="photo.caption"
-                                                          maxlength="255"
-                                                          class="textarea"required></textarea>
-                                            </div>
+                                        <div class="control is-expanded">
+                                            <input name="caption" title="Caption"
+                                                      placeholder="Caption"
+                                                      v-model="photo.caption"
+                                                      maxlength="255"
+                                                      class="input" required>
                                         </div>
-                                        <div class="nav-right">
-                                            <div class="nav-item button is-primary">
+                                        <div class="control">
+                                            <div class="button is-primary is-hovered">
                                                 <span class="icon">
                                                     <i title="Share this tent site"
                                                        class="fa fa-check" @click.prevent="storePhoto"></i>
                                                 </span>
                                             </div>
                                         </div>
-                                    </nav>
+                                    </div>
                                     <div key="Third step" v-if="step === 3" class="has-text-centered">
                                         We are uploading your tent site
                                         <i class="fa fa-circle-o-notch fa-spin"></i><br><br>
