@@ -5,7 +5,7 @@
     "dev": "gulp watch"
   },
   "devDependencies": {
-    "@websanova/vue-auth": "^2.11.2-beta",
+    "@websanova/vue-auth": "^2.11.0-beta",
     "animate.css": "^3.5.2",
     "axios": "^0.15.3",
     "babel-core": "^6.24.1",
