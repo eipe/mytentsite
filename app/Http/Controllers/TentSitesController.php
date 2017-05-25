@@ -147,9 +147,7 @@ class TentSitesController extends Controller
 
     public function getUserTentSites() {
         $m = self::MODEL;
-        return $this->listResponse(DB::table($m::DB)
-            ->where('reported_by', Auth::id())
-            ->get());
+        return $this->listResponse($m::where('reported_by', Auth::id())->get());
     }
 
     public function getUnapproved() {
