@@ -8,7 +8,7 @@
                         <p class="controls">
                             <input id="password" type="password" class="input" name="password"
                                    placeholder="Password"
-                                   v-model="info.password" autofocus required>
+                                   v-model="info.password" ref="password" autofocus required>
                         </p>
 
                         <p class="controls">
@@ -54,6 +54,9 @@
                     token: this.$route.query.token
                 }
             }
+        },
+        activated() {
+            this.$refs.password.focus();
         },
         methods: {
             submitForm() {

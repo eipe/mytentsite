@@ -7,7 +7,7 @@
                     <form @submit.prevent="submitForm" action="/login" method="POST">
                         <p class="control">
                             <input id="email" type="email" name="email" v-model="info.email"
-                                   value="" class="input" placeholder="E-mail address" required autofocus>
+                                   value="" class="input" placeholder="E-mail address" ref="email" required autofocus>
                         </p>
                         <p class="control">
                             <input id="password" type="password" name="password" v-model="info.password"
@@ -77,6 +77,9 @@
                     remember: false,
                 }
             }
+        },
+        activated() {
+            this.$refs.email.focus();
         },
         methods: {
             socialLogin(path, provider) {

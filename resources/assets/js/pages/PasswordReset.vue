@@ -8,7 +8,7 @@
                         <p class="controls">
                             <input id="email" type="email" class="input" name="email"
                                    placeholder="E-mail address"
-                                   v-model="info.email" required>
+                                   v-model="info.email" ref="email" autofocus required>
                         </p>
                         <transition enter-active-class="animated shake" leave-active-class="animated fadeOut">
                             <div class="notification is-danger" v-if="error">
@@ -57,6 +57,9 @@
                     return "Back";
                 }
             }
+        },
+        activated() {
+            this.$refs.email.focus();
         },
         methods: {
             back() {

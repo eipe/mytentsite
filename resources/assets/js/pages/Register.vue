@@ -8,7 +8,7 @@
                         <p class="controls">
                             <input id="name" type="text" name="name" class="input"
                                    placeholder="Name"
-                                   v-model="info.name" required autofocus>
+                                   v-model="info.name" ref="name" required autofocus>
                         </p>
                         <p class="controls">
                             <input id="email" type="email" name="email" class="input"
@@ -72,6 +72,9 @@
                     subscribe: false
                 }
             }
+        },
+        activated() {
+            this.$refs.name.focus();
         },
         methods: {
             back() {
