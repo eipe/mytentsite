@@ -24,7 +24,8 @@ $api->version(['v1'], function(\Dingo\Api\Routing\Router $api) {
     $api->post('/password/email', 'App\Http\Controllers\Auth\ForgotPasswordController@sendResetLinkEmail');
     // Reset password
     $api->post('/password/reset', 'App\Http\Controllers\Auth\ResetPasswordController@reset');
-
+    // Refresh token
+    $api->get('/refresh', 'App\Http\Controllers\Auth\AuthenticateController@refresh');
     // #Tent site routes
     // Fetch tent sites
     $api->get('/tentsites/{lat?}/{lng?}/{rad?}', 'App\Http\Controllers\TentSitesController@index');
@@ -35,8 +36,7 @@ $api->version(['v1'], function(\Dingo\Api\Routing\Router $api) {
         // Endpoints registered here will have the "auth" middleware applied.
 
         // #User routes
-        // Refresh token
-        $api->get('/refresh', 'App\Http\Controllers\Auth\AuthenticateController@refresh');
+
         // Fetch user contributed tent sites
         $api->get('/usersites', 'App\Http\Controllers\TentSitesController@getUserTentSites');
         // Fetch user profile data

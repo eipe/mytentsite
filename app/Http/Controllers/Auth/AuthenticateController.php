@@ -114,15 +114,18 @@ class AuthenticateController extends \App\Http\Controllers\Controller
     /**
      * Refresh token
      *
+     * @param Request $request
      * @return mixed
      */
-    public function refresh() {
+    public function refresh(Request $request) {
+
+        $oldToken = trim(str_ireplace('Bearer', '', $request->header('authorization')));
         try {
-            $token =  \JWTAuth::refresh();
+            $token =  \JWTAuth::refresh($oldToken);
         } catch (TokenExpiredException $e) {
-            return response()->json( 'token_expired', $e->getStatusCode());
+            return response()->json($e->getMessage(), $e->getStatusCode());
         } catch (JWTException $e) {
-            return response()->json('token_invalid', $e->getStatusCode());
+            return response()->json($e->getMessage(), $e->getStatusCode());
         }
         return response()->json(compact('token'))->header('Authorization', $token);
     }
