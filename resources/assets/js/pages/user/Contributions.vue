@@ -62,7 +62,7 @@
                                 caption: photo["caption"],
                                 created_at: photo["created_at"],
                                 updated_at: photo["updated_at"],
-                                approved: photo["approved"],
+                                approved: (photo["approved"] === 1),
                                 comments: []
                             });
                         });
