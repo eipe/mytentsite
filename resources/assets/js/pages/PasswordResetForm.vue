@@ -50,7 +50,8 @@
                 errors: [],
                 info: {
                     password: null,
-                    password_confirmation: null
+                    password_confirmation: null,
+                    token: this.$route.query.token
                 }
             }
         },
