@@ -5,7 +5,7 @@
 </template>
 <script>
 
-    import Map from "../pages/Map.vue";
+    import Locate from "../pages/Locate.vue";
 
     export default {
         name: "PhotoControllers",
@@ -14,7 +14,7 @@
             }
         },
         props: ["photo"],
-        components: { Map },
+        components: { Locate },
         methods: {
             viewOnMap() {
                 this.$store.dispatch("viewPhotoOnMap", this.photo);

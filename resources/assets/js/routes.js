@@ -10,9 +10,9 @@ export default {
             auth: true
         },
     }, {
-        path: '/map',
-        name: 'Map',
-        component: require('./pages/Map.vue')
+        path: '/locate',
+        name: 'Locate',
+        component: require('./pages/Locate.vue')
     }, {
         path: '/wall',
         name: 'Wall',

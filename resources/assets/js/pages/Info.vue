@@ -13,7 +13,7 @@
                                 </router-link>
                             </div>
                             <div class="column has-text-centered">
-                                <router-link to="map">
+                                <router-link to="locate">
                                     <h1 class="title">Locate</h1>
                                     <h2 class="subtitle is-6">Tentsites all over the world</h2>
                                     <i class="fa fa-map icon is-large"/>

@@ -23,6 +23,7 @@
 </template>
 <script>
     import Photo from "./Photo.vue";
+    import Locate from "../pages/Locate.vue";
 
     export default {
         name: "PhotoWall",
@@ -55,7 +56,7 @@
             }
         },
         components:{
-            Photo, Map
+            Photo, Locate
         },
         watch: {
             photos() {

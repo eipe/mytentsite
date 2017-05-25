@@ -151,7 +151,7 @@ const store = new Vuex.Store({
         viewPhotoOnMap(state, photo) {
             state.commit("destroyGallery");
             Vue.router.push({
-                path: "/map",
+                path: "/locate",
                 query: {
                     latitude: photo.lat,
                     longitude: photo.lng

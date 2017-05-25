@@ -8,7 +8,7 @@
             @endif
             <ul class="nav-center">
                 <li class="nav-item"><router-link to="/share"><i class="fa fa-camera"></i></router-link></li>
-                <li class="nav-item"><router-link to="/map"><i class="fa fa-map-o"></i></router-link></li>
+                <li class="nav-item"><router-link to="/locate"><i class="fa fa-map-o"></i></router-link></li>
                 <li class="nav-item"><router-link to="/wall"><i class="fa fa-th"></i></router-link></li>
                 <li class="nav-item"><router-link to="/info"><i class="fa fa-info"></i></router-link></li>
                 <li class="nav-item"><router-link to="/user"><i class="fa fa-user-o"></i></router-link></li>
