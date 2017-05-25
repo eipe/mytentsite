@@ -30,4 +30,11 @@ class UserController extends Controller
         return $this->showResponse($user);
     }
 
+
+    public function getAllUsers()
+    {
+        $m = self::MODEL;
+        return $this->listResponse(DB::table($m::DB)->select('name', 'email', 'created_at', 'updated_at', 'is_admin')->get());
+    }
+
 }
