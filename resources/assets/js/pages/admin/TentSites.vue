@@ -61,9 +61,8 @@
         },
         created() {
             let me = this;
-            Vue.axios.get("/unapproved/").then(function(response) {
-                response.data.forEach(function(value) {
-                    value.thumbnail_location = "/storage/photos/tentsite_thumbnails/" + value.thumbnail_location;
+            Vue.axios.get("unapproved").then(function(response) {
+                response.data.data.forEach(function(value) {
                     me.tentSites.push(value);
                 });
             }).catch(function() {
