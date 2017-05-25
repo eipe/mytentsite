@@ -89,12 +89,8 @@
                                                       class="input" required>
                                         </div>
                                         <div class="control">
-                                            <div class="button is-primary is-hovered">
-                                                <span class="icon">
-                                                    <i title="Share this tent site"
-                                                       class="fa fa-check" @click.prevent="storePhoto"></i>
-                                                </span>
-                                            </div>
+                                            <input type="submit" class="button is-primary is-hovered" value="Share"
+                                                   title="Share this tent site">
                                         </div>
                                     </div>
                                     <div key="Third step" v-if="step === 3" class="has-text-centered">
