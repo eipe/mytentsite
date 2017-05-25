@@ -67,7 +67,7 @@
                 Vue.axios.post("/password/reset", me.info).then(function(success) {
                     me.isPosting = false;
                     me.errors = [];
-                    this.$router.push("/info");
+                    me.$router.push("/info");
                 }).catch(function(error) {
                     if(typeof error.response.data.error !== typeof undefined) {
                         error.response.data.error.forEach(function(text) {
