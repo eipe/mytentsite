@@ -22,7 +22,7 @@ class AuthenticateController extends \App\Http\Controllers\Controller
      * @param Request $request
      * @return mixed
      */
-    public function authenticate(Request $request)
+    public static function authenticate(Request $request)
     {
 
         // grab credentials from the request

@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\UserController;
+use App\Models\User;
 use Dingo\Api\Http\Request;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Str;
 
 
 class ResetPasswordController extends Controller
@@ -51,10 +54,16 @@ class ResetPasswordController extends Controller
 
         $this->validate($request, $this->rules(), $this->validationErrorMessages());
 
+        $result = \DB::table('password_resets')->select(
+            'email')->where('token', $request->get('token'));
+
+        $email = $result->get(['email'])->toArray();
+        $request->merge(['email' => $email['0']->email]);
+
         // Here we will attempt to reset the user's password. If it is successful we
         // will update the password on an actual user model and persist it to the
         // database. Otherwise we will parse the error and return the response.
-        $response = $this->broker()->reset(
+        $this->broker()->reset(
             $this->credentials($request), function ($user, $password) {
             $this->resetPassword($user, $password);
         }
@@ -63,9 +72,23 @@ class ResetPasswordController extends Controller
         // If the password was successfully reset, we will redirect the user back to
         // the application's home authenticated view. If there is an error we can
         // redirect them back to where they came from with their error message.
-        return $response == Password::PASSWORD_RESET
-            ? $this->sendResetResponse($response)
-            : $this->sendResetFailedResponse($request, $response);
+        return AuthenticateController::authenticate($request);
+    }
+
+    /**
+     * Reset the given user's password.
+     *
+     * @param  \Illuminate\Contracts\Auth\CanResetPassword  $user
+     * @param  string  $password
+     * @return void
+     */
+    protected function resetPassword($user, $password)
+    {
+        $user->forceFill([
+            'password' => bcrypt($password),
+            'remember_token' => Str::random(60),
+        ])->save();
+
     }
 
     /**
@@ -89,5 +112,18 @@ class ResetPasswordController extends Controller
     protected function sendResetFailedResponse(Request $request, $response)
     {
         return response(['email' => trans($response)], 400);
+    }
+
+    /**
+     * Get the password reset validation rules.
+     *
+     * @return array
+     */
+    protected function rules()
+    {
+        return [
+            'token' => 'required',
+            'password' => 'required|confirmed|min:6',
+        ];
     }
 }
