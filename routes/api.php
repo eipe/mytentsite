@@ -55,6 +55,8 @@ $api->version(['v1'], function(\Dingo\Api\Routing\Router $api) {
         // #Admin routes
         // Fetch unapproved tent sites
         $api->get('/unapproved', 'App\Http\Controllers\TentSitesController@getUnapproved');
+        // Fetch all users
+        $api->get('/users', 'App\Http\Controllers\UserController@getAllUsers');
         // Approve tent site
         $api->post('/admin/approve/{id}', 'App\Http\Controllers\TentSitesController@approve');
         // Deny tent site
