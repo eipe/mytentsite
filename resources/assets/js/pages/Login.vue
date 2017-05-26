@@ -37,12 +37,10 @@
                                     Forgot your password?
                                 </router-link>
                             </p>
-                            <p class="control">
-                                <router-link to="/register" tag="button" class="button is-link">
-                                    Don't have an account?
-                                </router-link>
-                            </p>
                         </div>
+                        <router-link to="/register" tag="a" class="is-link">
+                            Don't have an account?
+                        </router-link>
                         <div v-if="socialLoginEnabled">
                             <hr>
                             <h2 class="is-small">Or use one of your existing accounts</h2>
