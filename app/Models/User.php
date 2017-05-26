@@ -46,7 +46,7 @@ class User extends Authenticatable
      */
     public function routeNotificationForSlack()
     {
-        return env('§SLACK_NOTIFICATION_ROUTE');
+        return env('SLACK_NOTIFICATION_ROUTE');
     }
 
 
