@@ -116,10 +116,18 @@
                     <transition enter-active-class="animated fadeIn">
                         <div v-if="ready">
                             <div class="columns">
-                                <div class="column"><h2 class="subtitle">1. Select photo</h2></div>
-                                <div class="column"><h2 class="subtitle">2. Adjust and set view</h2></div>
-                                <div class="column"><h2 class="subtitle">3. Add a caption</h2></div>
-                                <div class="column"><h2 class="subtitle">4. Share!</h2></div>
+                                <div class="column"><h2 class="subtitle button is-primary" @click="triggerSelectPhoto">
+                                    1. Select photo</h2>
+                                </div>
+                                <div class="column"><h2 class="subtitle button is-primary" disabled>
+                                    2. Adjust and set view</h2>
+                                </div>
+                                <div class="column"><h2 class="subtitle button is-primary" disabled>
+                                    3. Add a caption</h2>
+                                </div>
+                                <div class="column"><h2 class="subtitle button is-primary" disabled>
+                                    4. Share!</h2>
+                                </div>
                             </div>
                             <div>
                                 <button class="button title is-primary is-large" @click="triggerSelectPhoto"
