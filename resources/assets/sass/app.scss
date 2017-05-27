@@ -49,3 +49,12 @@ hr.border-dashed {
     padding: 0;
   }
 }
+
+/* Icons */
+.is-info .fa-is-info {
+  color: darken($info, 10%);
+}
+
+.is-info .fa-is-info:hover, .is-info .fa-is-info.is-hovered {
+  color: darken($info, 20%);
+}
