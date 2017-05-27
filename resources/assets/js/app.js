@@ -9,6 +9,7 @@ import Vuex from 'vuex'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueAuth from '@websanova/vue-auth'
+import VueScrollTo from 'vue-scroll-to'
 
 Vue.router = new VueRouter({
     routes: routes.routes,
@@ -175,6 +176,8 @@ const store = new Vuex.Store({
         }
     }
 });
+
+Vue.use(VueScrollTo);
 
 new Vue({
     el: "#app",
