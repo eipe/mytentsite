@@ -46,7 +46,7 @@ class TentSites extends Model
      */
     public function routeNotificationForSlack()
     {
-       return env('§SLACK_NOTIFICATION_ROUTE');
+       return env('SLACK_NOTIFICATION_ROUTE');
     }
 
     public function reportedBy() {
