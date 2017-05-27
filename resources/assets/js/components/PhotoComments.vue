@@ -1,11 +1,14 @@
 <template>
-    <div v-if="comments">
+    <div v-if="comments.length > 0">
         <div class="content" v-for="comment in comments">
             <photo-comment
                 :comment_by="comment.user_id"
                 :created_at="comment.created_at"
                 :comment="comment.comment"/>
         </div>
+    </div>
+    <div v-else>
+        Be the first to leave a comment on this tent site!
     </div>
 </template>
 <style>
