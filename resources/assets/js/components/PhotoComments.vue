@@ -18,6 +18,17 @@
             return {
             }
         },
+        watch: {
+            comments(newComments, oldComments) {
+                if(newComments === oldComments) {
+                    let me = this;
+                    me.$nextTick(function() {
+                        let container = me.$el;
+                        container.scrollTop = container.scrollHeight;
+                    });
+                }
+            }
+        },
         props: ["comments"],
         components: {
             "photo-comment": PhotoComment
