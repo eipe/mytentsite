@@ -132,7 +132,9 @@
         },
         methods: {
             openImage() {
-                this.$store.dispatch("openPhoto", this);
+                if(this.isControllersVisible) {
+                    this.$store.dispatch("openPhoto", this);
+                }
             },
             displayControllers() {
                 if(this.showControllers) {

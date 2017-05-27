@@ -43,11 +43,11 @@
             submitComment() {
                 let me = this;
                 me.isPostingComment = true;
-                Vue.axios.post("/comments/" + this.id, {
-                    comment: this.comment
+                Vue.axios.post("/comments/" + me.id, {
+                    comment: me.comment
                 }).then(function(response) {
                     me.isPostingComment = false;
-                    me.$store.dispatch("addCommentOnPhoto", response.data);
+                    me.$store.dispatch("addCommentOnPhoto", { id: me.id, comment: response.data.data });
                     me.reset();
                 }).catch(function(error) {
                     if(typeof error.response.data.data.form_validations !== typeof undefined) {

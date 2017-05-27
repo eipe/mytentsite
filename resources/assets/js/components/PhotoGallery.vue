@@ -20,13 +20,13 @@
                                 <p>{{ activePhoto.caption }}</p>
                                 <nav class="level">
                                     <div class="level-left">
-                                        <div class="level-item" v-if="activePhoto.showControllers">
+                                        <div class="level-item">
                                             <i class="fa" :title="bookmarkTitle"
                                                v-bind:class="bookmarkIcon" @click="toggleBookmark"></i>
                                             &nbsp;&nbsp;{{ activePhoto.bookmarks }}
                                         </div>
                                         <div class="level-item"
-                                             v-if="activePhoto.showControllers && isUserActionsAvailable">
+                                             v-if="isUserActionsAvailable">
                                             <span @click="checkIn"
                                                   class="button is-small">Check in</span>
                                         </div>
@@ -39,7 +39,7 @@
                                 <hr>
                                 <photo-comments :comments="comments" id="photo-comments" />
                                 <photo-comment-form :id="activePhoto.id" :focus="focus"
-                                                    v-if="activePhoto.showControllers && isUserActionsAvailable" />
+                                                    v-if="isUserActionsAvailable" />
                             </div>
                         </div>
                     </div>
@@ -141,13 +141,21 @@
                 if(typeof photo.id !== typeof undefined) {
                     this.hasUserBookmarked = photo.hasUserBookmarked;
                     let me = this;
-                    Vue.axios.get("comments/" + photo.id).then(function handleSuccess(response) {
-                        if(typeof response.data !== typeof undefined) {
-                            me.comments = response.data.data;
-                        }
-                    }).catch(function handleError(error) {
-                        me.$store.dispatch("displayError", "Could not load comments.<br>Please try again later");
-                    });
+
+                    if(typeof photo.comments !== typeof undefined) {
+                        me.comments = photo.comments;
+                    } else {
+                        Vue.axios.get("comments/" + photo.id).then(function handleSuccess(response) {
+                            if(typeof response.data !== typeof undefined) {
+                                let comments = Object.keys(response.data.data).map(key => response.data.data[key]);
+                                me.$store
+                                    .dispatch("addCommentsOnPhoto", { id: photo.id, comments: comments })
+                                    .then(() => { me.comments = comments });
+                            }
+                        }).catch(function handleError(error) {
+                            me.$store.dispatch("displayError", "Could not load comments.<br>Please try again later");
+                        });
+                    }
                 }
             }
         },

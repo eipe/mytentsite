@@ -44,6 +44,20 @@ Vue.use(VueProgressiveImage, {delay: 200});
 // Set default base url used for all requests in application
 Vue.axios.defaults.baseURL = "/api/";
 
+function getPhotoById(state, photoId) {
+    let index = state.tentSites.data.findIndex(function(photo) {
+        if(photo.id === photoId) {
+            return true;
+        }
+    });
+
+    if(typeof state.tentSites.data[index] !== typeof undefined) {
+        return state.tentSites.data[index];
+    } else {
+        return null;
+    }
+}
+
 // Define store
 const store = new Vuex.Store({
     state: {
@@ -61,7 +75,7 @@ const store = new Vuex.Store({
     },
     mutations: {
         setActivePhoto(state, photo) {
-            state.gallery.activePhoto = photo;
+            state.gallery.activePhoto = getPhotoById(state, photo.id);
             state.gallery.isActive = true;
         },
         destroyGallery(state) {
@@ -91,8 +105,7 @@ const store = new Vuex.Store({
                                 caption: photo["caption"],
                                 created_at: photo["created_at"],
                                 updated_at: photo["updated_at"],
-                                approved: photo["approved"],
-                                comments: []
+                                approved: photo["approved"]
                             });
                         });
                     }
@@ -102,43 +115,31 @@ const store = new Vuex.Store({
             }
         },
         addBookmark(state, id) {
-            let index = state.tentSites.data.findIndex(function(photo) {
-                if(photo.id === id) {
-                    return true;
-                }
-            });
-
-            if(typeof state.tentSites.data[index] !== typeof undefined &&
-                !state.tentSites.data[index].hasUserBookmarked) {
-                state.tentSites.data[index].bookmarks += 1;
-                state.tentSites.data[index].hasUserBookmarked = true;
+            let photo = getPhotoById(state, id);
+            if(photo && !photo.hasUserBookmarked) {
+                photo.bookmarks += 1;
+                photo.hasUserBookmarked = true;
                 Vue.axios.post("/like/" + id + "/");
             }
         },
         removeBookmark(state, id) {
-            let index = state.tentSites.data.findIndex(function(photo) {
-                if(photo.id === id) {
-                    return true;
-                }
-            });
-
-            if(typeof state.tentSites.data[index] !== typeof undefined &&
-                state.tentSites.data[index].hasUserBookmarked) {
-                state.tentSites.data[index].bookmarks -= 1;
-                state.tentSites.data[index].hasUserBookmarked = false;
+            let photo = getPhotoById(state, id);
+            if(photo && photo.hasUserBookmarked) {
+                photo.bookmarks -= 1;
+                photo.hasUserBookmarked = false;
             }
             Vue.axios.post("/unlike/" + id + "/");
         },
-        addCommentOnPhoto(state, id, comment) {
-            let index = state.tentSites.data.findIndex(function(photo) {
-                if(photo.id === id) {
-                    return true;
-                }
-            });
-
-            if(typeof state.tentSites.data[index] !== typeof undefined &&
-                state.tentSites.data[index].hasUserBookmarked) {
-                state.tentSites.data[index].comments.push(comment);
+        addCommentOnPhoto(state, data) {
+            let photo = getPhotoById(state, data.id);
+            if(photo) {
+                photo.comments.push(data.comment);
+            }
+        },
+        addCommentsOnPhoto(state, data) {
+            let photo = getPhotoById(state, data.id);
+            if(photo) {
+                photo.comments = data.comments;
             }
         },
         setError(state, error) {
@@ -168,8 +169,11 @@ const store = new Vuex.Store({
         removeBookmark(state, id) {
             state.commit("removeBookmark", id);
         },
-        addCommentOnPhoto(state, photoId, comment) {
-            state.commit("addCommentOnPhoto", photoId, comment);
+        addCommentOnPhoto(state, data) {
+            state.commit("addCommentOnPhoto", data);
+        },
+        addCommentsOnPhoto(state, data) {
+            state.commit("addCommentsOnPhoto", data);
         },
         displayError(state, error) {
             state.commit("setError", error);
