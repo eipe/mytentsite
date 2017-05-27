@@ -140,6 +140,16 @@
                     me.destroy();
                 }
             });
+
+            window.addEventListener("keyup", function(event) {
+                if(me.isActive) {
+                    if(event.keyCode === 37) {
+                        me.navigatePrev();
+                    } else if(event.keyCode === 39) {
+                        me.navigateNext();
+                    }
+                }
+            });
         },
         methods: {
             navigateNext() {
