@@ -144,7 +144,7 @@ const store = new Vuex.Store({
             if(photo && !photo.hasUserBookmarked) {
                 photo.bookmarks += 1;
                 photo.hasUserBookmarked = true;
-                Vue.axios.post("/like/" + id + "/");
+                Vue.axios.post("/like/" + id);
             }
         },
         removeBookmark(state, id) {
@@ -153,7 +153,7 @@ const store = new Vuex.Store({
                 photo.bookmarks -= 1;
                 photo.hasUserBookmarked = false;
             }
-            Vue.axios.post("/unlike/" + id + "/");
+            Vue.axios.post("/unlike/" + id);
         },
         addCommentOnPhoto(state, data) {
             let photo = getPhotoById(state, data.id);
