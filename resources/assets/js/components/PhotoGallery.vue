@@ -11,6 +11,10 @@
                                     <div class="card-image">
                                         <figure class="image is-4by3">
                                             <img :src="activePhoto.img_location" />
+                                            <div class="modal-navigate modal-navigate-prev is-clickable"
+                                                 @click.prevent="navigatePrev" v-if="!isFirstPhoto"></div>
+                                            <div class="modal-navigate modal-navigate-next is-clickable"
+                                                 @click.prevent="navigateNext" v-if="!isLastPhoto"></div>
                                         </figure>
                                     </div>
                                     <div class="card-content">
@@ -81,7 +85,9 @@
                 hasUserBookmarked: false,
                 focus: false,
                 activePage: "photo",
-                comments: []
+                comments: [],
+                isFirstPhoto: false,
+                isLastPhoto: false
             }
         },
         computed: {
@@ -136,6 +142,12 @@
             });
         },
         methods: {
+            navigateNext() {
+                this.$store.dispatch("galleryNavigateNext");
+            },
+            navigatePrev() {
+                this.$store.dispatch("galleryNavigatePrev");
+            },
             destroy() {
                 this.$store.dispatch("destroyGallery");
                 this.comments = null;

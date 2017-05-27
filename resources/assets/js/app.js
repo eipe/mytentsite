@@ -44,18 +44,27 @@ Vue.use(VueProgressiveImage, {delay: 200});
 // Set default base url used for all requests in application
 Vue.axios.defaults.baseURL = "/api/";
 
-function getPhotoById(state, photoId) {
-    let index = state.tentSites.data.findIndex(function(photo) {
+function getPhotoIndex(state, photoId) {
+    return state.tentSites.data.findIndex(function(photo) {
         if(photo.id === photoId) {
             return true;
         }
     });
+}
 
+function getPhotoByIndex(state, index) {
     if(typeof state.tentSites.data[index] !== typeof undefined) {
         return state.tentSites.data[index];
-    } else {
-        return null;
     }
+    return null;
+}
+
+function getPhotoById(state, photoId) {
+    let index = getPhotoIndex(state, photoId);
+    if(index !== null) {
+        return getPhotoByIndex(state, index);
+    }
+    return null;
 }
 
 // Define store
@@ -77,6 +86,22 @@ const store = new Vuex.Store({
         setActivePhoto(state, photo) {
             state.gallery.activePhoto = getPhotoById(state, photo.id);
             state.gallery.isActive = true;
+        },
+        galleryNavigateNext(state) {
+            let currentIndex = getPhotoIndex(state, state.gallery.activePhoto.id),
+                nextIndex = currentIndex+1;
+            let photo = getPhotoByIndex(state, nextIndex);
+            if(photo) {
+                state.gallery.activePhoto = photo;
+            }
+        },
+        galleryNavigatePrev(state) {
+            let currentIndex = getPhotoIndex(state, state.gallery.activePhoto.id),
+                nextIndex = currentIndex-1;
+            let photo = getPhotoByIndex(state, nextIndex);
+            if(photo) {
+                state.gallery.activePhoto = photo;
+            }
         },
         destroyGallery(state) {
             state.gallery.activePhoto = {};
@@ -149,6 +174,12 @@ const store = new Vuex.Store({
     actions: {
         openPhoto(state, photo) {
             state.commit("setActivePhoto", photo);
+        },
+        galleryNavigateNext(state) {
+            state.commit("galleryNavigateNext");
+        },
+        galleryNavigatePrev(state) {
+            state.commit("galleryNavigatePrev");
         },
         viewPhotoOnMap(state, photo) {
             state.commit("destroyGallery");
