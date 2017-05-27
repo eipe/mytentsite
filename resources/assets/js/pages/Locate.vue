@@ -68,8 +68,8 @@
         name: "Map",
         data() {
             return {
-                latitude: 63.412222,
-                longitude: 10.404722,
+                latitude: 61.651221,
+                longitude: 8.557483,
                 zoom: 4
             }
         },
