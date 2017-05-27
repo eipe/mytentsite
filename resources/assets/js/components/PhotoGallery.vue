@@ -193,6 +193,9 @@
                     this.hasUserBookmarked = photo.hasUserBookmarked;
                     let me = this;
 
+                    me.isFirstPhoto = (photo.id === me.$store.state.tentSites.firstPhotoId);
+                    me.isLastPhoto = (photo.id === me.$store.state.tentSites.lastPhotoId);
+
                     if(typeof photo.comments !== typeof undefined) {
                         me.comments = photo.comments;
                     } else {

@@ -79,6 +79,8 @@ const store = new Vuex.Store({
         tentSites: {
             apiUrl: "/tentsites",
             hasMore: true,
+            firstPhotoId: null,
+            lastPhotoId: null,
             data: []
         },
         gallery: {
@@ -124,7 +126,11 @@ const store = new Vuex.Store({
                     }
 
                     if(typeof responseData.data !== typeof undefined && responseData.data.length > 0) {
+                        let lastNewPhotoId = null;
                         responseData.data.forEach(function (photo) {
+                            if(!state.tentSites.firstPhotoId) {
+                                state.tentSites.firstPhotoId = photo["id"];
+                            }
                             state.tentSites.data.push({
                                 id: photo["id"],
                                 reported_by: photo["reported_by"],
@@ -138,7 +144,9 @@ const store = new Vuex.Store({
                                 updated_at: photo["updated_at"],
                                 approved: photo["approved"]
                             });
+                            lastNewPhotoId = photo["id"];
                         });
+                        state.tentSites.lastPhotoId = lastNewPhotoId;
                     }
                 }).catch(function(error) {
                     console.log(error);
