@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="columns is-multiline is-mobile has-tablet-no-padding">
+        <div class="columns is-multiline is-tablet has-tablet-no-padding">
             <template v-for="photo in photos">
                 <photo class="column is-one-third" :id="photo.id"
                 :img_location="photo.img_location"
