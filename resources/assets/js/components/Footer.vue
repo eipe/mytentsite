@@ -2,10 +2,10 @@
     <footer class="footer">
         <div class="container">
             <div class="columns">
-                <div class="column">
-                    <h1 class="title">Spread the word and inspire others</h1>
-                    <h2 class="subtitle">- to share their favourite tent sites!</h2>
-                    <p>We encourage you to bring this message further on, in hope of a growing database of
+                <div class="column is-half">
+                    <h1 class="title is-5">Spread the word and inspire others</h1>
+                    <h2 class="subtitle is-6">- to share their favourite tent sites!</h2>
+                    <p class="content is-small">We encourage you to bring this message further on, in hope of a growing database of
                         tent sites throughout the world. We will promote tent sites through our instagram account on
                         request, to spread the word and inspire to share.</p>
                     <br>
@@ -22,7 +22,7 @@
                         </a>
                     </p>
                     <br>
-                    <p><small>
+                    <p class="content is-small"><small>
                         We use cookies to give you the best possible user experience.
                         With continued use of our service, we assume that you agree to our use of cookies.</small>
                     </p>
