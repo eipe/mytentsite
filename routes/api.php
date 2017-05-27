@@ -49,6 +49,8 @@ $api->version(['v1'], function(\Dingo\Api\Routing\Router $api) {
         $api->put('/tentsites', 'App\Http\Controllers\TentSitesController@update');
         // Handle like/unlike tent site
         $api->post('/like/{id}', 'App\Http\Controllers\LikeController@handleLike');
+        // Handle like/unlike tent site
+        $api->post('/unlike/{id}', 'App\Http\Controllers\LikeController@handleLike');
         // Add comment on tent site
         $api->post('/comments/{id}', 'App\Http\Controllers\CommentController@store');
 
