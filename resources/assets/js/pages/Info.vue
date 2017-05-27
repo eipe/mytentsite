@@ -101,7 +101,6 @@
 <script>
 
     import Footer from "../components/Footer.vue"
-    import ScrollTo from "../components/ScrollTo.vue"
 
     export default {
         name: "Info",
@@ -117,8 +116,7 @@
             }, 500)
         },
         components: {
-            "footer-component": Footer,
-            "scroll-to": ScrollTo
+            "footer-component": Footer
         }
     }
 </script>
