@@ -100,13 +100,25 @@
                 L.control.layers(baseMaps, overlayMaps).addTo(TentMap);
 
                 // Add view position button
-                L.easyButton({
+                let locationButton = L.easyButton({
                     position: "topleft",
                     states: [{
+                        stateName: "locate",
                         icon: "fa-crosshairs",
                         title: "View my position",
                         onClick: function(button, map) {
                             map.locate();
+                            this.disable();
+                            button.state("locating");
+                        }
+                    }, {
+                        stateName: "locating",
+                        icon: "fa-refresh fa-spin",
+                        title: "Searching for your position",
+                        onClick: function(button, map) {
+                            map.locate();
+                            this.enable();
+                            button.state("locate");
                         }
                     }]
                 }).addTo(TentMap);
@@ -114,10 +126,14 @@
                 TentMap.on("locationfound", function(event) {
                     markLocation(event.latlng.lat, event.latlng.lng, event.accuracy);
                     TentMap.setView(event.latlng, 10);
+                    locationButton.enable();
+                    locationButton.state("locate");
                 });
 
                 TentMap.on("locationerror", function(event) {
                     me.$store.dispatch("displayError", "Could not detect your location:" + event.message);
+                    locationButton.enable();
+                    locationButton.state("locate");
                 });
 
                 if(this.tentSites.length === 0) {
