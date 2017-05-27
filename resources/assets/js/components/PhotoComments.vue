@@ -1,5 +1,5 @@
 <template>
-    <div v-if="comments" style="max-height: 300px; overflow-y: auto">
+    <div v-if="comments">
         <div class="content" v-for="comment in comments">
             <photo-comment
                 :comment_by="comment.user_id"
@@ -23,7 +23,7 @@
                 if(newComments === oldComments) {
                     let me = this;
                     me.$nextTick(function() {
-                        let container = me.$el;
+                        let container = me.$el.parentElement;
                         container.scrollTop = container.scrollHeight;
                     });
                 }

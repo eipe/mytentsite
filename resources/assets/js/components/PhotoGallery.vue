@@ -3,46 +3,65 @@
         <div class="modal" v-bind:class="{ 'is-active' : isActive }">
             <div class="modal-background" @click="destroy"></div>
             <transition enter-active-class="animated zoomIn">
-                <div class="modal-content" style="width: 80%;" v-show="isActive">
-                    <div class="content is-paddingless is-marginless">
-                        <div class="columns is-paddingless is-marginless">
-                            <div class="column is-paddingless">
-                                <img :src="activePhoto.img_location" />
-                            </div>
-                            <div class="column is-4" style="background-color: #fff;">
-                                <div class="media">
-                                    <div class="media-content">
-                                        <p><strong>{{ activePhoto.reported_by }}</strong>
-                                            <small>{{ activePhoto.created_at }}</small>
-                                        </p>
+                <div v-show="isActive">
+                    <transition enter-active-class="animated slideInDown">
+                        <div class="modal-content" v-if="activePage === 'photo'">
+                            <div class="content is-paddingless is-marginless">
+                                <div class="card" id="photo-container">
+                                    <div class="card-image">
+                                        <figure class="image is-4by3">
+                                            <img :src="activePhoto.img_location" />
+                                        </figure>
+                                    </div>
+                                    <div class="card-content">
+                                        <div class="media">
+                                            <div class="media-left">
+                                                <p class="title is-4">{{ activePhoto.reported_by }}</p>
+                                                <p class="subtitle is-6">{{ activePhoto.created_at }}</p>
+                                            </div>
+                                            <div class="media-right">
+                                                <nav class="level">
+                                                    <div class="level-left">
+                                                        <div class="level-item">
+                                                            <i class="fa" :title="bookmarkTitle"
+                                                               v-bind:class="bookmarkIcon" @click="toggleBookmark"></i>
+                                                            &nbsp;&nbsp;{{ activePhoto.bookmarks }}
+                                                        </div>
+                                                        <div class="level-item"
+                                                             v-if="isUserActionsAvailable">
+                                                <span @click="toggleComment"
+                                                      class="button is-small">Comments ({{ commentsCount }})</span>
+                                                        </div>
+                                                        <div class="level-item">
+                                                <span @click="viewOnMap" title="View tentsite on map"
+                                                      class="button is-small">View on map</span>
+                                                        </div>
+                                                    </div>
+                                                </nav>
+                                            </div>
+                                        </div>
+                                        <div class="content">{{ activePhoto.caption }}</div>
                                     </div>
                                 </div>
-                                <p>{{ activePhoto.caption }}</p>
-                                <nav class="level">
-                                    <div class="level-left">
-                                        <div class="level-item">
-                                            <i class="fa" :title="bookmarkTitle"
-                                               v-bind:class="bookmarkIcon" @click="toggleBookmark"></i>
-                                            &nbsp;&nbsp;{{ activePhoto.bookmarks }}
-                                        </div>
-                                        <div class="level-item"
-                                             v-if="isUserActionsAvailable">
-                                            <span @click="checkIn"
-                                                  class="button is-small">Check in</span>
-                                        </div>
-                                        <div class="level-item">
-                                            <span @click="viewOnMap" title="View tentsite on map"
-                                                  class="button is-small">View on map</span>
-                                        </div>
-                                    </div>
-                                </nav>
-                                <hr>
-                                <photo-comments :comments="comments" id="photo-comments" />
-                                <photo-comment-form :id="activePhoto.id" :focus="focus"
-                                                    v-if="isUserActionsAvailable" />
                             </div>
                         </div>
-                    </div>
+                    </transition>
+                    <transition enter-active-class="animated slideInUp">
+                        <div class="modal-card is-paddingless is-marginless" v-if="activePage === 'comments'">
+                            <header class="modal-card-head">
+                                <p class="modal-card-title">Comments ({{ commentsCount }})</p>
+                                <span class="button is-link is-pulled-right"
+                                      @click.prevent="toggleActivePage()">Back</span>
+                            </header>
+                            <section class="modal-card-body">
+                                <photo-comments :comments="comments" id="photo-comments" />
+                            </section>
+                            <footer class="modal-card-foot">
+                                <photo-comment-form :id="activePhoto.id" :focus="focus"
+                                                    v-if="isUserActionsAvailable" />
+                            </footer>
+                        </div>
+                    </transition>
                     <button class="modal-close" @click="destroy"></button>
                 </div>
             </transition>
@@ -61,6 +80,7 @@
             return {
                 hasUserBookmarked: false,
                 focus: false,
+                activePage: "photo",
                 comments: []
             }
         },
@@ -73,6 +93,12 @@
                 if(photo) {
                     return photo;
                 }
+            },
+            commentsCount() {
+                if(this.comments) {
+                    return this.comments.length;
+                }
+                return 0;
             },
             bookmarkTitle() {
                 if(this.isUserActionsAvailable) {
@@ -115,6 +141,7 @@
                 this.comments = null;
                 this.hasUserBookmarked = false;
                 this.focus = false;
+                this.activePage = "photo";
             },
             toggleBookmark() {
                 if(this.isUserActionsAvailable) {
@@ -127,13 +154,15 @@
                     }
                 }
             },
+            toggleActivePage() {
+                this.activePage = (this.activePage == "photo" ? "comments" : "photo");
+            },
             viewOnMap() {
                 this.$store.dispatch("viewPhotoOnMap", this.activePhoto);
             },
-            checkIn() {
+            toggleComment() {
+                this.toggleActivePage();
                 this.focus = true;
-                let container = this.$el.querySelector("#photo-comments");
-                container.scrollTop = container.scrollHeight;
             }
         },
         watch: {
