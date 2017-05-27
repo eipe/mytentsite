@@ -58,3 +58,46 @@ hr.border-dashed {
 .is-info .fa-is-info:hover, .is-info .fa-is-info.is-hovered {
   color: darken($info, 20%);
 }
+
+/* Bulma modal */
+.modal-navigate {
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 15%;
+  padding-top: 25%;
+  font-family: FontAwesome;
+  box-sizing: border-box;
+}
+
+.modal-navigate:before {
+  margin-top: 100%;
+  display: inline-block;
+  font-size: 40px;
+  color: $grey-light;
+}
+
+.modal-navigate:hover:before, .modal-navigate.is-hovered:before {
+  color: $dark;
+}
+
+.modal-navigate-prev {
+  left: 0;
+  padding-left: 10px;
+}
+
+.modal-navigate-prev:before {
+  content: "\f100";
+  right: 0;
+}
+
+.modal-navigate-next {
+  right: 0;
+  padding-right: 10px;
+}
+
+.modal-navigate-next:before {
+  content: "\f101";
+  float: right;
+}
