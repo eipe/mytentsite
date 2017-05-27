@@ -14,21 +14,31 @@
                             <div class="column has-text-centered">
                                 <router-link to="locate">
                                     <h1 class="title">Locate<i class="fa fa-map icon is-large"></i></h1>
-                                    <h2 class="subtitle is-6">Tentsites all over the world</h2>
+                                    <h2 class="subtitle is-6">Tent sites all over the world</h2>
                                 </router-link>
                             </div>
                             <div class="column has-text-centered">
                                 <router-link to="wall">
                                     <h1 class="title">Explore<i class="fa fa-th icon is-large"></i></h1>
-                                    <h2 class="subtitle is-6">Tentsites on the photo wall</h2>
+                                    <h2 class="subtitle is-6">Tent sites on the photo wall</h2>
                                 </router-link>
                             </div>
                         </div>
                     </div>
                 </transition>
             </div>
+            <div class="hero-foot">
+                <transition enter-active-class="animated fadeIn">
+                    <div class="container has-text-centered" v-show="isLoaded">
+                        <a href="#"
+                           v-scroll-to="'#info-share, 40px'"
+                           title="Read about how you can share your tent site with others"
+                           class="icon is-large"><i class="fa fa-angle-double-down fa-is-info"></i></a>
+                    </div>
+                </transition>
+            </div>
         </section>
-        <section class="hero is-medium">
+        <section class="hero is-medium" id="info-share">
             <div class="hero-body">
                 <div class="container">
                     <h1 class="title">How do I share?</h1>
@@ -64,8 +74,16 @@
                     </div>
                 </div>
             </div>
+            <div class="hero-foot">
+                <div class="container has-text-centered" v-show="isLoaded">
+                    <a href="#"
+                       v-scroll-to="'#info-story, 40px'"
+                       title="Read the story behind this project"
+                       class="icon is-large"><i class="fa fa-angle-double-down fa-is-info"></i></a>
+                </div>
+            </div>
         </section>
-        <section class="hero is-primary">
+        <section class="hero is-primary is-medium" id="info-story">
             <div class="hero-body">
                 <div class="container">
                     <h1 class="title">The story and vision of mytentsite</h1>
@@ -82,7 +100,8 @@
 </template>
 <script>
 
-    import Footer from "../components/Footer.vue";
+    import Footer from "../components/Footer.vue"
+    import ScrollTo from "../components/ScrollTo.vue"
 
     export default {
         name: "Info",
@@ -98,7 +117,8 @@
             }, 500)
         },
         components: {
-            "footer-component": Footer
+            "footer-component": Footer,
+            "scroll-to": ScrollTo
         }
     }
 </script>
