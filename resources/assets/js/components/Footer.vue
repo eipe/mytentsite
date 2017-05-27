@@ -42,27 +42,12 @@
                         We really would appreciate your inputs!
                     </p>
                 </div>
-                <div class="column" v-if="beta">
-                    <h1 class="title">BETA</h1>
-                    <h2 class="subtitle">- work in progress</h2>
-                    <p>We are still working on some features before we can publish this site,
-                        and appreciate that you have joined us one the journey.<br><br>
-                        Please submit both bug reports and feature ideas to us through our
-                        <a href="https://facebook.com/mytentsite" target="_blank"
-                           title="Facebook - mytentsite">facebook page</a> and we
-                        will take it into consideration on further development.</p>
-                </div>
             </div>
         </div>
     </footer>
 </template>
 <script>
     export default {
-        name: "Footer",
-        computed: {
-            beta() {
-                return this.$store.state.beta;
-            }
-        }
+        name: "Footer"
     }
 </script>
