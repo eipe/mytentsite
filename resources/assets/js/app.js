@@ -10,6 +10,7 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueAuth from '@websanova/vue-auth'
 import VueScrollTo from 'vue-scroll-to'
+import VueAnalytics from 'vue-analytics'
 
 Vue.router = new VueRouter({
     routes: routes.routes,
@@ -40,6 +41,11 @@ Vue.use(VueAuth, {
     },
 });
 Vue.use(VueProgressiveImage, {delay: 200});
+
+Vue.use(VueAnalytics, {
+    id: document.getElementById("analytics").innerHTML.toString(),
+    router: Vue.router
+});
 
 // Set default base url used for all requests in application
 Vue.axios.defaults.baseURL = "/api/";
