@@ -142,7 +142,8 @@ const store = new Vuex.Store({
                                 caption: photo["caption"],
                                 created_at: photo["created_at"],
                                 updated_at: photo["updated_at"],
-                                approved: photo["approved"]
+                                approved: photo["approved"],
+                                taken_date: photo["taken_date"]
                             });
                             lastNewPhotoId = photo["id"];
                         });

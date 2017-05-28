@@ -45,6 +45,9 @@
                                             </div>
                                         </div>
                                         <div class="content">{{ activePhoto.caption }}</div>
+                                        <div class="content is-small" v-if="activePhoto.taken_date">
+                                            Photo was taken {{ activePhoto.taken_date }}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
