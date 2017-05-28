@@ -10,6 +10,7 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueAuth from '@websanova/vue-auth'
 import VueScrollTo from 'vue-scroll-to'
+import VueAnalytics from 'vue-analytics'
 
 Vue.router = new VueRouter({
     routes: routes.routes,
@@ -40,6 +41,11 @@ Vue.use(VueAuth, {
     },
 });
 Vue.use(VueProgressiveImage, {delay: 200});
+
+Vue.use(VueAnalytics, {
+    id: document.getElementById("analytics").innerHTML.toString(),
+    router: Vue.router
+});
 
 // Set default base url used for all requests in application
 Vue.axios.defaults.baseURL = "/api/";
@@ -73,6 +79,8 @@ const store = new Vuex.Store({
         tentSites: {
             apiUrl: "/tentsites",
             hasMore: true,
+            firstPhotoId: null,
+            lastPhotoId: null,
             data: []
         },
         gallery: {
@@ -118,7 +126,11 @@ const store = new Vuex.Store({
                     }
 
                     if(typeof responseData.data !== typeof undefined && responseData.data.length > 0) {
+                        let lastNewPhotoId = null;
                         responseData.data.forEach(function (photo) {
+                            if(!state.tentSites.firstPhotoId) {
+                                state.tentSites.firstPhotoId = photo["id"];
+                            }
                             state.tentSites.data.push({
                                 id: photo["id"],
                                 reported_by: photo["reported_by"],
@@ -130,9 +142,12 @@ const store = new Vuex.Store({
                                 caption: photo["caption"],
                                 created_at: photo["created_at"],
                                 updated_at: photo["updated_at"],
-                                approved: photo["approved"]
+                                approved: photo["approved"],
+                                taken_date: photo["taken_date"]
                             });
+                            lastNewPhotoId = photo["id"];
                         });
+                        state.tentSites.lastPhotoId = lastNewPhotoId;
                     }
                 }).catch(function(error) {
                     console.log(error);

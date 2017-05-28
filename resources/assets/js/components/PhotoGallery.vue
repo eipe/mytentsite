@@ -45,6 +45,9 @@
                                             </div>
                                         </div>
                                         <div class="content">{{ activePhoto.caption }}</div>
+                                        <div class="content is-small" v-if="activePhoto.taken_date">
+                                            Photo was taken {{ activePhoto.taken_date }}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -192,6 +195,9 @@
                 if(typeof photo.id !== typeof undefined) {
                     this.hasUserBookmarked = photo.hasUserBookmarked;
                     let me = this;
+
+                    me.isFirstPhoto = (photo.id === me.$store.state.tentSites.firstPhotoId);
+                    me.isLastPhoto = (photo.id === me.$store.state.tentSites.lastPhotoId);
 
                     if(typeof photo.comments !== typeof undefined) {
                         me.comments = photo.comments;

@@ -102,7 +102,8 @@
                 required: true
             },
             approved: {
-                type: Boolean,
+                type: Number,
+                default: 0,
                 required: false
             },
             showDetails: {
@@ -116,14 +117,12 @@
         },
         computed: {
             status() {
-                if(typeof this.approved === typeof undefined) {
-                    return "Waiting for approval";
-                }
-
-                if(this.approved == true) {
+                if(this.approved > 0) {
                     return "Approved";
-                } else {
+                } else if(this.approved < 0) {
                     return "Not approved";
+                } else {
+                    return "Waiting for approval";
                 }
             }
         },
