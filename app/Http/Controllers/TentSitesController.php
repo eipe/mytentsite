@@ -174,7 +174,7 @@ class TentSitesController extends Controller
             $m = self::MODEL;
             /* @var TentSites $tentSite */
             $tentSite = $m::get()->where('id', $id)->first();
-            $tentSite->setAttribute('approved', false);
+            $tentSite->setAttribute('approved', -1);
             $tentSite->save();
             return $this->deletedResponse();
         } catch(\Exception $exception) {
