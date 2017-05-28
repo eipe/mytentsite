@@ -46,7 +46,7 @@ class AuthenticateController extends \App\Http\Controllers\Controller
      *
      * @return mixed
      */
-    public function getAuthenticatedUser()
+    public static function getAuthenticatedUser()
     {
         try {
 
