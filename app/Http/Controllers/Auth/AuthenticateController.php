@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\User;
 use Dingo\Api\Http\Request;
 use Dingo\Api\Http\Response;
 use Tymon\JWTAuth\Exceptions\JWTException;
@@ -46,7 +47,7 @@ class AuthenticateController extends \App\Http\Controllers\Controller
      *
      * @return mixed
      */
-    public function getAuthenticatedUser()
+    public static function getAuthenticatedUser()
     {
         try {
 
@@ -69,7 +70,7 @@ class AuthenticateController extends \App\Http\Controllers\Controller
         }
 
         // the token is valid and we have found the user via the sub claim
-        return response()->json(compact('user'));
+        return $user;
     }
 
     /**

@@ -163,6 +163,7 @@ class TentSitesController extends Controller
             $tentSite = $m::get()->where('id', $id)->first();
             $tentSite->setAttribute('approved', true);
             $tentSite->save();
+            \Log::info('Tentsite #'. $id .' approved.' );
             return $this->showResponse($tentSite);
         } catch(\Exception $exception) {
             return $this->clientErrorResponse(['exception' => $exception->getMessage()]);
@@ -176,6 +177,7 @@ class TentSitesController extends Controller
             $tentSite = $m::get()->where('id', $id)->first();
             $tentSite->setAttribute('approved', -1);
             $tentSite->save();
+            \Log::info('Tentsite #'. $id .' denied.' );
             return $this->deletedResponse();
         } catch(\Exception $exception) {
             return $this->clientErrorResponse(['exception' => $exception->getMessage()]);

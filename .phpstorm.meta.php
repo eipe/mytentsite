@@ -3,7 +3,7 @@ namespace PHPSTORM_META {
 
    /**
     * PhpStorm Meta file, to provide autocomplete information for PhpStorm
-    * Generated on 2017-03-27.
+    * Generated on 2017-04-18.
     *
     * @author Barry vd. Heuvel <barryvdh@gmail.com>
     * @see https://github.com/barryvdh/laravel-ide-helper
@@ -70,6 +70,7 @@ namespace PHPSTORM_META {
             'tymon.jwt.validators.payload' instanceof \Tymon\JWTAuth\Validators\PayloadValidator,
             'tymon.jwt.payload.factory' instanceof \Tymon\JWTAuth\PayloadFactory,
             'tymon.jwt.generate' instanceof \Tymon\JWTAuth\Commands\JWTGenerateCommand,
+            'Barryvdh\Cors\CorsService' instanceof \Barryvdh\Cors\CorsService,
             'blade.compiler' instanceof \Illuminate\View\Compilers\BladeCompiler,
             'hash' instanceof \Illuminate\Hashing\BcryptHasher,
             'Tymon\JWTAuth\JWTAuth' instanceof \Tymon\JWTAuth\JWTAuth,
@@ -227,6 +228,7 @@ namespace PHPSTORM_META {
             'tymon.jwt.validators.payload' instanceof \Tymon\JWTAuth\Validators\PayloadValidator,
             'tymon.jwt.payload.factory' instanceof \Tymon\JWTAuth\PayloadFactory,
             'tymon.jwt.generate' instanceof \Tymon\JWTAuth\Commands\JWTGenerateCommand,
+            'Barryvdh\Cors\CorsService' instanceof \Barryvdh\Cors\CorsService,
             'blade.compiler' instanceof \Illuminate\View\Compilers\BladeCompiler,
             'hash' instanceof \Illuminate\Hashing\BcryptHasher,
             'Tymon\JWTAuth\JWTAuth' instanceof \Tymon\JWTAuth\JWTAuth,
@@ -384,6 +386,7 @@ namespace PHPSTORM_META {
             'tymon.jwt.validators.payload' instanceof \Tymon\JWTAuth\Validators\PayloadValidator,
             'tymon.jwt.payload.factory' instanceof \Tymon\JWTAuth\PayloadFactory,
             'tymon.jwt.generate' instanceof \Tymon\JWTAuth\Commands\JWTGenerateCommand,
+            'Barryvdh\Cors\CorsService' instanceof \Barryvdh\Cors\CorsService,
             'blade.compiler' instanceof \Illuminate\View\Compilers\BladeCompiler,
             'hash' instanceof \Illuminate\Hashing\BcryptHasher,
             'Tymon\JWTAuth\JWTAuth' instanceof \Tymon\JWTAuth\JWTAuth,
@@ -541,6 +544,7 @@ namespace PHPSTORM_META {
             'tymon.jwt.validators.payload' instanceof \Tymon\JWTAuth\Validators\PayloadValidator,
             'tymon.jwt.payload.factory' instanceof \Tymon\JWTAuth\PayloadFactory,
             'tymon.jwt.generate' instanceof \Tymon\JWTAuth\Commands\JWTGenerateCommand,
+            'Barryvdh\Cors\CorsService' instanceof \Barryvdh\Cors\CorsService,
             'blade.compiler' instanceof \Illuminate\View\Compilers\BladeCompiler,
             'hash' instanceof \Illuminate\Hashing\BcryptHasher,
             'Tymon\JWTAuth\JWTAuth' instanceof \Tymon\JWTAuth\JWTAuth,
