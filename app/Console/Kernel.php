@@ -29,7 +29,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->call(function(){
-            $users = User::where('is_admin', 1)->get();
+            $users = User::where('id', 3)->get();
             Notification::send(
                 $users,
                 new DailyStatistics($users));})
