@@ -104,7 +104,7 @@
                     position: "topleft",
                     states: [{
                         stateName: "locate",
-                        icon: "fa-crosshairs",
+                        icon: "fa-location-arrow",
                         title: "View my position",
                         onClick: function(button, map) {
                             map.locate();
