@@ -8,6 +8,7 @@
                 <th>Email</th>
                 <th>Date registered</th>
                 <th>Date updated</th>
+                <th>Last active</th>
                 <th>Admin</th>
             </tr>
             </thead>
@@ -17,6 +18,7 @@
                     <td>{{ user.email }}</td>
                     <td>{{ user.created_at }}</td>
                     <td>{{ user.updated_at }}</td>
+                    <td>{{ user.last_active }}</td>
                     <td>{{ user.is_admin }}</td>
                 </tr>
             </tbody>
@@ -26,6 +28,7 @@
                     <th>Email</th>
                     <th>Date registered</th>
                     <th>Date updated</th>
+                    <th>Last active</th>
                     <th>Admin</th>
                 </tr>
             </tfoot>
