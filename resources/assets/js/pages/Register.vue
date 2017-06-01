@@ -87,6 +87,7 @@
 
                 Vue.axios.post("/register", me.info).then(function(success) {
                     me.isPosting = false;
+                    me.$router.push({ path: "/user" });
                 }).catch(function(error) {
                     if(typeof error.response !== typeof undefined) {
                         me.error = error.response.data.message;
