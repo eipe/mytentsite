@@ -85,14 +85,20 @@
                 me.isPosting = true;
                 me.error = null;
 
-                Vue.axios.post("/register", me.info).then(function(success) {
-                    me.isPosting = false;
-                    me.$router.push({ path: "/user" });
-                }).catch(function(error) {
-                    if(typeof error.response !== typeof undefined) {
-                        me.error = error.response.data.message;
+                me.$auth.register({
+                    data: me.info,
+                    url: "/register",
+                    redirect: "/user",
+                    fetchUser: true,
+                    success: function(response) {
+                        me.isPosting = false;
+                    },
+                    error: function(error) {
+                        me.isPosting = false;
+                        if(typeof error.response !== typeof undefined) {
+                            me.error = error.response.data.message;
+                        }
                     }
-                    me.isPosting = false;
                 });
             }
         }
