@@ -153,7 +153,7 @@ class TentSitesController extends Controller
 
     public function getUnapproved() {
         $m = self::MODEL;
-        return $this->listResponse($m::where('approved', 0)->get());
+        return $this->listResponse($m::where('approved', 0)->oldest()->get());
     }
 
 
