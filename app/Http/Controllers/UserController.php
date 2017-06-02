@@ -36,7 +36,7 @@ class UserController extends Controller
         $m = self::MODEL;
         return $this->listResponse(DB::table($m::DB)->select(
             'name', 'email', 'created_at', 'updated_at', 'is_admin', 'last_active'
-        )->get());
+        )->orderBy('name')->get());
     }
 
 }
