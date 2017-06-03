@@ -10,6 +10,14 @@ use Illuminate\Support\Facades\Auth;
 class LikeController extends Controller
 {
 
+    use RestControllerTrait;
+
+    /**
+     * Set like to opposite of the current state
+     *
+     * @param $id
+     * @return mixed
+     */
     public function handleLike($id)
     {
         $existing_like = Like::withTrashed()->whereTentSitesId($id)->whereUserId(Auth::id())->first();
@@ -29,5 +37,15 @@ class LikeController extends Controller
 
         $existing_like->total = Like::all()->where('tent_sites_id', $id)->count();
         return $existing_like;
+    }
+
+    /**
+     * Get all
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getLikesByUser($id) {
+        $likes = Like::all()->where('user_id', $id);
+        return $this->showResponse($likes);
     }
 }
