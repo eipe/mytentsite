@@ -106,6 +106,9 @@
                     fetchUser: true,
                     success(response) {
                         me.isPosting = false;
+                        me.info.email = "";
+                        me.info.password = "";
+                        me.info.remember = false;
                     },
                     error(error) {
                         me.isPosting = false;
