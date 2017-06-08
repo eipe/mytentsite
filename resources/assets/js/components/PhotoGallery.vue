@@ -5,7 +5,7 @@
             <transition enter-active-class="animated zoomIn">
                 <div v-show="isActive">
                     <transition enter-active-class="animated slideInDown">
-                        <div class="modal-content is-marginless" v-if="activePage === 'photo'">
+                        <div class="modal-content is-fullheight is-marginless" v-if="activePage === 'photo'">
                             <div class="content is-paddingless is-marginless">
                                 <div class="card" id="photo-container">
                                     <div class="card-image">
