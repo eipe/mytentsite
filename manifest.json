@@ -4,7 +4,7 @@
 	"description": "A place to locate and share tentsites around the world",
 	"theme_color": "#ffffff",
 	"background-color": "#ffffff",
-	"display": "standalone",
+	"display": "fullscreen",
 	"lang": "en-US",
 	"dir": "ltr",
 	"icons": [
