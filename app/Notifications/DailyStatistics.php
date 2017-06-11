@@ -77,12 +77,16 @@ class DailyStatistics extends Notification
 
         $newUsers = \DB::table('users')->whereDate('created_at','>=',date('Y-m-d'))
             ->whereTime('created_at','>=','07:00:00')->count();
+        $activeDayUsers = \DB::table('users')->whereDate('last_active','>=',date('Y-m-d'))
+            ->whereTime('last_active','>=','07:00:00')->count();
+        $activeWeekUsers = \DB::table('users')->whereDate('last_active','>=',date('Y-m-d', strtotime("-1 week")))
+            ->whereTime('last_active','>=','07:00:00')->count();
         $totalUsers = \DB::table('users')->count();
         $newTentSites = \DB::table(TentSites::DB)->whereDate('created_at','>=',date('Y-m-d'))
             ->whereTime('created_at','>=','07:00:00')->count();
         $totalTentSites = \DB::table(TentSites::DB)->count();
 
-        $data = [$newUsers, $totalUsers, $newTentSites, $totalTentSites, $responseData];
+        $data = [$newUsers, $totalUsers, $activeDayUsers, $activeWeekUsers, $newTentSites, $totalTentSites, $responseData];
 
         return (new SlackMessage)
             ->success()
@@ -92,10 +96,12 @@ class DailyStatistics extends Notification
                     ->fields([
                         'New users' => $data[0],
                         'Total users' => $data[1],
-                        'New tentsites' => $data[2],
-                        'Total tentsites' => $data[3],
-                        'Apdex' => $data[4]->apdex.' / 1',
-                        'Response time' => $data[4]->timings->total.' ms'
+                        'Active last day' => $data[2],
+                        'Active last week' => $data[3],
+                        'New tentsites' => $data[4],
+                        'Total tentsites' => $data[5],
+                        'Apdex' => $data[6]->apdex.' / 1',
+                        'Response time' => $data[7]->timings->total.' ms'
                     ]);
             });
     }
