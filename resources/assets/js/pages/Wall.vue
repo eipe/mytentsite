@@ -1,8 +1,6 @@
 <template>
-    <div class="has-page-margin-top">
-        <div class="container">
-            <photo-wall/>
-        </div>
+    <div class="has-fixed-header">
+        <photo-wall/>
         <br>
         <footer-component/>
     </div>

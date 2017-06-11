@@ -1,18 +1,16 @@
 <template>
-    <div>
-        <div class="columns is-multiline is-tablet has-tablet-no-padding">
-            <template v-for="photo in photos">
-                <photo class="column is-one-third" :id="photo.id"
-                :img_location="photo.img_location"
-                :thumbnail="photo.thumbnail"
-                :lat="photo.lat"
-                :lng="photo.lng"
-                :caption="photo.caption"
-                :reported_by="photo.reported_by"
-                :created_at="photo.created_at"
-                :bookmarks="photo.bookmarks">
-                </photo>
-            </template>
+    <div class="container">
+        <div class="columns is-multiline is-tablet has-tablet-no-padding has-normal-margin">
+            <photo v-for="photo in photos" class="column is-one-third" :id="photo.id"
+            :img_location="photo.img_location"
+            :thumbnail="photo.thumbnail"
+            :lat="photo.lat"
+            :lng="photo.lng"
+            :caption="photo.caption"
+            :reported_by="photo.reported_by"
+            :created_at="photo.created_at"
+            :bookmarks="photo.bookmarks">
+            </photo>
         </div>
         <div class="container has-text-centered">
             <button class="button is-info" v-if="hasMore" @click="loadMore"
