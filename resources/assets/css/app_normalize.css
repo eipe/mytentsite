@@ -68,3 +68,7 @@
     /* Increase height of modal */
     max-height: calc(100vh - 20px);
 }
+
+.columns.has-normal-margin {
+    margin: 0;
+}
