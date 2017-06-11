@@ -32,12 +32,12 @@
 }
 
 #content.has-fixed-header-top {
-  margin-top: $size-1;
+  margin-top: $nav-height;
 }
 
 .has-fixed-header .is-fullheight {
-  max-height: calc(100vh - #{$size-1});
-  min-height: calc(100vh - #{$size-1});
+  max-height: calc(100vh - #{$nav-height});
+  min-height: calc(100vh - #{$nav-height});
 }
 
 hr.border-dashed {

@@ -115,7 +115,7 @@ class TentSitesController extends Controller
             $tentSites = $this->getWithinArea($lat, $lng, $rad);
         } else {
             $m = self::MODEL;
-            $tentSites= $m::where('approved', 1)->paginate(9);
+            $tentSites= $m::where('approved', 1)->latest()->paginate(9);
         }
         return $this->listResponse($tentSites);
     }
@@ -142,17 +142,18 @@ class TentSitesController extends Controller
             ->whereBetween('latitude', [$minLat, $maxLat])
             ->whereBetween('longitude', [$minLng, $maxLng])
             ->where('approved', 1)
+            ->latest()
             ->get();
     }
 
     public function getUserTentSites() {
         $m = self::MODEL;
-        return $this->listResponse($m::where('reported_by', Auth::id())->get());
+        return $this->listResponse($m::where('reported_by', Auth::id())->latest()->get());
     }
 
     public function getUnapproved() {
         $m = self::MODEL;
-        return $this->listResponse($m::where('approved', 0)->get());
+        return $this->listResponse($m::where('approved', 0)->oldest()->get());
     }
 
 

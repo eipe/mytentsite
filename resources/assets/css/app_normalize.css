@@ -62,3 +62,9 @@
 .cropit-disabled .cropit-image-loaded .cropit-preview-image-container {
     cursor: default;
 }
+
+/* Bulma overrides */
+.modal-content.is-fullheight {
+    /* Increase height of modal */
+    max-height: calc(100vh - 20px);
+}
