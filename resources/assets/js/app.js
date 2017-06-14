@@ -4,7 +4,6 @@
 import PhotoGallery from './components/PhotoGallery.vue';
 import Error from './components/Error.vue';
 import routes from './routes.js'
-import VueProgressiveImage from 'vue-progressive-image'
 import Vuex from 'vuex'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
@@ -40,7 +39,6 @@ Vue.use(VueAuth, {
         interval: 0
     },
 });
-Vue.use(VueProgressiveImage, {delay: 200});
 
 Vue.use(VueAnalytics, {
     id: document.getElementById("analytics").innerHTML.toString(),

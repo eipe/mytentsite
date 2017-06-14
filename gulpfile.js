@@ -37,7 +37,6 @@ elixir(function(mix) {
     mix.webpack('app.js', 'public/js/app.js')
         .scripts([
             config.nodeDir + '/vue/dist/vue.js',
-            config.nodeDir + '/vue-progressive-image/dist/vue-progressive-image.js',
             config.nodeDir + '/vue-router/dist/vue-router.js',
             config.nodeDir + '/axios/dist/axios.js',
             config.nodeDir + '/vuex/dist/vuex.js'
