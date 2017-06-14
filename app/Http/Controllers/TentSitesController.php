@@ -88,7 +88,8 @@ class TentSitesController extends Controller
         $originalHeight = imagesy($originalPhoto);
 
         // 4:3 ratio
-        $thumbnailWidth = 600;
+        // 800px width secures that thumbnail is larger than the smallest viewport
+        $thumbnailWidth = 800;
         $thumbnailHeight = floor($originalHeight * ($thumbnailWidth / $originalWidth));
 
         $virtualPhoto = imagecreatetruecolor($thumbnailWidth, $thumbnailHeight);
