@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="columns is-multiline is-tablet has-tablet-no-padding has-normal-margin">
-            <photo v-for="photo in photos" class="column is-one-third" :id="photo.id"
+            <photo v-for="photo in photos" class="column is-one-third" :key="photo.id" :id="photo.id"
             :img_location="photo.img_location"
             :thumbnail="photo.thumbnail"
             :lat="photo.lat"
