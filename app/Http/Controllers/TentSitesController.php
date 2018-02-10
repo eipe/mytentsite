@@ -6,6 +6,7 @@ use App\Events\NewTentSiteRegistered;
 use App\Models\TentSites;
 use Auth;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -150,6 +151,14 @@ class TentSitesController extends Controller
     public function getUserTentSites() {
         $m = self::MODEL;
         return $this->listResponse($m::where('reported_by', Auth::id())->latest()->get());
+    }
+
+    public function getBookmarkedTentSites() {
+        $m = self::MODEL;
+        return $this->listResponse(DB::table('tent_sites')->join('likes', function($join) {
+            /* @var JoinClause $join */
+            $join->on('tent_sites.id', '=', 'likes.tent_sites_id')->where('likes.user_id', '=', Auth::id());
+        })->select('tent_sites.*')->get());
     }
 
     public function getUnapproved() {
