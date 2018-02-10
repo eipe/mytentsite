@@ -44,6 +44,7 @@ $api->version(['v1'], function(\Dingo\Api\Routing\Router $api) {
         $api->get('/usersites', 'App\Http\Controllers\TentSitesController@getUserTentSites');
         // Fetch user profile data
         $api->get('/user', 'App\Http\Controllers\UserController@index');
+        $api->get('/bookmarks', 'App\Http\Controllers\TentSitesController@getBookmarkedTentSites');
 
         // #Tent site routes
         // Upload tent site
