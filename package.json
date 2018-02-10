@@ -12,6 +12,7 @@
     "babel-loader": "^7.0.0",
     "bootstrap-sass": "^3.3.7",
     "bulma": "^0.4.1",
+    "bulma-tooltip": "^0.1.7",
     "cropit": "^0.5.1",
     "css-loader": "^0.28.2",
     "exif-js": "^2.2.1",

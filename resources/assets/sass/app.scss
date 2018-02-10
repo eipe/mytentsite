@@ -6,9 +6,11 @@
 
 // Bootstrap
 @import "node_modules/bulma/bulma.sass";
+@import "node_modules/bulma-tooltip/dist/bulma-tooltip.sass";
 
 .nav {
   background-color: #333;
+  z-index: initial;
 }
 
 .color-gray {
