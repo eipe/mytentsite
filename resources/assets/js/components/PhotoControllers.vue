@@ -1,6 +1,8 @@
 <template>
     <div class="photo-controllers" :data-photo="photo">
-        <i class="photo-view-map fa fa-map-marker is-clickable" title="View photo on map" @click.stop="viewOnMap"></i>
+        <span class="tooltip is-tooltip-top" data-tooltip="Locate this tent site">
+            <i class="photo-view-map fa fa-map-marker is-clickable"  @click.stop="viewOnMap"></i>
+        </span>
     </div>
 </template>
 <script>

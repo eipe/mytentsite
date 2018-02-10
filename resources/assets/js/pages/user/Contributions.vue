@@ -6,20 +6,20 @@
                     <div class="container">
                         <h2 class="title">Your contributions <small>- displaying {{ tentSitesCount }}</small></h2>
                         <div class="content">
-                            <span class="tag is-light is-clickable"
-                                  title="Click to toggle filter"
+                            <span class="tag is-light is-clickable tooltip is-tooltip-top"
+                                  data-tooltip="Click to toggle filter"
                                   @click="toggleFilter('approved')"
                                   v-bind:class="{ 'is-success' : filter.approved }">
                                 {{ count.approved }} Approved
                             </span>
-                            <span class="tag is-light is-clickable"
-                                  title="Click to toggle filter"
+                            <span class="tag is-light is-clickable tooltip is-tooltip-top"
+                                  data-tooltip="Click to toggle filter"
                                   @click="toggleFilter('denied')"
                                   v-bind:class="{ 'is-warning' : filter.denied }">
                                 {{ count.denied }} Not approved
                             </span>
-                            <span class="tag is-light is-clickable"
-                                  title="Click to toggle filter"
+                            <span class="tag is-light is-clickable tooltip is-tooltip-top"
+                                  data-tooltip="Click to toggle filter"
                                   @click="toggleFilter('waitingApproval')"
                                   v-bind:class="{'is-info' : filter.waitingApproval }">
                                 {{ count.waitingApproval }} Waiting for approval

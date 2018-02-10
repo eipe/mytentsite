@@ -26,19 +26,25 @@
                                             <div class="media-right">
                                                 <nav class="level">
                                                     <div class="level-left">
-                                                        <div class="level-item">
-                                                            <i class="fa" :title="bookmarkTitle"
-                                                               v-bind:class="bookmarkIcon" @click="toggleBookmark"></i>
-                                                            &nbsp;&nbsp;{{ activePhoto.bookmarks }}
-                                                        </div>
                                                         <div class="level-item"
                                                              v-if="isUserActionsAvailable">
-                                                <span @click="toggleComment"
-                                                      class="button is-small">Comments ({{ commentsCount }})</span>
+                                                            <span @click="toggleComment"
+                                                                  class="button is-small tooltip is-tooltip-top"
+                                                                  data-tooltip="View comments and/or add your own">Comments ({{ commentsCount }})</span>
                                                         </div>
                                                         <div class="level-item">
-                                                <span @click="viewOnMap" title="View tentsite on map"
-                                                      class="button is-small">View on map</span>
+                                                            <span @click="viewOnMap" data-tooltip="View tent site on map"
+                                                                  class="button is-small tooltip is-tooltip-top">View on map</span>
+                                                        </div>
+                                                         <div class="level-item" v-if="isUserActionsAvailable">
+                                                            <span class="tooltip is-tooltip-top is-tooltip-multiline"
+                                                                  data-tooltip="Click to add/remove tent site bookmark. Review your bookmarks in user profile">
+                                                                <i class="fa"
+                                                                   :title="bookmarkTitle"
+                                                                   v-bind:class="bookmarkIcon"
+                                                                   @click="toggleBookmark"></i>
+                                                            </span>
+                                                            &nbsp;&nbsp;{{ activePhoto.bookmarks }}
                                                         </div>
                                                     </div>
                                                 </nav>
