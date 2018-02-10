@@ -59,8 +59,12 @@ class TentSitesController extends Controller
             // Force all photos to be .jpg formatted
             $imageName = $data->getAttribute('id') . '.jpg';
 
-            // Store all photos in public tent site directory
-            Storage::disk('public')->put(env('TENT_SITE_PHOTO_DIR') . $imageName, $photo);
+            // Because we don't use storage to store photo we need to make sure the directory exists
+            Storage::disk('public')->makeDirectory(env('TENT_SITE_PHOTO_DIR'));
+            imagejpeg(
+                imagecreatefromstring($photo),
+                storage_path('app/public') . env('TENT_SITE_PHOTO_DIR') . $imageName, 70);
+
             $data->setAttribute('img_location', $imageName);
             $data->setAttribute('thumbnail_location', $imageName);
             $data->setAttribute('reported_by', Auth::user()->getAttribute('id'));
@@ -69,7 +73,7 @@ class TentSitesController extends Controller
             // Fire event
             event(new NewTentSiteRegistered($data));
 
-            $this->makeThumbnail($imageName, $photo);
+            $this->makeThumbnail($imageName);
 
             return $this->createdResponse($data);
         } catch (\Exception $ex) {
@@ -101,7 +105,7 @@ class TentSitesController extends Controller
 
         // Because we don't use storage to store photo we need to make sure the directory exists
         Storage::disk('public')->makeDirectory(env('TENT_SITE_THUMBNAIL_DIR'));
-        imagejpeg($virtualPhoto, storage_path('app/public') . env('TENT_SITE_THUMBNAIL_DIR') . $originalPhotoName, 30);
+        imagejpeg($virtualPhoto, storage_path('app/public') . env('TENT_SITE_THUMBNAIL_DIR') . $originalPhotoName, 70);
     }
 
     /**
