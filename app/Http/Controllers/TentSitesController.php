@@ -161,7 +161,7 @@ class TentSitesController extends Controller
         $m = self::MODEL;
         return $this->listResponse(DB::table('tent_sites')->join('likes', function($join) {
             /* @var JoinClause $join */
-            $join->on('tent_sites.id', '=', 'likes.tent_sites_id')->where('likes.user_id', '=', Auth::id());
+            $join->on('tent_sites.id', '=', 'likes.tent_sites_id')->where('likes.user_id', '=', Auth::id())->whereNull('deleted_at');
         })->select('tent_sites.*')->get());
     }
 
