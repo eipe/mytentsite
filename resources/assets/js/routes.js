@@ -14,9 +14,9 @@ export default {
         name: 'Locate',
         component: require('./pages/Locate.vue')
     }, {
-        path: '/wall',
-        name: 'Wall',
-        component: require('./pages/Wall.vue')
+        path: '/explore',
+        name: 'Explore',
+        component: require('./pages/Explore.vue')
     }, {
         path: '/info',
         name: 'Info',

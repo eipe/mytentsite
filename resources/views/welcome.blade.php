@@ -14,7 +14,7 @@
                     <router-link to="/locate" active-class="is-active icon is-medium"><i class="fa fa-map-o"></i></router-link>
                 </li>
                 <li class="nav-item">
-                    <router-link to="/wall" active-class="is-active icon is-medium"><i class="fa fa-th"></i></router-link>
+                    <router-link to="/explore" active-class="is-active icon is-medium"><i class="fa fa-th"></i></router-link>
                 </li>
                 <li class="nav-item">
                     <router-link to="/info" active-class="is-active icon is-medium"><i class="fa fa-info"></i></router-link>
