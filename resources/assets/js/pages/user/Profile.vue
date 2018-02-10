@@ -17,7 +17,7 @@
             </div>
         </section>
     </div>
-</template>r
+</template>
 <script>
     export default {
         name: "User-profile",
