@@ -1,6 +1,7 @@
 <template>
     <div>
         <h1>Tent sites</h1>
+        <p>{{ tentSites.length }} waiting for approval</p>
         <table class="table is-striped">
             <thead>
                 <tr>

@@ -1,6 +1,7 @@
 <template>
     <div>
         <h1>Users</h1>
+        <p>We currently have {{ users.length}} users</p>
         <table class="table is-striped">
             <thead>
             <tr>
@@ -19,7 +20,7 @@
                     <td>{{ user.created_at }}</td>
                     <td>{{ user.updated_at }}</td>
                     <td>{{ user.last_active }}</td>
-                    <td>{{ user.is_admin }}</td>
+                    <td>{{ isAdmin(user) }}</td>
                 </tr>
             </tbody>
             <tfoot>
@@ -51,6 +52,11 @@
                 });
             }).catch(function() {
             });
+        },
+        methods: {
+            isAdmin(user) {
+                return (user.is_admin ? 'Yes' : 'No');
+            }
         },
         components: {
         }
