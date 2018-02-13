@@ -35,6 +35,9 @@ $api->version(['v1'], function(\Dingo\Api\Routing\Router $api) {
     // Fetch tent site comments
     $api->get('/like/{id}', 'App\Http\Controllers\LikeController@getLikesByUser');
 
+    // Statistics
+    $api->get('/statistics', 'App\Http\Controllers\StatisticsController@getPublicStatistics');
+
     $api->group(['middleware' => ['jwt.auth', 'last_active']], function (\Dingo\Api\Routing\Router $api) {
         // Endpoints registered here will have the "auth" middleware applied.
 

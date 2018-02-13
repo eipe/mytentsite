@@ -171,6 +171,17 @@ class TentSitesController extends Controller
     }
 
 
+    public function getApprovedCount() {
+        $m = self::MODEL;
+        return $m::where('approved', 1)->count();
+    }
+
+    public function getContributorCount() {
+        $m = self::MODEL;
+        return $m::where('approved', 1)->groupBy('reported_by')->count();
+    }
+
+
     public function approve($id) {
         try {
             $m = self::MODEL;
