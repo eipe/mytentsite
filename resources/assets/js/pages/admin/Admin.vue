@@ -1,26 +1,21 @@
 <template>
-    <div>
-        <section class="section" v-if="this.$auth.check('admin')">
-            <div class="container">
-                <div class="columns">
-                    <div class="column is-narrow">
-                        <aside class="menu">
-                            <p class="menu-label">Admin</p>
-                            <ul class="menu-list">
-                                <li><router-link to="/admin/dashboard">Dashboard</router-link></li>
-                                <li><router-link to="/admin/tentsites">Tent sites</router-link></li>
-                                <li><router-link to="/admin/users">Users</router-link></li>
-                                <li><router-link to="/admin/statistics">Statistics</router-link></li>
-                            </ul>
-                        </aside>
-                    </div>
-                    <div class="column content">
-                        <transition enter-active-class="animated fadeIn">
-                            <keep-alive>
-                                <router-view></router-view>
-                            </keep-alive>
-                        </transition>
-                    </div>
+    <div class="page page-allow-overflow" v-if="this.$auth.check('admin')">
+        <nav class="nav white">
+            <div class="nav-center">
+                <div class="nav-item"><router-link to="/admin/dashboard">Dashboard</router-link></div>
+                <div class="nav-item"><router-link to="/admin/tentsites">Tent sites</router-link></div>
+                <div class="nav-item"><router-link to="/admin/users">Users</router-link></div>
+                <div class="nav-item"><router-link to="/admin/statistics">Statistics</router-link></div>
+            </div>
+        </nav>
+        <section class="hero content">
+            <div class="hero-body">
+                <div class="content container">
+                    <transition enter-active-class="animated fadeIn">
+                        <keep-alive>
+                            <router-view></router-view>
+                        </keep-alive>
+                    </transition>
                 </div>
             </div>
         </section>
