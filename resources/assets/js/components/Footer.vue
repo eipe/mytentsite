@@ -31,8 +31,7 @@
                     <h1 class="title is-5">About</h1>
                     <h2 class="subtitle is-6">- people behind and site info</h2>
                     <p class="content is-small">
-                        The concept and solution <strong>mytentsite</strong> is developed and maintained
-                        by Petter Alstad and Eivind Røe (Eipe).<br>
+                        The concept and solution <strong>mytentsite</strong> is developed and maintained by Eipe.<br>
                         We launched the first version in 2017 after months of planning and development and proudly
                         present to you this collaborative tent collective!
                     </p>
