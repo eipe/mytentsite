@@ -72,7 +72,7 @@
                                 </router-link>
                             </div>
                             <div class="level-item has-text-centered">
-                                <router-link to="wall">
+                                <router-link to="explore">
                                 <div>
                                     <p class="title">Explore<i class="fa fa-th icon is-large"></i></p>
                                     <p class="heading">Tent sites on the photo wall</p>
