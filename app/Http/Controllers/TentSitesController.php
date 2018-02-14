@@ -170,18 +170,6 @@ class TentSitesController extends Controller
         return $this->listResponse($m::where('approved', 0)->oldest()->get());
     }
 
-
-    public function getApprovedCount() {
-        $m = self::MODEL;
-        return $m::where('approved', 1)->count();
-    }
-
-    public function getContributorCount() {
-        $m = self::MODEL;
-        return $m::where('approved', 1)->groupBy('reported_by')->count();
-    }
-
-
     public function approve($id) {
         try {
             $m = self::MODEL;

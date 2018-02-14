@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\Like;
+use App\Models\TentSites;
+
 class StatisticsController extends Controller
 {
 
@@ -13,12 +16,11 @@ class StatisticsController extends Controller
      */
     public function getPublicStatistics()
     {
-        $objTentSitesController = new TentSitesController();
         return [
-            'tentSites' => $objTentSitesController->getApprovedCount(),
-            'bookmarkedTentSites' => 0,
+            'tentSites' => TentSites::all()->where('approved', 1)->count(),
+            'bookmarkedTentSites' => Like::all()->count(),
             'countries' => 1,
-            'contributors' => $objTentSitesController->getContributorCount(),
+            'contributors' => TentSites::all()->where('approved', 1)->groupBy('reported_by')->count(),
         ];
     }
 

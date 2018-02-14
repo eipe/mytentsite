@@ -19,7 +19,7 @@
                             </div>
                             <div class="level-item has-text-centered">
                                 <div>
-                                    <p class="heading">Countries</p>
+                                    <p class="heading">Countries represented</p>
                                     <p class="title">{{ statistics.numberOfCountries }}</p>
                                 </div>
                             </div>
@@ -36,18 +36,20 @@
         </section>
         <section class="hero">
             <div class="hero-body">
-                <div class="container">
-                    <h1 class="title">The vision of mytentsite and the story behind</h1>
-                    <h2 class="subtitle">What is it? And why did we create it?</h2>
-                    <p>The main purpose of this service is to <strong>make it easy to find a tent site</strong> without making a lot
-                        of research.<br>
-                        When traveling around it can be hard to find a tent site if you are not planning to stay at established camp sites.<br>
-                        We host this service to inspire others using and taking care of our great nature.
-                    </p><br>
-                    <h3 class="subtitle">Take care of the nature and local environment</h3>
-                    <p>The nature is free to use, but it is our responsibility to keep it intact so others can enjoy the same as us.</p>
-                    <p>We also want to encourage you to follow local restrictions and make sure that you <strong>bring all trash and non biodegradable material for recycling</strong>!</p>
-                </div>
+                <transition enter-active-class="animated fadeIn">
+                    <div class="container" v-if="isLoaded" v-cloak>
+                        <h1 class="title">The vision of mytentsite and the story behind</h1>
+                        <h2 class="subtitle">What is it? And why did we create it?</h2>
+                        <p>The main purpose of this service is to <strong>make it easy to find a tent site</strong> without making a lot
+                            of research.<br>
+                            When traveling around it can be hard to find a tent site if you are not planning to stay at established camp sites.<br>
+                            We host this service to inspire others using and taking care of our great nature.
+                        </p><br>
+                        <h3 class="subtitle">Take care of the nature and local environment</h3>
+                        <p>The nature is free to use, but it is our responsibility to keep it intact so others can enjoy the same as us.</p>
+                        <p>We also want to encourage you to follow local restrictions and make sure that you <strong>bring all trash and non biodegradable material for recycling</strong>!</p>
+                    </div>
+                </transition>
             </div>
         </section>
         <section class="hero is-small is-light">
