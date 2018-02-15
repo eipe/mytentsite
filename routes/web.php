@@ -24,6 +24,12 @@ Route::get('auth/handle/{provider}', 'Auth\SocialController@handleProviderCallba
 Route::get('/beta', 'StagingController@showForm');
 Route::post('/beta', 'StagingController@handle');
 
+Route::get('manifest.json', function() {
+    ob_start();
+    require('../manifest.json');
+    return ob_get_clean();
+});
+
 /**
  * Errors
  */
