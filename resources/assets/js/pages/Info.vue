@@ -7,26 +7,26 @@
                         <nav class="level" v-show="isLoaded" v-cloak>
                             <div class="level-item has-text-centered">
                                 <div>
-                                    <p class="heading">Shared tent sites</p>
                                     <p class="title">{{ statistics.numberOfTentSites }}</p>
+                                    <p class="heading">Shared tent sites</p>
                                 </div>
                             </div>
                             <div class="level-item has-text-centered">
                                 <div>
-                                    <p class="heading">Bookmarked tent sites</p>
                                     <p class="title">{{ statistics.numberOfBookmarkedTentSites }}</p>
+                                    <p class="heading">Bookmarked tent sites</p>
                                 </div>
                             </div>
                             <div class="level-item has-text-centered">
                                 <div>
-                                    <p class="heading">Countries represented</p>
                                     <p class="title">{{ statistics.numberOfCountries }}</p>
+                                    <p class="heading">Countries represented</p>
                                 </div>
                             </div>
                             <div class="level-item has-text-centered">
                                 <div>
-                                    <p class="heading">Contributors</p>
                                     <p class="title">{{ statistics.numberOfContributors }}</p>
+                                    <p class="heading">Contributors</p>
                                 </div>
                             </div>
                         </nav>
