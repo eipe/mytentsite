@@ -16,6 +16,7 @@ Route::get('/', function () {
         return view('errors.503');
     }
     return view('welcome');
+
 });
 
 Route::get('auth/sign_out', 'Auth\SocialController@signOut');
