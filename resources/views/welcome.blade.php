@@ -62,6 +62,5 @@
             </keep-alive>
         </transition>
     </div>
-    <photo-gallery></photo-gallery>
     <error></error>
 @endsection

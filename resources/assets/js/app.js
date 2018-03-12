@@ -1,7 +1,6 @@
 /**
  * Created by Eivind Røe <eivindroe@gmail.com> on 06.08.2016.
  */
-import PhotoGallery from './components/PhotoGallery.vue';
 import Error from './components/Error.vue';
 import routes from './routes.js'
 import Vuex from 'vuex'
@@ -48,29 +47,6 @@ Vue.use(VueAnalytics, {
 // Set default base url used for all requests in application
 Vue.axios.defaults.baseURL = "/api/";
 
-function getPhotoIndex(state, photoId) {
-    return state.tentSites.data.findIndex(function(photo) {
-        if(photo.id === photoId) {
-            return true;
-        }
-    });
-}
-
-function getPhotoByIndex(state, index) {
-    if(typeof state.tentSites.data[index] !== typeof undefined) {
-        return state.tentSites.data[index];
-    }
-    return null;
-}
-
-function getPhotoById(state, photoId) {
-    let index = getPhotoIndex(state, photoId);
-    if(index !== null) {
-        return getPhotoByIndex(state, index);
-    }
-    return null;
-}
-
 // Define store
 const store = new Vuex.Store({
     state: {
@@ -81,40 +57,48 @@ const store = new Vuex.Store({
             lastPhotoId: null,
             data: []
         },
-        gallery: {
-            activePhoto: {},
-            isActive: false
-        },
         beta: false,
-        error: null
+        error: null,
     },
     mutations: {
-        setActivePhoto(state, photo) {
-            state.gallery.activePhoto = getPhotoById(state, photo.id);
-            state.gallery.isActive = true;
+        addBookmark(state, tentSite) {
+            let me = this;
+            Vue.axios.post("/like/" + tentSite.id).then(function () {
+                tentSite.bookmarks.push(me.$auth.user().id);
+            });
         },
-        galleryNavigateNext(state) {
-            let currentIndex = getPhotoIndex(state, state.gallery.activePhoto.id),
-                nextIndex = currentIndex+1;
-            let photo = getPhotoByIndex(state, nextIndex);
-            if(photo) {
-                state.gallery.activePhoto = photo;
+        removeBookmark(state, tentSite) {
+            let me = this;
+            Vue.axios.post("/unlike/" + tentSite.id).then(function() {
+                let indexOfBookmark = tentSite.bookmarks.indexOf(me.$auth.user().id);
+                if(indexOfBookmark) {
+                    tentSite.bookmarks.splice(indexOfBookmark, 1);
+                }
+            });
+        },
+        addCommentOnPhoto(state, data) {
+            let tentSiteId = data.id,
+                tentSite = state.$store.tentSites.data[tentSiteId];
+            if(tentSite) {
+                tentSite.comments.push(data.comment);
             }
         },
-        galleryNavigatePrev(state) {
-            let currentIndex = getPhotoIndex(state, state.gallery.activePhoto.id),
-                nextIndex = currentIndex-1;
-            let photo = getPhotoByIndex(state, nextIndex);
-            if(photo) {
-                state.gallery.activePhoto = photo;
+        addCommentsOnPhoto(state, data) {
+            let tentSiteId = data.id,
+                tentSite = state.$store.tentSites.data[tentSiteId];
+            if(tentSite) {
+                tentSite.comments = data.comments;
             }
         },
-        destroyGallery(state) {
-            state.gallery.activePhoto = {};
-            state.gallery.isActive = false;
+        setError(state, error) {
+            state.error = error;
         },
         loadMoreTentSites(state) {
-            if(state.tentSites.hasMore) {
+            return new Promise((resolve, reject) => {
+                if(!state.tentSites.hasMore) {
+                    reject("Has no more tent sites");
+                }
+
                 Vue.axios.get(state.tentSites.apiUrl).then(function(response) {
                     let responseData = response.data.data;
                     if(responseData.next_page_url) {
@@ -147,55 +131,18 @@ const store = new Vuex.Store({
                         });
                         state.tentSites.lastPhotoId = lastNewPhotoId;
                     }
+                    resolve();
                 }).catch(function(error) {
-                    console.log(error);
+                    reject(error);
                 });
-            }
-        },
-        addBookmark(state, id) {
-            let photo = getPhotoById(state, id);
-            if(photo && !photo.hasUserBookmarked) {
-                photo.bookmarks += 1;
-                photo.hasUserBookmarked = true;
-                Vue.axios.post("/like/" + id);
-            }
-        },
-        removeBookmark(state, id) {
-            let photo = getPhotoById(state, id);
-            if(photo && photo.hasUserBookmarked) {
-                photo.bookmarks -= 1;
-                photo.hasUserBookmarked = false;
-            }
-            Vue.axios.post("/unlike/" + id);
-        },
-        addCommentOnPhoto(state, data) {
-            let photo = getPhotoById(state, data.id);
-            if(photo) {
-                photo.comments.push(data.comment);
-            }
-        },
-        addCommentsOnPhoto(state, data) {
-            let photo = getPhotoById(state, data.id);
-            if(photo) {
-                photo.comments = data.comments;
-            }
-        },
-        setError(state, error) {
-            state.error = error;
+            });
         }
     },
     actions: {
-        openPhoto(state, photo) {
-            state.commit("setActivePhoto", photo);
-        },
-        galleryNavigateNext(state) {
-            state.commit("galleryNavigateNext");
-        },
-        galleryNavigatePrev(state) {
-            state.commit("galleryNavigatePrev");
+        loadMoreTentSites(state) {
+            state.commit("loadMoreTentSites");
         },
         viewPhotoOnMap(state, photo) {
-            state.commit("destroyGallery");
             Vue.router.push({
                 path: "/locate",
                 query: {
@@ -204,14 +151,11 @@ const store = new Vuex.Store({
                 }
             });
         },
-        destroyGallery(state) {
-            state.commit("destroyGallery");
+        addBookmark(state, tentSite) {
+            state.commit("addBookmark", tentSite);
         },
-        addBookmark(state, id) {
-            state.commit("addBookmark", id);
-        },
-        removeBookmark(state, id) {
-            state.commit("removeBookmark", id);
+        removeBookmark(state, tentSite) {
+            state.commit("removeBookmark", tentSite);
         },
         addCommentOnPhoto(state, data) {
             state.commit("addCommentOnPhoto", data);
@@ -232,7 +176,7 @@ new Vue({
     store,
     router: Vue.router,
     components: {
-        PhotoGallery, Error
+        Error
     },
     created() {
         let environment = document.getElementById("environment").innerHTML.toString();

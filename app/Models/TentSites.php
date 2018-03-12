@@ -96,7 +96,7 @@ class TentSites extends Model
 
     public function likes()
     {
-        return $this->hasMany('App\Models\Like')->whereDeletedAt(null)->count();
+        return $this->hasMany('App\Models\Like')->whereDeletedAt(null)->pluck('user_id');
     }
 
     public function getUserHasLiked()

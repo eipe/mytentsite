@@ -1,23 +1,14 @@
 <template>
     <div class="photo-container"
-        :data-photo-id="id"
-        :data-photo-latitude="lat"
-        :data-photo-longitude="lng"
-        :data-photo-caption="caption"
-        :data-photo-reported-by="reported_by"
-        :data-photo-created-at="created_at"
-        :data-photo-bookmarks="bookmarks"
-        :data-photo-location="img_location"
-        :data-photo-approved="approved"
+        :data-tent-site="tentSite"
          @mouseenter="displayControllers()"
-         @mouseleave="hideControllers()"
-         @click="openImage">
-        <img :src="thumbnail" class="is-clickable" />
+         @mouseleave="hideControllers()">
+        <img :src="tentSite.thumbnail" class="is-clickable" />
         <slot v-if="isControllersVisible">
-            <photo-controllers :photo="this"></photo-controllers>
+            <photo-controllers :photo="tentSite"></photo-controllers>
         </slot>
         <div v-if="showDetails">
-            Status: {{ status }}
+            Status: {{ tentSite.status }}
         </div>
     </div>
 </template>
@@ -62,46 +53,9 @@
             }
         },
         props: {
-            id: {
-                type: Number,
+            tentSite: {
+                type: Object,
                 required: true
-            },
-            img_location: {
-                type: String,
-                required: true
-            },
-            thumbnail: {
-                type: String,
-                required: true
-            },
-            lat: {
-                type: Number,
-                required: true
-            },
-            lng: {
-                type: Number,
-                required: true
-            },
-            caption: {
-                type: String,
-                required: true
-            },
-            created_at: {
-                type: String,
-                required: false
-            },
-            reported_by: {
-                type: String,
-                required: false
-            },
-            bookmarks: {
-                type: Number,
-                required: true
-            },
-            approved: {
-                type: Number,
-                default: 0,
-                required: false
             },
             showDetails: {
                 type: Boolean,
@@ -127,11 +81,6 @@
             PhotoControllers
         },
         methods: {
-            openImage() {
-                if(this.isControllersVisible) {
-                    this.$store.dispatch("openPhoto", this);
-                }
-            },
             displayControllers() {
                 if(this.showControllers) {
                     this.isControllersVisible = true;

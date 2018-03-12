@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div :data-tent-sites="tentSites" v-if="isActive">
         <div class="modal" v-bind:class="{ 'is-active' : isActive }">
             <div class="modal-background" @click="destroy"></div>
             <transition enter-active-class="animated zoomIn">
@@ -10,18 +10,18 @@
                                 <div class="card" id="photo-container">
                                     <div class="card-image">
                                         <figure class="image is-4by3">
-                                            <img :src="activePhoto.img_location" />
+                                            <img :src="activeTentSite.img_location" />
                                             <div class="modal-navigate modal-navigate-prev is-clickable"
-                                                 @click.prevent="navigatePrev" v-if="!isFirstPhoto"></div>
+                                                 @click.prevent="navigatePrev"></div>
                                             <div class="modal-navigate modal-navigate-next is-clickable"
-                                                 @click.prevent="navigateNext" v-if="!isLastPhoto"></div>
+                                                 @click.prevent="navigateNext"></div>
                                         </figure>
                                     </div>
                                     <div class="card-content">
                                         <div class="media">
                                             <div class="media-left">
-                                                <p class="title is-4">{{ activePhoto.reported_by }}</p>
-                                                <p class="subtitle is-6">{{ activePhoto.created_at }}</p>
+                                                <p class="title is-4">{{ activeTentSite.reported_by }}</p>
+                                                <p class="subtitle is-6">{{ activeTentSite.created_at }}</p>
                                             </div>
                                             <div class="media-right">
                                                 <nav class="level">
@@ -44,15 +44,15 @@
                                                                    v-bind:class="bookmarkIcon"
                                                                    @click="toggleBookmark"></i>
                                                             </span>
-                                                            &nbsp;&nbsp;{{ activePhoto.bookmarks }}
+                                                            &nbsp;&nbsp;{{ activeTentSite.bookmarks.length }}
                                                         </div>
                                                     </div>
                                                 </nav>
                                             </div>
                                         </div>
-                                        <div class="content">{{ activePhoto.caption }}</div>
-                                        <div class="content is-small" v-if="activePhoto.taken_date">
-                                            Photo was taken {{ activePhoto.taken_date }}
+                                        <div class="content">{{ activeTentSite.caption }}</div>
+                                        <div class="content is-small" v-if="activeTentSite.taken_date">
+                                            Photo was taken {{ activeTentSite.taken_date }}
                                         </div>
                                     </div>
                                 </div>
@@ -70,7 +70,7 @@
                                 <photo-comments :comments="comments" id="photo-comments" />
                             </section>
                             <footer class="modal-card-foot">
-                                <photo-comment-form :id="activePhoto.id" :focus="focus"
+                                <photo-comment-form :id="activeTentSite.id" :focus="focus"
                                                     v-if="isUserActionsAvailable" />
                             </footer>
                         </div>
@@ -83,32 +83,29 @@
 </template>
 <script>
 
-    import Photo from './Photo.vue'
     import PhotoComments from './PhotoComments.vue'
     import PhotoCommentForm from './PhotoCommentForm.vue'
 
     export default {
-        name: 'PhotoGallery',
+        name: "PhotoGallery",
         data() {
             return {
-                hasUserBookmarked: false,
+                isActive: false,
                 focus: false,
                 activePage: "photo",
+                activeTentSite: null,
                 comments: [],
-                isFirstPhoto: false,
-                isLastPhoto: false
+                hasUserBookmarked: false,
+                order: {}
+            }
+        },
+        props: {
+            tentSites: {
+                type: Array,
+                required: true
             }
         },
         computed: {
-            isActive() {
-                return this.$store.state.gallery.isActive;
-            },
-            activePhoto() {
-                let photo = this.$store.state.gallery.activePhoto;
-                if(photo) {
-                    return photo;
-                }
-            },
             commentsCount() {
                 if(this.comments) {
                     return this.comments.length;
@@ -143,15 +140,15 @@
             }
         },
         created() {
-            var me = this;
+            let me = this;
             window.addEventListener("keyup", function(event) {
-                if(me.isActive && event.keyCode === 27) {
+                if(me.activeTentSite && event.keyCode === 27) {
                     me.destroy();
                 }
             });
 
             window.addEventListener("keyup", function(event) {
-                if(me.isActive) {
+                if(me.activeTentSite) {
                     if(event.keyCode === 37) {
                         me.navigatePrev();
                     } else if(event.keyCode === 39) {
@@ -161,35 +158,59 @@
             });
         },
         methods: {
+            openGallery(tentSite) {
+                this.activeTentSite = tentSite;
+                this.isActive = true;
+            },
             navigateNext() {
-                this.$store.dispatch("galleryNavigateNext");
+                let indexOfCurrent = this.tentSites.indexOf(this.activeTentSite);
+                if(indexOfCurrent === this.tentSites.length-1) {
+                    this.activeTentSite = this.tentSites[0];
+                } else {
+                    this.activeTentSite = this.tentSites[++indexOfCurrent];
+                }
             },
             navigatePrev() {
-                this.$store.dispatch("galleryNavigatePrev");
+                let indexOfCurrent = this.tentSites.indexOf(this.activeTentSite);
+                if(indexOfCurrent === 0) {
+                    this.activeTentSite = this.tentSites[this.tentSites.length-1];
+                } else {
+                    this.activeTentSite = this.tentSites[--indexOfCurrent];
+                }
             },
             destroy() {
-                this.$store.dispatch("destroyGallery");
                 this.comments = null;
-                this.hasUserBookmarked = false;
                 this.focus = false;
                 this.activePage = "photo";
+                this.activeTentSite = null;
+                this.isActive = false;
             },
             toggleBookmark() {
-                if(this.isUserActionsAvailable) {
+                if(this.isUserActionsAvailable && this.activeTentSite) {
+                    let me = this;
                     if(this.hasUserBookmarked) {
-                        this.hasUserBookmarked = false;
-                        this.$store.dispatch("removeBookmark", this.activePhoto.id);
+                        this.$store.dispatch("removeBookmark", this.activeTentSite).then(function() {
+                            let indexOfUser = me.activeTentSite.bookmarks.indexOf(me.$auth.user().id);
+                            if(indexOfUser > -1) {
+                                me.activeTentSite.bookmarks.splice(indexOfUser, 1);
+                            }
+                            me.hasUserBookmarked = false;
+                        });
                     } else {
-                        this.hasUserBookmarked = true;
-                        this.$store.dispatch("addBookmark", this.activePhoto.id);
+                        this.$store.dispatch("addBookmark", this.activeTentSite).then(function() {
+                            me.activeTentSite.bookmarks.push(me.$auth.user().id);
+                            me.hasUserBookmarked = true;
+                        });
                     }
                 }
             },
             toggleActivePage() {
-                this.activePage = (this.activePage == "photo" ? "comments" : "photo");
+                this.activePage = (this.activePage === "photo" ? "comments" : "photo");
             },
             viewOnMap() {
-                this.$store.dispatch("viewPhotoOnMap", this.activePhoto);
+                if(this.activeTentSite) {
+                    this.$store.dispatch("viewPhotoOnMap", this.activeTentSite);
+                }
             },
             toggleComment() {
                 this.toggleActivePage();
@@ -197,31 +218,19 @@
             }
         },
         watch: {
-            activePhoto(photo) {
-                if(typeof photo.id !== typeof undefined) {
-                    this.hasUserBookmarked = photo.hasUserBookmarked;
-                    let me = this;
-
-                    me.isFirstPhoto = (photo.id === me.$store.state.tentSites.firstPhotoId);
-                    me.isLastPhoto = (photo.id === me.$store.state.tentSites.lastPhotoId);
-
-                    if(typeof photo.comments !== typeof undefined) {
-                        me.comments = photo.comments;
-                    } else {
-                        Vue.axios.get("comments/" + photo.id).then(function handleSuccess(response) {
-                            if(typeof response.data !== typeof undefined) {
-                                let comments = Object.keys(response.data.data).map(key => response.data.data[key]);
-                                me.$store
-                                    .dispatch("addCommentsOnPhoto", { id: photo.id, comments: comments })
-                                    .then(() => { me.comments = comments });
-                            }
-                        }).catch(function handleError(error) {
-                            me.$store.dispatch("displayError", "Could not load comments.<br>Please try again later");
-                        });
-                    }
+            activeTentSite(tentSite) {
+                if(!tentSite) {
+                    this.hasUserBookmarked = false;
+                    return;
                 }
+
+                if(!this.$auth.user().id) {
+                    this.hasUserBookmarked = false;
+                    return;
+                }
+                this.hasUserBookmarked = (tentSite.bookmarks.indexOf(this.$auth.user().id) > -1);
             }
         },
-        components: { Photo, PhotoComments, PhotoCommentForm }
+        components: { PhotoComments, PhotoCommentForm }
     }
 </script>

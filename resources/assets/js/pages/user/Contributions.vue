@@ -1,58 +1,46 @@
 <template>
     <div>
-        <div v-if="tentSites">
-            <section class="hero">
-                <div class="hero-body">
-                    <div class="container">
-                        <h2 class="title">Your contributions <small>- displaying {{ tentSitesCount }}</small></h2>
-                        <div class="content">
-                            <span class="tag is-light is-clickable tooltip is-tooltip-top"
-                                  data-tooltip="Click to toggle filter"
-                                  @click="toggleFilter('approved')"
-                                  v-bind:class="{ 'is-success' : filter.approved }">
-                                {{ count.approved }} Approved
-                            </span>
-                            <span class="tag is-light is-clickable tooltip is-tooltip-top"
-                                  data-tooltip="Click to toggle filter"
-                                  @click="toggleFilter('denied')"
-                                  v-bind:class="{ 'is-warning' : filter.denied }">
-                                {{ count.denied }} Not approved
-                            </span>
-                            <span class="tag is-light is-clickable tooltip is-tooltip-top"
-                                  data-tooltip="Click to toggle filter"
-                                  @click="toggleFilter('waitingApproval')"
-                                  v-bind:class="{'is-info' : filter.waitingApproval }">
-                                {{ count.waitingApproval }} Waiting for approval
-                            </span>
-                        </div>
-                        <button class="button" @click.prevent="loadTentSites"
-                                v-if="!isLoaded" v-bind:class="{ 'is-loading disabled' : isLoading }">Try again</button>
-                        <div class="columns is-multiline is-mobile">
-                            <template v-for="tentSite in filteredTentSites">
-                                <photo class="column is-2" :id="tentSite.id"
-                                       :img_location="tentSite.img_location"
-                                       :thumbnail="tentSite.thumbnail"
-                                       :lat="tentSite.lat"
-                                       :lng="tentSite.lng"
-                                       :caption="tentSite.caption"
-                                       :reported_by="tentSite.reported_by"
-                                       :created_at="tentSite.created_at"
-                                       :bookmarks="tentSite.bookmarks"
-                                       :approved="tentSite.approved"
-                                       :showDetails="true"
-                                       :showControllers="false">
-                                </photo>
-                            </template>
+        <section class="hero">
+            <div class="hero-body">
+                <div class="container">
+                    <h2 class="title">Your contributions <small>- displaying {{ tentSitesCount }}</small></h2>
+                    <div class="content">
+                        <span class="tag is-light is-clickable tooltip is-tooltip-top"
+                              data-tooltip="Click to toggle filter"
+                              @click="toggleFilter('approved')"
+                              v-bind:class="{ 'is-success' : filter.approved }">
+                            {{ count.approved }} Approved
+                        </span>
+                        <span class="tag is-light is-clickable tooltip is-tooltip-top"
+                              data-tooltip="Click to toggle filter"
+                              @click="toggleFilter('denied')"
+                              v-bind:class="{ 'is-warning' : filter.denied }">
+                            {{ count.denied }} Not approved
+                        </span>
+                        <span class="tag is-light is-clickable tooltip is-tooltip-top"
+                              data-tooltip="Click to toggle filter"
+                              @click="toggleFilter('waitingApproval')"
+                              v-bind:class="{'is-info' : filter.waitingApproval }">
+                            {{ count.waitingApproval }} Waiting for approval
+                        </span>
+                    </div>
+                    <button class="button" @click.prevent="loadTentSites"
+                            v-if="!isLoaded" v-bind:class="{ 'is-loading disabled' : isLoading }">Try again</button>
+                    <div class="columns is-multiline is-mobile">
+                        <div class="column is-2" v-for="tentSite in filteredTentSites">
+                            <img :src="tentSite.thumbnail" class="is-clickable" @click="openGallery(tentSite)" />
                         </div>
                     </div>
                 </div>
-            </section>
-        </div>
+            </div>
+        </section>
+        <photo-gallery :tent-sites="tentSites" ref="gallery"></photo-gallery>
     </div>
 </template>
 <script>
 
-    import Photo from "../../components/Photo.vue";
+    import Photo from "../../components/Photo.vue"
+    import PhotoGallery from "../../components/PhotoGallery.vue"
 
     export default {
         name: "User-contributions",
@@ -96,6 +84,9 @@
             }
         },
         methods: {
+            openGallery(tentSite) {
+                this.$refs.gallery.openGallery(tentSite);
+            },
             toggleFilter(key) {
                 this.filter[key] = (this.filter[key] ? false : true);
             },
@@ -157,6 +148,7 @@
            this.loadTentSites();
         },
         components: {
+            PhotoGallery,
             Photo
         }
     }
