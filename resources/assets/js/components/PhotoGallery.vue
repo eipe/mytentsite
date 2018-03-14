@@ -26,8 +26,7 @@
                                             <div class="media-right">
                                                 <nav class="level">
                                                     <div class="level-left">
-                                                        <div class="level-item"
-                                                             v-if="isUserActionsAvailable">
+                                                        <div class="level-item">
                                                             <span @click="toggleComment"
                                                                   class="button is-small tooltip is-tooltip-top"
                                                                   data-tooltip="View comments and/or add your own">Comments ({{ commentsCount }})</span>
@@ -36,7 +35,7 @@
                                                             <span @click="viewOnMap" data-tooltip="View tent site on map"
                                                                   class="button is-small tooltip is-tooltip-top">View on map</span>
                                                         </div>
-                                                         <div class="level-item" v-if="isUserActionsAvailable">
+                                                         <div class="level-item">
                                                             <span class="tooltip is-tooltip-top is-tooltip-multiline"
                                                                   data-tooltip="Click to add/remove tent site bookmark. Review your bookmarks in user profile">
                                                                 <i class="fa"
@@ -44,7 +43,7 @@
                                                                    v-bind:class="bookmarkIcon"
                                                                    @click="toggleBookmark"></i>
                                                             </span>
-                                                            &nbsp;&nbsp;{{ activeTentSite.bookmarks.length }}
+                                                            &nbsp;&nbsp;{{ bookmarks.length }}
                                                         </div>
                                                     </div>
                                                 </nav>
@@ -70,7 +69,7 @@
                                 <photo-comments :comments="comments" id="photo-comments" />
                             </section>
                             <footer class="modal-card-foot">
-                                <photo-comment-form :id="activeTentSite.id" :focus="focus"
+                                <photo-comment-form :tent-site="activeTentSite" :focus="focus"
                                                     v-if="isUserActionsAvailable" />
                             </footer>
                         </div>
@@ -94,7 +93,6 @@
                 focus: false,
                 activePage: "photo",
                 activeTentSite: null,
-                comments: [],
                 hasUserBookmarked: false,
                 order: {}
             }
@@ -106,11 +104,23 @@
             }
         },
         computed: {
+            comments() {
+                if(this.activeTentSite.comments) {
+                    return this.activeTentSite.comments;
+                }
+                return [];
+            },
             commentsCount() {
                 if(this.comments) {
                     return this.comments.length;
                 }
                 return 0;
+            },
+            bookmarks() {
+                if(this.activeTentSite.bookmarks) {
+                    return this.activeTentSite.bookmarks;
+                }
+                return [];
             },
             bookmarkTitle() {
                 if(this.isUserActionsAvailable) {
@@ -179,7 +189,6 @@
                 }
             },
             destroy() {
-                this.comments = null;
                 this.focus = false;
                 this.activePage = "photo";
                 this.activeTentSite = null;
@@ -192,13 +201,13 @@
                         this.$store.dispatch("removeBookmark", this.activeTentSite).then(function() {
                             let indexOfUser = me.activeTentSite.bookmarks.indexOf(me.$auth.user().id);
                             if(indexOfUser > -1) {
-                                me.activeTentSite.bookmarks.splice(indexOfUser, 1);
+                                me.bookmarks.splice(indexOfUser, 1);
                             }
                             me.hasUserBookmarked = false;
                         });
                     } else {
                         this.$store.dispatch("addBookmark", this.activeTentSite).then(function() {
-                            me.activeTentSite.bookmarks.push(me.$auth.user().id);
+                            me.bookmarks.push(me.$auth.user().id);
                             me.hasUserBookmarked = true;
                         });
                     }
@@ -224,11 +233,30 @@
                     return;
                 }
 
+                let me = this;
+                if(typeof tentSite.comments == "undefined") {
+                    Vue.axios.get('comments/' + this.activeTentSite.id).then(function handleResponse(response) {
+                        if(typeof response.data !== typeof undefined) {
+                            for (let commentKey in response.data.data) {
+                                if(!response.data.data.hasOwnProperty(commentKey)) {
+                                    continue;
+                                }
+                                me.$store.dispatch(
+                                    "addCommentOnPhoto", {
+                                        id: me.activeTentSite.id,
+                                        comment: response.data.data[commentKey]
+                                    }
+                                );
+                            }
+                        }
+                    });
+                }
+
                 if(!this.$auth.user().id) {
                     this.hasUserBookmarked = false;
                     return;
                 }
-                this.hasUserBookmarked = (tentSite.bookmarks.indexOf(this.$auth.user().id) > -1);
+                this.hasUserBookmarked = (this.bookmarks.indexOf(this.$auth.user().id) > -1);
             }
         },
         components: { PhotoComments, PhotoCommentForm }

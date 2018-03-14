@@ -50,17 +50,31 @@ Vue.axios.defaults.baseURL = "/api/";
 // Define store
 const store = new Vuex.Store({
     state: {
-        tentSites: {
-            apiUrl: "/tentsites",
-            hasMore: true,
-            firstPhotoId: null,
-            lastPhotoId: null,
-            data: []
-        },
+        tentSites: {},
         beta: false,
         error: null,
     },
     mutations: {
+        addTentSite(state, tentSite) {
+            if(state.tentSites[tentSite["id"]]) {
+                return;
+            }
+
+            state.tentSites[tentSite["id"]] = {
+                id: tentSite["id"],
+                reported_by: tentSite["reported_by"],
+                lat: tentSite["latitude"],
+                lng: tentSite["longitude"],
+                bookmarks: tentSite["likes"],
+                img_location: tentSite["img_location"],
+                thumbnail: tentSite["thumbnail_location"],
+                caption: tentSite["caption"],
+                created_at: tentSite["created_at"],
+                updated_at: tentSite["updated_at"],
+                approved: tentSite["approved"],
+                taken_date: tentSite["taken_date"]
+            };
+        },
         addBookmark(state, tentSite) {
             let me = this;
             Vue.axios.post("/like/" + tentSite.id).then(function () {
@@ -77,70 +91,21 @@ const store = new Vuex.Store({
             });
         },
         addCommentOnPhoto(state, data) {
-            let tentSiteId = data.id,
-                tentSite = state.$store.tentSites.data[tentSiteId];
+            let tentSite = state.tentSites[data.id];
             if(tentSite) {
+                if(typeof tentSite.comments == "undefined") {
+                    tentSite.comments = [];
+                }
                 tentSite.comments.push(data.comment);
-            }
-        },
-        addCommentsOnPhoto(state, data) {
-            let tentSiteId = data.id,
-                tentSite = state.$store.tentSites.data[tentSiteId];
-            if(tentSite) {
-                tentSite.comments = data.comments;
             }
         },
         setError(state, error) {
             state.error = error;
-        },
-        loadMoreTentSites(state) {
-            return new Promise((resolve, reject) => {
-                if(!state.tentSites.hasMore) {
-                    reject("Has no more tent sites");
-                }
-
-                Vue.axios.get(state.tentSites.apiUrl).then(function(response) {
-                    let responseData = response.data.data;
-                    if(responseData.next_page_url) {
-                        state.tentSites.apiUrl = responseData.next_page_url;
-                    } else {
-                        state.tentSites.hasMore = false;
-                    }
-
-                    if(typeof responseData.data !== typeof undefined && responseData.data.length > 0) {
-                        let lastNewPhotoId = null;
-                        responseData.data.forEach(function (photo) {
-                            if(!state.tentSites.firstPhotoId) {
-                                state.tentSites.firstPhotoId = photo["id"];
-                            }
-                            state.tentSites.data.push({
-                                id: photo["id"],
-                                reported_by: photo["reported_by"],
-                                lat: photo["latitude"],
-                                lng: photo["longitude"],
-                                bookmarks: photo["likes"],
-                                img_location: photo["img_location"],
-                                thumbnail: photo["thumbnail_location"],
-                                caption: photo["caption"],
-                                created_at: photo["created_at"],
-                                updated_at: photo["updated_at"],
-                                approved: photo["approved"],
-                                taken_date: photo["taken_date"]
-                            });
-                            lastNewPhotoId = photo["id"];
-                        });
-                        state.tentSites.lastPhotoId = lastNewPhotoId;
-                    }
-                    resolve();
-                }).catch(function(error) {
-                    reject(error);
-                });
-            });
         }
     },
     actions: {
-        loadMoreTentSites(state) {
-            state.commit("loadMoreTentSites");
+        addTentSite(state, tentSite) {
+            state.commit("addTentSite", tentSite);
         },
         viewPhotoOnMap(state, photo) {
             Vue.router.push({

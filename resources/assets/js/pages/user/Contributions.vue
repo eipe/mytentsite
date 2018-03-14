@@ -34,7 +34,7 @@
                 </div>
             </div>
         </section>
-        <photo-gallery :tent-sites="tentSites" ref="gallery"></photo-gallery>
+        <photo-gallery :tent-sites="filteredTentSites" ref="gallery"></photo-gallery>
     </div>
 </template>
 <script>
@@ -46,7 +46,8 @@
         name: "User-contributions",
         data() {
             return {
-                tentSites: [],
+                tentSiteIds: [],
+                tentSiteStates: {},
                 isLoaded: false,
                 isLoading: false,
                 count: {
@@ -69,11 +70,20 @@
                     "waitingApproval": this.filter.waitingApproval
                 };
             },
+            tentSites() {
+                let me = this;
+                return me.tentSiteIds.map(function (id) {
+                    if(me.$store.state.tentSites.hasOwnProperty(id)) {
+                        return me.$store.state.tentSites[id];
+                    }
+                });
+            },
             filteredTentSites() {
                 let me = this,
                     filtered = [];
+
                 me.tentSites.forEach(function(tentSite) {
-                    if(me.activeFilters[tentSite.state]) {
+                    if(me.activeFilters[me.tentSiteStates[tentSite.id]]) {
                         filtered.push(tentSite);
                     }
                 });
@@ -90,48 +100,27 @@
             toggleFilter(key) {
                 this.filter[key] = (this.filter[key] ? false : true);
             },
-            addTentSite(tentSite) {
-                this.tentSites.push(tentSite);
-                if(tentSite.approved > 0) {
-                    this.count.approved++;
-                } else if(tentSite.approved < 0) {
-                    this.count.denied++;
-                } else {
-                    this.count.waitingApproval++;
-                }
-            },
             loadTentSites() {
                 let me = this;
-                me.tentSites = [];
                 me.isLoading = true;
                 Vue.axios.get("usersites").then(function success(success) {
                     if(typeof success.data !== typeof undefined) {
-                        success.data.data.forEach(function (photo) {
-
-                            let approved = parseInt(photo["approved"]),
-                                state = 'waitingApproval';
+                        success.data.data.forEach(function (tentSite) {
+                            let approved = parseInt(tentSite["approved"]);
 
                             if(approved > 0) {
-                                state = 'approved';
+                                me.tentSiteStates[tentSite["id"]] = 'approved';
+                                me.count.approved++;
                             } else if(approved < 0) {
-                                state = 'denied';
+                                me.tentSiteStates[tentSite["id"]] = 'denied';
+                                me.count.denied++;
+                            } else {
+                                me.tentSiteStates[tentSite["id"]] = 'waitingApproval';
+                                me.count.waitingApproval++;
                             }
 
-                            me.addTentSite({
-                                id: photo["id"],
-                                reported_by: photo["reported_by"],
-                                lat: photo["latitude"],
-                                lng: photo["longitude"],
-                                bookmarks: photo["likes"],
-                                img_location: photo["img_location"],
-                                thumbnail: photo["thumbnail_location"],
-                                caption: photo["caption"],
-                                created_at: photo["created_at"],
-                                updated_at: photo["updated_at"],
-                                approved: approved,
-                                state: state,
-                                comments: []
-                            });
+                            me.$store.dispatch("addTentSite", tentSite);
+                            me.tentSiteIds.push(tentSite.id);
                         });
                         me.isLoaded = true;
                         me.isLoading = false;
@@ -139,7 +128,6 @@
                 }).catch(function error(error) {
                     me.isLoading = false;
                     me.isLoaded = false;
-                    me.tentSites = [];
                     me.$store.dispatch("displayError", "Could not load your contributions. <br>Please try again later");
                 });
             }

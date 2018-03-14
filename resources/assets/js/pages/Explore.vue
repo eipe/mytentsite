@@ -28,12 +28,17 @@
         name: "Explore",
         data() {
             return {
-                isLoadingMore: false
+                apiUrl: "tentsites",
+                isLoadingMore: false,
+                tentSiteIds: [],
+                hasMore: true,
+                firstPhotoId: null,
+                lastPhotoId: null,
             }
         },
         created() {
             if(typeof this.tentSites === typeof undefined || this.tentSites.length === 0) {
-                this.$store.dispatch("loadMoreTentSites");
+                this.loadMoreTentSites();
             }
         },
         methods: {
@@ -43,17 +48,52 @@
             loadMore() {
                 let me = this;
                 this.isLoadingMore = true;
-                this.$store.dispatch("loadMoreTentSites").then(function() {
+                this.loadMoreTentSites().then(function() {
                     me.isLoadingMore = false;
+                });
+            },
+            loadMoreTentSites() {
+                let me = this;
+                return new Promise((resolve, reject) => {
+                    if(!me.hasMore) {
+                        reject("Has no more tent sites");
+                    }
+
+                    Vue.axios.get(me.apiUrl).then(function(response) {
+                        let responseData = response.data.data;
+                        if(responseData.next_page_url) {
+                            me.apiUrl = responseData.next_page_url;
+                        } else {
+                            me.hasMore = false;
+                        }
+
+                        if(typeof responseData.data !== typeof undefined && responseData.data.length > 0) {
+                            let lastNewPhotoId = null;
+                            responseData.data.forEach(function (photo) {
+                                if(!me.firstPhotoId) {
+                                    me.firstPhotoId = photo["id"];
+                                }
+                                me.$store.dispatch("addTentSite", photo);
+                                me.tentSiteIds.push(photo["id"]);
+                                lastNewPhotoId = photo["id"];
+                            });
+                            me.lastPhotoId = lastNewPhotoId;
+                        }
+                        resolve();
+                    }).catch(function(error) {
+                        reject(error);
+                    });
                 });
             }
         },
         computed: {
-            hasMore() {
-                return this.$store.state.tentSites.hasMore;
-            },
             tentSites() {
-                return this.$store.state.tentSites.data;
+                let me = this;
+                return me.tentSiteIds.map(function (id) {
+                    if(me.$store.state.tentSites.hasOwnProperty(id)) {
+                        return me.$store.state.tentSites[id];
+                    }
+                });
             }
         },
         components: {
