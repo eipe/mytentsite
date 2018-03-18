@@ -46,7 +46,7 @@
                     comment: me.comment
                 }).then(function(response) {
                     me.isPostingComment = false;
-                    me.$store.dispatch("addCommentOnPhoto", { id: me.tentSite.id, comment: response.data.data });
+                    me.$store.dispatch("addCommentOnPhoto", { tentSite: me.tentSite, comment: response.data.data });
                     me.reset();
                 }).catch(function(error) {
                     if(typeof error.response.data.data.form_validations !== typeof undefined) {

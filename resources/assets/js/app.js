@@ -60,11 +60,16 @@ const store = new Vuex.Store({
                 return;
             }
 
+            if(typeof tentSite.comments === "undefined") {
+                tentSite.comments = [];
+            }
+
             state.tentSites[tentSite["id"]] = {
                 id: tentSite["id"],
                 reported_by: tentSite["reported_by"],
                 lat: tentSite["latitude"],
                 lng: tentSite["longitude"],
+                comments: tentSite["comments"],
                 bookmarks: tentSite["likes"],
                 img_location: tentSite["img_location"],
                 thumbnail: tentSite["thumbnail_location"],
@@ -91,9 +96,9 @@ const store = new Vuex.Store({
             });
         },
         addCommentOnPhoto(state, data) {
-            let tentSite = state.tentSites[data.id];
+            let tentSite = data.tentSite;
             if(tentSite) {
-                if(typeof tentSite.comments == "undefined") {
+                if(typeof tentSite.comments === "undefined") {
                     tentSite.comments = [];
                 }
                 tentSite.comments.push(data.comment);
@@ -125,8 +130,31 @@ const store = new Vuex.Store({
         addCommentOnPhoto(state, data) {
             state.commit("addCommentOnPhoto", data);
         },
-        addCommentsOnPhoto(state, data) {
-            state.commit("addCommentsOnPhoto", data);
+        loadCommentsForTentSite(state, tentSite) {
+            return new Promise((resolve, reject)  => {
+                // Reject if comments are already initialized
+                if(typeof tentSite.comments !== "undefined") {
+                    reject("Comments are already initialized");
+                }
+
+                Vue.axios.get("/comments/" + tentSite.id).then(response => {
+                    if(typeof response.data !== typeof undefined) {
+                        for (let commentKey in response.data.data) {
+                            if(!response.data.data.hasOwnProperty(commentKey)) {
+                                continue;
+                            }
+                            state.commit("addCommentOnPhoto", {
+                                    tentSite: tentSite,
+                                    comment: response.data.data[commentKey]
+                                }
+                            );
+                        }
+                    }
+                    resolve();
+                }, error => {
+                    reject(error);
+                });
+            });
         },
         displayError(state, error) {
             state.commit("setError", error);

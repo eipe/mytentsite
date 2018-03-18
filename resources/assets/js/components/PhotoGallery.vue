@@ -29,7 +29,7 @@
                                                         <div class="level-item">
                                                             <span @click="toggleComment"
                                                                   class="button is-small tooltip is-tooltip-top"
-                                                                  data-tooltip="View comments and/or add your own">Comments ({{ commentsCount }})</span>
+                                                                  data-tooltip="View comments and/or add your own">Comments ({{ comments.length }})</span>
                                                         </div>
                                                         <div class="level-item">
                                                             <span @click="viewOnMap" data-tooltip="View tent site on map"
@@ -61,7 +61,7 @@
                     <transition enter-active-class="animated slideInUp">
                         <div class="modal-card is-paddingless is-marginless" v-if="activePage === 'comments'">
                             <header class="modal-card-head">
-                                <p class="modal-card-title">Comments ({{ commentsCount }})</p>
+                                <p class="modal-card-title">Comments ({{ comments.length }})</p>
                                 <span class="button is-link is-pulled-right"
                                       @click.prevent="toggleActivePage()">Back</span>
                             </header>
@@ -94,7 +94,7 @@
                 activePage: "photo",
                 activeTentSite: null,
                 hasUserBookmarked: false,
-                order: {}
+                order: {},
             }
         },
         props: {
@@ -105,16 +105,7 @@
         },
         computed: {
             comments() {
-                if(this.activeTentSite.comments) {
-                    return this.activeTentSite.comments;
-                }
-                return [];
-            },
-            commentsCount() {
-                if(this.comments) {
-                    return this.comments.length;
-                }
-                return 0;
+                return this.activeTentSite.comments;
             },
             bookmarks() {
                 if(this.activeTentSite.bookmarks) {
@@ -152,14 +143,10 @@
         created() {
             let me = this;
             window.addEventListener("keyup", function(event) {
-                if(me.activeTentSite && event.keyCode === 27) {
-                    me.destroy();
-                }
-            });
-
-            window.addEventListener("keyup", function(event) {
-                if(me.activeTentSite) {
-                    if(event.keyCode === 37) {
+                if(me.isActive) {
+                    if(event.keyCode === 27) {
+                        me.destroy();
+                    } else if(event.keyCode === 37) {
                         me.navigatePrev();
                     } else if(event.keyCode === 39) {
                         me.navigateNext();
@@ -169,6 +156,7 @@
         },
         methods: {
             openGallery(tentSite) {
+
                 this.activeTentSite = tentSite;
                 this.isActive = true;
             },
@@ -229,34 +217,18 @@
         watch: {
             activeTentSite(tentSite) {
                 if(!tentSite) {
-                    this.hasUserBookmarked = false;
                     return;
-                }
-
-                let me = this;
-                if(typeof tentSite.comments == "undefined") {
-                    Vue.axios.get('comments/' + this.activeTentSite.id).then(function handleResponse(response) {
-                        if(typeof response.data !== typeof undefined) {
-                            for (let commentKey in response.data.data) {
-                                if(!response.data.data.hasOwnProperty(commentKey)) {
-                                    continue;
-                                }
-                                me.$store.dispatch(
-                                    "addCommentOnPhoto", {
-                                        id: me.activeTentSite.id,
-                                        comment: response.data.data[commentKey]
-                                    }
-                                );
-                            }
-                        }
-                    });
                 }
 
                 if(!this.$auth.user().id) {
                     this.hasUserBookmarked = false;
-                    return;
+                } else {
+                    this.hasUserBookmarked = (tentSite.bookmarks.indexOf(this.$auth.user().id) > -1);
                 }
-                this.hasUserBookmarked = (this.bookmarks.indexOf(this.$auth.user().id) > -1);
+
+                if(tentSite.comments.length === 0) {
+                    this.$store.dispatch("loadCommentsForTentSite", tentSite);
+                }
             }
         },
         components: { PhotoComments, PhotoCommentForm }
