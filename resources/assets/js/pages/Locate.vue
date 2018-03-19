@@ -70,12 +70,13 @@
             return {
                 latitude: 61.651221,
                 longitude: 8.557483,
-                zoom: 4
+                zoom: 4,
+                tentSiteIds: [],
             }
         },
         computed: {
             tentSites() {
-                return this.$store.state.tentSites.data;
+                return this.$store.state.tentSites;
             },
             position() {
                 return new L.LatLng(this.latitude, this.longitude);
@@ -90,6 +91,24 @@
                 this.latitude = this.$route.query.latitude;
                 this.longitude = this.$route.query.longitude;
                 this.zoom = 11;
+            }
+
+            let me = this,
+                tentSiteIds = Object.keys(this.tentSites);
+
+            if(tentSiteIds.length > 0) {
+                tentSiteIds.filter(tentSiteId => {
+                    if(me.tentSiteIds.indexOf(tentSiteId) === -1) {
+                        return tentSiteId;
+                    }
+                });
+
+                let newTentSites = [];
+                tentSiteIds.forEach(tentSiteId => {
+                    newTentSites.push(me.tentSites[tentSiteId]);
+                    me.tentSiteIds.push(tentSiteId);
+                });
+                placeSites(newTentSites);
             }
         },
         methods: {
@@ -135,12 +154,6 @@
                     locationButton.enable();
                     locationButton.state("locate");
                 });
-
-                if(this.tentSites.length === 0) {
-                    me.$store.commit("loadMoreTentSites");
-                }
-
-                placeSites(this.tentSites);
             },
             updateView: function() {
                 TentMap.setView(
@@ -151,9 +164,6 @@
             }
         },
         watch: {
-            tentSites(newSites) {
-                placeSites(newSites);
-            },
             position() {
                 this.updateView();
             }
