@@ -154,12 +154,12 @@ class TentSitesController extends Controller
 
     public function getUserTentSites() {
         $m = self::MODEL;
-        return $this->listResponse($m::where('reported_by', Auth::id())->latest()->get());
+        return $this->listResponse($m::query()->where('reported_by', Auth::id())->latest()->get());
     }
 
     public function getBookmarkedTentSites() {
         $m = self::MODEL;
-        return $this->listResponse(DB::table('tent_sites')->join('likes', function($join) {
+        return $this->listResponse($m::query()->join('likes', function($join) {
             /* @var JoinClause $join */
             $join->on('tent_sites.id', '=', 'likes.tent_sites_id')->where('likes.user_id', '=', Auth::id())->whereNull('deleted_at');
         })->select('tent_sites.*')->get());

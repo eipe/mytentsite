@@ -54,10 +54,6 @@
                 Vue.axios.get("bookmarks").then(function success(success) {
                     if(typeof success.data !== typeof undefined) {
                         success.data.data.forEach(function (tentSite) {
-                            // Todo: Fix API and provide correct path to images
-                            tentSite["thumbnail_location"] = '/storage/photos/tentsite_thumbnails/' + tentSite.img_location;
-                            tentSite["img_location"] = '/storage/photos/tentsites/' + tentSite.img_location;
-                            tentSite["bookmarks"] = [];
                             me.$store.dispatch("addTentSite", tentSite);
                             me.tentSiteIds.push(tentSite["id"]);
                         });
