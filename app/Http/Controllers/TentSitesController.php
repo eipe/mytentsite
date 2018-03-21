@@ -121,7 +121,7 @@ class TentSitesController extends Controller
             $tentSites = $this->getWithinArea($lat, $lng, $rad);
         } else {
             $m = self::MODEL;
-            $tentSites= $m::where('approved', 1)->latest()->paginate(9);
+            $tentSites= $m::query()->where('approved', 1)->latest()->paginate(9);
         }
         return $this->listResponse($tentSites);
     }
@@ -154,20 +154,27 @@ class TentSitesController extends Controller
 
     public function getUserTentSites() {
         $m = self::MODEL;
-        return $this->listResponse($m::query()->where('reported_by', Auth::id())->latest()->get());
+        return $this->listResponse($m::withTrashed()->where('reported_by', Auth::id())->latest()->get());
     }
 
     public function getBookmarkedTentSites() {
         $m = self::MODEL;
-        return $this->listResponse($m::query()->join('likes', function($join) {
-            /* @var JoinClause $join */
-            $join->on('tent_sites.id', '=', 'likes.tent_sites_id')->where('likes.user_id', '=', Auth::id())->whereNull('deleted_at');
-        })->select('tent_sites.*')->get());
+        return $this->listResponse(
+            $m::query()
+                ->where('approved', 1)
+                ->join('likes', function($join) {
+                    /* @var JoinClause $join */
+                    $join->on('tent_sites.id', '=', 'likes.tent_sites_id')
+                        ->where('likes.user_id', '=', Auth::id());
+                })
+                ->select('tent_sites.*')
+                ->get()
+        );
     }
 
     public function getUnapproved() {
         $m = self::MODEL;
-        return $this->listResponse($m::where('approved', 0)->oldest()->get());
+        return $this->listResponse($m::query()->where('approved', 0)->oldest()->get());
     }
 
     public function approve($id) {
@@ -177,7 +184,7 @@ class TentSitesController extends Controller
             $tentSite = $m::get()->where('id', $id)->first();
             $tentSite->setAttribute('approved', true);
             $tentSite->save();
-            \Log::info('Tentsite #'. $id .' approved.' );
+            \Log::info('Tent site #'. $id .' approved.' );
             return $this->showResponse($tentSite);
         } catch(\Exception $exception) {
             return $this->clientErrorResponse(['exception' => $exception->getMessage()]);
@@ -191,8 +198,34 @@ class TentSitesController extends Controller
             $tentSite = $m::get()->where('id', $id)->first();
             $tentSite->setAttribute('approved', -1);
             $tentSite->save();
-            \Log::info('Tentsite #'. $id .' denied.' );
+            \Log::info('Tent site #'. $id .' denied.' );
             return $this->deletedResponse();
+        } catch(\Exception $exception) {
+            return $this->clientErrorResponse(['exception' => $exception->getMessage()]);
+        }
+    }
+
+    public function delete($id) {
+        try {
+            $m = self::MODEL;
+            /* @var TentSites $tentSite */
+            $tentSite = $m::query()->where('id', $id)->first();
+            $tentSite->delete();
+            \Log::info('Tent site #'. $id .' deleted' );
+            return $this->showResponse($tentSite);
+        } catch(\Exception $exception) {
+            return $this->clientErrorResponse(['exception' => $exception->getMessage()]);
+        }
+    }
+
+    public function restore($id) {
+        try {
+            $m = self::MODEL;
+            /* @var TentSites $tentSite */
+            $tentSite = $m::withTrashed()->where('id', $id)->first();
+            $tentSite->restore();
+            \Log::info('Tent site #'. $id .' deleted' );
+            return $this->showResponse($tentSite);
         } catch(\Exception $exception) {
             return $this->clientErrorResponse(['exception' => $exception->getMessage()]);
         }

@@ -61,6 +61,9 @@ $api->version(['v1'], function(\Dingo\Api\Routing\Router $api) {
         // Add comment on tent site
         $api->post('/comments/{id}', 'App\Http\Controllers\CommentController@store');
 
+        $api->delete('/delete/{id}', 'App\Http\Controllers\TentSitesController@delete');
+        $api->post('/restore/{id}', 'App\Http\Controllers\TentSitesController@restore');
+
         // #Admin routes
         // Fetch unapproved tent sites
         $api->get('/unapproved', 'App\Http\Controllers\TentSitesController@getUnapproved');

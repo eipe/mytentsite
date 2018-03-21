@@ -77,8 +77,15 @@ const store = new Vuex.Store({
                 created_at: tentSite["created_at"],
                 updated_at: tentSite["updated_at"],
                 approved: tentSite["approved"],
-                taken_date: tentSite["taken_date"]
+                taken_date: tentSite["taken_date"],
+                deleted: tentSite["deleted_at"]
             };
+        },
+        removeTentSite(state, tentSite) {
+            if(state.tentSites[tentSite.id]) {
+                return;
+            }
+            delete state.tentSites[tentSite.id];
         },
         addBookmark(state, tentSite) {
             let me = this;
@@ -112,6 +119,9 @@ const store = new Vuex.Store({
         addTentSite(state, tentSite) {
             state.commit("addTentSite", tentSite);
         },
+        removeTentSite(state, tentSite) {
+            state.commit("removeTentSite", tentSite);
+        },
         viewPhotoOnMap(state, photo) {
             Vue.router.push({
                 path: "/locate",
@@ -132,11 +142,6 @@ const store = new Vuex.Store({
         },
         loadCommentsForTentSite(state, tentSite) {
             return new Promise((resolve, reject)  => {
-                // Reject if comments are already initialized
-                if(typeof tentSite.comments !== "undefined") {
-                    reject("Comments are already initialized");
-                }
-
                 Vue.axios.get("/comments/" + tentSite.id).then(response => {
                     if(typeof response.data !== typeof undefined) {
                         for (let commentKey in response.data.data) {

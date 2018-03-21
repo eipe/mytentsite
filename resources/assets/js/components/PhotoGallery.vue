@@ -27,15 +27,6 @@
                                                 <nav class="level">
                                                     <div class="level-left">
                                                         <div class="level-item">
-                                                            <span @click="toggleComment"
-                                                                  class="button is-small tooltip is-tooltip-top"
-                                                                  data-tooltip="View comments and/or add your own">Comments ({{ comments.length }})</span>
-                                                        </div>
-                                                        <div class="level-item">
-                                                            <span @click="viewOnMap" data-tooltip="View tent site on map"
-                                                                  class="button is-small tooltip is-tooltip-top">View on map</span>
-                                                        </div>
-                                                         <div class="level-item">
                                                             <span class="tooltip is-tooltip-top is-tooltip-multiline"
                                                                   data-tooltip="Click to add/remove tent site bookmark. Review your bookmarks in user profile">
                                                                 <i class="fa"
@@ -44,6 +35,30 @@
                                                                    @click="toggleBookmark"></i>
                                                             </span>
                                                             &nbsp;&nbsp;{{ bookmarks.length }}
+                                                        </div>
+                                                        <div class="level-item">
+                                                            <span @click="toggleComment"
+                                                                  class="button is-small tooltip is-tooltip-top"
+                                                                  data-tooltip="View comments and/or add your own">Comments ({{ comments.length }})</span>
+                                                        </div>
+                                                        <div class="level-item">
+                                                            <span @click="viewOnMap" data-tooltip="View tent site on map"
+                                                                  class="button is-small tooltip is-tooltip-top">View on map</span>
+                                                        </div>
+                                                        <div class="level-item" v-if="isUserCreator">
+                                                            <span v-if="isDeleted" class="button is-success is-small tooltip is-tooltip-top"
+                                                                  v-bind:class="{ 'is-loading' : isDeleting }"
+                                                                  data-tooltip="Click to restore this contribution"
+                                                                  @click="restoreTentSite(activeTentSite)">
+                                                                Restore
+                                                            </span>
+                                                            <span class="button is-danger is-small tooltip is-tooltip-top"
+                                                                  v-bind:class="{ 'is-loading' : isDeleting }"
+                                                                  data-tooltip="Click to delete this contribution"
+                                                                  @click="deleteTentSite(activeTentSite)"
+                                                                  v-else>
+                                                                Delete
+                                                            </span>
                                                         </div>
                                                     </div>
                                                 </nav>
@@ -90,6 +105,7 @@
         data() {
             return {
                 isActive: false,
+                isDeleting: false,
                 focus: false,
                 activePage: "photo",
                 activeTentSite: null,
@@ -104,6 +120,19 @@
             }
         },
         computed: {
+            isDeleted() {
+                if(!this.activeTentSite) {
+                    return false;
+                }
+                return this.activeTentSite.deleted !== null;
+            },
+            isUserCreator() {
+                if(!this.activeTentSite) {
+                    return false;
+                }
+                // Todo: Use user id instead of name when available from API
+                return (this.$auth.user().name === this.activeTentSite.reported_by)
+            },
             comments() {
                 return this.activeTentSite.comments;
             },
@@ -156,9 +185,38 @@
         },
         methods: {
             openGallery(tentSite) {
-
                 this.activeTentSite = tentSite;
                 this.isActive = true;
+            },
+            deleteTentSite(tentSite) {
+                let me = this;
+                me.isDeleting = true;
+                Vue.axios.delete("delete/" + tentSite.id).then(success => {
+                    me.isDeleting = false;
+                    tentSite.deleted = success.data.data.deleted_at.date;
+                    me.$store.dispatch("removeTentSite", tentSite);
+                }, error => {
+                    me.isDeleting = false;
+                    me.$store.dispatch(
+                        "displayError",
+                        "Could not delete tent site, please try again. <br><br>If you are stuck with error messages, " +
+                        "please contact us so we can help you.<br>See information page for contact information");
+                });
+            },
+            restoreTentSite(tentSite) {
+                let me = this;
+                me.isDeleting = true;
+                Vue.axios.post("restore/" + tentSite.id).then(success => {
+                    me.isDeleting = false;
+                    tentSite.deleted = null;
+                    me.$store.dispatch("addTentSite", tentSite);
+                }, error => {
+                    me.isDeleting = false;
+                    me.$store.dispatch(
+                        "displayError",
+                        "Could not restore tent site, please try again. <br><br>If you are stuck with error messages, " +
+                        "please contact us so we can help you.<br>See information page for contact information");
+                });
             },
             navigateNext() {
                 let indexOfCurrent = this.tentSites.indexOf(this.activeTentSite);
