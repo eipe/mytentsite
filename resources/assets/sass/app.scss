@@ -37,6 +37,21 @@
   min-height: calc(100vh - #{$nav-height});
 }
 
+.is-relative {
+  position: relative;
+}
+
+.is-absolute {
+  position: absolute;
+
+  &.is-top {
+    top: 0;
+  }
+  &.is-right {
+    right: 0;
+  }
+}
+
 hr.border-dashed {
   border-style: dashed;
 }

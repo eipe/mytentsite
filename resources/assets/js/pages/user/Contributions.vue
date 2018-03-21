@@ -23,12 +23,21 @@
                               v-bind:class="{'is-info' : filter.waitingApproval }">
                             {{ count.waitingApproval }} Waiting for approval
                         </span>
+                        <span class="tag is-light is-clickable tooltip is-tooltip-top"
+                              data-tooltip="Click to toggle filter"
+                              @click="toggleFilter('deleted')"
+                              v-bind:class="{'is-danger' : filter.deleted }">
+                            {{ count.deleted }} Deleted
+                        </span>
                     </div>
                     <button class="button" @click.prevent="loadTentSites"
                             v-if="!isLoaded" v-bind:class="{ 'is-loading disabled' : isLoading }">Try again</button>
                     <div class="columns is-multiline is-mobile">
                         <div class="column is-2" v-for="tentSite in filteredTentSites">
-                            <img :src="tentSite.thumbnail" class="is-clickable" @click="openGallery(tentSite)" />
+                            <div class="is-relative">
+                                <span class="tag is-absolute is-top is-right" v-bind:class="stateClass(tentSite)"></span>
+                                <img :src="tentSite.thumbnail" class="is-clickable" @click="openGallery(tentSite)" @error="handleImageError" />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -53,12 +62,14 @@
                 count: {
                     approved: 0,
                     denied: 0,
-                    waitingApproval: 0
+                    waitingApproval: 0,
+                    deleted: 0
                 },
                 filter: {
                     approved: true,
                     denied: true,
-                    waitingApproval: true
+                    waitingApproval: true,
+                    deleted: false
                 }
             }
         },
@@ -67,7 +78,8 @@
                 return {
                     "approved": this.filter.approved,
                     "denied": this.filter.denied,
-                    "waitingApproval": this.filter.waitingApproval
+                    "waitingApproval": this.filter.waitingApproval,
+                    "deleted": this.filter.deleted
                 };
             },
             tentSites() {
@@ -94,6 +106,22 @@
             }
         },
         methods: {
+            handleImageError(event) {
+                event.target.src = '/images/500.png';
+            },
+            stateClass(tentSite) {
+                let state = this.tentSiteStates[tentSite.id];
+                if(state === 'deleted') {
+                    return 'is-danger';
+                } else if(state === 'approved') {
+                    return 'is-success';
+                } else if(state === 'denied') {
+                    return 'is-warning';
+                } else if(state === 'waitingApproval') {
+                    return 'is-info';
+                }
+                return '';
+            },
             openGallery(tentSite) {
                 this.$refs.gallery.openGallery(tentSite);
             },
@@ -108,7 +136,11 @@
                         success.data.data.forEach(function (tentSite) {
                             let approved = parseInt(tentSite["approved"]);
 
-                            if(approved > 0) {
+                            if(tentSite["deleted_at"] !== null) {
+                                me.tentSiteStates[tentSite["id"]] = 'deleted';
+                                me.count.deleted++;
+                            }
+                            else if(approved > 0) {
                                 me.tentSiteStates[tentSite["id"]] = 'approved';
                                 me.count.approved++;
                             } else if(approved < 0) {
