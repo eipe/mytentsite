@@ -165,7 +165,8 @@ class TentSitesController extends Controller
                 ->join('likes', function($join) {
                     /* @var JoinClause $join */
                     $join->on('tent_sites.id', '=', 'likes.tent_sites_id')
-                        ->where('likes.user_id', '=', Auth::id());
+                        ->where('likes.user_id', '=', Auth::id())
+                        ->whereNull('likes.deleted_at');
                 })
                 ->select('tent_sites.*')
                 ->get()
