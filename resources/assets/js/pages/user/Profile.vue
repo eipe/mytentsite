@@ -35,11 +35,6 @@
                     }
                 });
             }
-        },
-        created() {
-            if(!this.$auth.user().name) {
-                this.$auth.fetch();
-            }
         }
     }
 </script>
