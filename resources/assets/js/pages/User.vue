@@ -1,12 +1,23 @@
 <template>
-    <div class="page page-allow-overflow">
-        <nav class="nav white">
-            <div class="nav-center">
-                <div class="nav-item"><router-link to="/user/profile">Profile</router-link></div>
-                <div class="nav-item"><router-link to="/user/bookmarks">Bookmarked</router-link></div>
-                <div class="nav-item"><router-link to="/user/contributions">Contributions</router-link></div>
+    <div>
+        <section class="hero is-info">
+            <div class="hero-body">
+                <div class="container">
+                    <h1 class="title">Hi, {{ $auth.user().name }}!</h1>
+                </div>
             </div>
-        </nav>
+            <div class="hero-foot">
+                <div class="container">
+                    <div class="tabs is-boxed">
+                        <ul>
+                            <router-link to="/user/profile" tag="li"><a>Profile</a></router-link>
+                            <router-link to="/user/bookmarks" tag="li"><a>Bookmarked</a></router-link>
+                            <router-link to="/user/contributions" tag="li"><a>Contributions</a></router-link>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
         <transition enter-active-class="animated fadeIn">
             <keep-alive>
                 <router-view></router-view>
@@ -21,12 +32,8 @@
 
     export default {
         name: "User",
-        data() {
-            return {
-            }
-        },
         components: {
             "footer-component": Footer
-        }
+        },
     }
 </script>

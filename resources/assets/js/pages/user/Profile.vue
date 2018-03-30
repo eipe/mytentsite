@@ -1,22 +1,16 @@
 <template>
-    <div>
-        <section class="hero">
-            <div class="hero-body">
-                <div class="container">
-                    <h1 class="title">Hi, {{ $auth.user().name }}!</h1>
-                    <hr>
-                    <slot v-if="socialLogin.valid">
-                        <p>You signed up through {{ socialLogin.provider }},<br>
-                            and the last authentication was {{ socialLogin.time }}.</p>
-                        <a href="/auth/sign_out" class="button is-info">Sign out</a>
-                    </slot>
-                    <slot v-else>
-                        <a class="button is-info" href="/logout" @click.prevent="logout">Logout</a>
-                    </slot>
-                </div>
-            </div>
-        </section>
-    </div>
+    <section class="section">
+        <div class="container content">
+            <slot v-if="socialLogin.valid">
+                <p>You signed up through {{ socialLogin.provider }},<br>
+                    and the last authentication was {{ socialLogin.time }}.</p>
+                <a href="/auth/sign_out" class="button is-danger">Sign out</a>
+            </slot>
+            <slot v-else>
+                <a href="/logout" class="button is-danger" @click.prevent="logout">Logout</a>
+            </slot>
+        </div>
+    </section>
 </template>
 <script>
     export default {
