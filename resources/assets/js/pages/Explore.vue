@@ -2,7 +2,7 @@
     <div class="has-fixed-header">
         <photo-gallery ref="gallery" :tent-sites="tentSites"></photo-gallery>
         <div class="container">
-            <div class="columns is-multiline is-tablet has-tablet-no-padding has-normal-margin">
+            <div class="columns is-multiline is-mobile has-normal-margin">
                 <div v-for="tentSite in tentSites" class="column is-one-third"
                        :key="tentSite.id" @click="openGallery(tentSite)">
                     <photo :tent-site="tentSite"></photo>
