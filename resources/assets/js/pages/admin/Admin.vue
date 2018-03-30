@@ -1,22 +1,32 @@
 <template>
-    <div class="page page-allow-overflow" v-if="this.$auth.check('admin')">
-        <nav class="nav white">
-            <div class="nav-center">
-                <div class="nav-item"><router-link to="/admin/dashboard">Dashboard</router-link></div>
-                <div class="nav-item"><router-link to="/admin/tentsites">Tent sites</router-link></div>
-                <div class="nav-item"><router-link to="/admin/users">Users</router-link></div>
-                <div class="nav-item"><router-link to="/admin/statistics">Statistics</router-link></div>
-            </div>
-        </nav>
-        <section class="hero content">
+    <div class="" v-if="this.$auth.check('admin')">
+        <section class="hero is-dark">
             <div class="hero-body">
-                <div class="content container">
-                    <transition enter-active-class="animated fadeIn">
-                        <keep-alive>
-                            <router-view></router-view>
-                        </keep-alive>
-                    </transition>
+                <div class="container">
+                    <h1 class="title">Administrator's homeground</h1>
+                    <h2 class="subtitle">Make sure that the tent site is up and running!</h2>
                 </div>
+            </div>
+            <div class="hero-foot">
+                <div class="container">
+                    <div class="tabs is-boxed">
+                        <ul>
+                            <router-link to="/admin/dashboard" tag="li"><a>Dashboard</a></router-link>
+                            <router-link to="/admin/tentsites" tag="li"><a>Tent sites</a></router-link>
+                            <router-link to="/admin/users" tag="li"><a>Users</a></router-link>
+                            <router-link to="/admin/statistics" tag="li"><a>Statistics</a></router-link>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section">
+            <div class="container content">
+                <transition enter-active-class="animated fadeIn">
+                    <keep-alive>
+                        <router-view></router-view>
+                    </keep-alive>
+                </transition>
             </div>
         </section>
     </div>
