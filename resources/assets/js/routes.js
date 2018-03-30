@@ -5,26 +5,26 @@ export default {
     }, {
         path: '/share',
         name: 'Share',
-        component: require('./pages/Share.vue'),
+        component: require('./pages/Share.vue').default,
         meta: {
             auth: true
         },
     }, {
         path: '/locate',
         name: 'Locate',
-        component: require('./pages/Locate.vue')
+        component: require('./pages/Locate.vue').default
     }, {
         path: '/explore',
         name: 'Explore',
-        component: require('./pages/Explore.vue')
+        component: require('./pages/Explore.vue').default
     }, {
         path: '/info',
         name: 'Info',
-        component: require('./pages/Info.vue'),
+        component: require('./pages/Info.vue').default,
     }, {
         path: '/user',
         name: 'User',
-        component: require('./pages/User.vue'),
+        component: require('./pages/User.vue').default,
         meta: {
             auth: true
         },
@@ -33,19 +33,19 @@ export default {
             redirect: '/user/profile'
         }, {
             path: '/user/profile',
-            component: require('./pages/user/Profile.vue'),
+            component: require('./pages/user/Profile.vue').default,
             meta: {
                 auth: true
             }
         }, {
             path: '/user/bookmarks',
-            component: require('./pages/user/Bookmarks.vue'),
+            component: require('./pages/user/Bookmarks.vue').default,
             meta: {
                 auth: true
             }
         }, {
             path: '/user/contributions',
-            component: require('./pages/user/Contributions.vue'),
+            component: require('./pages/user/Contributions.vue').default,
             meta: {
                 auth: true
             }
@@ -53,23 +53,23 @@ export default {
     }, {
         path: '/login',
         name: 'Login',
-        component: require('./pages/Login.vue')
+        component: require('./pages/Login.vue').default
     }, {
         path: '/register',
         name: 'Register',
-        component: require('./pages/Register.vue')
+        component: require('./pages/Register.vue').default
     }, {
         path: '/password/reset',
         name: 'Reset password',
-        component: require('./pages/PasswordReset.vue')
+        component: require('./pages/PasswordReset.vue').default
     }, {
         path: '/password/reset-form',
         name: 'Reset password form',
-        component: require('./pages/PasswordResetForm.vue')
+        component: require('./pages/PasswordResetForm.vue').default
     }, {
         path: '/admin',
         name: 'Admin',
-        component: require('./pages/admin/Admin.vue'),
+        component: require('./pages/admin/Admin.vue').default,
         meta: {
             auth: true
         },
@@ -79,28 +79,28 @@ export default {
         }, {
             path: '/admin/dashboard',
             name: 'Dashboard',
-            component: require('./pages/admin/Dashboard.vue'),
+            component: require('./pages/admin/Dashboard.vue').default,
             meta: {
                 auth: true
             }
         }, {
             path: '/admin/tentsites',
             name: 'Tent sites',
-            component: require('./pages/admin/TentSites.vue'),
+            component: require('./pages/admin/TentSites.vue').default,
             meta: {
                 auth: true
             }
         }, {
             path: '/admin/users',
             name: 'Users',
-            component: require('./pages/admin/Users.vue'),
+            component: require('./pages/admin/Users.vue').default,
             meta: {
                 auth: true
             }
         }, {
             path: '/admin/statistics',
             name: 'Statistics',
-            component: require('./pages/admin/Statistics.vue'),
+            component: require('./pages/admin/Statistics.vue').default,
             meta: {
                 auth: true
             }
