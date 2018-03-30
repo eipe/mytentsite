@@ -1,61 +1,48 @@
 @extends('layouts.app')
 
 @section('header')
-    <header class="is-fixed-top">
-        <nav class="nav">
-            @if(Config::get('app.env') === 'staging')
-                <div class="is-pulled-bottom is-bold nav-item"><span style="color: #f00">BETA</span></div>
-            @endif
-            <ul class="nav-center">
-                <li class="nav-item">
-                    <router-link to="/share" active-class="is-active icon is-medium">
+    <header>
+        <nav class="navbar is-fixed-top is-light" role="navigation" aria-label="main navigation">
+            <div class="container">
+                <div class="navbar-brand">
+                    <router-link to="/info" class="navbar-item has-text-centered" active-class="is-active">
+                        <span class="tooltip is-tooltip-bottom" data-tooltip="View information about this project">
+                            mytentsite
+                        </span>
+                    </router-link>
+                    <router-link to="/share" class="navbar-item has-text-centered" active-class="is-active">
                         <span class="tooltip is-tooltip-bottom" data-tooltip="Share a tent site">
-                            <i class="fa fa-camera"></i>
+                            <i class="fa fa-camera fa-lg"></i>
                         </span>
                     </router-link>
-                </li>
-                <li class="nav-item">
-                    <router-link to="/locate" active-class="is-active icon is-medium">
+                    <router-link to="/locate" class="navbar-item has-text-centered" active-class="is-active">
                         <span class="tooltip is-tooltip-bottom" data-tooltip="Locate shared tent sites">
-                            <i class="fa fa-map-o"></i>
+                            <i class="fa fa-map fa-lg"></i>
                         </span>
                     </router-link>
-                </li>
-                <li class="nav-item">
-                    <router-link to="/explore" active-class="is-active icon is-medium">
+                    <router-link to="/explore" class="navbar-item has-text-centered" active-class="is-active">
                         <span class="tooltip is-tooltip-bottom" data-tooltip="Explore shared tent sites">
-                            <i class="fa fa-th"></i>
+                            <i class="fa fa-th fa-lg"></i>
                         </span>
                     </router-link>
-                </li>
-                <li class="nav-item">
-                    <router-link to="/info" active-class="is-active icon is-medium">
-                        <span class="tooltip is-tooltip-bottom" data-tooltip="View information about this site">
-                            <i class="fa fa-info"></i>
-                        </span>
-                    </router-link>
-                </li>
-                <li class="nav-item">
-                    <router-link to="/user" active-class="is-active icon is-medium">
+                    <router-link to="/user" class="navbar-item has-text-centered" active-class="is-active">
                         <span class="tooltip is-tooltip-bottom" data-tooltip="User profile">
-                            <i class="fa fa-user-o"></i>
+                            <i class="fa fa-user fa-lg"></i>
                         </span>
                     </router-link>
-                </li>
-                <li class="nav-item" v-if="$auth.check('admin')">
-                    <router-link to="/admin" active-class="is-active icon is-medium">
+                    <router-link to="/admin" class="navbar-item has-text-centered" active-class="is-active" v-if="$auth.check('admin')">
                         <span class="tooltip is-tooltip-bottom" data-tooltip="Administrator">
-                            <i class="fa fa-unlock-alt"></i>
+                            <i class="fa fa-unlock-alt fa-lg"></i>
                         </span>
                     </router-link>
-                </li>
-            </ul>
+                </div>
+            </div>
         </nav>
     </header>
 @endsection
 
 @section('content')
-    <div id="content" class="has-fixed-header-top">
+    <div id="content">
         <transition enter-active-class="animated fadeIn">
             <keep-alive>
                 <router-view></router-view>
