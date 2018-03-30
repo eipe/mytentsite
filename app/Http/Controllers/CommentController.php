@@ -22,6 +22,19 @@ class CommentController extends Controller
         return $this->listResponse($m::all()->where('tent_site_id', $tentSiteId));
     }
 
+    public function delete(Request $request, $commentId) {
+        try {
+            $m = self::MODEL;
+            /* @var Comment $comment */
+            $comment = $m::query()->where('id', $commentId)->first();
+            $comment->delete();
+            \Log::info('Comment #'. $commentId .' deleted' );
+            return $this->showResponse($comment);
+        } catch(\Exception $exception) {
+            return $this->clientErrorResponse(['exception' => $exception->getMessage()]);
+        }
+    }
+
     public function store(Request $request, $tentSiteId)
     {
         /**

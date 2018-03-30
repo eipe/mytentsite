@@ -60,6 +60,7 @@ $api->version(['v1'], function(\Dingo\Api\Routing\Router $api) {
         $api->post('/unlike/{id}', 'App\Http\Controllers\LikeController@handleLike');
         // Add comment on tent site
         $api->post('/comments/{id}', 'App\Http\Controllers\CommentController@store');
+        $api->post('/comment/{id}/delete', 'App\Http\Controllers\CommentController@delete');
 
         $api->delete('/delete/{id}', 'App\Http\Controllers\TentSitesController@delete');
         $api->post('/restore/{id}', 'App\Http\Controllers\TentSitesController@restore');

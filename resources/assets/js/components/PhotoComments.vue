@@ -1,11 +1,14 @@
 <template>
     <div v-if="comments.length > 0">
-        <div class="content" v-for="comment in comments">
+        <slot v-for="comment in comments">
             <photo-comment
-                :comment_by="comment.user_id"
-                :created_at="comment.created_at"
+                :tentSiteId="comment.tent_site_id"
+                :commentId="comment.id"
+                :commentBy="comment.user_id"
+                :createdAt="comment.created_at"
                 :comment="comment.comment"/>
-        </div>
+        </slot>
+        <div class="is-clearfix"></div>
     </div>
     <div v-else>
         Be the first to leave a comment on this tent site!

@@ -110,6 +110,13 @@ const store = new Vuex.Store({
                 tentSite.comments.push(data.comment);
             }
         },
+        removeCommentFromPhoto(state, data) {
+            let tentSite = state.tentSites[data["tentSiteId"]],
+                indexOfComment = tentSite.comments.indexOf(data["comment"]);
+            if (indexOfComment) {
+                tentSite.comments.splice(indexOfComment, 1);
+            }
+        },
         setError(state, error) {
             state.error = error;
         }
@@ -138,6 +145,9 @@ const store = new Vuex.Store({
         },
         addCommentOnPhoto(state, data) {
             state.commit("addCommentOnPhoto", data);
+        },
+        removeCommentFromPhoto(state, data) {
+            state.commit("removeCommentFromPhoto", data);
         },
         loadCommentsForTentSite(state, tentSite) {
             return new Promise((resolve, reject)  => {
