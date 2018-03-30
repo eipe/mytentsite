@@ -6,7 +6,7 @@
                 <div v-show="isActive">
                     <transition enter-active-class="animated slideInDown">
                         <div class="modal-content is-fullheight is-marginless" v-if="activePage === 'photo'">
-                            <div class="content is-paddingless is-marginless">
+                            <div class="is-paddingless is-marginless">
                                 <div class="card" id="photo-container">
                                     <div class="card-image">
                                         <figure class="image is-4by3">
@@ -24,49 +24,44 @@
                                                 <p class="subtitle is-6">{{ activeTentSite.created_at }}</p>
                                             </div>
                                             <div class="media-right">
-                                                <nav class="level">
-                                                    <div class="level-left">
-                                                        <div class="level-item">
-                                                            <span class="tooltip is-tooltip-top is-tooltip-multiline"
-                                                                  data-tooltip="Click to add/remove tent site bookmark. Review your bookmarks in user profile">
-                                                                <i class="fa"
-                                                                   :title="bookmarkTitle"
-                                                                   v-bind:class="bookmarkIcon"
-                                                                   @click="toggleBookmark"></i>
-                                                            </span>
-                                                            &nbsp;&nbsp;{{ bookmarks.length }}
-                                                        </div>
-                                                        <div class="level-item">
-                                                            <span @click="toggleComment"
-                                                                  class="button is-small tooltip is-tooltip-top"
-                                                                  data-tooltip="View comments and/or add your own">Comments ({{ comments.length }})</span>
-                                                        </div>
-                                                        <div class="level-item">
-                                                            <span @click="viewOnMap" data-tooltip="View tent site on map"
-                                                                  class="button is-small tooltip is-tooltip-top">View on map</span>
-                                                        </div>
-                                                        <div class="level-item" v-if="isUserCreator">
-                                                            <span v-if="isDeleted" class="button is-success is-small tooltip is-tooltip-top"
-                                                                  v-bind:class="{ 'is-loading' : isDeleting }"
-                                                                  data-tooltip="Click to restore this contribution"
-                                                                  @click="restoreTentSite(activeTentSite)">
-                                                                Restore
-                                                            </span>
-                                                            <span class="button is-danger is-small tooltip is-tooltip-top"
-                                                                  v-bind:class="{ 'is-loading' : isDeleting }"
-                                                                  data-tooltip="Click to delete this contribution"
-                                                                  @click="deleteTentSite(activeTentSite)"
-                                                                  v-else>
-                                                                Delete
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </nav>
+                                                <div class="buttons has-addons">
+                                                    <a class="button is-white tooltip is-tooltip-top is-tooltip-multiline"
+                                                       data-tooltip="Click to add/remove tent site bookmark. Review your bookmarks in user profile"
+                                                       @click="toggleBookmark">
+                                                            <i class="fa"
+                                                               :title="bookmarkTitle"
+                                                               v-bind:class="bookmarkIcon"></i>&nbsp;{{ bookmarks.length }}
+                                                    </a>
+                                                    <a @click="toggleComment"
+                                                              class="button is-white tooltip is-tooltip-top"
+                                                              data-tooltip="View comments and/or add your own">
+                                                        <i class="fa fa-comments-o"></i>&nbsp;{{ comments.length }}
+                                                    </a>
+                                                    <a @click="viewOnMap" data-tooltip="View tent site on map"
+                                                              class="button is-white tooltip is-tooltip-top">
+                                                        <i class="fa fa-map-o"></i>
+                                                    </a>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="content">{{ activeTentSite.caption }}</div>
                                         <div class="content is-small" v-if="activeTentSite.taken_date">
                                             Photo was taken {{ activeTentSite.taken_date }}
+                                        </div>
+                                        <div v-if="isUserCreator">
+                                            <a v-if="isDeleted" class="button is-success tooltip is-tooltip-top"
+                                                  v-bind:class="{ 'is-loading' : isDeleting }"
+                                                  data-tooltip="Click to restore this contribution"
+                                                  @click="restoreTentSite(activeTentSite)">
+                                                Restore
+                                            </a>
+                                            <a class="button is-danger tooltip is-tooltip-top"
+                                                  v-bind:class="{ 'is-loading' : isDeleting }"
+                                                  data-tooltip="Click to delete this contribution"
+                                                  @click="deleteTentSite(activeTentSite)"
+                                                  v-else>
+                                                Delete
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
