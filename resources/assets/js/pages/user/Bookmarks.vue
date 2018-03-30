@@ -1,21 +1,17 @@
 <template>
-    <div>
-        <section class="hero">
-            <div class="hero-body">
-                <div class="container">
-                    <h2 class="title">Your bookmarks - {{ tentSiteIds.length}} in total</h2>
-                    <button class="button" @click.prevent="loadTentSites"
-                            v-if="!isLoaded" v-bind:class="{ 'is-loading disabled' : isLoading }">Try again</button>
-                    <div class="columns is-multiline is-mobile">
-                        <div class="column is-2" v-for="tentSite in tentSites">
-                            <img :src="tentSite.thumbnail" class="is-clickable" @click="openGallery(tentSite)" />
-                        </div>
-                    </div>
+    <section class="section">
+        <div class="container content">
+            <h2 class="title">Your bookmarks - {{ tentSiteIds.length}} in total</h2>
+            <button class="button" @click.prevent="loadTentSites"
+                    v-if="!isLoaded" v-bind:class="{ 'is-loading disabled' : isLoading }">Try again</button>
+            <div class="columns is-multiline is-mobile">
+                <div class="column is-one-quarter" v-for="tentSite in tentSites">
+                    <img :src="tentSite.thumbnail" class="is-clickable" @click="openGallery(tentSite)" />
                 </div>
             </div>
-        </section>
+        </div>
         <photo-gallery :tent-sites="tentSites" ref="gallery"></photo-gallery>
-    </div>
+    </section>
 </template>
 <script>
 

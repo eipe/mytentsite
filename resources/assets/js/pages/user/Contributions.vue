@@ -1,39 +1,39 @@
 <template>
     <div>
-        <section class="hero">
-            <div class="hero-body">
-                <div class="container">
+        <section class="section">
+            <div class="container">
+                <div class="content">
                     <h2 class="title">Your contributions <small>- displaying {{ tentSitesCount }}</small></h2>
-                    <div class="content">
-                        <span class="tag is-light is-clickable tooltip is-tooltip-top"
-                              data-tooltip="Click to toggle filter"
-                              @click="toggleFilter('approved')"
-                              v-bind:class="{ 'is-success' : filter.approved }">
-                            {{ count.approved }} Approved
-                        </span>
-                        <span class="tag is-light is-clickable tooltip is-tooltip-top"
-                              data-tooltip="Click to toggle filter"
-                              @click="toggleFilter('denied')"
-                              v-bind:class="{ 'is-warning' : filter.denied }">
-                            {{ count.denied }} Not approved
-                        </span>
-                        <span class="tag is-light is-clickable tooltip is-tooltip-top"
-                              data-tooltip="Click to toggle filter"
-                              @click="toggleFilter('waitingApproval')"
-                              v-bind:class="{'is-info' : filter.waitingApproval }">
-                            {{ count.waitingApproval }} Waiting for approval
-                        </span>
-                        <span class="tag is-light is-clickable tooltip is-tooltip-top"
-                              data-tooltip="Click to toggle filter"
-                              @click="toggleFilter('deleted')"
-                              v-bind:class="{'is-danger' : filter.deleted }">
-                            {{ count.deleted }} Deleted
-                        </span>
-                    </div>
+                    <span class="tag is-light is-clickable tooltip is-tooltip-top"
+                          data-tooltip="Click to toggle filter"
+                          @click="toggleFilter('approved')"
+                          v-bind:class="{ 'is-success' : filter.approved }">
+                        {{ count.approved }} Approved
+                    </span>
+                    <span class="tag is-light is-clickable tooltip is-tooltip-top"
+                          data-tooltip="Click to toggle filter"
+                          @click="toggleFilter('denied')"
+                          v-bind:class="{ 'is-warning' : filter.denied }">
+                        {{ count.denied }} Not approved
+                    </span>
+                    <span class="tag is-light is-clickable tooltip is-tooltip-top"
+                          data-tooltip="Click to toggle filter"
+                          @click="toggleFilter('waitingApproval')"
+                          v-bind:class="{'is-info' : filter.waitingApproval }">
+                        {{ count.waitingApproval }} Waiting for approval
+                    </span>
+                    <span class="tag is-light is-clickable tooltip is-tooltip-top"
+                          data-tooltip="Click to toggle filter"
+                          @click="toggleFilter('deleted')"
+                          v-bind:class="{'is-danger' : filter.deleted }">
+                        {{ count.deleted }} Deleted
+                    </span>
+                </div>
+                <div class="content">
                     <button class="button" @click.prevent="loadTentSites"
-                            v-if="!isLoaded" v-bind:class="{ 'is-loading disabled' : isLoading }">Try again</button>
+                        v-if="!isLoaded" v-bind:class="{ 'is-loading disabled' : isLoading }">Try again</button>
                     <div class="columns is-multiline is-mobile">
-                        <div class="column is-2" v-for="tentSite in filteredTentSites">
+                        <div class="column is-one-quarter" v-for="tentSite in filteredTentSites">
                             <div class="is-relative">
                                 <span class="tag is-absolute is-top is-right" v-bind:class="stateClass(tentSite)"></span>
                                 <img :src="tentSite.thumbnail" class="is-clickable" @click="openGallery(tentSite)" @error="handleImageError" />
