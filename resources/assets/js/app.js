@@ -7,7 +7,6 @@ import Vuex from 'vuex'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueAuth from '@websanova/vue-auth'
-import VueScrollTo from 'vue-scroll-to'
 import VueAnalytics from 'vue-analytics'
 
 Vue.router = new VueRouter({
@@ -166,8 +165,6 @@ const store = new Vuex.Store({
         }
     }
 });
-
-Vue.use(VueScrollTo);
 
 new Vue({
     el: "#app",
