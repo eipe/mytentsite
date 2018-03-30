@@ -4,32 +4,26 @@
             <div class="hero-body">
                 <div class="container">
                     <transition enter-active-class="animated fadeIn">
-                        <nav class="level" v-show="isLoaded" v-cloak>
-                            <div class="level-item has-text-centered">
-                                <div>
-                                    <p class="title">{{ statistics.numberOfTentSites }}</p>
-                                    <p class="heading">Shared tent sites</p>
-                                </div>
+                        <div class="columns is-mobile" v-show="isLoaded" v-cloak>
+                            <div class="column has-text-centered">
+                                <p class="title is-marginless is-paddingless">{{ statistics.numberOfTentSites }}</p>
+                                <p class="heading">Shared tent sites</p>
                             </div>
-                            <div class="level-item has-text-centered">
-                                <div>
-                                    <p class="title">{{ statistics.numberOfBookmarkedTentSites }}</p>
+                            <div class="column has-text-centered">
+                                    <p class="title is-marginless is-paddingless">{{ statistics.numberOfBookmarkedTentSites }}</p>
                                     <p class="heading">Bookmarked tent sites</p>
-                                </div>
                             </div>
-                            <div class="level-item has-text-centered">
-                                <div>
-                                    <p class="title">{{ statistics.numberOfCountries }}</p>
-                                    <p class="heading">Countries represented</p>
-                                </div>
+                            <div class="column has-text-centered">
+                                <p class="title is-marginless is-paddingless">{{ statistics.numberOfCountries }}</p>
+                                <p class="heading">Countries represented</p>
                             </div>
-                            <div class="level-item has-text-centered">
+                            <div class="column has-text-centered">
                                 <div>
-                                    <p class="title">{{ statistics.numberOfContributors }}</p>
+                                    <p class="title is-marginless is-paddingless">{{ statistics.numberOfContributors }}</p>
                                     <p class="heading">Contributors</p>
                                 </div>
                             </div>
-                        </nav>
+                        </div>
                     </transition>
                 </div>
             </div>
