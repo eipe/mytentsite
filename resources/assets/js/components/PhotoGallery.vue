@@ -214,6 +214,9 @@
                 });
             },
             navigateNext() {
+                if(this.activePage !== "photo") {
+                    return;
+                }
                 let indexOfCurrent = this.tentSites.indexOf(this.activeTentSite);
                 if(indexOfCurrent === this.tentSites.length-1) {
                     this.activeTentSite = this.tentSites[0];
@@ -222,6 +225,9 @@
                 }
             },
             navigatePrev() {
+                if(this.activePage !== "photo") {
+                    return;
+                }
                 let indexOfCurrent = this.tentSites.indexOf(this.activeTentSite);
                 if(indexOfCurrent === 0) {
                     this.activeTentSite = this.tentSites[this.tentSites.length-1];
