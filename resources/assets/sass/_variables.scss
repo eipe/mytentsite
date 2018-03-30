@@ -1,3 +1,7 @@
+@import "../../../node_modules/bulma/sass/utilities/initial-variables";
+@import "../../../node_modules/bulma/sass/utilities/functions";
+
+
 $link-active: #eee;
 $link-hover: #999;
 
@@ -6,3 +10,9 @@ $yellow: hsl(48,  100%, 67%);
 $green: hsl(124, 78%, 44%);
 $blue: hsl(217, 71%,  53%);
 $red: hsl(356, 86%, 53%);
+
+$navbar-background-color: $grey-lighter;
+$navbar-item-hover-background-color: transparent;
+$navbar-item-color: $grey;
+$navbar-item-hover-color: $grey-darker;
+$navbar-item-active-color: $black;

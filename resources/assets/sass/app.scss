@@ -8,33 +8,8 @@
 @import "node_modules/bulma/bulma.sass";
 @import "node_modules/bulma-tooltip/dist/bulma-tooltip.sass";
 
-.nav {
-  background-color: #333;
-  z-index: initial;
-}
-
-.color-gray {
-  color: #444;
-}
-
 .is-clickable {
   cursor: pointer;
-}
-
-.is-fixed-top {
-  position: fixed;
-  width: 100%;
-  z-index: 10;
-  top: 0;
-}
-
-#content.has-fixed-header-top {
-  margin-top: $nav-height;
-}
-
-.has-fixed-header .is-fullheight {
-  max-height: calc(100vh - #{$nav-height});
-  min-height: calc(100vh - #{$nav-height});
 }
 
 .is-relative {
@@ -54,12 +29,6 @@
 
 hr.border-dashed {
   border-style: dashed;
-}
-
-@media (max-width: $tablet) {
-  .has-tablet-no-padding .column {
-    padding: 0;
-  }
 }
 
 /* Icons */
