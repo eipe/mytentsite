@@ -1,5 +1,5 @@
 <template>
-    <div class="has-fixed-header">
+    <div>
         <section id="tentmap" class="hero is-fullheight"></section>
     </div>
 </template>

@@ -1,63 +1,59 @@
 <template>
-    <div class="page page-allow-overflow">
+    <div class="container content">
         <section class="section">
-            <div class="content columns">
-                <div class="column is-half is-offset-one-quarter">
-                    <h1>Login</h1>
-                    <form @submit.prevent="submitForm" action="/login" method="POST">
-                        <p class="control">
-                            <input id="email" type="email" name="email" v-model="info.email"
-                                   value="" class="input" placeholder="E-mail address" ref="email" required autofocus>
-                        </p>
-                        <p class="control">
-                            <input id="password" type="password" name="password" v-model="info.password"
-                                   class="input" placeholder="Password" required>
-                        </p>
+            <h1>Login</h1>
+            <form @submit.prevent="submitForm" action="/login" method="POST">
+                <p class="control">
+                    <input id="email" type="email" name="email" v-model="info.email"
+                           value="" class="input" placeholder="E-mail address" ref="email" required autofocus>
+                </p>
+                <p class="control">
+                    <input id="password" type="password" name="password" v-model="info.password"
+                           class="input" placeholder="Password" required>
+                </p>
 
-                        <p class="control">
-                            <label class="checkbox">
-                                <input type="checkbox" name="remember" v-model="info.remember" class="checkbox"> Remember me
-                            </label>
-                        </p>
+                <p class="control">
+                    <label class="checkbox">
+                        <input type="checkbox" name="remember" v-model="info.remember" class="checkbox"> Remember me
+                    </label>
+                </p>
 
-                        <transition enter-active-class="animated shake" leave-active-class="animated fadeOut">
-                            <div class="notification is-danger" v-if="error">
-                                <span class="delete" @click.prevent="error = null"></span>
-                                {{ error }}
-                            </div>
-                        </transition>
+                <transition enter-active-class="animated shake" leave-active-class="animated fadeOut">
+                    <div class="notification is-danger" v-if="error">
+                        <span class="delete" @click.prevent="error = null"></span>
+                        {{ error }}
+                    </div>
+                </transition>
 
-                        <div class="field is-grouped">
-                            <p class="control">
-                                <button type="submit" class="button is-primary"
-                                        v-bind:class="{ 'is-loading' : isPosting }">Login</button>
-                            </p>
-                            <p class="control">
-                                <router-link to="/password/reset" tag="button" class="button is-link">
-                                    Forgot your password?
-                                </router-link>
-                            </p>
-                        </div>
-                        <router-link to="/register" tag="a" class="is-link">
-                            Don't have an account?
+                <div class="field is-grouped">
+                    <p class="control">
+                        <button type="submit" class="button is-primary"
+                                v-bind:class="{ 'is-loading' : isPosting }">Login</button>
+                    </p>
+                    <p class="control">
+                        <router-link to="/password/reset" tag="a" class="button is-text">
+                            Forgot your password?
                         </router-link>
-                        <div v-if="socialLoginEnabled">
-                            <hr>
-                            <h2 class="is-small">Or use one of your existing accounts</h2>
-                            <div class="control is-grouped">
-                                <p class="control">
-                                    <button class="button is-info"
-                                            @click.prevent="socialLogin('/auth/facebook/', 'facebook')"
-                                            v-bind:class="{ 'is-loading' : socialLoginProvider == 'facebook' }">
-                                        <span class="icon is-small"><i class="fa fa-facebook"></i></span>
-                                        <span>Facebook</span>
-                                    </button>
-                                </p>
-                            </div>
-                        </div>
-                    </form>
+                    </p>
                 </div>
-            </div>
+                <router-link to="/register" tag="a" class="button is-white">
+                    Don't have an account?
+                </router-link>
+                <div v-if="socialLoginEnabled">
+                    <hr>
+                    <h2 class="is-small">Or use one of your existing accounts</h2>
+                    <div class="control is-grouped">
+                        <p class="control">
+                            <button class="button is-info"
+                                    @click.prevent="socialLogin('/auth/facebook/', 'facebook')"
+                                    v-bind:class="{ 'is-loading' : socialLoginProvider == 'facebook' }">
+                                <span class="icon is-small"><i class="fa fa-facebook"></i></span>
+                                <span>Facebook</span>
+                            </button>
+                        </p>
+                    </div>
+                </div>
+            </form>
         </section>
     </div>
 </template>

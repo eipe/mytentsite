@@ -1,39 +1,35 @@
 <template>
-    <div>
+    <div class="container content">
         <section class="section">
-            <div class="content columns">
-                <div class="column is-half is-offset-one-quarter">
-                    <h1>Reset password</h1>
-                    <form method="post" @submit.prevent="submitForm">
-                        <p class="controls">
-                            <input id="email" type="email" class="input" name="email"
-                                   placeholder="E-mail address"
-                                   v-model="info.email" ref="email" autofocus required>
-                        </p>
-                        <transition enter-active-class="animated shake" leave-active-class="animated fadeOut">
-                            <div class="notification is-danger" v-if="error">
-                                <span class="delete" @click.prevent="error = null"></span>
-                                {{ error }}
-                            </div>
-                        </transition>
-                        <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
-                            <div class="notification is-success" v-if="isSuccess">
-                                We sent an email with link to reset your password to <u>{{ info.email }}</u>.
-                                This link is active for 30 minutes.
-                            </div>
-                        </transition>
-                        <div class="field is-grouped">
-                            <p class="control" v-if="!isSuccess">
-                                <button type="submit" class="button is-primary"
-                                        v-bind:class="{ 'is-loading' : isPosting }">Send password reset link</button>
-                            </p>
-                            <p class="control">
-                                <button @click="back" class="button is-link">{{ backButtonText }}</button>
-                            </p>
-                        </div>
-                    </form>
+            <h1>Reset password</h1>
+            <form method="post" @submit.prevent="submitForm">
+                <p class="controls">
+                    <input id="email" type="email" class="input" name="email"
+                           placeholder="E-mail address"
+                           v-model="info.email" ref="email" autofocus required>
+                </p>
+                <transition enter-active-class="animated shake" leave-active-class="animated fadeOut">
+                    <div class="notification is-danger" v-if="error">
+                        <span class="delete" @click.prevent="error = null"></span>
+                        {{ error }}
+                    </div>
+                </transition>
+                <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
+                    <div class="notification is-success" v-if="isSuccess">
+                        We sent an email with link to reset your password to <u>{{ info.email }}</u>.
+                        This link is active for 30 minutes.
+                    </div>
+                </transition>
+                <div class="field is-grouped">
+                    <p class="control" v-if="!isSuccess">
+                        <button type="submit" class="button is-primary"
+                                v-bind:class="{ 'is-loading' : isPosting }">Send password reset link</button>
+                    </p>
+                    <p class="control">
+                        <button @click="back" class="button is-text">{{ backButtonText }}</button>
+                    </p>
                 </div>
-            </div>
+            </form>
         </section>
     </div>
 </template>
