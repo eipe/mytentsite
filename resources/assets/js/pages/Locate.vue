@@ -1,7 +1,5 @@
 <template>
-    <div>
-        <section id="tentmap" class="hero is-fullheight"></section>
-    </div>
+    <section id="tentmap" class="hero is-fullheight is-fullheight-excluding-navbar"></section>
 </template>
 <style>
     #tentmap img, #tentmap video {
