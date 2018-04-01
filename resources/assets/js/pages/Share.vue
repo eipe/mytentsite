@@ -238,6 +238,7 @@
                 this.error = null;
                 this.step = 0;
                 this.isStoringPhoto = false;
+                this.completedSteps = [];
                 this.photoLoading = false;
                 this.photoLoaded = false;
                 this.photo.latitude = null;
