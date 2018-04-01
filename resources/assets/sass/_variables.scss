@@ -11,8 +11,13 @@ $green: hsl(124, 78%, 44%);
 $blue: hsl(217, 71%,  53%);
 $red: hsl(356, 86%, 53%);
 
+/** Bulma **/
 $navbar-background-color: $grey-lighter;
 $navbar-item-hover-background-color: transparent;
 $navbar-item-color: $grey;
 $navbar-item-hover-color: $grey-darker;
 $navbar-item-active-color: $black;
+
+/** Bulma steps **/
+$steps-completed-color: lighten($blue, 20%);
+$steps-active-color: $blue;
