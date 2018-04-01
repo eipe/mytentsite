@@ -116,9 +116,11 @@
                 </transition-group>
             </form>
             <transition enter-active-class="animated fadeIn">
-                <div class="has-text-centered is-clickable" v-if="photoShareSuccess">
-                    <h1 class="title" @click="photoShareSuccess = false">Thank's for your contribution!</h1>
-                    <h2 class="subtitle">Click me if you want to start over again</h2>
+                <div class="has-text-centered is-clickable" v-if="isCurrentStep(3) && photoShareSuccess">
+                    <h1 class="title">Thank's for your contribution!</h1>
+                    <span class="button" @click="photoShareSuccess = false">
+                        Click me if you want to start over again
+                    </span>
                 </div>
             </transition>
         </section>
