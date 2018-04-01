@@ -2,7 +2,7 @@
     <div class="content">
         <article class="media">
             <div class="media-content">
-                <strong>{{ commentBy }}</strong> <small>{{ createdAt }}</small>
+                <strong>{{ commentByName }}</strong> <small>{{ createdAt }}</small>
                 <br>
                 {{ comment }}
             </div>
@@ -22,11 +22,7 @@
         },
         computed: {
             isUserCreator() {
-                // Todo: Replace with user id when available
-                if(this.$auth.user().name === this.commentBy) {
-                    return true;
-                }
-                return false;
+                return this.$auth.user().id === this.commentBy;
             }
         },
         methods: {
@@ -54,6 +50,10 @@
                 required: true
             },
             "commentBy": {
+                type: Number,
+                required: true
+            },
+            "commentByName": {
                 type: String,
                 required: true
             },

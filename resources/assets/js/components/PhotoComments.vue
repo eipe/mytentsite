@@ -5,6 +5,7 @@
                 :tentSiteId="comment.tent_site_id"
                 :commentId="comment.id"
                 :commentBy="comment.user_id"
+                :commentByName="comment.user_name"
                 :createdAt="comment.created_at"
                 :comment="comment.comment"/>
         </slot>
