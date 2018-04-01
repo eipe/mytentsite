@@ -20,9 +20,7 @@ export default {
     }, {
         path: '/info',
         name: 'Info',
-        component: {
-            template: "<div>tester</div>"
-        },
+        component: require('./pages/Info.vue')
     }, {
         path: '/user',
         name: 'User',
