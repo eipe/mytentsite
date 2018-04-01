@@ -19,7 +19,7 @@
                     <td>{{ tentSite.id }}</td>
                     <td>{{ tentSite.caption }}</td>
                     <td>{{ tentSite.created_at }}</td>
-                    <td>{{ tentSite.reported_by }}</td>
+                    <td>{{ tentSite.reported_by_name }}</td>
                     <td><img :src="tentSite.thumbnail_location" /></td>
                     <td>
                         <button class="button is-outlined" title="View on Google Map" @click.prevent="viewOnMap(tentSite)">

@@ -37,7 +37,7 @@
     function placeSites(tentSites) {
         var photoLayer = L.photo.cluster().on("click", function (evt) {
             var photo = evt.layer.photo,
-                template = '<img src="{thumbnail}" /></a><p>{caption}</p><p>{reported_by} - {created_at}</p>';
+                template = '<img src="{thumbnail}" /></a><p>{caption}</p><p>{reported_by_name} - {created_at}</p>';
             if (photo.video &&
                 (!!document.createElement("video").canPlayType("video/mp4; codecs=avc1.42E01E,mp4a.40.2"))
             ) {

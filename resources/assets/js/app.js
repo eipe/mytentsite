@@ -66,6 +66,7 @@ const store = new Vuex.Store({
             state.tentSites[tentSite["id"]] = {
                 id: tentSite["id"],
                 reported_by: tentSite["reported_by"],
+                reported_by_name: tentSite["reported_by_name"],
                 lat: tentSite["latitude"],
                 lng: tentSite["longitude"],
                 comments: tentSite["comments"],

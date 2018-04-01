@@ -39,7 +39,7 @@ class TentSites extends Model
      *
      * @var array
      */
-    protected $appends = ['likes'];
+    protected $appends = ['likes', 'reported_by_name'];
 
     /**
      * Route notifications for the Slack channel.
@@ -55,20 +55,12 @@ class TentSites extends Model
         return $this->belongsTo('App\Models\User', 'id');
     }
 
-    /**
-     * Get the user's name.
-     *
-     * @param  string  $id
-     * @return string
-     */
-    public function getReportedByAttribute($id)
-    {
-        $user = \DB::table('users')->where('id', $id)->first();
-        if(is_object($user)) {
-            return $user->name;
-        }
-        return $id;
+    public function reportedByUser() {
+        return $this->hasOne('App\Models\User', 'id', 'reported_by')->first();
+    }
 
+    public function getReportedByNameAttribute() {
+        return $this->reportedByUser()->name;
     }
 
     public function getCaptionAttribute($caption)

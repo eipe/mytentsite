@@ -20,7 +20,7 @@
                                     <div class="card-content">
                                         <div class="media">
                                             <div class="media-left">
-                                                <p class="title is-4">{{ activeTentSite.reported_by }}</p>
+                                                <p class="title is-4">{{ activeTentSite.reported_by_name }}</p>
                                                 <p class="subtitle is-6">{{ activeTentSite.created_at }}</p>
                                             </div>
                                             <div class="media-right">
@@ -125,8 +125,7 @@
                 if(!this.activeTentSite) {
                     return false;
                 }
-                // Todo: Use user id instead of name when available from API
-                return (this.$auth.user().name === this.activeTentSite.reported_by)
+                return (this.$auth.user().id === this.activeTentSite.reported_by)
             },
             comments() {
                 return this.activeTentSite.comments;
