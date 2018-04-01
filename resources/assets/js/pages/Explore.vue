@@ -1,7 +1,6 @@
 <template>
-    <div class="has-fixed-header">
-        <photo-gallery ref="gallery" :tent-sites="tentSites"></photo-gallery>
-        <div class="container">
+    <div>
+        <section class="section container">
             <div class="columns is-multiline is-mobile has-normal-margin">
                 <div v-for="tentSite in tentSites" class="column is-one-third"
                        :key="tentSite.id" @click="openGallery(tentSite)">
@@ -13,9 +12,9 @@
                         v-bind:class="{ 'is-loading' : isLoadingMore }">Load more tent site photos</button>
                 <button class="button" disabled v-else>All tent site photos are loaded</button>
             </div>
-        </div>
-        <br>
+        </section>
         <footer-component/>
+        <photo-gallery ref="gallery" :tent-sites="tentSites"></photo-gallery>
     </div>
 </template>
 <script>
