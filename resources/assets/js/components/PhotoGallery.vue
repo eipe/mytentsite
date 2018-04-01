@@ -26,7 +26,7 @@
                                             <div class="media-right">
                                                 <div class="buttons has-addons">
                                                     <a class="button is-white tooltip is-tooltip-top is-tooltip-multiline"
-                                                       data-tooltip="Click to add/remove tent site bookmark. Review your bookmarks in user profile"
+                                                       :data-tooltip="bookmarkTooltip"
                                                        @click="toggleBookmark">
                                                             <i class="fa"
                                                                :title="bookmarkTitle"
@@ -34,7 +34,7 @@
                                                     </a>
                                                     <a @click="toggleComment"
                                                               class="button is-white tooltip is-tooltip-top"
-                                                              data-tooltip="View comments and/or add your own">
+                                                              :data-tooltip="commentsTooltip">
                                                         <i class="fa fa-comments-o"></i>&nbsp;{{ comments.length }}
                                                     </a>
                                                     <a @click="viewOnMap" data-tooltip="View tent site on map"
@@ -131,11 +131,23 @@
             comments() {
                 return this.activeTentSite.comments;
             },
+            commentsTooltip() {
+                if(this.isUserActionsAvailable) {
+                    return "View comments and/or add your own";
+                }
+                return "View comments others have added. Login to add comments";
+            },
             bookmarks() {
                 if(this.activeTentSite.bookmarks) {
                     return this.activeTentSite.bookmarks;
                 }
                 return [];
+            },
+            bookmarkTooltip() {
+                if(this.isUserActionsAvailable) {
+                    return "Click to add/remove tent site bookmark. Review your bookmarks in user profile";
+                }
+                return "Login to bookmark your favorite tent sites";
             },
             bookmarkTitle() {
                 if(this.isUserActionsAvailable) {
