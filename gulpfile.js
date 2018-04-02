@@ -3,7 +3,6 @@ var elixir = require('laravel-elixir'),
     gulp = require('gulp');
 
 var config = {
-    bowerDir: '../../../vendor/bower_components',
     nodeDir: '../../../node_modules'
 };
 
@@ -30,7 +29,7 @@ elixir(function(mix) {
             config.nodeDir + '/leaflet/dist/leaflet.css',
             config.nodeDir + '/leaflet.markercluster/dist/MarkerCluster.css',
             config.nodeDir + '/leaflet.markercluster/dist/MarkerCluster.Default.css',
-            config.bowerDir + '/Leaflet.Photo/Leaflet.Photo.css',
+            config.nodeDir + '/Leaflet.Photo/Leaflet.Photo.css',
             config.nodeDir + '/leaflet-easybutton/src/easy-button.css',
         ], 'public/css/map-dep.css');
 
@@ -44,7 +43,7 @@ elixir(function(mix) {
         .scripts([
             config.nodeDir + '/leaflet/dist/leaflet.js',
             config.nodeDir + '/leaflet.markercluster/dist/leaflet.markercluster.js',
-            config.bowerDir + '/Leaflet.Photo/Leaflet.Photo.js',
+            config.nodeDir + '/Leaflet.Photo/Leaflet.Photo.js',
             config.nodeDir + '/leaflet-easybutton/src/easy-button.js',
         ], 'public/js/map-dep.js')
         .scripts([
@@ -54,19 +53,9 @@ elixir(function(mix) {
         ], 'public/js/share-dep.js');
 });
 
-gulp.task('font-awesome', function() {
-    return gulp.src('vendor/bower_components/font-awesome/fonts/*.*')
-        .pipe(gulp.dest('public/fonts'));
-});
-
-gulp.task('leaflet-images', function() {
-    return gulp.src('vendor/bower_components/leaflet/dist/images/*.*').
-        pipe(gulp.dest('public/css/images'));
-});
-
 gulp.task('app-images', function() {
     return gulp.src('resources/assets/images/*.*').
         pipe(gulp.dest('public/css/images'));
 });
 
-gulp.task('move-component-assets', ['font-awesome', 'leaflet-images', 'app-images']);
+gulp.task('move-component-assets', ['app-images']);

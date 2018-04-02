@@ -2,7 +2,11 @@
   "private": true,
   "scripts": {
     "prod": "gulp --production",
-    "dev": "gulp watch"
+    "dev": "gulp watch",
+    "install" : "napa"
+  },
+  "napa": {
+    "Leaflet.Photo": "https://github.com/turban/Leaflet.Photo.git#gh-pages"
   },
   "dependencies": {
     "@websanova/vue-auth": "^2.21.3-beta",
@@ -20,6 +24,7 @@
     "font-awesome": "^4.7.0",
     "gulp": "^3.9.1",
     "jquery": "^3.2.1",
+    "napa": "^3.0.0",
     "laravel-elixir": "^6.0.0-17",
     "laravel-elixir-vue-2": "^0.3.0",
     "laravel-elixir-webpack-official": "^1.0.10",
