@@ -3,16 +3,22 @@
         <section class="section">
             <h1>Reset password</h1>
             <form method="post" @submit.prevent="submitForm">
-                <p class="controls">
+                <p class="control has-icons-left">
                     <input id="password" type="password" class="input" name="password"
                            placeholder="Password"
                            v-model="info.password" ref="password" autofocus required>
+                    <span class="icon is-small is-left">
+                        <i class="fa fa-lock"></i>
+                    </span>
                 </p>
 
-                <p class="controls">
+                <p class="control has-icons-left">
                     <input id="password-confirm" type="password" class="input" name="password_confirmation"
                            placeholder="Confirm password"
                            v-model="info.password_confirmation" required>
+                    <span class="icon is-small is-left">
+                        <i class="fa fa-lock"></i>
+                    </span>
                 </p>
 
                 <transition enter-active-class="animated shake" leave-active-class="animated fadeOut">

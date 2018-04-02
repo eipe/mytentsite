@@ -3,10 +3,13 @@
         <section class="section">
             <h1>Reset password</h1>
             <form method="post" @submit.prevent="submitForm">
-                <p class="controls">
+                <p class="control has-icons-left">
                     <input id="email" type="email" class="input" name="email"
                            placeholder="E-mail address"
                            v-model="info.email" ref="email" autofocus required>
+                    <span class="icon is-small is-left">
+                        <i class="fa fa-envelope"></i>
+                    </span>
                 </p>
                 <transition enter-active-class="animated shake" leave-active-class="animated fadeOut">
                     <div class="notification is-danger" v-if="error">

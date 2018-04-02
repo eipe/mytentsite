@@ -3,29 +3,41 @@
         <section class="section">
             <h1>Create a new account</h1>
             <form method="post" @submit.prevent="submitForm">
-                <p class="controls">
+                <p class="control has-icons-left">
                     <input id="name" type="text" name="name" class="input"
                            placeholder="Name"
                            v-model="info.name" ref="name" required autofocus>
+                    <span class="icon is-small is-left">
+                        <i class="fa fa-user"></i>
+                    </span>
                 </p>
-                <p class="controls">
+                <p class="control has-icons-left">
                     <input id="email" type="email" name="email" class="input"
                            placeholder="E-mail address"
                            v-model="info.email" required>
+                    <span class="icon is-small is-left">
+                        <i class="fa fa-envelope"></i>
+                    </span>
                 </p>
-                <p class="controls">
+                <p class="control has-icons-left">
                     <input id="password" type="password" name="password" class="input"
                            placeholder="Password"
                            v-model="info.password" required>
+                    <span class="icon is-small is-left">
+                        <i class="fa fa-lock"></i>
+                    </span>
                 </p>
-                <p class="controls">
+                <p class="control has-icons-left">
                     <input id="password-confirm" type="password"
                            name="password_confirmation" class="input"
                            placeholder="Confirm password"
                            v-model="info.password_confirmation" required>
+                    <span class="icon is-small is-left">
+                        <i class="fa fa-lock"></i>
+                    </span>
                 </p>
 
-                <p class="controls">
+                <p class="control">
                     <label for="subscribe" class="label">
                         <input id="subscribe" type="checkbox"
                                name="subscribe" class="checkbox"

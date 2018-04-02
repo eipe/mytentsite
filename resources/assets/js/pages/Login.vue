@@ -3,13 +3,19 @@
         <section class="section">
             <h1>Login</h1>
             <form @submit.prevent="submitForm" action="/login" method="POST">
-                <p class="control">
+                <p class="control has-icons-left">
                     <input id="email" type="email" name="email" v-model="info.email"
                            value="" class="input" placeholder="E-mail address" ref="email" required autofocus>
+                    <span class="icon is-small is-left">
+                        <i class="fa fa-envelope"></i>
+                    </span>
                 </p>
-                <p class="control">
+                <p class="control has-icons-left">
                     <input id="password" type="password" name="password" v-model="info.password"
                            class="input" placeholder="Password" required>
+                    <span class="icon is-small is-left">
+                        <i class="fa fa-lock"></i>
+                    </span>
                 </p>
 
                 <p class="control">
