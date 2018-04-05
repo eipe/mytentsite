@@ -124,9 +124,9 @@ class AuthenticateController extends \App\Http\Controllers\Controller
         try {
             $token =  \JWTAuth::refresh($oldToken);
         } catch (TokenExpiredException $e) {
-            return response()->json($e->getMessage(), $e->getStatusCode());
+            return response()->json([$e->getMessage()], $e->getStatusCode());
         } catch (JWTException $e) {
-            return response()->json($e->getMessage(), $e->getStatusCode());
+            return response()->json([$e->getMessage()], $e->getStatusCode());
         }
         return response()->json(compact('token'))->header('Authorization', $token);
     }
