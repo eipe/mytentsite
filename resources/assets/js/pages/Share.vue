@@ -59,7 +59,7 @@
                         </span>
                     </div>
                     <div v-show="isCurrentStep(1)" key="Adjust photo">
-                        <div class="buttons has-addons is-mobile">
+                        <div class="buttons is-centered has-addons is-mobile">
                             <div class="control">
                                 <div class="button is-light" @click="rotate" title="Rotate clockwise">
                                     <span class="icon">
