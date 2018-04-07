@@ -10,7 +10,7 @@
                         <div class="steps-content is-size-7">Cancel</div>
                     </li>
                     <li class="steps-segment"
-                        v-bind:class="{'is-active' : isCurrentStep(0), 'is-clickable' : isCompletedStep(1) && !isStoringPhoto, 'has-gaps' : isUnCompletedStep(0)}"
+                        v-bind:class="{'is-active' : isCurrentStep(0), 'is-clickable' : isCompletedStep(1) && !isSharing, 'has-gaps' : isUnCompletedStep(0)}"
                         @click="goToStepIfPossible(0)">
                         <span class="steps-marker">
                             <i class="fa fa-camera"></i>
@@ -18,7 +18,7 @@
                         <div class="steps-content is-size-7">Select photo</div>
                     </li>
                     <li class="steps-segment"
-                        v-bind:class="{'is-active' : isCurrentStep(1), 'is-clickable' : isCompletedStep(1) && !isStoringPhoto, 'has-gaps' : isUnCompletedStep(1)}"
+                        v-bind:class="{'is-active' : isCurrentStep(1), 'is-clickable' : isCompletedStep(1) && !isSharing, 'has-gaps' : isUnCompletedStep(1)}"
                         @click="goToStepIfPossible(1)">
                         <span class="steps-marker">
                             <i class="fa fa-crop"></i>
@@ -26,7 +26,7 @@
                         <div class="steps-content is-size-7">Adjust and set view</div>
                     </li>
                     <li class="steps-segment"
-                        v-bind:class="{'is-active' : isCurrentStep(2), 'is-clickable' : isCompletedStep(2) && !isStoringPhoto, 'has-gaps' : isUnCompletedStep(2)}"
+                        v-bind:class="{'is-active' : isCurrentStep(2), 'is-clickable' : isCompletedStep(2) && !isSharing, 'has-gaps' : isUnCompletedStep(2)}"
                         @click="goToStepIfPossible(2)">
                         <span class="steps-marker">
                             <i class="fa fa-pencil"></i>
@@ -34,11 +34,11 @@
                         <div class="steps-content is-size-7">Add a caption</div>
                     </li>
                     <li class="steps-segment"
-                        v-bind:class="{'is-active' : isCurrentStep(3), 'is-success' : photoShareSuccess, 'has-gaps' : isUnCompletedStep(3)}">
+                        v-bind:class="{'is-active' : isCurrentStep(3) || isCurrentStep(4), 'is-success' : isShareSuccess, 'has-gaps' : isUnCompletedStep(3)}">
                         <span class="steps-marker">
-                            <i class="fa fa-check" v-bind:class="{'fa-circle-o-notch fa-spin' : isCurrentStep(3) && !photoShareSuccess}"></i>
+                            <i class="fa fa-check" v-bind:class="{'fa-circle-o-notch fa-spin' : isCurrentStep(4) && !isShareSuccess}"></i>
                         </span>
-                        <div class="steps-content is-size-7">Share!</div>
+                        <div class="steps-content is-size-7">Review and share!</div>
                     </li>
                 </ul>
             </transition>
@@ -96,18 +96,60 @@
                     </div>
                     <div key="Add caption" v-show="isCurrentStep(2)">
                         <div class="field">
-                            <input name="caption" title="Caption"
+                            <textarea name="caption" title="Caption"
                                       placeholder="Caption"
-                                      v-model="photo.caption"
-                                      maxlength="255"
-                                      class="input" required>
+                                      v-model="tentSite.caption"
+                                      :maxlength="rules.captionMaxLength"
+                                      class="textarea" required></textarea>
                         </div>
-                        <div class="field">
-                            <input type="submit" class="button is-success" value="Share"
-                                   title="Share this tent site">
+                        <div class="field is-pulled-right">
+                            <div class="control">
+                                <span class="button is-white is-disabled">{{ (rules.captionMaxLength - tentSite.caption.length) }} characters left</span>
+                                <div class="button is-light is-right" title="Proceed" @click="goToNextStep">
+                                    <span>Next</span>
+                                    <span class="icon">
+                                        <i class="fa fa-step-forward"></i>
+                                    </span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div key="Share tent site" v-if="isCurrentStep(3)" class="has-text-centered">
+                    <div key="Review tent site" v-if="isCurrentStep(3)">
+                        <div class="columns">
+                            <div class="column is-half is-offset-one-quarter">
+                                <div class="card">
+                                    <div class="card-image">
+                                        <figure class="image is-4by3">
+                                            <img :src="tentSite.photo" />
+                                        </figure>
+                                    </div>
+                                    <div class="card-content">
+                                        <div class="media">
+                                            <div class="media-left">
+                                                <p class="title is-4">{{ userName }}</p>
+                                                <p class="subtitle is-6">{{ currentDate }}</p>
+                                            </div>
+                                            <div class="media-content"></div>
+                                            <div class="media-right">
+                                                <div class="buttons has-addons">
+                                                    <input
+                                                            type="submit"
+                                                            class="button is-success"
+                                                            value="All good. Share it!"
+                                                            title="Share this tent site">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="content">{{ tentSite.caption }}</div>
+                                        <div class="content is-small" v-if="tentSite.takenDate">
+                                            Photo was taken {{ tentSite.takenDate }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div key="Share tent site" v-if="isCurrentStep(4)" class="has-text-centered">
                         We are uploading your tent site
                         <i class="fa fa-circle-o-notch fa-spin"></i><br><br>
                         <span class="button is-danger" @click.prevent="abortStoring">
@@ -116,9 +158,9 @@
                 </transition-group>
             </form>
             <transition enter-active-class="animated fadeIn">
-                <div class="has-text-centered is-clickable" v-if="isCurrentStep(3) && photoShareSuccess">
+                <div class="has-text-centered is-clickable" v-if="isCurrentStep(3) && isShareSuccess">
                     <h1 class="title">Thank's for your contribution!</h1>
-                    <span class="button" @click="photoShareSuccess = false">
+                    <span class="button" @click="isShareSuccess = false">
                         Click me if you want to start over again
                     </span>
                 </div>
@@ -136,17 +178,23 @@
                 error: null,
                 step: 0,
                 zoom: 0,
-                isStoringPhoto: false,
-                photoShareSuccess: false,
+                isSharing: false,
+                isShareSuccess: false,
                 photoLoading: false,
                 photoLoaded: false,
-                photo: {
+                photoObject: null,
+                rules: {
+                    captionMaxLength: 255
+                },
+                tentSite: {
                     latitude: null,
                     longitude: null,
-                    caption: null
+                    caption: "",
+                    takenDate: null,
+                    photo: null
                 },
+                currentDate: "Now",
                 completedSteps: [],
-                photoObject: null,
                 cropItSettings: {
                     allowDragNDrop: false,
                     exportZoom: 1,
@@ -167,6 +215,11 @@
                     quality: 1,
                     originalSize: true
                 }
+            }
+        },
+        computed: {
+            userName() {
+                return this.$auth.user().name;
             }
         },
         mounted() {
@@ -229,7 +282,7 @@
                 this.completedSteps.push(step);
             },
             goToStepIfPossible(step) {
-                if(this.isCompletedStep(step) && !this.isStoringPhoto) {
+                if(this.isCompletedStep(step) && !this.isSharing) {
                     this.step = step;
                 }
             },
@@ -239,13 +292,14 @@
             reset() {
                 this.error = null;
                 this.step = 0;
-                this.isStoringPhoto = false;
+                this.isSharing = false;
                 this.completedSteps = [];
                 this.photoLoading = false;
                 this.photoLoaded = false;
-                this.photo.latitude = null;
-                this.photo.longitude = null;
-                this.photo.caption = null;
+                this.tentSite.latitude = null;
+                this.tentSite.longitude = null;
+                this.tentSite.caption = "";
+                this.tentSite.photo = null;
             },
             cancel() {
                 this.reset();
@@ -257,6 +311,9 @@
                 if(!file) {
                     return;
                 }
+
+                // Reset exported photo as user has changed photo
+                this.tentSite.photo = null;
 
                 this.photoLoading = true;
 
@@ -278,29 +335,33 @@
                         let latRef = exifData.GPSLatitudeRef || "N",
                             lngRef = exifData.GPSLongitudeRef || "W";
 
-                        me.photo.latitude = (lat[0] + lat[1]/60 + lat[2]/3600) * (latRef == "N" ? 1 : -1);
-                        me.photo.longitude = (lng[0] + lng[1]/60 + lng[2]/3600) * (lngRef == "W" ? -1 : 1);
+                        me.tentSite.latitude = (lat[0] + lat[1]/60 + lat[2]/3600) * (latRef == "N" ? 1 : -1);
+                        me.tentSite.longitude = (lng[0] + lng[1]/60 + lng[2]/3600) * (lngRef == "W" ? -1 : 1);
 
                         if(typeof exifData.DateTime !== typeof undefined) {
-                            me.photo.taken_date = exifData.DateTime;
+                            me.tentSite.takenDate = exifData.DateTime;
                         }
                         me.photoLoaded = true;
                     });
                 });
             },
+            exportPhoto() {
+                return this.photoObject.cropit("export", this.cropItExportOptions);
+            },
             storePhoto() {
-                let me = this,
-                    photoData = me.photo;
+                let me = this;
 
                 me.goToNextStep();
 
-                photoData.photo = me.photoObject.cropit("export", me.cropItExportOptions);
+                if(me.tentSite.photo) {
+                    me.tentSite.photo = me.exportPhoto();
+                }
 
                 me.isStoringPhoto = true;
-                Vue.axios.post("/tentsites", photoData).then(function(response) {
+                Vue.axios.post("/tentsites", me.tentSite).then(function(response) {
                     me.photoStored();
                 }).catch(function(error) {
-                    me.isStoringPhoto = false;
+                    me.isSharing = false;
                     if(parseInt(error.response.readyState) === 0 && error.response.statusText === "abort") {
                         return;
                     }
@@ -319,10 +380,10 @@
             },
             photoStored() {
                 this.reset();
-                this.photoShareSuccess = true;
+                this.isShareSuccess = true;
             },
             triggerSelectPhoto() {
-                this.photoShareSuccess = false;
+                this.isShareSuccess = false;
                 this.$refs.photo.click();
             }
         },
@@ -347,6 +408,10 @@
                     } else {
                         this.photoObject.cropit("reenable");
                     }
+                }
+
+                if(newStep === 3 && !this.tentSite.photo) {
+                    this.tentSite.photo = this.exportPhoto();
                 }
             },
             photoLoaded() {
