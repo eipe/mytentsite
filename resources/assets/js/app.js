@@ -2,6 +2,7 @@
  * Created by Eivind Røe <eivindroe@gmail.com> on 06.08.2016.
  */
 import Error from './components/Error.vue';
+import Header from './elements/Header.vue';
 import routes from './routes.js'
 import Vuex from 'vuex'
 import axios from 'axios'
@@ -182,7 +183,7 @@ new Vue({
     store,
     router: Vue.router,
     components: {
-        Error
+        Error, "header-element" : Header
     },
     created() {
         let environment = document.getElementById("environment").innerHTML.toString();
