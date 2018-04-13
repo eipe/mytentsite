@@ -31,6 +31,8 @@ $api->version(['v1'], function(\Dingo\Api\Routing\Router $api) {
     $api->get('/tentsites/{lat?}/{lng?}/{rad?}', 'App\Http\Controllers\TentSitesController@index');
     // Fetch tent site comments
     $api->get('/comments/{id}', 'App\Http\Controllers\CommentController@index');
+    // Handle tags
+    $api->get('/tags', 'App\Http\Controllers\TagsController@index');
 
     // Fetch tent site comments
     $api->get('/like/{id}', 'App\Http\Controllers\LikeController@getLikesByUser');
