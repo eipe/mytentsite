@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\NewTentSiteRegistered;
+use App\Models\Tag;
 use App\Models\TentSites;
 use Auth;
 use Illuminate\Database\Eloquent\Collection;
@@ -53,6 +54,8 @@ class TentSitesController extends Controller
 
             // Set approved to false as default - could this be defined in table?
             $post['approved'] = false;
+
+            Tag::saveTentSiteTags($post['tags']);
 
             $data = $m::create($post);
 

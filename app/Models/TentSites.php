@@ -93,6 +93,14 @@ class TentSites extends Model
         return $this->hasMany('App\Models\Like')->whereDeletedAt(null)->pluck('user_id');
     }
 
+    /**
+     * The tags that belongs to tentsites
+     */
+    public function tags()
+    {
+        return $this->belongsToMany('App\Tag', 'tentsite_tags');
+    }
+
     public function getUserHasLiked()
     {
         $like = $this->likes()->whereUserId(Auth::id())->first();

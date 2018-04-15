@@ -17,4 +17,9 @@ class Tag extends Model
         'name',
     ];
 
+    public static function saveTentSiteTags($tags){
+        // Loop and save
+
+    }
+
 }
