@@ -18,6 +18,11 @@
                                         </figure>
                                     </div>
                                     <div class="card-content">
+                                        <div class="tags" v-if="tags">
+                                            <div class="tag" v-for="tag in tags">
+                                                {{ tag }}
+                                            </div>
+                                        </div>
                                         <div class="media">
                                             <div class="media-left">
                                                 <p class="title is-4">{{ activeTentSite.reported_by_name }}</p>
@@ -126,6 +131,9 @@
                     return false;
                 }
                 return (this.$auth.user().id === this.activeTentSite.reported_by)
+            },
+            tags() {
+                return this.activeTentSite.tags;
             },
             comments() {
                 return this.activeTentSite.comments;
