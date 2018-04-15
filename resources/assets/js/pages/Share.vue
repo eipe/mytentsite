@@ -31,7 +31,7 @@
                         <span class="steps-marker">
                             <i class="fa fa-pencil"></i>
                         </span>
-                        <div class="steps-content is-size-7">Add a caption</div>
+                        <div class="steps-content is-size-7">Add a information</div>
                     </li>
                     <li class="steps-segment"
                         v-bind:class="{'is-active' : isCurrentStep(3) || isCurrentStep(4), 'is-success' : isShareSuccess, 'has-gaps' : isUnCompletedStep(3)}">
@@ -94,7 +94,12 @@
                             </div>
                         </div>
                     </div>
-                    <div key="Add caption" v-show="isCurrentStep(2)">
+                    <div key="Add information" v-show="isCurrentStep(2)">
+                        <div class="tags">
+                            <div class="tag is-clickable" v-for="tag in availableTags" v-bind:class="{'is-success' : isTagSelected(tag)}" @click="toggleTag(tag)">
+                                {{ tag.name }}
+                            </div>
+                        </div>
                         <div class="field">
                             <textarea name="caption" title="Caption"
                                       placeholder="Caption"
@@ -124,6 +129,11 @@
                                         </figure>
                                     </div>
                                     <div class="card-content">
+                                        <div class="tags">
+                                            <div class="tag" v-for="tag in tentSite.tags">
+                                                {{ getTagName(tag) }}
+                                            </div>
+                                        </div>
                                         <div class="media">
                                             <div class="media-left">
                                                 <p class="title is-4">{{ userName }}</p>
@@ -186,12 +196,14 @@
                 rules: {
                     captionMaxLength: 255
                 },
+                availableTags: [],
                 tentSite: {
                     latitude: null,
                     longitude: null,
                     caption: "",
                     takenDate: null,
-                    photo: null
+                    photo: null,
+                    tags: []
                 },
                 currentDate: "Now",
                 completedSteps: [],
@@ -231,6 +243,12 @@
                 this.photoObject.cropit(this.cropItSettings);
             });
 
+            Vue.axios.get('tags').then(response => {
+                response.data.data.forEach(tag => {
+                    me.availableTags.push({ id: tag.id, name: tag.name});
+                });
+            });
+
             window.onbeforeunload = function() {
                 if(me.photoLoaded &&
                     !confirm("You have a pending photo upload, do you want to finish that before leaving this page?")) {
@@ -256,6 +274,24 @@
                     return;
                 }
                 this.zoom -= 0.1;
+            },
+            toggleTag(tag) {
+                let index = this.tentSite.tags.indexOf(tag.id);
+                if(index > -1) {
+                    this.tentSite.tags.splice(index, 1);
+                } else {
+                    this.tentSite.tags.push(tag.id);
+                }
+            },
+            getTagName(tag) {
+                let index = this.availableTags.indexOf(tag);
+                if(index > -1) {
+                    return this.availableTags[index].name;
+                }
+                return "";
+            },
+            isTagSelected(tag) {
+                return (this.tentSite.tags.indexOf(tag.id) > -1);
             },
             isCurrentStep(step) {
                 return (step === this.step);
