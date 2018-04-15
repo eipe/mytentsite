@@ -79,7 +79,8 @@ const store = new Vuex.Store({
                 updated_at: tentSite["updated_at"],
                 approved: tentSite["approved"],
                 taken_date: tentSite["taken_date"],
-                deleted: tentSite["deleted_at"]
+                deleted: tentSite["deleted_at"],
+                tags: tentSite["tags"]
             };
         },
         removeTentSite(state, tentSite) {
