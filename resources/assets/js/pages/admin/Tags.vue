@@ -1,0 +1,104 @@
+<template>
+    <div>
+        <h1>Tags</h1>
+        <form @submit.prevent="addTag">
+            <div class="field has-addons">
+                <div class="control">
+                    <input class="input" v-model="tag" type="text" placeholder="Add a new tag" required>
+                </div>
+                <div class="control">
+                    <button type="submit" class="button is-success" v-bind:class="{'is-loading' : isSubmitting }">
+                        Add tag
+                    </button>
+                </div>
+            </div>
+        </form>
+        <table class="table is-striped">
+            <thead>
+            <tr>
+                <th>Tag</th>
+                <th>Popularity</th>
+                <th>Date created</th>
+                <th>Handle</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr v-for="tag in tags">
+                    <td>{{ tag.name }}</td>
+                    <td>{{ tag.count }}</td>
+                    <td>{{ tag.created_at }}</td>
+                    <td>
+                        <a class="button is-danger tooltip is-tooltip-top"
+                              v-bind:class="{ 'is-loading' : isDeletingTag(tag) }"
+                              data-tooltip="Click to delete this contribution"
+                              @click="deleteTag(tag)">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>Tag</th>
+                    <th>Popularity</th>
+                    <th>Date created</th>
+                    <th>Handle</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</template>
+<script>
+    export default {
+        name: "AdminTags",
+        data() {
+            return {
+                isSubmitting: false,
+                isDeleting: false,
+                tag: "",
+                tags: []
+            }
+        },
+        created() {
+            let me = this;
+            Vue.axios.get('tags').then(function(response) {
+                response.data.data.forEach(function(tag) {
+                    me.tags.push(tag);
+                });
+            }).catch(function() {
+            });
+        },
+        methods: {
+            addTag() {
+                let me = this;
+                me.isSubmitting = true;
+                Vue.axios.post('tags', { name: me.tag }).then(response => {
+                    me.tags.push(response.data.data);
+                    me.tag = "";
+                    me.isSubmitting = false;
+                }).catch(error => {
+                    me.isSubmitting = false;
+                });
+            },
+            deleteTag(tag) {
+                let me = this;
+                me.isDeleting = tag;
+                Vue.axios.post('tags/' + tag.id + '/delete').then(response => {
+                    let index = me.tags.indexOf(tag);
+                    if(index > -1) {
+                        me.tags.splice(index, 1);
+                    }
+                    me.isDeleting= null;
+                }).catch(error => {
+                    me.isDeleting = null;
+                    me.$store.dispatch("error", "Could not delete tag. Please try again");
+                });
+            },
+            isDeletingTag(tag) {
+                return (this.isDeleting === tag);
+            }
+        },
+        components: {
+        }
+    }
+</script>

@@ -14,6 +14,7 @@
                             <router-link to="/admin/dashboard" tag="li"><a>Dashboard</a></router-link>
                             <router-link to="/admin/tentsites" tag="li"><a>Tent sites</a></router-link>
                             <router-link to="/admin/users" tag="li"><a>Users</a></router-link>
+                            <router-link to="/admin/tags" tag="li"><a>Tags</a></router-link>
                             <router-link to="/admin/statistics" tag="li"><a>Statistics</a></router-link>
                         </ul>
                     </div>

@@ -39,7 +39,7 @@ class TentSites extends Model
      *
      * @var array
      */
-    protected $appends = ['likes', 'reported_by_name'];
+    protected $appends = ['likes', 'reported_by_name', 'tags'];
 
     /**
      * Route notifications for the Slack channel.
@@ -107,7 +107,20 @@ class TentSites extends Model
         return (!is_null($like)) ? true : false;
     }
 
-    public function getLikesAttribute() {
+    public function getLikesAttribute()
+    {
         return $this->likes();
     }
+
+
+    public function tags()
+    {
+        return $this->hasMany('App\Models\Tag');
+    }
+
+    public function getTagsAttribute()
+    {
+        return $this->tags();
+    }
+
 }
