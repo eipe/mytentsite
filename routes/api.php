@@ -69,6 +69,7 @@ $api->version(['v1'], function(\Dingo\Api\Routing\Router $api) {
 
         // #Admin routes
         $api->post('/tags', 'App\Http\Controllers\TagsController@store');
+        $api->post('/tags/{id}/delete', 'App\Http\Controllers\TagsController@destroy');
         // Fetch unapproved tent sites
         $api->get('/unapproved', 'App\Http\Controllers\TentSitesController@getUnapproved');
         // Fetch all users
