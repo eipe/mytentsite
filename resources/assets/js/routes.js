@@ -97,6 +97,13 @@ export default {
             meta: {
                 auth: true
             }
+        },  {
+            path: '/admin/tags',
+            name: 'Tags',
+            component: require('./pages/admin/Tags.vue'),
+            meta: {
+                auth: true
+            }
         }, {
             path: '/admin/statistics',
             name: 'Statistics',
