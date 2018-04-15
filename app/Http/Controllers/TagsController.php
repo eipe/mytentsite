@@ -14,6 +14,7 @@ class TagsController extends Controller
     /* @var Tag MODEL */
     const MODEL = 'App\Models\Tag';
 
+    protected $validationRules = ['name' => 'required'];
 
     public function index()
     {
