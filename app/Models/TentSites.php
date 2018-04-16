@@ -98,7 +98,7 @@ class TentSites extends Model
      */
     public function tags()
     {
-        return $this->belongsToMany('App\Tag', 'tentsite_tags');
+        return $this->belongsToMany('App\Tag', 'tentsite_tags', 'tent_site_id', 'tag_id');
     }
 
     public function getUserHasLiked()
@@ -110,12 +110,6 @@ class TentSites extends Model
     public function getLikesAttribute()
     {
         return $this->likes();
-    }
-
-
-    public function tags()
-    {
-        return $this->hasMany('App\Models\Tag');
     }
 
     public function getTagsAttribute()
