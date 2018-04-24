@@ -29,9 +29,7 @@ class Tag extends Model
     public static function saveTentSiteTags(TentSites $tentsite, $tags){
         // Loop and save
         if(is_array($tags) && !empty($tags)) {
-            foreach ($tags as $id) {
-                $tentsite->tags()->sync($id);
-            }
+            $tentsite->tags()->sync(array_values($tags));
         }
 
     }
