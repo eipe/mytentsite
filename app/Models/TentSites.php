@@ -98,7 +98,8 @@ class TentSites extends Model
      */
     public function tags()
     {
-        return $this->belongsToMany('App\Tag', 'tentsite_tags', 'tent_site_id', 'tag_id');
+        return $this->belongsToMany('App\Models\Tag', 'tentsite_tags',
+            'tent_site_id', 'tag_id')->pluck('name');
     }
 
     public function getUserHasLiked()

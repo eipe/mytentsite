@@ -17,6 +17,15 @@ class Tag extends Model
         'name',
     ];
 
+    /**
+     * The tags that belongs to tentsites
+     */
+    public function tentsites()
+    {
+        return $this->belongsToMany('App\Models\Tentsites', 'tentsite_tags',
+            'tag_id', 'tent_site_id')->pluck('id');
+    }
+
     public static function saveTentSiteTags($tags){
         // Loop and save
 
