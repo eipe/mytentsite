@@ -26,8 +26,13 @@ class Tag extends Model
             'tag_id', 'tent_site_id')->pluck('id');
     }
 
-    public static function saveTentSiteTags($tags){
+    public static function saveTentSiteTags(TentSites $tentsite, $tags){
         // Loop and save
+        if(is_array($tags) && !empty($tags)) {
+            foreach ($tags as $id) {
+                $tentsite->tags()->sync($id);
+            }
+        }
 
     }
 
