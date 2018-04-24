@@ -17,8 +17,6 @@ class CreateTentsiteTagsTable extends Migration
             $table->increments('id');
             $table->integer('tag_id')->unsigned();
             $table->foreign('tag_id')->references('id')->on('tags');
-            $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');
             $table->integer('tent_site_id')->unsigned();
             $table->foreign('tent_site_id')->references('id')->on('tent_sites');
             $table->timestamps();
