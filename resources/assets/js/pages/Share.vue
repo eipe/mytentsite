@@ -283,12 +283,14 @@
                     this.tentSite.tags.push(tag.id);
                 }
             },
-            getTagName(tag) {
-                let index = this.availableTags.indexOf(tag);
-                if(index > -1) {
-                    return this.availableTags[index].name;
+            getTagName(tagId) {
+                let tag = this.availableTags.find((findTag) => {
+                    return (findTag.id === tagId);
+                });
+                if(tag) {
+                    return tag.name;
                 }
-                return "";
+                return '';
             },
             isTagSelected(tag) {
                 return (this.tentSite.tags.indexOf(tag.id) > -1);
