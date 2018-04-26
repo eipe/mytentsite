@@ -55,8 +55,6 @@ class TentSitesController extends Controller
             // Set approved to false as default - could this be defined in table?
             $post['approved'] = false;
 
-            Tag::saveTentSiteTags($post['tags']);
-
             $data = $m::create($post);
 
             // Force all photos to be .jpg formatted
@@ -72,6 +70,11 @@ class TentSitesController extends Controller
             $data->setAttribute('thumbnail_location', $imageName);
             $data->setAttribute('reported_by', Auth::user()->getAttribute('id'));
             $data->save();
+
+
+            if(isset($post['tags'])) {
+                Tag::saveTentSiteTags($data, $post['tags']);
+            }
 
             // Fire event
             event(new NewTentSiteRegistered($data));
