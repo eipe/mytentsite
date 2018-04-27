@@ -17,13 +17,22 @@ class Tag extends Model
         'name',
     ];
 
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['count'];
+
+
     /**
      * The tags that belongs to tentsites
      */
     public function tentsites()
     {
         return $this->belongsToMany('App\Models\Tentsites', 'tentsite_tags',
-            'tag_id', 'tent_site_id')->pluck('id');
+            'tag_id', 'tent_site_id');
     }
 
     public static function saveTentSiteTags(TentSites $tentsite, $tags){
@@ -32,6 +41,11 @@ class Tag extends Model
             $tentsite->tags()->sync(array_values($tags));
         }
 
+    }
+
+    public function getCountAttribute()
+    {
+        return $this->tentsites()->count();
     }
 
 }
