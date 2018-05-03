@@ -20,7 +20,11 @@
                     <td>{{ tentSite.caption }}</td>
                     <td>{{ tentSite.created_at }}</td>
                     <td>{{ tentSite.reported_by_name }}</td>
-                    <td><img :src="tentSite.thumbnail_location" /></td>
+                    <td>
+                        <img :src="tentSite.thumbnail_location"
+                             class="is-clickable"
+                             @click="openGallery(tentSite)"/>
+                    </td>
                     <td>
                         <button class="button is-outlined" title="View on Google Map" @click.prevent="viewOnMap(tentSite)">
                             <span class="icon is-small">
@@ -50,11 +54,13 @@
                 </tr>
             </tfoot>
         </table>
+        <photo-gallery :tent-sites="tentSites" :user-actions="false" ref="gallery"></photo-gallery>
     </div>
 </template>
 <script>
 
     import Photo from "../../components/Photo.vue"
+    import PhotoGallery from "../../components/PhotoGallery.vue"
 
     export default {
         name: "AdminTentSites",
@@ -66,13 +72,18 @@
         created() {
             let me = this;
             Vue.axios.get("unapproved").then(function(response) {
-                response.data.data.forEach(function(value) {
-                    me.tentSites.push(value);
+                response.data.data.forEach(function(tentSite) {
+                    tentSite['bookmarks'] = [];
+                    tentSite['comments'] = [];
+                    me.tentSites.push(tentSite);
                 });
             }).catch(function() {
             });
         },
         methods: {
+            openGallery(tentSite) {
+                this.$refs.gallery.openGallery(tentSite);
+            },
             removeTentSite(id) {
                 let index = this.tentSites.findIndex(function(photo) {
                     if(photo.id === id) {
@@ -115,7 +126,7 @@
             }
         },
         components: {
-            Photo
+            Photo, PhotoGallery
         }
     }
 </script>
