@@ -1,7 +1,7 @@
 <template>
     <div>
         <h1>Tags</h1>
-        <form @submit.prevent="addTag">
+        <form @submit.prevent="submitTag">
             <div class="field has-addons">
                 <div class="control">
                     <input class="input" v-model="tag" type="text" placeholder="Add a new tag" required>
@@ -25,8 +25,8 @@
             <tbody>
                 <tr v-for="tag in tags">
                     <td>{{ tag.name }}</td>
-                    <td>{{ tag.count }}</td>
-                    <td>{{ tag.created_at }}</td>
+                    <td>{{ tag.timesUsed }}</td>
+                    <td>{{ tag.createdAt }}</td>
                     <td>
                         <a class="button is-danger tooltip is-tooltip-top"
                               v-bind:class="{ 'is-loading' : isDeletingTag(tag) }"
@@ -61,35 +61,43 @@
         },
         created() {
             let me = this;
-            Vue.axios.get('tags').then(function(response) {
-                response.data.data.forEach(function(tag) {
-                    me.tags.push(tag);
+            Vue.axios.get('tags').then((response) => {
+                response.data.data.forEach((tag) => {
+                    me.addTag(tag);
                 });
-            }).catch(function() {
+            }).catch(() => {
             });
         },
         methods: {
-            addTag() {
+            addTag(tagData) {
+                this.tags.push({
+                    id: tagData.id,
+                    name: tagData.name,
+                    createdAt: tagData.created_at,
+                    timesUsed: tagData.count
+                });
+            },
+            submitTag() {
                 let me = this;
                 me.isSubmitting = true;
                 Vue.axios.post('tags', { name: me.tag }).then(response => {
-                    me.tags.push(response.data.data);
+                    me.addTag(response.data.data);
                     me.tag = "";
                     me.isSubmitting = false;
-                }).catch(error => {
+                }).catch(() => {
                     me.isSubmitting = false;
                 });
             },
             deleteTag(tag) {
                 let me = this;
                 me.isDeleting = tag;
-                Vue.axios.post('tags/' + tag.id + '/delete').then(response => {
+                Vue.axios.post('tags/' + tag.id + '/delete').then(() => {
                     let index = me.tags.indexOf(tag);
                     if(index > -1) {
                         me.tags.splice(index, 1);
                     }
                     me.isDeleting= null;
-                }).catch(error => {
+                }).catch(() => {
                     me.isDeleting = null;
                     me.$store.dispatch("error", "Could not delete tag. Please try again");
                 });
