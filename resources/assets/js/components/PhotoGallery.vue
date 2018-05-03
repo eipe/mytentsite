@@ -28,7 +28,7 @@
                                                 <p class="title is-4">{{ activeTentSite.reported_by_name }}</p>
                                                 <p class="subtitle is-6">{{ activeTentSite.created_at }}</p>
                                             </div>
-                                            <div class="media-right">
+                                            <div class="media-right" v-if="shouldDisplayUserActions">
                                                 <div class="buttons has-addons">
                                                     <a class="button is-white tooltip is-tooltip-top is-tooltip-multiline"
                                                        :data-tooltip="bookmarkTooltip"
@@ -53,7 +53,7 @@
                                         <div class="content is-small" v-if="activeTentSite.taken_date">
                                             Photo was taken {{ activeTentSite.taken_date }}
                                         </div>
-                                        <div v-if="isUserCreator">
+                                        <div v-if="isUserCreator && shouldDisplayUserActions">
                                             <a v-if="isDeleted" class="button is-success tooltip is-tooltip-top"
                                                   v-bind:class="{ 'is-loading' : isDeleting }"
                                                   data-tooltip="Click to restore this contribution"
@@ -117,9 +117,16 @@
             tentSites: {
                 type: Array,
                 required: true
+            },
+            userActions: {
+                type: Boolean,
+                default: true
             }
         },
         computed: {
+            shouldDisplayUserActions() {
+                return (this.userActions);
+            },
             isDeleted() {
                 if(!this.activeTentSite) {
                     return false;
