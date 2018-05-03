@@ -9,12 +9,16 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueAuth from '@websanova/vue-auth'
 import VueAnalytics from 'vue-analytics'
+import Vuei18n from 'vue-i18n'
+import language from './lang/language'
 
 Vue.router = new VueRouter({
     routes: routes.routes,
     linkActiveClass: "is-active",
     path: "/"
 });
+
+const i18n = new Vuei18n(language);
 
 Vue.use(VueAxios, axios);
 Vue.use(VueAuth, {
@@ -175,6 +179,9 @@ const store = new Vuex.Store({
         },
         displayError(state, error) {
             state.commit("setError", error);
+        },
+        changeLanguage(state, lng) {
+            i18n.locale = lng;
         }
     }
 });
@@ -183,6 +190,7 @@ new Vue({
     el: "#app",
     store,
     router: Vue.router,
+    i18n: i18n,
     components: {
         Error, "header-element" : Header
     },
