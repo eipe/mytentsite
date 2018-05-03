@@ -4,7 +4,8 @@
             <div class="tags">
                 <span v-for="tag in tags"
                       :data-id="tag.id"
-                      class="tag is-clickable"
+                      class="tag is-clickable tooltip is-tooltip-bottom"
+                      :data-tooltip="$t('action.clickToToggle')"
                       @click="toggleTagFilter(tag)"
                       v-bind:class="{'is-success' : isTagFilterActive(tag)}">
                     {{ tag.name }}

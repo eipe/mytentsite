@@ -3,7 +3,9 @@
         <div class="container content">
             <h2 class="title">{{ $t('tentSite.bookmarkCount', [tentSiteIds.length])}}</h2>
             <button class="button" @click.prevent="loadTentSites"
-                    v-if="!isLoaded" v-bind:class="{ 'is-loading disabled' : isLoading }">{{ $t('action.tryAgain')}}</button>
+                    v-if="!isLoaded" v-bind:class="{ 'is-loading disabled' : isLoading }">
+                {{ $t('action.tryAgain')}}
+            </button>
             <div class="columns is-multiline is-mobile">
                 <div class="column is-one-quarter" v-for="tentSite in tentSites">
                     <img :src="tentSite.thumbnail" class="is-clickable" @click="openGallery(tentSite)" />
