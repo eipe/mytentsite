@@ -65,12 +65,12 @@ class TentSitesController extends Controller
             imagejpeg(
                 imagecreatefromstring($photo),
                 storage_path('app/public') . env('TENT_SITE_PHOTO_DIR') . $imageName, 70);
+            $this->makeThumbnail($imageName);
 
             $data->setAttribute('img_location', $imageName);
             $data->setAttribute('thumbnail_location', $imageName);
             $data->setAttribute('reported_by', Auth::user()->getAttribute('id'));
             $data->save();
-
 
             if(isset($post['tags'])) {
                 Tag::saveTentSiteTags($data, $post['tags']);
@@ -78,8 +78,6 @@ class TentSitesController extends Controller
 
             // Fire event
             event(new NewTentSiteRegistered($data));
-
-            $this->makeThumbnail($imageName);
 
             return $this->createdResponse($data);
         } catch (\Exception $ex) {
