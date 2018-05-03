@@ -38,7 +38,8 @@ elixir(function(mix) {
             config.nodeDir + '/vue/dist/vue.js',
             config.nodeDir + '/vue-router/dist/vue-router.js',
             config.nodeDir + '/axios/dist/axios.js',
-            config.nodeDir + '/vuex/dist/vuex.js'
+            config.nodeDir + '/vuex/dist/vuex.js',
+            config.nodeDir + '/vue-i18n/dist/vue-i18n.js'
         ], 'public/js/core-dep.js')
         .scripts([
             config.nodeDir + '/leaflet/dist/leaflet.js',
