@@ -39,4 +39,14 @@ class UserController extends Controller
         )->orderBy('name')->get());
     }
 
+
+    public function updateLanguage(Request $request) {
+        $m = self::MODEL;
+        $user = $m::findOrFail(Auth::id(), 'id');
+        $user->language = $request->get('language');
+        $user->save();
+
+        return $this->createdResponse($user);
+    }
+
 }
