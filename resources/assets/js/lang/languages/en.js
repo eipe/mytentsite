@@ -32,6 +32,8 @@ export default {
         resetPassword: 'Reset password',
         delete: 'Delete',
         clickToDelete: 'Click to delete',
+        approve: 'Approve',
+        deny: 'Deny',
     },
     tentSite: {
         shareTentSite: 'Share a tent site',
@@ -41,6 +43,8 @@ export default {
         bookmarkCount: 'Your bookmarks {0} in total',
         contribution: 'Contribution | Contributions',
         contributionCount: 'Your contributions - displaying {0} of {1}',
+        caption: 'Caption',
+        numberWaitingForApproval: '{0} waiting for approval',
         state: {
             approved: 'Approved',
             notApproved: 'Not approved',
@@ -66,6 +70,13 @@ export default {
         allLoaded: 'All loaded',
         tag: 'Tag',
         handle: 'Handle',
+        id: 'Id',
+        reportedBy: 'Added by',
+        preview: 'Preview',
+        map: 'Map',
+        viewOn: 'View on {0}',
+        yes: 'Yes',
+        no: 'No',
     },
     error: {
         couldNotLoad: 'Could not load {0}.<br>Please try again later',
@@ -73,5 +84,8 @@ export default {
     },
     date: {
         created: 'Created date',
+        updated: 'Updated date',
+        registered: 'Registered date',
+        lastActive: 'Last active',
     },
 }

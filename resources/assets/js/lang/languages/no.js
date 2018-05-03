@@ -32,6 +32,8 @@ export default {
         resetPassword: 'Nullstill passord',
         delete: 'Slett',
         clickToDelete: 'Klikk for å slette',
+        approve: 'Godkjenn',
+        deny: 'Avslå',
     },
     tentSite: {
         shareTentSite: 'Del en teltplass',
@@ -41,6 +43,8 @@ export default {
         bookmarkCount: 'Dine bokmerker - totalt {0}',
         contribution: 'Bidrag | Bidrag',
         contributionCount: 'Dine bidrag - viser {0} av {1}',
+        caption: 'Bildetekst',
+        numberWaitingForApproval: '{0} venter på godkjenning',
         state: {
             approved: 'Godkjent',
             notApproved: 'Ikke godkjent',
@@ -65,7 +69,14 @@ export default {
         viewInfo: 'Se informasjon om prosjektet',
         allLoaded: 'Alle lastet',
         tag: 'Emneknagg',
-        handle: 'Håndter'
+        handle: 'Håndter',
+        id: 'Id',
+        reportedBy: 'Lagt inn av',
+        preview: 'Forhåndsvisning',
+        map: 'Kart',
+        viewOn: 'Vis i {0}',
+        yes: 'Ja',
+        no: 'Nei',
     },
     error: {
         couldNotLoad: 'Kunne ikke laste {0}. <br>Vennligst prøv igjen senere',
@@ -73,5 +84,8 @@ export default {
     },
     date: {
         created: 'Opprettet dato',
+        updated: 'Oppdatert dato',
+        registered: 'Registrert dato',
+        lastActive: 'Sist aktiv',
     },
 }

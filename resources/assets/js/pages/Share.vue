@@ -114,8 +114,8 @@
                         </div>
                         <div class="field">
                             <textarea name="caption"
-                                      :title="$t('caption')"
-                                      :placeholder="$t('caption')"
+                                      :title="$t('tentSite.caption')"
+                                      :placeholder="$t('tentSite.caption')"
                                       v-model="tentSite.caption"
                                       :maxlength="rules.captionMaxLength"
                                       class="textarea" required></textarea>
@@ -222,7 +222,6 @@
                         clickToZoomOut: 'click to zoom out',
                     },
                     photoWasTaken: 'Photo was taken {0}',
-                    caption: 'Caption',
                     captionLength: '{0} characters left',
                     warning: 'You have a pending photo upload, do you want to finish that before leaving this page?',
                     error: {
@@ -251,7 +250,6 @@
                         clickToZoomOut: 'klikk for å zoom\'e ut',
                     },
                     photoWasTaken: 'Foto ble tatt {0}',
-                    caption: 'Bildetekst',
                     captionLength: '{0} tegn til gode',
                     warning: 'Du har ikke delt teltplassen enda, vil du fullføre det før du forlater denne siden?',
                     error: {

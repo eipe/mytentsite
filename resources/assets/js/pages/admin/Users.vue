@@ -1,16 +1,16 @@
 <template>
     <div>
-        <h1>Users</h1>
-        <p>We currently have {{ users.length}} users</p>
+        <h1>{{ $t('page.users')}}</h1>
+        <p>{{ $t('numberOfUsers', [users.length])}}</p>
         <table class="table is-striped">
             <thead>
             <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Date registered</th>
-                <th>Date updated</th>
-                <th>Last active</th>
-                <th>Admin</th>
+                <th>{{ $t('profile.name')}}</th>
+                <th>{{ $t('authentication.email')}}</th>
+                <th>{{ $t('date.registered')}}</th>
+                <th>{{ $t('date.updated')}}</th>
+                <th>{{ $t('date.lastActive')}}</th>
+                <th>{{ $t('role.admin')}}</th>
             </tr>
             </thead>
             <tbody>
@@ -25,12 +25,12 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Date registered</th>
-                    <th>Date updated</th>
-                    <th>Last active</th>
-                    <th>Admin</th>
+                    <th>{{ $t('profile.name')}}</th>
+                    <th>{{ $t('authentication.email')}}</th>
+                    <th>{{ $t('date.registered')}}</th>
+                    <th>{{ $t('date.updated')}}</th>
+                    <th>{{ $t('date.lastActive')}}</th>
+                    <th>{{ $t('role.admin')}}</th>
                 </tr>
             </tfoot>
         </table>
@@ -39,6 +39,16 @@
 <script>
     export default {
         name: "AdminUsers",
+        i18n: {
+            messages: {
+                en: {
+                    numberOfUsers: 'We currently have {0} users'
+                },
+                no: {
+                    numberOfUsers: 'Vi har for øyeblikket {0} brukere'
+                }
+            },
+        },
         data() {
             return {
                 users: []
@@ -46,8 +56,8 @@
         },
         created() {
             let me = this;
-            Vue.axios.get("users").then(function(response) {
-                response.data.data.forEach(function(value) {
+            Vue.axios.get("users").then((response) => {
+                response.data.data.forEach((value) => {
                     me.users.push(value);
                 });
             }).catch(function() {
@@ -55,7 +65,7 @@
         },
         methods: {
             isAdmin(user) {
-                return (user.is_admin ? 'Yes' : 'No');
+                return (user.is_admin ? this.$t('misc.yes') : this.$t('misc.no'));
             }
         },
         components: {

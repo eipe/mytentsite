@@ -1,17 +1,17 @@
 <template>
     <div>
-        <h1>Tent sites</h1>
-        <p>{{ tentSites.length }} waiting for approval</p>
+        <h1>{{ $t('page.tentSites')}}</h1>
+        <p>{{ $t('tentSite.numberWaitingForApproval', [tentSites.length])}}</p>
         <table class="table is-striped">
             <thead>
                 <tr>
-                    <th>Id</th>
-                    <th>Caption</th>
-                    <th>Created</th>
-                    <th>Reported by</th>
-                    <th width="50">Preview</th>
-                    <th>Map</th>
-                    <th>Handle</th>
+                    <th>{{ $t('misc.id')}}</th>
+                    <th>{{ $t('tentSite.caption')}}</th>
+                    <th>{{ $t('date.created')}}</th>
+                    <th>{{ $t('misc.reportedBy')}}</th>
+                    <th width="50">{{ $t('misc.preview')}}</th>
+                    <th>{{ $t('misc.map')}}</th>
+                    <th>{{ $t('misc.handle')}}</th>
                 </tr>
             </thead>
             <tbody>
@@ -26,17 +26,23 @@
                              @click="openGallery(tentSite)"/>
                     </td>
                     <td>
-                        <button class="button is-outlined" title="View on Google Map" @click.prevent="viewOnMap(tentSite)">
+                        <button class="button is-outlined"
+                                :title="$t('misc.viewOn', ['Google Map'])"
+                                @click.prevent="viewOnMap(tentSite)">
                             <span class="icon is-small">
                                 <i class="fa fa-map-o"></i>
                             </span>
                         </button>
                     </td>
                     <td>
-                        <button class="button is-success is-outlined" title="Approve" @click.prevent="approve(tentSite)">
+                        <button class="button is-success is-outlined"
+                                :title="$t('action.approve')"
+                                @click.prevent="approve(tentSite)">
                             <span class="icon is-small"><i class="fa fa-thumbs-up"></i></span>
                         </button>
-                        <button class="button is-danger is-outlined" title="Deny" @click.prevent="deny(tentSite)">
+                        <button class="button is-danger is-outlined"
+                                :title="$t('action.deny')"
+                                @click.prevent="deny(tentSite)">
                             <span class="icon is-small"><i class="fa fa-thumbs-down"></i></span>
                         </button>
                     </td>
@@ -44,13 +50,13 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <th>Id</th>
-                    <th>Caption</th>
-                    <th>Created</th>
-                    <th>Reported by</th>
-                    <th>Preview</th>
-                    <th>Map</th>
-                    <th>Handle</th>
+                    <th>{{ $t('misc.id')}}</th>
+                    <th>{{ $t('tentSite.caption')}}</th>
+                    <th>{{ $t('date.created')}}</th>
+                    <th>{{ $t('misc.reportedBy')}}</th>
+                    <th width="50">{{ $t('misc.preview')}}</th>
+                    <th>{{ $t('misc.map')}}</th>
+                    <th>{{ $t('misc.handle')}}</th>
                 </tr>
             </tfoot>
         </table>
@@ -71,8 +77,8 @@
         },
         created() {
             let me = this;
-            Vue.axios.get("unapproved").then(function(response) {
-                response.data.data.forEach(function(tentSite) {
+            Vue.axios.get("unapproved").then((response) => {
+                response.data.data.forEach((tentSite) => {
                     tentSite['bookmarks'] = [];
                     tentSite['comments'] = [];
                     me.tentSites.push(tentSite);
@@ -85,7 +91,7 @@
                 this.$refs.gallery.openGallery(tentSite);
             },
             removeTentSite(id) {
-                let index = this.tentSites.findIndex(function(photo) {
+                let index = this.tentSites.findIndex((photo) => {
                     if(photo.id === id) {
                         return true;
                     }
@@ -98,7 +104,7 @@
             approve(tentSite) {
                 let me = this,
                     id = tentSite.id;
-                Vue.axios.post("/admin/approve/" + id).then(function() {
+                Vue.axios.post("/admin/approve/" + id).then(() => {
                     me.removeTentSite(id);
                 }).catch(function(error) {
                     let errorMessage = "Could not approve";
@@ -111,7 +117,7 @@
             deny(tentSite) {
                 let me = this,
                     id = tentSite.id;
-                Vue.axios.post("/admin/deny/" + id).then(function() {
+                Vue.axios.post("/admin/deny/" + id).then(() => {
                     me.removeTentSite(id);
                 }).catch(function(error) {
                     let errorMessage = "Could not deny";
