@@ -31,14 +31,14 @@ class Tag extends Model
      */
     public function tentsites()
     {
-        return $this->belongsToMany('App\Models\Tentsites', 'tentsite_tags',
+        return $this->belongsToMany('App\Models\TentSites', 'tentsite_tags',
             'tag_id', 'tent_site_id');
     }
 
-    public static function saveTentSiteTags(TentSites $tentsite, $tags){
+    public static function saveTentSiteTags(TentSites $tentSite, $tags){
         // Loop and save
         if(is_array($tags) && !empty($tags)) {
-            $tentsite->tags()->sync(array_values($tags));
+            $tentSite->tags()->sync(array_values($tags));
         }
 
     }
