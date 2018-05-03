@@ -1,8 +1,11 @@
+import english from './languages/en'
+import norwegian from './languages/no'
+
 export default {
     locale: 'en',
     fallbackLocale: 'en',
     messages: {
-        en: require('./languages/en'),
-        no: require('./languages/no'),
+        en: english,
+        no: norwegian,
     }
 }
