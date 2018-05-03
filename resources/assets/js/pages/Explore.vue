@@ -11,15 +11,19 @@
                 </span>
             </div>
             <div class="columns is-multiline is-mobile has-normal-margin">
-                <div v-for="tentSite in tentSites" class="column is-one-third"
-                       :key="tentSite.id" @click="openGallery(tentSite)">
+                <div v-for="tentSite in tentSites"
+                     class="column is-one-third"
+                     :key="tentSite.id"
+                     @click="openGallery(tentSite)">
                     <photo :tent-site="tentSite"></photo>
                 </div>
             </div>
             <div class="container has-text-centered">
-                <button class="button is-info" v-if="hasMore" @click="loadMore"
-                        v-bind:class="{ 'is-loading' : isLoadingMore }">Load more tent site photos</button>
-                <button class="button" disabled v-else>All tent site photos are loaded</button>
+                <button class="button is-info"
+                        v-if="hasMore"
+                        @click="loadMore"
+                        v-bind:class="{ 'is-loading' : isLoadingMore }">{{ $t('action.loadMore')}}</button>
+                <button class="button" disabled v-else>{{ $t('misc.allLoaded')}}</button>
             </div>
         </section>
         <footer-component/>
@@ -84,7 +88,7 @@
             loadMore() {
                 let me = this;
                 this.isLoadingMore = true;
-                this.loadMoreTentSites().then(function() {
+                this.loadMoreTentSites().then(() => {
                     me.isLoadingMore = false;
                 });
             },

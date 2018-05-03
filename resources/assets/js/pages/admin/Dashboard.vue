@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>Dashboard</h1>
+        <h1>{{ $t('page.dashboard')}}</h1>
         <ul>
             <li>Apdex: {{ apDex }}</li>
             <li>- redirect: {{ redirect }}</li>

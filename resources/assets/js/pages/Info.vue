@@ -7,20 +7,20 @@
                         <div class="columns is-mobile" v-show="isLoaded" v-cloak>
                             <div class="column has-text-centered">
                                 <p class="title is-marginless is-paddingless">{{ statistics.numberOfTentSites }}</p>
-                                <p class="heading">Shared tent sites</p>
+                                <p class="heading">{{ $t('info.tentSites')}}</p>
                             </div>
                             <div class="column has-text-centered">
                                     <p class="title is-marginless is-paddingless">{{ statistics.numberOfBookmarkedTentSites }}</p>
-                                    <p class="heading">Bookmarked tent sites</p>
+                                    <p class="heading">{{ $t('info.bookmarks')}}</p>
                             </div>
                             <div class="column has-text-centered">
                                 <p class="title is-marginless is-paddingless">{{ statistics.numberOfCountries }}</p>
-                                <p class="heading">Countries represented</p>
+                                <p class="heading">{{ $t('info.countries')}}</p>
                             </div>
                             <div class="column has-text-centered">
                                 <div>
                                     <p class="title is-marginless is-paddingless">{{ statistics.numberOfContributors }}</p>
-                                    <p class="heading">Contributors</p>
+                                    <p class="heading">{{ $t('info.contributors')}}</p>
                                 </div>
                             </div>
                         </div>
@@ -54,7 +54,7 @@
                             <div class="level-item has-text-centered">
                                 <router-link to="share">
                                 <div>
-                                    <p class="title">Share<i class="fa fa-camera icon is-large"></i></p>
+                                    <p class="title">{{ $t('action.share')}}<i class="fa fa-camera icon is-large"></i></p>
                                     <p class="heading">Your favourites with others</p>
                                 </div>
                                 </router-link>
@@ -62,7 +62,7 @@
                             <div class="level-item has-text-centered">
                                 <router-link to="locate">
                                 <div>
-                                    <p class="title">Locate<i class="fa fa-map icon is-large"></i></p>
+                                    <p class="title">{{ $t('locate')}}<i class="fa fa-map icon is-large"></i></p>
                                     <p class="heading">Tent sites all over the world</p>
                                 </div>
                                 </router-link>
@@ -70,7 +70,7 @@
                             <div class="level-item has-text-centered">
                                 <router-link to="explore">
                                 <div>
-                                    <p class="title">Explore<i class="fa fa-th icon is-large"></i></p>
+                                    <p class="title">{{ $t('explore')}}<i class="fa fa-th icon is-large"></i></p>
                                     <p class="heading">Tent sites on the photo wall</p>
                                 </div>
                                 </router-link>
@@ -128,6 +128,26 @@
 
     export default {
         name: "Info",
+        i18n: {
+            messages: {
+                en: {
+                    info: {
+                        tentSites: 'Shared tent sites',
+                        bookmarks: 'Bookmarked tent sites',
+                        countries: 'Countries represented',
+                        contributors: 'Contributors',
+                    }
+                },
+                no: {
+                    info: {
+                        sharedSites: 'Delte teltplasser',
+                        bookmarks: 'Bokmerkede teltplasser',
+                        countries: 'Land representer',
+                        contributors: 'Bidragsytere'
+                    }
+                }
+            }
+        },
         data() {
             return {
                 statistics: {
@@ -142,7 +162,7 @@
         created() {
             let me = this;
 
-            Vue.axios.get('statistics').then(function(response) {
+            Vue.axios.get('statistics').then((response) => {
                 me.statistics.numberOfTentSites = response.data.tentSites;
                 me.statistics.numberOfBookmarkedTentSites = response.data.bookmarkedTentSites;
                 me.statistics.numberOfCountries = response.data.countries;

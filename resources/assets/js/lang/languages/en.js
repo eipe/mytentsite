@@ -4,8 +4,16 @@ export default {
         norwegian: 'Norwegian',
     },
     profile: {
+        name: 'Name',
         helloName: 'Hi, {0}!',
         profile: 'Profile',
+    },
+    page: {
+        dashboard: 'Dashboard',
+        tentSites: 'Tent sites',
+        users: 'Users',
+        tags: 'Tags',
+        statistics: 'Statistics',
     },
     action: {
         logOut: 'Logout',
@@ -17,6 +25,13 @@ export default {
         next: 'Next',
         cancel: 'Cancel',
         selectLanguage: 'Select language',
+        loadMore: 'Load more',
+        share: 'Share',
+        locate: 'Locate',
+        explore: 'Explore',
+        resetPassword: 'Reset password',
+        delete: 'Delete',
+        clickToDelete: 'Click to delete',
     },
     tentSite: {
         shareTentSite: 'Share a tent site',
@@ -36,15 +51,27 @@ export default {
     authentication: {
         email: 'E-mail address',
         password: 'Password',
+        confirmPassword: 'Confirm password',
         forgotPasswordQuestion: 'Forgot your password?',
         dontHaveAnAccountQuestion: 'Don\'t have an account?',
         rememberMe: 'Remember me',
-        sendPasswordResetLink: 'Send password reset link',
+        useExistingAccount: 'Or use one of your existing accounts',
+        subscribe: 'Subscribe to our mailinglist',
     },
     role: {
-        'admin': 'Administrator',
+        admin: 'Administrator',
     },
     misc: {
-        'viewInfo': 'View information about this project',
-    }
+        viewInfo: 'View information about this project',
+        allLoaded: 'All loaded',
+        tag: 'Tag',
+        handle: 'Handle',
+    },
+    error: {
+        couldNotLoad: 'Could not load {0}.<br>Please try again later',
+        couldNotDelete: 'Could not delete {0}.<br> Please try again later',
+    },
+    date: {
+        created: 'Created date',
+    },
 }

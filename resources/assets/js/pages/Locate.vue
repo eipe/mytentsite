@@ -64,6 +64,20 @@
 
     export default {
         name: "Map",
+        i18n: {
+            messages: {
+                en: {
+                    viewPosition: 'View my position',
+                    searchingForPosition: 'Searching for your position',
+                    couldNotDetectLocation: 'Could not detect your location: {0}',
+                },
+                no: {
+                    viewPosition: 'Vis min posisjon',
+                    searchingForPosition: 'Søker etter din posisjon',
+                    couldNotDetectLocation: 'Kunne ikke finne din posisjon: {0}',
+                }
+            }
+        },
         data() {
             return {
                 latitude: 61.651221,
@@ -122,7 +136,7 @@
                     states: [{
                         stateName: "locate",
                         icon: "fa-location-arrow",
-                        title: "View my position",
+                        title: me.$t('viewPosition'),
                         onClick: function(button, map) {
                             map.locate();
                             this.disable();
@@ -131,7 +145,7 @@
                     }, {
                         stateName: "locating",
                         icon: "fa-refresh fa-spin",
-                        title: "Searching for your position",
+                        title: me.$t('searchingForPosition'),
                         onClick: function(button, map) {
                             map.locate();
                             this.enable();
@@ -148,7 +162,7 @@
                 });
 
                 TentMap.on("locationerror", function(event) {
-                    me.$store.dispatch("displayError", "Could not detect your location:" + event.message);
+                    me.$store.dispatch("displayError", me.$t('couldNotDetectLocation', [event.message]));
                     locationButton.enable();
                     locationButton.state("locate");
                 });

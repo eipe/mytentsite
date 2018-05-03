@@ -1,14 +1,14 @@
 <template>
     <div>
-        <h1>Tags</h1>
+        <h1>{{ $t('page.tags')}}</h1>
         <form @submit.prevent="submitTag">
             <div class="field has-addons">
                 <div class="control">
-                    <input class="input" v-model="tag" type="text" placeholder="Add a new tag" required>
+                    <input class="input" v-model="tag" type="text" :placeholder="$t('addNew')" required>
                 </div>
                 <div class="control">
                     <button type="submit" class="button is-success" v-bind:class="{'is-loading' : isSubmitting }">
-                        Add tag
+                        {{ $t('add')}}
                     </button>
                 </div>
             </div>
@@ -16,10 +16,10 @@
         <table class="table is-striped">
             <thead>
             <tr>
-                <th>Tag</th>
-                <th>Popularity</th>
-                <th>Date created</th>
-                <th>Handle</th>
+                <th>{{ $t('misc.tag')}}</th>
+                <th>{{ $t('popularity')}}</th>
+                <th>{{ $t('date.created')}}</th>
+                <th>{{ $t('misc.handle')}}</th>
             </tr>
             </thead>
             <tbody>
@@ -30,19 +30,19 @@
                     <td>
                         <a class="button is-danger tooltip is-tooltip-top"
                               v-bind:class="{ 'is-loading' : isDeletingTag(tag) }"
-                              data-tooltip="Click to delete this contribution"
+                              :data-tooltip="$t('action.clickToDelete')"
                               @click="deleteTag(tag)">
-                            Delete
+                            {{ $t('action.delete')}}
                         </a>
                     </td>
                 </tr>
             </tbody>
             <tfoot>
                 <tr>
-                    <th>Tag</th>
-                    <th>Popularity</th>
-                    <th>Date created</th>
-                    <th>Handle</th>
+                    <th>{{ $t('misc.tag')}}</th>
+                    <th>{{ $t('popularity')}}</th>
+                    <th>{{ $t('date.created')}}</th>
+                    <th>{{ $t('misc.handle')}}</th>
                 </tr>
             </tfoot>
         </table>
@@ -51,6 +51,20 @@
 <script>
     export default {
         name: "AdminTags",
+        i18n: {
+            messages: {
+                en: {
+                    addNew: 'Add a new tag',
+                    add: 'Add tag',
+                    popularity: 'Popularity',
+                },
+                no: {
+                    addNew: 'Legg til ny emneknagg',
+                    add: 'Legg til emneknagg',
+                    popularity: 'Popularitet',
+                }
+            }
+        },
         data() {
             return {
                 isSubmitting: false,
@@ -99,7 +113,13 @@
                     me.isDeleting= null;
                 }).catch(() => {
                     me.isDeleting = null;
-                    me.$store.dispatch("error", "Could not delete tag. Please try again");
+                    me.$store.dispatch(
+                        "error",
+                        me.$t(
+                            'error.couldNotDelete',
+                            [me.$t('misc.tag')]
+                        )
+                    );
                 });
             },
             isDeletingTag(tag) {

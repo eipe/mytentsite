@@ -1,18 +1,29 @@
 <template>
     <div class="container content">
         <section class="section">
-            <h1>Login</h1>
+            <h1>{{ $t('action.logIn')}}</h1>
             <form @submit.prevent="submitForm" action="/login" method="POST">
                 <p class="control has-icons-left">
-                    <input id="email" type="email" name="email" v-model="info.email"
-                           value="" class="input" placeholder="E-mail address" ref="email" required autofocus>
+                    <input id="email"
+                           type="email"
+                           name="email"
+                           v-model="info.email"
+                           value=""
+                           class="input"
+                           :placeholder="$t('authentication.email')"
+                           ref="email"
+                           required autofocus>
                     <span class="icon is-small is-left">
                         <i class="fa fa-envelope"></i>
                     </span>
                 </p>
                 <p class="control has-icons-left">
-                    <input id="password" type="password" name="password" v-model="info.password"
-                           class="input" placeholder="Password" required>
+                    <input id="password"
+                           type="password"
+                           name="password"
+                           v-model="info.password"
+                           class="input"
+                           :placeholder="$t('authentication.password')" required>
                     <span class="icon is-small is-left">
                         <i class="fa fa-lock"></i>
                     </span>
@@ -20,7 +31,10 @@
 
                 <p class="control">
                     <label class="checkbox">
-                        <input type="checkbox" name="remember" v-model="info.remember" class="checkbox"> Remember me
+                        <input type="checkbox"
+                               name="remember"
+                               v-model="info.remember"
+                               class="checkbox"> {{ $t('authentication.rememberMe')}}
                     </label>
                 </p>
 
@@ -34,20 +48,20 @@
                 <div class="field is-grouped">
                     <p class="control">
                         <button type="submit" class="button is-primary"
-                                v-bind:class="{ 'is-loading' : isPosting }">Login</button>
+                                v-bind:class="{ 'is-loading' : isPosting }">{{ $t('action.logIn')}}</button>
                     </p>
                     <p class="control">
                         <router-link to="/password/reset" tag="a" class="button is-text">
-                            Forgot your password?
+                            {{ $t('authentication.forgotPasswordQuestion')}}
                         </router-link>
                     </p>
                 </div>
                 <router-link to="/register" tag="a" class="button is-white">
-                    Don't have an account?
+                    {{ $t('authentication.dontHaveAnAccountQuestion')}}
                 </router-link>
                 <div v-if="socialLoginEnabled">
                     <hr>
-                    <h2 class="is-small">Or use one of your existing accounts</h2>
+                    <h2 class="is-small">{{ $t('authentication.useExistingAccount')}}</h2>
                     <div class="control is-grouped">
                         <p class="control">
                             <button class="button is-info"

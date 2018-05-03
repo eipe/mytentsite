@@ -1,12 +1,16 @@
 <template>
     <div class="container content">
         <section class="section">
-            <h1>Reset password</h1>
+            <h1>{{ $t('action.resetPassword')}}</h1>
             <form method="post" @submit.prevent="submitForm">
                 <p class="control has-icons-left">
-                    <input id="email" type="email" class="input" name="email"
-                           placeholder="E-mail address"
-                           v-model="info.email" ref="email" autofocus required>
+                    <input id="email"
+                           type="email"
+                           class="input"
+                           name="email"
+                           :placeholder="$t('authentication.email')"
+                           v-model="info.email"
+                           ref="email" autofocus required>
                     <span class="icon is-small is-left">
                         <i class="fa fa-envelope"></i>
                     </span>
@@ -19,14 +23,13 @@
                 </transition>
                 <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
                     <div class="notification is-success" v-if="isSuccess">
-                        We sent an email with link to reset your password to <u>{{ info.email }}</u>.
-                        This link is active for 30 minutes.
+                        {{ $t('resetPasswordInfo', [info.email])}}
                     </div>
                 </transition>
                 <div class="field is-grouped">
                     <p class="control" v-if="!isSuccess">
                         <button type="submit" class="button is-primary"
-                                v-bind:class="{ 'is-loading' : isPosting }">Send password reset link</button>
+                                v-bind:class="{ 'is-loading' : isPosting }">{{ $t('sendPasswordResetLink')}}</button>
                     </p>
                     <p class="control">
                         <button @click="back" class="button is-text">{{ backButtonText }}</button>
@@ -38,6 +41,22 @@
 </template>
 <script>
     export default {
+        i18n: {
+            messages: {
+                en: {
+                    goBackToLogin: 'Go back to login',
+                    resetPasswordInfo: 'We sent an email with link to reset your password to <u>{0}</u>.\n' +
+                    'This link is active for 30 minutes.',
+                    sendPasswordResetLink: 'Send password reset link',
+                },
+                no: {
+                    goBackToLogin: 'Tilbake til innlogging',
+                    resetPasswordInfo: 'Vi har sendt deg en epost med lenke for å nullstille passord til <u>{0}.\n' +
+                    'Denne lenken er aktiv i 30 minutter.',
+                    sendPasswordResetLink: 'Send lenke for å nullstille passord',
+                }
+            }
+        },
         data() {
             return {
                 isPosting: false,
@@ -51,9 +70,9 @@
         computed: {
             backButtonText() {
                 if(this.isSuccess) {
-                    return "Go back to login";
+                    return this.$t('goBackToLogin');
                 } else {
-                    return "Back";
+                    return this.$t('action.back');
                 }
             }
         },
@@ -73,10 +92,10 @@
                 me.isPosting = true;
                 me.error = null;
 
-                Vue.axios.post("/password/email", me.info).then(function(success) {
+                Vue.axios.post("/password/email", me.info).then(() => {
                     me.isSuccess = true;
                     me.isPosting = false;
-                }).catch(function(error) {
+                }).catch((error) => {
                     if(typeof error.response !== typeof undefined) {
                         me.error = error.response.data.message;
                     }

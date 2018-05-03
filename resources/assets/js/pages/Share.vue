@@ -7,7 +7,7 @@
                         <span class="steps-marker is-danger">
                             <i class="fa fa-trash-o"></i>
                         </span>
-                        <div class="steps-content is-size-7">Cancel</div>
+                        <div class="steps-content is-size-7">{{ $t('action.cancel')}}</div>
                     </li>
                     <li class="steps-segment"
                         v-bind:class="{'is-active' : isCurrentStep(0), 'is-clickable' : isCompletedStep(1) && !isSharing, 'has-gaps' : isUnCompletedStep(0)}"
@@ -15,7 +15,7 @@
                         <span class="steps-marker">
                             <i class="fa fa-camera"></i>
                         </span>
-                        <div class="steps-content is-size-7">Select photo</div>
+                        <div class="steps-content is-size-7">{{ $t('action.selectPhoto')}}</div>
                     </li>
                     <li class="steps-segment"
                         v-bind:class="{'is-active' : isCurrentStep(1), 'is-clickable' : isCompletedStep(1) && !isSharing, 'has-gaps' : isUnCompletedStep(1)}"
@@ -23,7 +23,7 @@
                         <span class="steps-marker">
                             <i class="fa fa-crop"></i>
                         </span>
-                        <div class="steps-content is-size-7">Adjust and set view</div>
+                        <div class="steps-content is-size-7">{{ $t('action.adjust')}}</div>
                     </li>
                     <li class="steps-segment"
                         v-bind:class="{'is-active' : isCurrentStep(2), 'is-clickable' : isCompletedStep(2) && !isSharing, 'has-gaps' : isUnCompletedStep(2)}"
@@ -31,14 +31,15 @@
                         <span class="steps-marker">
                             <i class="fa fa-pencil"></i>
                         </span>
-                        <div class="steps-content is-size-7">Add a information</div>
+                        <div class="steps-content is-size-7">{{ $t('action.addInfo')}}</div>
                     </li>
                     <li class="steps-segment"
                         v-bind:class="{'is-active' : isCurrentStep(3) || isCurrentStep(4), 'is-success' : isShareSuccess, 'has-gaps' : isUnCompletedStep(3)}">
                         <span class="steps-marker">
-                            <i class="fa fa-check" v-bind:class="{'fa-circle-o-notch fa-spin' : isCurrentStep(4) && !isShareSuccess}"></i>
+                            <i class="fa fa-check"
+                               v-bind:class="{'fa-circle-o-notch fa-spin' : isCurrentStep(4) && !isShareSuccess}"></i>
                         </span>
-                        <div class="steps-content is-size-7">Review and share!</div>
+                        <div class="steps-content is-size-7">{{ $t('action.reviewAndShare')}}</div>
                     </li>
                 </ul>
             </transition>
@@ -47,46 +48,54 @@
                     <input type="file" ref="photo" @change="photoChanged"
                            class="cropit-image-input is-hidden" />
                     <figure key="Preview" class="cropit-preview"
-                        v-show="photoLoaded" title="Drag to adjust">
+                        v-show="photoLoaded" :title="$t('action.dragToAdjust')">
                     </figure>
                 </div>
                 <transition-group enter-active-class="animated fadeIn">
                     <div v-show="isCurrentStep(0)" key="Select photo" class="has-text-centered">
                         <span class="button title is-info is-medium" @click="triggerSelectPhoto"
                             v-bind:class="{ 'is-loading' : photoLoading }">
-                            <slot v-if="photoLoaded">Click me to select another photo</slot>
-                            <slot v-else>Click me to start sharing!</slot>
+                            <slot v-if="photoLoaded">{{ $t('action.clickToSelectAnotherPhoto')}}</slot>
+                            <slot v-else>{{ $t('clickToStartShare')}}</slot>
                         </span>
                     </div>
                     <div v-show="isCurrentStep(1)" key="Adjust photo">
                         <div class="buttons is-centered has-addons is-mobile">
                             <div class="control">
-                                <div class="button is-light" @click="rotate" title="Rotate clockwise">
+                                <div class="button is-light"
+                                     @click="rotate"
+                                     :title="$t('action.rotateClockwise')">
                                     <span class="icon">
                                         <i class="fa fa-rotate-right"></i>
                                     </span>
-                                    <span>Rotate</span>
+                                    <span>{{ $t('action.rotate')}}</span>
                                 </div>
                             </div>
                             <div class="control">
-                                <div class="button is-light" title="Click to zoom out" @click="zoomOut" v-bind="{ 'disabled' : isZoomedOut() }">
+                                <div class="button is-light"
+                                     :title="$t('action.clickToZoomOut')"
+                                     @click="zoomOut" v-bind="{ 'disabled' : isZoomedOut() }">
                                     <span class="icon">
                                         <i class="fa fa-search-minus"></i>
                                     </span>
-                                    <span>Zoom out</span>
+                                    <span>{{ $t('action.zoomOut')}}</span>
                                 </div>
                             </div>
                             <div class="control">
-                                <div class="button is-light" title="Click to zoom in" @click="zoomIn" v-bind="{ 'disabled' : isZoomedIn() }">
+                                <div class="button is-light"
+                                     :title="$t('action.clickToZoomIn')"
+                                     @click="zoomIn" v-bind="{ 'disabled' : isZoomedIn() }">
                                     <span class="icon">
                                         <i class="fa fa-search-plus"></i>
                                     </span>
-                                    <span>Zoom in</span>
+                                    <span>{{ $t('action.zoomIn')}}</span>
                                 </div>
                             </div>
                             <div class="control">
-                                <div class="button is-light" title="Proceed" @click="goToNextStep">
-                                    <span>Next</span>
+                                <div class="button is-light"
+                                     :title="$t('action.next')"
+                                     @click="goToNextStep">
+                                    <span>{{ $t('action.next')}}</span>
                                     <span class="icon">
                                         <i class="fa fa-step-forward"></i>
                                     </span>
@@ -96,22 +105,30 @@
                     </div>
                     <div key="Add information" v-show="isCurrentStep(2)">
                         <div class="tags">
-                            <div class="tag is-clickable" v-for="tag in availableTags" v-bind:class="{'is-success' : isTagSelected(tag)}" @click="toggleTag(tag)">
+                            <div class="tag is-clickable"
+                                 v-for="tag in availableTags"
+                                 v-bind:class="{'is-success' : isTagSelected(tag)}"
+                                 @click="toggleTag(tag)">
                                 {{ tag.name }}
                             </div>
                         </div>
                         <div class="field">
-                            <textarea name="caption" title="Caption"
-                                      placeholder="Caption"
+                            <textarea name="caption"
+                                      :title="$t('caption')"
+                                      :placeholder="$t('caption')"
                                       v-model="tentSite.caption"
                                       :maxlength="rules.captionMaxLength"
                                       class="textarea" required></textarea>
                         </div>
                         <div class="field is-pulled-right">
                             <div class="control">
-                                <span class="button is-white is-disabled">{{ (rules.captionMaxLength - tentSite.caption.length) }} characters left</span>
-                                <div class="button is-light is-right" title="Proceed" @click="goToNextStep">
-                                    <span>Next</span>
+                                <span class="button is-white is-disabled">
+                                    {{ $t('captionLength', [(rules.captionMaxLength - tentSite.caption.length)])}}
+                                </span>
+                                <div class="button is-light is-right"
+                                     :title="$t('action.next')"
+                                     @click="goToNextStep">
+                                    <span>{{ $t('action.next')}}</span>
                                     <span class="icon">
                                         <i class="fa fa-step-forward"></i>
                                     </span>
@@ -142,17 +159,16 @@
                                             <div class="media-content"></div>
                                             <div class="media-right">
                                                 <div class="buttons has-addons">
-                                                    <input
-                                                            type="submit"
+                                                    <input type="submit"
                                                             class="button is-success"
-                                                            value="All good. Share it!"
-                                                            title="Share this tent site">
+                                                            :value="$t('action.share')"
+                                                            :title="$t('action.share')">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="content">{{ tentSite.caption }}</div>
                                         <div class="content is-small" v-if="tentSite.takenDate">
-                                            Photo was taken {{ tentSite.takenDate }}
+                                            {{ $t('photoWasTaken', [tentSite.takenDate])}}
                                         </div>
                                     </div>
                                 </div>
@@ -160,18 +176,18 @@
                         </div>
                     </div>
                     <div key="Share tent site" v-if="isCurrentStep(4)" class="has-text-centered">
-                        We are uploading your tent site
+                        {{ $t('progressUploading')}}
                         <i class="fa fa-circle-o-notch fa-spin"></i><br><br>
                         <span class="button is-danger" @click.prevent="abortStoring">
-                            Cancel upload</span>
+                            {{ $t('action.cancel')}}</span>
                     </div>
                 </transition-group>
             </form>
             <transition enter-active-class="animated fadeIn">
                 <div class="has-text-centered is-clickable" v-if="isCurrentStep(3) && isShareSuccess">
-                    <h1 class="title">Thank's for your contribution!</h1>
+                    <h1 class="title">{{ $t('thanksForContributing')}}</h1>
                     <span class="button" @click="isShareSuccess = false">
-                        Click me if you want to start over again
+                        {{ $t('clickToStartOverAgain')}}
                     </span>
                 </div>
             </transition>
@@ -182,6 +198,68 @@
 
     export default {
         name: "Share",
+        i18n: {
+            messages: {
+                en: {
+                    thanksForContributing: 'Thank\'s for your contribution!',
+                    clickToStartShare: 'Click me to start sharing',
+                    clickToStartOverAgain: 'Click me if you want to start over again',
+                    progressUploading: 'We are uploading your tent site',
+                    action: {
+                        cancel: 'Cancel upload',
+                        share: 'All good. Share it!',
+                        dragToAdjust: 'Drag to adjust',
+                        selectPhoto: 'Select photo',
+                        clickToSelectAnotherPhoto: 'Click me to select another photo',
+                        adjust: 'Adjust and set view',
+                        addInfo: 'Add a information',
+                        reviewAndShare: 'Review and share!',
+                        rotateClockwise: 'Rotate clockwise',
+                        rotate: 'Rotate',
+                        zoomIn: 'zoom in',
+                        zoomOut: 'zoom out',
+                        clickToZoomIn: 'click to zoom in',
+                        clickToZoomOut: 'click to zoom out',
+                    },
+                    photoWasTaken: 'Photo was taken {0}',
+                    caption: 'Caption',
+                    captionLength: '{0} characters left',
+                    warning: 'You have a pending photo upload, do you want to finish that before leaving this page?',
+                    error: {
+                        location: 'Photo does not contain location data.<br> We can not accept photos without location data as they are impossible to place on the map, which indeed is the whole concept of this service. <br><br> Please try a new photo',
+                    }
+                },
+                no: {
+                    thanksForContributing: 'Takk for ditt bidrag!',
+                    clickToStartShare: 'Klikk meg for å starte deling',
+                    clickToStartOverAgain: 'Klikk meg hvis du vil starte på nytt',
+                    progressUploading: 'Vi laster opp teltplassen din',
+                    action: {
+                        cancel: 'Avbryt deling',
+                        share: 'Alt klart. Del tentplassen!',
+                        dragToAdjust: 'Dra for å justere',
+                        selectPhoto: 'Velg foto',
+                        clickToSelectAnotherPhoto: 'Klikk meg for å velge et annet foto',
+                        adjust: 'Juster foto',
+                        addInfo: 'Legg til informasjon',
+                        reviewAndShare: 'Se over og del!',
+                        rotateClockwise: 'Roter med klokken',
+                        rotate: 'Roter',
+                        zoomIn: 'zoom inn',
+                        zoomOut: 'zoom ut',
+                        clickToZoomIn: 'klikk for å zoom\'e inn',
+                        clickToZoomOut: 'klikk for å zoom\'e ut',
+                    },
+                    photoWasTaken: 'Foto ble tatt {0}',
+                    caption: 'Bildetekst',
+                    captionLength: '{0} tegn til gode',
+                    warning: 'Du har ikke delt teltplassen enda, vil du fullføre det før du forlater denne siden?',
+                    error: {
+                        location: 'Foto inneholder ikke lokasjonsdata.<br>Vi kan ikke akseptere foto uten lokasjonsdata, da det gjør det umulig å plassere teltplassen på kartet, noe som er hele konseptet med denne tjenesten <br><br>Vennligst prøv et annet foto',
+                    }
+                }
+            }
+        },
         data() {
             return {
                 ready: false,
@@ -251,7 +329,7 @@
 
             window.onbeforeunload = function() {
                 if(me.photoLoaded &&
-                    !confirm("You have a pending photo upload, do you want to finish that before leaving this page?")) {
+                    !confirm(me.$t('warning'))) {
                     return false;
                 }
             };
@@ -358,10 +436,7 @@
                 me.$nextTick(function() {
                     EXIF.getData(file, function() {
                         if(typeof EXIF.getTag(this, "GPSLatitude") === typeof undefined) {
-                            me.error = "Photo does not contain location data.<br>" +
-                                "We can not accept photos without location data as they are impossible to place on " +
-                                "the map, which indeed is the whole concept of this service. <br><br>" +
-                                "Please try a new photo";
+                            me.error = me.$t('error.location');
                             return false;
                         }
 

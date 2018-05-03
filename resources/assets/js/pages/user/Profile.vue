@@ -4,10 +4,10 @@
             <slot v-if="socialLogin.valid">
                 <p>You signed up through {{ socialLogin.provider }},<br>
                     and the last authentication was {{ socialLogin.time }}.</p>
-                <a href="/auth/sign_out" class="button is-danger">Sign out</a>
+                <a href="/auth/sign_out" class="button is-danger">{{ $t('action.signOut')}}</a>
             </slot>
             <slot v-else>
-                <a href="/logout" class="button is-danger" @click.prevent="logout">Logout</a>
+                <a href="/logout" class="button is-danger" @click.prevent="logout">{{ $t('action.logOut')}}</a>
             </slot>
         </div>
     </section>

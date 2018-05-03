@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h2>Statistics</h2>
+        <h2>{{ $t('page.statistics')}}</h2>
     </div>
 </template>
 <script>

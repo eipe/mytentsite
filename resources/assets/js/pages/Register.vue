@@ -1,36 +1,48 @@
 <template>
     <div class="container content">
         <section class="section">
-            <h1>Create a new account</h1>
+            <h1>{{ $t('createNewAccount')}}</h1>
             <form method="post" @submit.prevent="submitForm">
                 <p class="control has-icons-left">
-                    <input id="name" type="text" name="name" class="input"
-                           placeholder="Name"
-                           v-model="info.name" ref="name" required autofocus>
+                    <input id="name"
+                           type="text"
+                           name="name"
+                           class="input"
+                           :placeholder="$t('profile.name')"
+                           v-model="info.name"
+                           ref="name" required autofocus>
                     <span class="icon is-small is-left">
                         <i class="fa fa-user"></i>
                     </span>
                 </p>
                 <p class="control has-icons-left">
-                    <input id="email" type="email" name="email" class="input"
-                           placeholder="E-mail address"
+                    <input id="email"
+                           type="email"
+                           name="email"
+                           class="input"
+                           :placeholder="$t('authentication.email')"
                            v-model="info.email" required>
                     <span class="icon is-small is-left">
                         <i class="fa fa-envelope"></i>
                     </span>
                 </p>
                 <p class="control has-icons-left">
-                    <input id="password" type="password" name="password" class="input"
-                           placeholder="Password"
+                    <input id="password"
+                           type="password"
+                           name="password"
+                           class="input"
+                           :placeholder="$t('authentication.password')"
                            v-model="info.password" required>
                     <span class="icon is-small is-left">
                         <i class="fa fa-lock"></i>
                     </span>
                 </p>
                 <p class="control has-icons-left">
-                    <input id="password-confirm" type="password"
-                           name="password_confirmation" class="input"
-                           placeholder="Confirm password"
+                    <input id="password-confirm"
+                           type="password"
+                           name="password_confirmation"
+                           class="input"
+                           :placeholder="$t('authentication.confirmPassword')"
                            v-model="info.password_confirmation" required>
                     <span class="icon is-small is-left">
                         <i class="fa fa-lock"></i>
@@ -41,7 +53,7 @@
                     <label for="subscribe" class="label">
                         <input id="subscribe" type="checkbox"
                                name="subscribe" class="checkbox"
-                               v-model="info.subscribe"> Subscribe to our mailinglist
+                               v-model="info.subscribe"> {{ $t('authentication.subscribe')}}
                     </label>
                 </p>
 
@@ -55,10 +67,10 @@
                 <div class="field is-grouped">
                     <p class="control">
                         <button type="submit" class="button is-primary"
-                                v-bind:class="{ 'is-loading' : isPosting }">Create a new account</button>
+                                v-bind:class="{ 'is-loading' : isPosting }">{{ $t('createNewAccount')}}</button>
                     </p>
                     <p class="control">
-                        <button @click="back" class="button is-text">Back</button>
+                        <button @click="back" class="button is-text">{{ $t('action.back')}}</button>
                     </p>
                 </div>
             </form>
@@ -68,6 +80,16 @@
 <script>
     export default {
         name: 'Register',
+        i18n: {
+            messages: {
+                en: {
+                    createNewAccount: 'Create a new account'
+                },
+                no: {
+                    createNewAccount: 'Opprett ny konto'
+                }
+            }
+        },
         data() {
             return {
                 isPosting: false,

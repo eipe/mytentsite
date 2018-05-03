@@ -4,8 +4,16 @@ export default {
         norwegian: 'Norsk',
     },
     profile: {
+        name: 'Navn',
         helloName: 'Hei, {0}!',
         profile: 'Profil',
+    },
+    page: {
+        dashboard: 'Dashboard',
+        tentSites: 'Teltplasser',
+        users: 'Brukere',
+        tags: 'Emneknagger',
+        statistics: 'Statistikk',
     },
     action: {
         logOut: 'Logg ut',
@@ -17,6 +25,13 @@ export default {
         next: 'Neste',
         cancel: 'Avbryt',
         selectLanguage: 'Velg språk',
+        loadMore: 'Last flere',
+        share: 'Del',
+        locate: 'Lokaliser',
+        explore: 'Utforsk',
+        resetPassword: 'Nullstill passord',
+        delete: 'Slett',
+        clickToDelete: 'Klikk for å slette',
     },
     tentSite: {
         shareTentSite: 'Del en teltplass',
@@ -36,15 +51,27 @@ export default {
     authentication: {
         email: 'Epost adresse',
         password: 'Passord',
-        forgotPasswordQuestion: 'Glemt passord??',
+        confirmPassword: 'Gjenta passord',
+        forgotPasswordQuestion: 'Glemt passord?',
         dontHaveAnAccountQuestion: 'Har du ikke konto enda?',
         rememberMe: 'Husk meg',
-        sendPasswordResetLink: 'Send lenke for å nullstille passord'
+        useExistingAccount: 'Eller bruk en av dine eksisterende kontoer',
+        subscribe: 'Abonner på vårt nyhetsbrev',
     },
     role: {
-        'admin': 'Administrator'
+        admin: 'Administrator'
     },
     misc: {
-        'viewInfo': 'Se informasjon om prosjektet',
-    }
+        viewInfo: 'Se informasjon om prosjektet',
+        allLoaded: 'Alle lastet',
+        tag: 'Emneknagg',
+        handle: 'Håndter'
+    },
+    error: {
+        couldNotLoad: 'Kunne ikke laste {0}. <br>Vennligst prøv igjen senere',
+        couldNotDelete: 'Kunne ikke slette {0}.<br>Vennligst prøv igjen senere',
+    },
+    date: {
+        created: 'Opprettet dato',
+    },
 }

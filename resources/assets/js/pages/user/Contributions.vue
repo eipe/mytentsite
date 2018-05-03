@@ -3,35 +3,35 @@
         <section class="section">
             <div class="container">
                 <div class="content">
-                    <h2 class="title">Your contributions <small>- displaying {{ tentSitesCount }}</small></h2>
+                    <h2 class="title">{{ $t('tentSite.contributionCount', [this.filteredTentSites.length, this.tentSites.length])}}</h2>
                     <span class="tag is-light is-clickable tooltip is-tooltip-top"
                           data-tooltip="Click to toggle filter"
                           @click="toggleFilter('approved')"
                           v-bind:class="{ 'is-success' : filter.approved }">
-                        {{ count.approved }} Approved
+                        {{ count.approved }} {{ $t('tentSite.state.approved')}}
                     </span>
                     <span class="tag is-light is-clickable tooltip is-tooltip-top"
                           data-tooltip="Click to toggle filter"
                           @click="toggleFilter('denied')"
                           v-bind:class="{ 'is-warning' : filter.denied }">
-                        {{ count.denied }} Not approved
+                        {{ count.denied }} {{ $t('tentSite.state.notApproved')}}
                     </span>
                     <span class="tag is-light is-clickable tooltip is-tooltip-top"
                           data-tooltip="Click to toggle filter"
                           @click="toggleFilter('waitingApproval')"
                           v-bind:class="{'is-info' : filter.waitingApproval }">
-                        {{ count.waitingApproval }} Waiting for approval
+                        {{ count.waitingApproval }} {{ $t('tentSite.state.waitingApproval')}}
                     </span>
                     <span class="tag is-light is-clickable tooltip is-tooltip-top"
                           data-tooltip="Click to toggle filter"
                           @click="toggleFilter('deleted')"
                           v-bind:class="{'is-danger' : filter.deleted }">
-                        {{ count.deleted }} Deleted
+                        {{ count.deleted }} {{ $t('tentSite.state.deleted')}}
                     </span>
                 </div>
                 <div class="content">
                     <button class="button" @click.prevent="loadTentSites"
-                        v-if="!isLoaded" v-bind:class="{ 'is-loading disabled' : isLoading }">Try again</button>
+                        v-if="!isLoaded" v-bind:class="{ 'is-loading disabled' : isLoading }">{{ $t('action.tryAgain')}}</button>
                     <div class="columns is-multiline is-mobile">
                         <div class="column is-one-quarter" v-for="tentSite in filteredTentSites">
                             <div class="is-relative">
@@ -84,7 +84,7 @@
             },
             tentSites() {
                 let me = this;
-                return me.tentSiteIds.map(function (id) {
+                return me.tentSiteIds.map((id) => {
                     if(me.$store.state.tentSites.hasOwnProperty(id)) {
                         return me.$store.state.tentSites[id];
                     }
@@ -94,15 +94,12 @@
                 let me = this,
                     filtered = [];
 
-                me.tentSites.forEach(function(tentSite) {
+                me.tentSites.forEach((tentSite) => {
                     if(me.activeFilters[me.tentSiteStates[tentSite.id]]) {
                         filtered.push(tentSite);
                     }
                 });
                 return filtered;
-            },
-            tentSitesCount() {
-                return this.filteredTentSites.length + " of " + this.tentSites.length;
             }
         },
         methods: {
@@ -131,9 +128,9 @@
             loadTentSites() {
                 let me = this;
                 me.isLoading = true;
-                Vue.axios.get("usersites").then(function success(success) {
+                Vue.axios.get("usersites").then((success) => {
                     if(typeof success.data !== typeof undefined) {
-                        success.data.data.forEach(function (tentSite) {
+                        success.data.data.forEach((tentSite) => {
                             let approved = parseInt(tentSite["approved"]);
 
                             if(tentSite["deleted_at"] !== null) {
@@ -157,10 +154,16 @@
                         me.isLoaded = true;
                         me.isLoading = false;
                     }
-                }).catch(function error(error) {
+                }).catch(() => {
                     me.isLoading = false;
                     me.isLoaded = false;
-                    me.$store.dispatch("displayError", "Could not load your contributions. <br>Please try again later");
+                    me.$store.dispatch(
+                        "displayError",
+                        me.$t(
+                            'error.couldNotLoad',
+                            [me.$tc('tentSite.contribution', 2).toLowerCase()]
+                        )
+                    );
                 });
             }
         },
