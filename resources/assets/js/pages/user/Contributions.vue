@@ -3,27 +3,29 @@
         <section class="section">
             <div class="container">
                 <div class="content">
-                    <h2 class="title">{{ $t('tentSite.contributionCount', [this.filteredTentSites.length, this.tentSites.length])}}</h2>
+                    <h2 class="title">
+                        {{ $t('tentSite.contributionCount', [this.filteredTentSites.length, this.tentSites.length])}}
+                    </h2>
                     <span class="tag is-light is-clickable tooltip is-tooltip-top"
-                          data-tooltip="Click to toggle filter"
+                          :data-tooltip="$t('action.clickToToggle')"
                           @click="toggleFilter('approved')"
                           v-bind:class="{ 'is-success' : filter.approved }">
                         {{ count.approved }} {{ $t('tentSite.state.approved')}}
                     </span>
                     <span class="tag is-light is-clickable tooltip is-tooltip-top"
-                          data-tooltip="Click to toggle filter"
+                          :data-tooltip="$t('action.clickToToggle')"
                           @click="toggleFilter('denied')"
                           v-bind:class="{ 'is-warning' : filter.denied }">
                         {{ count.denied }} {{ $t('tentSite.state.notApproved')}}
                     </span>
                     <span class="tag is-light is-clickable tooltip is-tooltip-top"
-                          data-tooltip="Click to toggle filter"
+                          :data-tooltip="$t('action.clickToToggle')"
                           @click="toggleFilter('waitingApproval')"
                           v-bind:class="{'is-info' : filter.waitingApproval }">
                         {{ count.waitingApproval }} {{ $t('tentSite.state.waitingApproval')}}
                     </span>
                     <span class="tag is-light is-clickable tooltip is-tooltip-top"
-                          data-tooltip="Click to toggle filter"
+                          :data-tooltip="$t('action.clickToToggle')"
                           @click="toggleFilter('deleted')"
                           v-bind:class="{'is-danger' : filter.deleted }">
                         {{ count.deleted }} {{ $t('tentSite.state.deleted')}}
@@ -31,12 +33,18 @@
                 </div>
                 <div class="content">
                     <button class="button" @click.prevent="loadTentSites"
-                        v-if="!isLoaded" v-bind:class="{ 'is-loading disabled' : isLoading }">{{ $t('action.tryAgain')}}</button>
+                        v-if="!isLoaded" v-bind:class="{ 'is-loading disabled' : isLoading }">
+                        {{ $t('action.tryAgain')}}
+                    </button>
                     <div class="columns is-multiline is-mobile">
                         <div class="column is-one-quarter" v-for="tentSite in filteredTentSites">
                             <div class="is-relative">
-                                <span class="tag is-absolute is-top is-right" v-bind:class="stateClass(tentSite)"></span>
-                                <img :src="tentSite.thumbnail" class="is-clickable" @click="openGallery(tentSite)" @error="handleImageError" />
+                                <span class="tag is-absolute is-top is-right"
+                                      v-bind:class="stateClass(tentSite)"></span>
+                                <img :src="tentSite.thumbnail"
+                                     class="is-clickable"
+                                     @click="openGallery(tentSite)"
+                                     @error="handleImageError" />
                             </div>
                         </div>
                     </div>
