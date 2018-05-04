@@ -22,7 +22,7 @@ class UserController extends Controller
     public function index()
     {
         $m = self::MODEL;
-        $user = DB::table($m::DB)->select('name', 'id', 'is_admin')->where('id', Auth::id())->first();
+        $user = DB::table($m::DB)->select('name', 'id', 'is_admin', 'language')->where('id', Auth::id())->first();
         if($user->is_admin)
         {
             $user->roles = array('admin');
@@ -42,11 +42,11 @@ class UserController extends Controller
 
     public function updateLanguage(Request $request) {
         $m = self::MODEL;
-        $user = $m::findOrFail(Auth::id(), 'id');
+        $user = $m::findOrFail(Auth::id(), ['id']);
         $user->language = $request->get('language');
         $user->save();
 
-        return $this->createdResponse($user);
+        return $this->showResponse($user);
     }
 
 }
