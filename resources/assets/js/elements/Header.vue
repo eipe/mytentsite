@@ -80,6 +80,9 @@
             },
             setLanguage(lng) {
                 this.$store.dispatch('changeLanguage', lng);
+                if(this.isLoggedIn) {
+                    Vue.axios.put('language', {language: lng});
+                }
             }
         }
     }

@@ -200,5 +200,13 @@ new Vue({
         if(environment !== "production") {
             store.state.beta = true;
         }
+
+        this.$auth.ready(() => {
+            let userLanguage = this.$auth.user().language;
+            if(userLanguage) {
+                store.dispatch('changeLanguage', userLanguage);
+            }
+        });
     }
+
 });
