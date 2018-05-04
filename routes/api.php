@@ -44,7 +44,7 @@ $api->version(['v1'], function(\Dingo\Api\Routing\Router $api) {
         // Endpoints registered here will have the "auth" middleware applied.
 
         // #User routes
-        $api->put('/language', 'App\Http\UserController@updateLanguage');
+        $api->put('/language', 'App\Http\Controllers\UserController@updateLanguage');
 
         // Fetch user contributed tent sites
         $api->get('/usersites', 'App\Http\Controllers\TentSitesController@getUserTentSites');
