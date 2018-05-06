@@ -1,6 +1,6 @@
 <template>
     <div class="photo-controllers is-hidden-mobile" :data-photo="photo">
-        <span class="tooltip is-tooltip-top" data-tooltip="Locate this tent site">
+        <span class="tooltip is-tooltip-top" :data-tooltip="$tc('tentSite.locateTentSite', 1)">
             <i class="photo-view-map fa fa-map-marker is-clickable"  @click.stop="viewOnMap"></i>
         </span>
     </div>

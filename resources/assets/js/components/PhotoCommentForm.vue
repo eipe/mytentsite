@@ -2,16 +2,20 @@
     <form @submit.prevent="submitComment" style="width: 100%">
         <div class="field is-grouped">
             <p class="control is-expanded has-icon has-icon-right">
-                <input class="input" ref="comment" v-model="comment" type="text"
-                       placeholder="Write a comment" v-bind:class="{ 'is-danger' : errors.comment }" required>
+                <input class="input"
+                       ref="comment"
+                       v-model="comment"
+                       type="text"
+                       :placeholder="$t('writeComment')"
+                       v-bind:class="{ 'is-danger' : errors.comment }" required>
                 <span class="icon is-small">
-                    <i class="fa fa-warning" title="Required field"></i>
+                    <i class="fa fa-warning" :title="$t('requiredField')"></i>
                 </span>
             </p>
             <p class="control">
                 <button type="submit" class="button is-primary"
                         v-bind:class="{ 'is-loading' : isPostingComment }">
-                    Post
+                    {{ $t('action.post')}}
                 </button>
             </p>
         </div>
@@ -20,6 +24,16 @@
 <script>
     export default {
         name: 'PhotoCommentForm',
+        i18n: {
+            messages: {
+                en: {
+                    writeComment: 'Write a comment',
+                },
+                no: {
+                    writeComment: 'Skriv en kommentar',
+                }
+            }
+        },
         data() {
             return {
                 comment: '',

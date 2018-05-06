@@ -7,7 +7,12 @@
                 {{ comment }}
             </div>
             <div class="media-right">
-                <button class="button is-danger" @click="deleteComment()" v-bind:class="{ 'is-loading' : isDeleting }" v-if="isUserCreator">Delete</button>
+                <button class="button is-danger"
+                        @click="deleteComment()"
+                        v-bind:class="{ 'is-loading' : isDeleting }"
+                        v-if="isUserCreator">
+                    {{ $t('action.delete')}}
+                </button>
             </div>
         </article>
     </div>
@@ -28,15 +33,19 @@
         methods: {
             deleteComment() {
                 this.isDeleting = true;
-                Vue.axios.post('/comment/' + this.commentId + '/delete').then(success => {
-                    this.isDeleting = false;
-                    this.$store.dispatch(
-                        "removeCommentFromPhoto",
+                let me = this;
+                Vue.axios.post('/comment/' + this.commentId + '/delete').then(() => {
+                    me.isDeleting = false;
+                    me.$store.dispatch(
+                        'removeCommentFromPhoto',
                         { tentSiteId: this.tentSiteId, comment: this}
                     );
-                }, error => {
-                    this.isDeleting = false;
-                    this.$store.dispatch("displayError", "Could not delete comment. Please try again");
+                }, () => {
+                    me.isDeleting = false;
+                    me.$store.dispatch(
+                        'displayError',
+                        me.$t('error.couldNotDelete', me.$t('comment', 1).toLowerCase())
+                    );
                 });
             }
         },

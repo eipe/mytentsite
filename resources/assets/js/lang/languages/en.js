@@ -34,8 +34,12 @@ export default {
         clickToDelete: 'Click to delete',
         approve: 'Approve',
         deny: 'Deny',
+        post: 'Post',
+        restore: 'Restore',
+        clickToRestore: 'Click to restore',
     },
     tentSite: {
+        tentSite: 'tent site | tent sites',
         shareTentSite: 'Share a tent site',
         locateTentSite: 'Locate tent site | Locate tent sites',
         exploreTentSite: 'Explore tent site | Explore tent sites',
@@ -51,6 +55,7 @@ export default {
             waitingApproval: 'Waiting approval',
             deleted: 'Deleted',
         },
+        status: 'Status',
     },
     authentication: {
         email: 'E-mail address',
@@ -77,10 +82,14 @@ export default {
         viewOn: 'View on {0}',
         yes: 'Yes',
         no: 'No',
+        comment: 'Comment | Comments',
+        requiredField: 'Required field',
     },
     error: {
         couldNotLoad: 'Could not load {0}.<br>Please try again later',
         couldNotDelete: 'Could not delete {0}.<br> Please try again later',
+        couldNotRestore: 'Could not restore {0}.<br>Please try again later',
+        title: 'Woops, something went wrong',
     },
     date: {
         created: 'Created date',

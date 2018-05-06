@@ -5,7 +5,7 @@
                 <div class="modal-content" @click="close">
                     <article v-if="text" class="message is-danger" @click="close">
                         <div class="message-header">
-                            <p>Woops, something went wrong</p>
+                            <p>{{ $t('error.title')}}</p>
                             <button class="delete" @click="close"></button>
                         </div>
                         <div class="message-body" v-html="text"></div>

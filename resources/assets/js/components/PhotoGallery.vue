@@ -42,7 +42,7 @@
                                                               :data-tooltip="commentsTooltip">
                                                         <i class="fa fa-comments-o"></i>&nbsp;{{ comments.length }}
                                                     </a>
-                                                    <a @click="viewOnMap" data-tooltip="View tent site on map"
+                                                    <a @click="viewOnMap" :data-tooltip="$tc('tentSite.locateTentSite', 1)"
                                                               class="button is-white tooltip is-tooltip-top">
                                                         <i class="fa fa-map-o"></i>
                                                     </a>
@@ -51,21 +51,21 @@
                                         </div>
                                         <div class="content">{{ activeTentSite.caption }}</div>
                                         <div class="content is-small" v-if="activeTentSite.taken_date">
-                                            Photo was taken {{ activeTentSite.taken_date }}
+                                            {{ $t('photoTakenDate', [activeTentSite.taken_date])}}
                                         </div>
                                         <div v-if="isUserCreator && shouldDisplayUserActions">
                                             <a v-if="isDeleted" class="button is-success tooltip is-tooltip-top"
                                                   v-bind:class="{ 'is-loading' : isDeleting }"
-                                                  data-tooltip="Click to restore this contribution"
+                                                  :data-tooltip="$t('action.clickToRestore')"
                                                   @click="restoreTentSite(activeTentSite)">
-                                                Restore
+                                                {{ $t('action.restore')}}
                                             </a>
                                             <a class="button is-danger tooltip is-tooltip-top"
                                                   v-bind:class="{ 'is-loading' : isDeleting }"
-                                                  data-tooltip="Click to delete this contribution"
+                                                  :data-tooltip="$t('action.clickToDelete')"
                                                   @click="deleteTentSite(activeTentSite)"
                                                   v-else>
-                                                Delete
+                                                {{ $t('action.delete')}}
                                             </a>
                                         </div>
                                     </div>
@@ -76,16 +76,20 @@
                     <transition enter-active-class="animated slideInUp">
                         <div class="modal-card is-paddingless is-marginless" v-if="activePage === 'comments'">
                             <header class="modal-card-head">
-                                <p class="modal-card-title">Comments ({{ comments.length }})</p>
+                                <p class="modal-card-title">{{ $tc('misc.comment', 2) }} ({{ comments.length }})</p>
                                 <span class="button is-link is-pulled-right"
-                                      @click.prevent="toggleActivePage()">Back</span>
+                                      @click.prevent="toggleActivePage()">
+                                    {{ $t('action.back')}}
+                                </span>
                             </header>
                             <section class="modal-card-body">
                                 <photo-comments :comments="comments" id="photo-comments" />
                             </section>
                             <footer class="modal-card-foot">
-                                <photo-comment-form :tent-site="activeTentSite" :focus="focus"
-                                                    v-if="isUserActionsAvailable" />
+                                <photo-comment-form
+                                        :tent-site="activeTentSite"
+                                        :focus="focus"
+                                        v-if="isUserActionsAvailable" />
                             </footer>
                         </div>
                     </transition>
@@ -102,6 +106,26 @@
 
     export default {
         name: "PhotoGallery",
+        i18n: {
+            messages: {
+                en: {
+                    photoTakenDate: 'Photo taken {0}',
+                    viewComments: 'View comments and/or add your own',
+                    viewCommentsLoggedIn: 'View comments others have added. Login to add comments',
+                    clickToAddBookmark: 'Click to add/remove tent site bookmark. Review your bookmarks in user profile',
+                    loginToBookmark: 'Login to bookmark your favorite tent sites',
+                    numberOfBookmarks: 'Number of users who has bookmarked this tent site',
+                },
+                no: {
+                    photoTakenDate: 'Bilde ble tatt {0}',
+                    viewComments: 'Se kommenter og/eller legg til dine egne',
+                    viewCommentsLoggedIn: 'Se kommentarer brukere har lagt til. Logg inn for å legge til egne kommentarer',
+                    clickToAddBookmark: 'Klikk for å legge til som bokmerke. De blir så tilgjenglig i din brukerprofil',
+                    loginToBookmark: 'Logg inn for å bokmerke dine favoritt telt plasser',
+                    numberOfBookmarks: 'Antall brukere som har bokmerket denne teltplassen',
+                }
+            }
+        },
         data() {
             return {
                 isActive: false,
@@ -147,9 +171,9 @@
             },
             commentsTooltip() {
                 if(this.isUserActionsAvailable) {
-                    return "View comments and/or add your own";
+                    return this.$t('viewCommentsLoggedIn');
                 }
-                return "View comments others have added. Login to add comments";
+                return this.$t('viewComments');
             },
             bookmarks() {
                 if(this.activeTentSite.bookmarks) {
@@ -159,19 +183,19 @@
             },
             bookmarkTooltip() {
                 if(this.isUserActionsAvailable) {
-                    return "Click to add/remove tent site bookmark. Review your bookmarks in user profile";
+                    return this.$t('clickToAddBookmark');
                 }
-                return "Login to bookmark your favorite tent sites";
+                return this.$t('loginToBookmark');
             },
             bookmarkTitle() {
                 if(this.isUserActionsAvailable) {
                     if(this.hasUserBookmarked) {
-                        return 'Click to remove bookmark';
+                        return this.$t('clickToRemove', [this.$tc('tentSite.bookmark', 1)]);
                     } else {
-                        return 'Click to add bookmark';
+                        return this.$t('clickToAdd', [this.$tc('tentSite.bookmark, 1')]);
                     }
                 }
-                return 'Number of users who has bookmarked this tent site';
+                return this.$t('numberOfBookmarks');
             },
             bookmarkIcon() {
                 let icon = '';
@@ -216,27 +240,27 @@
                     me.isDeleting = false;
                     tentSite.deleted = success.data.data.deleted_at.date;
                     me.$store.dispatch("removeTentSite", tentSite);
-                }, error => {
+                }, () => {
                     me.isDeleting = false;
                     me.$store.dispatch(
-                        "displayError",
-                        "Could not delete tent site, please try again. <br><br>If you are stuck with error messages, " +
-                        "please contact us so we can help you.<br>See information page for contact information");
+                        'displayError',
+                        me.$t('error.couldNotDelete', [me.$tc('tentSite.tentSite', 1)])
+                    );
                 });
             },
             restoreTentSite(tentSite) {
                 let me = this;
                 me.isDeleting = true;
-                Vue.axios.post("restore/" + tentSite.id).then(success => {
+                Vue.axios.post("restore/" + tentSite.id).then(() => {
                     me.isDeleting = false;
                     tentSite.deleted = null;
                     me.$store.dispatch("addTentSite", tentSite);
-                }, error => {
+                }, () => {
                     me.isDeleting = false;
                     me.$store.dispatch(
-                        "displayError",
-                        "Could not restore tent site, please try again. <br><br>If you are stuck with error messages, " +
-                        "please contact us so we can help you.<br>See information page for contact information");
+                        'displayError',
+                        me.$t('error.couldNotRestore', [me.$tc('tentSite.tentSite', 1)])
+                    );
                 });
             },
             navigateNext() {

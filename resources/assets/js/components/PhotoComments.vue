@@ -12,7 +12,7 @@
         <div class="is-clearfix"></div>
     </div>
     <div v-else>
-        Be the first to leave a comment on this tent site!
+        {{ $t('noCommentsNotice')}}
     </div>
 </template>
 <style>
@@ -21,6 +21,16 @@
     import PhotoComment from "./PhotoComment.vue"
     export default {
         name: "PhotoComments",
+        i18n: {
+            messages: {
+                en: {
+                    noCommentsNotice: 'Be the first to leave a comment on this tent site!',
+                },
+                no: {
+                    noCommentsNotice: 'Vær den første til å legge igjen en kommentar!'
+                }
+            }
+        },
         data() {
             return {
             }

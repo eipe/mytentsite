@@ -34,8 +34,12 @@ export default {
         clickToDelete: 'Klikk for å slette',
         approve: 'Godkjenn',
         deny: 'Avslå',
+        post: 'Legg til',
+        restore: 'Gjenopprett',
+        clickToRestore: 'Klikk for å gjennopprette',
     },
     tentSite: {
+        tentSite: 'teltplass | teltplasser',
         shareTentSite: 'Del en teltplass',
         locateTentSite: 'Lokaliser teltplass | Lokaliser teltplasser',
         exploreTentSite: 'Utforsk teltplass | Utforsk teltplasser',
@@ -51,6 +55,7 @@ export default {
             waitingApproval: 'Venter på godkjenning',
             deleted: 'Slettet',
         },
+        status: 'Status',
     },
     authentication: {
         email: 'Epost adresse',
@@ -77,10 +82,14 @@ export default {
         viewOn: 'Vis i {0}',
         yes: 'Ja',
         no: 'Nei',
+        comment: 'Kommentar | Kommentarer',
+        requiredField: 'Påkrev felt',
     },
     error: {
         couldNotLoad: 'Kunne ikke laste {0}. <br>Vennligst prøv igjen senere',
         couldNotDelete: 'Kunne ikke slette {0}.<br>Vennligst prøv igjen senere',
+        couldNotRestore: 'Kunne ikke gjenopprette {0}.<br>Vennligst prøv igjen senere',
+        title: 'Wops! Noe gikk galt',
     },
     date: {
         created: 'Opprettet dato',

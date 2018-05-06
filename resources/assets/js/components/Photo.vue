@@ -8,7 +8,7 @@
             <photo-controllers :photo="tentSite"></photo-controllers>
         </slot>
         <div v-if="showDetails">
-            Status: {{ tentSite.status }}
+            {{ $t('status')}}: {{ tentSite.status }}
         </div>
     </div>
 </template>
@@ -69,11 +69,11 @@
         computed: {
             status() {
                 if(this.approved > 0) {
-                    return "Approved";
+                    return this.$t('tentSite.state.approved');
                 } else if(this.approved < 0) {
-                    return "Not approved";
+                    return this.$t('tentSite.state.notApproved');
                 } else {
-                    return "Waiting for approval";
+                    return this.$t('tentSite.state.waitingApproval');;
                 }
             }
         },
