@@ -27,7 +27,6 @@
                 <button class="button" disabled v-else>{{ $t('misc.allLoaded')}}</button>
             </div>
         </section>
-        <footer-component/>
         <photo-gallery ref="gallery" :tent-sites="tentSites"></photo-gallery>
     </div>
 </template>
@@ -35,7 +34,6 @@
 
     import Photo from '../components/Photo.vue'
     import PhotoGallery from '../components/PhotoGallery.vue'
-    import Footer from '../components/Footer.vue'
 
     export default {
         name: "Explore",
@@ -156,7 +154,6 @@
         components: {
             Photo,
             PhotoGallery,
-            "footer-component": Footer
         }
     }
 </script>
