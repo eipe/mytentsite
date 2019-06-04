@@ -29,17 +29,10 @@
                 <router-view></router-view>
             </keep-alive>
         </transition>
-        <footer-component/>
     </div>
 </template>
 <script>
-
-    import Footer from "../components/Footer.vue";
-
     export default {
         name: "User",
-        components: {
-            "footer-component": Footer
-        },
     }
 </script>
