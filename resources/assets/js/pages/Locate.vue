@@ -19,7 +19,7 @@
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
         subdomains: ["a","b","c"]
     }), Kartverket_Topographic = L.tileLayer(
-        "https://opencache.statkart.no/gatekeeper/gk/gk.open_gmaps?layers=topo2&zoom={z}&x={x}&y={y}", {
+        "https://opencache.statkart.no/gatekeeper/gk/gk.open_gmaps?layers=norges_grunnkart&zoom={z}&x={x}&y={y}", {
         attribution: '<a href="http://www.kartverket.no/">Kartverket</a>',
         transparent: true
     });
