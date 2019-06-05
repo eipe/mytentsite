@@ -1,6 +1,6 @@
 <template>
     <div class="has-fixed-header">
-        <section class="hero is-fullheight is-fullheight-excluding-navbar" style="background: url('/images/tentsite.jpg'); background-repeat: no-repeat; background-size: cover">
+        <section class="hero is-fullheight is-fullheight-excluding-navbar" style="background: url('/images/tentsite.jpg'); background-position: top center; background-repeat: no-repeat; background-size: cover">
             <div class="hero-head">
                 <div class="container">
                     <br><br>
@@ -39,10 +39,6 @@
                                 <p class="heading">{{ $t('info.tentSites')}}</p>
                             </div>
                             <div class="column has-text-centered">
-                                    <p class="title is-marginless is-paddingless">{{ statistics.numberOfBookmarkedTentSites }}</p>
-                                    <p class="heading">{{ $t('info.bookmarks')}}</p>
-                            </div>
-                            <div class="column has-text-centered">
                                 <p class="title is-marginless is-paddingless">{{ statistics.numberOfCountries }}</p>
                                 <p class="heading">{{ $t('info.countries')}}</p>
                             </div>
@@ -75,7 +71,7 @@
                         <div class="column is-offset-1 is-4" style="background-image: url('/images/tentsite-share.jpg'); background-size: cover">
                             <figure class="image is-4by3"></figure>
                         </div>
-                        <div class="column is-6 notification is-white" style="padding: 80px">
+                        <div class="column is-6 notification is-white" style="padding: 40px">
                             <h1 class="title is-3">{{ $t('share.title')}}</h1>
                             <article class="media">
                                 <div class="media-left">
@@ -180,7 +176,6 @@
                 en: {
                     info: {
                         tentSites: 'Shared tent sites',
-                        bookmarks: 'Bookmarked tent sites',
                         countries: 'Countries represented',
                         contributors: 'Contributors',
                     },
