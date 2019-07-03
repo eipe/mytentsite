@@ -14,7 +14,7 @@ class AddLanguageToUserTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('language');
+            $table->string('language')->default('no');
         });
     }
 
@@ -25,6 +25,8 @@ class AddLanguageToUserTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('language');
+        });
     }
 }
