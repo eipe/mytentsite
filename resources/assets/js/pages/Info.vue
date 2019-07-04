@@ -228,7 +228,7 @@
                         guide: {
                             stepOneTitle: 'Velg ett foto med lokasjon og juster bildet slik du vil ha det',
                             stepTwoTitle: 'Fortell andre naturnytere hvorfor du liker denne teltplassen og litt nyttig informasjon',
-                            stepThreeTitle: 'Forhåndsvis og se over detaljene før du deler teltplassen3. Se over din teltplass',
+                            stepThreeTitle: 'Forhåndsvis og se over detaljene før du deler teltplassen',
                             stepFourTitle: 'Del teltplassen og fortsett å utforske naturen. Vi vil se over og godkjenne før det publiseres',
                         },
                     },
