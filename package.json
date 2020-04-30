@@ -23,7 +23,7 @@
     "exif-js": "^2.2.1",
     "font-awesome": "^4.7.0",
     "gulp": "^3.9.1",
-    "jquery": "^3.2.1",
+    "jquery": "^3.5.0",
     "napa": "^3.0.0",
     "laravel-elixir": "^6.0.0-17",
     "laravel-elixir-vue-2": "^0.3.0",
