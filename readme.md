@@ -1,3 +1,5 @@
+This repository is archived and will not be maintained anymore
+
 <h4>The story and vision of mytentsite</h4>
 
 <p>As we have focused on developing the story has not yet been written in words.</p>
